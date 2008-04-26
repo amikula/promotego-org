@@ -1,0 +1,32 @@
+  [4;36;1mSQL (0.002654)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.004764)[0m   [0mCREATE TABLE schema_info (version integer)[0m
+  [4;36;1mSQL (0.001982)[0m   [0;1mINSERT INTO schema_info (version) VALUES(0)[0m
+  [4;35;1mSQL (0.000394)[0m   [0mSELECT version FROM schema_info[0m
+  [4;36;1mSQL (0.026418)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: table schema_info already exists: CREATE TABLE schema_info (version integer)[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: table schema_info already exists: CREATE TABLE schema_info (version integer)[0m
+  [4;35;1mSQL (0.000373)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to CreateLocations (1)
+  [4;36;1mSQL (0.003446)[0m   [0;1mCREATE TABLE locations ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) DEFAULT NULL, "type_id" integer DEFAULT NULL, "street_address" varchar(255) DEFAULT NULL, "city" varchar(255) DEFAULT NULL, "state" varchar(255) DEFAULT NULL, "zip_code" varchar(255) DEFAULT NULL, "phone_number" varchar(255) DEFAULT NULL, "hours" varchar(255) DEFAULT NULL, "created_at" datetime DEFAULT NULL, "updated_at" datetime DEFAULT NULL) [0m
+  [4;35;1mSQL (0.002544)[0m   [0mUPDATE schema_info SET version = 1[0m
+  [4;36;1mSQL (0.000694)[0m   [0;1mSELECT * FROM schema_info[0m
+  [4;35;1mSQL (0.000615)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.000102)[0m   [0;1mPRAGMA index_list(locations)[0m
+  [4;36;1mSQL (0.000482)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: table schema_info already exists: CREATE TABLE schema_info (version integer)[0m
+  [4;36;1mSQL (0.000324)[0m   [0;1mSELECT version FROM schema_info[0m
+  [4;35;1mSQL (0.000311)[0m   [0mSELECT * FROM schema_info[0m
+  [4;36;1mSQL (0.000387)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.000097)[0m   [0mPRAGMA index_list(locations)[0m
+  [4;36;1mSQL (0.000284)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: no such table: locations: DROP TABLE locations[0m
+  [4;36;1mSQL (0.003961)[0m   [0;1mCREATE TABLE locations ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) DEFAULT NULL, "type_id" integer DEFAULT NULL, "street_address" varchar(255) DEFAULT NULL, "city" varchar(255) DEFAULT NULL, "state" varchar(255) DEFAULT NULL, "zip_code" varchar(255) DEFAULT NULL, "phone_number" varchar(255) DEFAULT NULL, "hours" varchar(255) DEFAULT NULL, "created_at" datetime DEFAULT NULL, "updated_at" datetime DEFAULT NULL) [0m
+  [4;35;1mSQL (0.002024)[0m   [0mCREATE TABLE schema_info (version integer)[0m
+  [4;36;1mSQL (0.013636)[0m   [0;1mINSERT INTO schema_info (version) VALUES(0)[0m
+  [4;35;1mSQL (0.002173)[0m   [0mUPDATE schema_info SET version = 1[0m
