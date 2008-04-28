@@ -1,0 +1,49 @@
+#wrapper {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#header {
+  background: #222222;
+  color: #ffffff;
+  font: "Arial Black";
+  font-size: 40pt;
+  padding: 0.2em;
+}
+
+#sitenav ul {
+  background: #aaaaaa;
+  padding: 5px;
+  margin: 0px;
+}
+
+#sitenav li {
+  display: inline;
+  list-style: none;
+  padding-right: 20px;
+}
+
+#body {
+  min-height: 300px;
+  height: auto !important;
+  height: 300px;
+  padding: 10px;
+}
+
+#footer {
+  padding-top: 1em;
+  clear: both;
+}
+
+.noquorum {
+  text-decoration: line-through;
+}
+
+.error {
+  border: 1px solid red;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2px;
+  color: red;
+}

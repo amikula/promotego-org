@@ -37,6 +37,11 @@ ActionController::Routing::Routes.draw do |map|
 
   # See how all your routes lay out with "rake routes"
 
+  # Map basic pages to home_controller
+  map.root :controller => 'home'
+  map.home ':page', :controller => 'home', :action => 'show', :page => /about|contact/
+
+
   # Install the default routes as the lowest priority.
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
