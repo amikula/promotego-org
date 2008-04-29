@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
   def index
     # display index.html
-    @title = "Welcome to Vote!"
+    @title = "Welcome to PromoteGo.org!"
   end
 
   def show
