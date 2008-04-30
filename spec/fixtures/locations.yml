@@ -3,7 +3,7 @@
 one:
   name: MyString
   type_id: 1
-  street_address: MyString
+  address: MyString
   city: MyString
   state: MyString
   zip_code: MyString
@@ -13,7 +13,7 @@ one:
 two:
   name: MyString
   type_id: 1
-  street_address: MyString
+  address: MyString
   city: MyString
   state: MyString
   zip_code: MyString

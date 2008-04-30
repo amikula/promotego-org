@@ -7,7 +7,7 @@ describe "/locations/show.html.erb" do
     @location = mock_model(Location)
     @location.stub!(:name).and_return("MyString")
     @location.stub!(:type_id).and_return("1")
-    @location.stub!(:street_address).and_return("MyString")
+    @location.stub!(:address).and_return("MyString")
     @location.stub!(:city).and_return("MyString")
     @location.stub!(:state).and_return("MyString")
     @location.stub!(:zip_code).and_return("MyString")
