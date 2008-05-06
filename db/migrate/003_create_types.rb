@@ -5,6 +5,10 @@ class CreateTypes < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    ["Go Club", "Coffee House", "Park", "Pub", "Other"].each do |type|
+      Type.create(:name => type)
+    end
   end
 
   def self.down
