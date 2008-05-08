@@ -1,0 +1,28 @@
+<% form_for :location, @location, :html => {:method => :get} do |f| %>
+  <table>
+    <tr><td>Address:</td><td><%= f.text_field :address %></td></tr>
+    <tr><td>City:</td><td><%= f.text_field :city %></td></tr>
+    <tr><td>State:</td><td><%= f.text_field :state %></td></tr>
+    <tr><td>Zip Code:</td><td><%= f.text_field :zip_code %></td></tr>
+    <tr><td>Radius:</td>
+      <td>
+        <select id="radius" name="radius">
+          <% @radii.each do |radius| %>
+            <option<%=' selected="selected"' if radius == @radius %>><%= radius %></option>
+          <% end %>
+        </select>
+      </td>
+    </tr>
+    <tr><td>Type:</td>
+      <td>
+        <select id="type" name="type">
+          <option value="0">Any</option>
+          <% @types.each do |type| %>
+            <option value="<%= type.id %>"<%=' selected="selected"' if type.id == @type %>><%= type.name %></option>
+          <% end %>
+        </select>
+      </td>
+    </tr>
+  </table>
+  <%= submit_tag 'Search' %>
+<% end %>
