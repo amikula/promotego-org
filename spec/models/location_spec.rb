@@ -6,9 +6,13 @@ describe Location do
   end
 
   it "should be valid" do
-    @location.address="1600 Pennsylvania Ave."
+    @location.street_address="1600 Pennsylvania Ave."
     @location.city="Washington"
     @location.state="DC"
     @location.should be_valid
+  end
+
+  it "should combine components into a single address for geocoding" do
+    pending
   end
 end
