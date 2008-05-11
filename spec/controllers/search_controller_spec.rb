@@ -9,7 +9,10 @@ describe SearchController do
   end
 
   it "should perform a search if location is provided" do
-    Location.should_receive(:find).with(:all, :origin => Location.new(:street_address => "169 N. Berkeley Ave.", :city => "Pasadena", :state => "CA", :zip_code => "91107"), :within => 5)
-    get :radius, "location" => {:street_address => "169 N. Berkeley Ave.", :city => "Pasadena", :state => "CA", :zip_code => "91107"}, :radius => "5"
+    params = {"street_address" => "169 N. Berkeley Ave.", "city" => "Pasadena", "state" => "CA", "zip_code" => "91107"}
+    origin = Location.new(params)
+    Location.should_receive(:new).with(params).and_return(origin)
+    Location.should_receive(:find).with(:all, :origin => origin, :within => 5).and_return([])
+    get :radius, "location" => params, :radius => "5"
   end
 end
