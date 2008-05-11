@@ -7,7 +7,7 @@ class SearchController < ApplicationController
     @types = Type.find(:all)
     if(params[:location])
       @location.geocode
-      @results = Location.find(:all, :origin => @location, :within => radius)
+      @results = Location.find(:all, :origin => @location, :within => @radius)
     end
   end
 end
