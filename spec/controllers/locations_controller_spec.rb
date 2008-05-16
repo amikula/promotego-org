@@ -208,12 +208,20 @@ describe LocationsController do
   
       it "should create a new location" do
         Location.should_receive(:new).with({}).and_return(@location)
+        @location.stub!(:geocode)
         do_post
       end
 
       it "should redirect to the new location" do
+        @location.stub!(:geocode)
         do_post
         response.should redirect_to(location_url("1"))
+      end
+
+      it "should geocode the new location" do
+        Location.should_receive(:new).with({}).and_return(@location)
+        @location.should_receive(:geocode)
+        do_post
       end
       
     end
@@ -226,6 +234,7 @@ describe LocationsController do
       end
   
       it "should re-render 'new'" do
+        @location.stub!(:geocode)
         do_post
         response.should render_template('new')
       end
@@ -243,7 +252,9 @@ describe LocationsController do
     describe "with successful update" do
 
       def do_put
-        @location.should_receive(:update_attributes).and_return(true)
+        @location.should_receive(:attributes=)
+        @location.should_receive(:geocode)
+        @location.should_receive(:save).and_return(true)
         put :update, :id => "1"
       end
 
@@ -267,12 +278,21 @@ describe LocationsController do
         response.should redirect_to(location_url("1"))
       end
 
+      it "should re-geocode the location" do
+        @location.should_receive(:attributes=).ordered.and_return(true)
+        @location.should_receive(:geocode).ordered
+        @location.should_receive(:save).ordered
+        put :update, :id => "1"
+      end
+
     end
     
     describe "with failed update" do
 
       def do_put
-        @location.should_receive(:update_attributes).and_return(false)
+        @location.should_receive(:attributes=)
+        @location.should_receive(:geocode)
+        @location.should_receive(:save).and_return(false)
         put :update, :id => "1"
       end
 

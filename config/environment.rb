@@ -84,7 +84,7 @@ GeoKit::Geocoders::yahoo = 'REPLACE_WITH_YOUR_YAHOO_KEY'
 # This is your Google Maps geocoder key. 
 # See http://www.google.com/apis/maps/signup.html
 # and http://www.google.com/apis/maps/documentation/#Geocoding_Examples
-GeoKit::Geocoders::google = 'REPLACE_WITH_YOUR_GOOGLE_KEY'
+GeoKit::Geocoders::google = 'ABQIAAAAQ9kXGj0otum-gtsuvrHhGxQSocJuWfmHgsGLqiOih89HQncy7hQ2xGrLS0B4Shyu4gzFaHVptBkHCA'
     
 # This is your username and password for geocoder.us.
 # To use the free service, the value can be set to nil or false.  For 
@@ -107,4 +107,4 @@ GeoKit::Geocoders::geocoder_ca = false
 # Be aware that there are Terms of Use restrictions on how you can use the 
 # various geocoders.  Make sure you read up on relevant Terms of Use for each
 # geocoder you are going to use.
-GeoKit::Geocoders::provider_order = [:google,:us]
+GeoKit::Geocoders::provider_order = [:google]

@@ -41,6 +41,7 @@ class LocationsController < ApplicationController
   # POST /locations.xml
   def create
     @location = Location.new(params[:location])
+    @location.geocode
 
     respond_to do |format|
       if @location.save
@@ -60,7 +61,10 @@ class LocationsController < ApplicationController
     @location = Location.find(params[:id])
 
     respond_to do |format|
-      if @location.update_attributes(params[:location])
+      @location.attributes = params[:location]
+      @location.geocode
+
+      if @location.save
         flash[:notice] = 'Location was successfully updated.'
         format.html { redirect_to(@location) }
         format.xml  { head :ok }

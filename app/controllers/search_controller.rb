@@ -8,6 +8,8 @@ class SearchController < ApplicationController
     if(params[:location])
       @location.geocode
       @results = Location.find(:all, :origin => @location, :within => @radius)
+
+      flash[:error] = "No locations matched your search" if @results.blank?
     end
   end
 end
