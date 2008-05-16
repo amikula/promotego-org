@@ -9,7 +9,7 @@ class Location < ActiveRecord::Base
     geo = GeoKit::Geocoders::MultiGeocoder.geocode(geocode_address)
     if geo.success
       self.lat, self.lng = geo.lat, geo.lng
-      return geo
+      return self
     else
       errors.add_to_base("Could not geocode address")
       return nil
@@ -17,6 +17,8 @@ class Location < ActiveRecord::Base
   end
 
   def geocode_address
+    city_state_zip = ""
+
     unless city.blank? || state.blank?
       city_state_zip = city + ", " + state
     end

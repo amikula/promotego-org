@@ -25,4 +25,12 @@
     </tr>
   </table>
   <%= submit_tag 'Search' %>
+  <% unless @results.blank? %>
+    <table>
+      <tr><th>Name</th><th>Address</th></tr>
+      <% @results.each do |result| %>
+        <tr><td><%= result.name %></td><td><%= result.geocode_address %></td></tr>
+      <% end %>
+    </table>
+  <% end %>
 <% end %>

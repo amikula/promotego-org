@@ -1,0 +1,55 @@
+<% form_for(location) do |f| %>
+  <p>
+    <b>Name</b><br />
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <b>Type</b><br />
+    <%= f.text_field :type_id %>
+  </p>
+
+  <p>
+    <b>Address</b><br />
+    <%= f.text_field :street_address %>
+  </p>
+
+  <p>
+    <b>City</b><br />
+    <%= f.text_field :city %>
+  </p>
+
+  <p>
+    <b>State</b><br />
+    <%= f.text_field :state %>
+  </p>
+
+  <p>
+    <b>Zip code</b><br />
+    <%= f.text_field :zip_code %>
+  </p>
+
+  <p>
+    <b>Phone number</b><br />
+    <%= f.text_field :phone_number %>
+  </p>
+
+  <p>
+    <b>Hours</b><br />
+    <%= f.text_field :hours %>
+  </p>
+
+  <p>
+    <b>Latitude</b><br />
+    <%= f.text_field :lat %>
+  </p>
+
+  <p>
+    <b>Longitude</b><br />
+    <%= f.text_field :lng %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
