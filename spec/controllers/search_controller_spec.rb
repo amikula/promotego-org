@@ -32,8 +32,12 @@ describe SearchController do
     origin = Location.new(params)
     Location.should_receive(:new).with(params).and_return(origin)
     Location.should_receive(:find).with(:all, :origin => origin, :within => 5).and_return([])
+
+    # stub out sweep so we can read flash.now
+    @controller.instance_eval{flash.stub!(:sweep)}
+
     get :radius, "location" => params, :radius => "5"
 
-    flash[:error].should == "No locations matched your search"
+    flash.now[:error].should == "No locations matched your search"
   end
 end
