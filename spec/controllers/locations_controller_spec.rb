@@ -4,6 +4,7 @@ describe LocationsController do
   describe "handling GET /locations" do
 
     before(:each) do
+      @controller.stub!(:login_required).and_return(true)
       @location = mock_model(Location)
       Location.stub!(:find).and_return([@location])
     end
@@ -36,6 +37,7 @@ describe LocationsController do
   describe "handling GET /locations.xml" do
 
     before(:each) do
+      @controller.stub!(:login_required).and_return(true)
       @location = mock_model(Location, :to_xml => "XML")
       Location.stub!(:find).and_return(@location)
     end
@@ -65,6 +67,7 @@ describe LocationsController do
   describe "handling GET /locations/1" do
 
     before(:each) do
+      @controller.stub!(:login_required).and_return(true)
       @location = mock_model(Location)
       Location.stub!(:find).and_return(@location)
     end
@@ -97,6 +100,7 @@ describe LocationsController do
   describe "handling GET /locations/1.xml" do
 
     before(:each) do
+      @controller.stub!(:login_required).and_return(true)
       @location = mock_model(Location, :to_xml => "XML")
       Location.stub!(:find).and_return(@location)
     end
@@ -126,6 +130,7 @@ describe LocationsController do
   describe "handling GET /locations/new" do
 
     before(:each) do
+      @controller.stub!(:login_required).and_return(true)
       @location = mock_model(Location)
       Location.stub!(:new).and_return(@location)
     end
@@ -163,6 +168,7 @@ describe LocationsController do
   describe "handling GET /locations/1/edit" do
 
     before(:each) do
+      @controller.stub!(:login_required).and_return(true)
       @location = mock_model(Location)
       Location.stub!(:find).and_return(@location)
     end
@@ -195,6 +201,7 @@ describe LocationsController do
   describe "handling POST /locations" do
 
     before(:each) do
+      @controller.stub!(:login_required).and_return(true)
       @location = mock_model(Location, :to_param => "1")
       Location.stub!(:new).and_return(@location)
     end
@@ -245,6 +252,7 @@ describe LocationsController do
   describe "handling PUT /locations/1" do
 
     before(:each) do
+      @controller.stub!(:login_required).and_return(true)
       @location = mock_model(Location, :to_param => "1")
       Location.stub!(:find).and_return(@location)
     end
@@ -307,6 +315,7 @@ describe LocationsController do
   describe "handling DELETE /locations/1" do
 
     before(:each) do
+      @controller.stub!(:login_required).and_return(true)
       @location = mock_model(Location, :destroy => true)
       Location.stub!(:find).and_return(@location)
     end
