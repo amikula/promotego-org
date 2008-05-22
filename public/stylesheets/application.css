@@ -42,8 +42,9 @@
 
 .error {
   border: 1px solid red;
+  text-align: center;
   margin-left: auto;
   margin-right: auto;
-  padding: 2px;
+  padding: 10px;
   color: red;
 }
