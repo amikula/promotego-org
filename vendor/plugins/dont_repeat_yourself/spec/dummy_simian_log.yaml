@@ -1,0 +1,27 @@
+simian:
+  version: "2.2.22"
+  checks:
+    - failOnDuplication: true
+      ignoreCharacterCase: true
+      ignoreCurlyBraces: true
+      ignoreIdentifierCase: true
+      ignoreModifiers: true
+      ignoreStringCase: true
+      threshold: 3
+      sets:
+        - lineCount: 6
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/dryplugin/config/../app/models/dummy_model.rb"
+              startLineNumber: 4
+              endLineNumber: 9
+            - sourceFile: "/home/jeanmichel/ruby/projects/dryplugin/config/../app/models/dummy_model2.rb"
+              startLineNumber: 5
+              endLineNumber: 10
+      summary:
+        duplicateFileCount: 2
+        duplicateLineCount: 12
+        duplicateBlockCount: 2
+        totalFileCount: 4
+        totalRawLineCount: 37
+        totalSignificantLineCount: 19
+        processingTime: 43

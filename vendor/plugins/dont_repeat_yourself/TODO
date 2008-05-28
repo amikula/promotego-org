@@ -1,0 +1,29 @@
+Must Have:
+
+    Dev Tasks:
+        - add to rails statistics: number of duplicate lines ;-)
+        - Add an option for separating HTML/CSS related reports, from JS ones and from Ruby ones.
+        - Add support for mini-spec, mini-unit, test/spec (what's the new name) expectation frameworks
+        - TODO: update README
+        - Add plugin version
+
+    Communication Tasks:        
+        - Send post to beta testers: Philippe, Paris on Rails, Simon, Bcn on Rails, Raul, Rafa, Christian Rynning, Markus: active rubyforge forum
+        - Aptana RadRails report, vim report (ask Marco)?
+        - generate this todo from rake todo ;-)
+        - write Doc for rubyforge homepage: links to blog post + image +
+        - publicize in blogs and plugin sites after feeback from beta testers: make list
+
+Nice to have:
+        - use geminstaller to install missing gems
+        - run "java -version" to check java is installed
+        - set up a configuration file called dry.yml to your config folder for setting up rake tasks
+        - move code to a gem so it can be outside of Rails ;-)
+        - compile specs and use them for doc (?)
+        - Use http://codeforpeople.rubyforge.org/bones/ for project admin tasks
+        - use bones for documentation?
+
+Someday Maybe: 
+        - use allison for rdoc (?) Will I write any rdoc?
+        - Use Validatable from Jay Fields
+        - Ask DHH to record his voice saying: "Don't Repeat Yourself" and play that sound when the project contains some duplicate lines :-)

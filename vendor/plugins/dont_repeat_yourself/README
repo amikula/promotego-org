@@ -1,0 +1,78 @@
+= Don't Repeat Yourself plugin
+
+Based on Simian (Similarity Analyser) by Simon Harris from RedHill Consulting, see http://www.redhillconsulting.com.au/products/simian/
+Copyright (c) 2003-08 RedHill Consulting Pty. Ltd.  All rights reserved.
+
+Report the duplicate lines in your code, integrated with Textmate and Netbeans.
+
+== Install
+
+Dependencies:
+* java executable in the path
+* gem install syntax
+
+Install the plugin:
+ruby script/plugin install http://dryplugin.rubyforge.org/svn/vendor/plugins/dont_repeat_yourself/
+
+== Description
+
+Watch the 1 min screencast at http://www.21croissants.com/files/dry_screencast.html
+
+There are two ways of using the plugin:
+* with a Test Unit framework (Test::Unit & RSpec at the moment), to get a generate a report within your IDE
+(Netbeans / Textmate) every time you run the tests
+* with rake tasks, if you don't write tests (give it a try!) or you want to generate a report with your Continuous Integration tool.
+
+=== with Test::Unit
+
+class DryTest < Test::Unit::TestCase
+  def test_should_display_duplicate_lines
+    assert_DRY(rails_application.with_netbeans_reporting)
+  end
+end
+
+=== with RSpec
+
+require File.dirname(__FILE__) + '/spec_helper'
+
+describe "Dupplicate lines Report: Don't Repeat Yourself" do
+  
+  it { rails_application.
+      with_threshold_of_duplicate_lines(4).
+      with_netbeans_reporting.
+        should be_DRY }
+end
+
+=== Rake tasks:
+rake dry:report:html                 # html, including the snippets of duplicate lines
+rake dry:report:netbeans             # Netbeans, displays the report in the Output window and contains some links which open the files
+rake dry:report:textmate             # TODO: checks if it works with someone who has a Mac ;-)
+
+rake dry:cruise_control_artefact     # Copy the HTML report to the CruiseControl artefact folder
+
+Current Unit Test (RSpec specs) coverage is 95%. My objective is to get 100% after I receive some 
+feedback from the beta testers ;-)
+
+== License dont_repeat_yourself plugin
+
+MIT-LICENSE
+
+=== License Simian
+
+See ./SIMIAN-LICENSE file
+
+Simon Harris had the same idea as me and also wrote a Rails plugin.
+More information in http://www.redhillonrails.org/#simian
+
+== Contribute
+
+* include unit tests (specs!) 
+* run “rake spec” on your patched source
+* create a patch with “svn diff > something_rather_descriptive.diff”
+* Contact me 
+
+== Contact
+
+Contact me for feedback at http://www.21croissants.com/contact
+Or post a comment in http://21croissants.blogspot.com/2008/03/dry.html
+If I have a lot of feedbak, I'll switch to the rubyforge forum
