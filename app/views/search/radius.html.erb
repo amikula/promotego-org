@@ -13,16 +13,18 @@
         </select>
       </td>
     </tr>
-    <tr><td>Type:</td>
-      <td>
-        <select id="type" name="type">
-          <option value="0">Any</option>
-          <% @types.each do |type| %>
-            <option value="<%= type.id %>"<%=' selected="selected"' if type.id == @type_id %>><%= type.name %></option>
-          <% end %>
-        </select>
-      </td>
-    </tr>
+    <% unless params[:type] %>
+      <tr><td>Type:</td>
+        <td>
+          <select id="type" name="type">
+            <option value="0">Any</option>
+            <% @types.each do |type| %>
+              <option value="<%= type.id %>"<%=' selected="selected"' if type.id == @type_id %>><%= type.name %></option>
+            <% end %>
+          </select>
+        </td>
+      </tr>
+    <% end %>
   </table>
   <%= submit_tag 'Search' %>
   <% unless @results.blank? %>
