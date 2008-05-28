@@ -2,6 +2,21 @@ class Location < ActiveRecord::Base
   acts_as_mappable
   belongs_to :type
 
+  def self.valid_options
+    {
+      :name => "LocationName",
+      :type_id => 1,
+      :street_address => "Street Address",
+      :city => "Anytown",
+      :state => "US",
+      :zip_code => "00000",
+      :phone_number => "123-456-7890",
+      :hours => "",
+      :lat => "0",
+      :lng => "0"
+    }
+  end
+
   # Geocode the address represented by this location, storing the result in
   # lat and lng and returning the geocode object if it was successful, or nil
   # otherwise.

@@ -4,23 +4,13 @@ describe "/locations/edit.html.erb" do
   include LocationsHelper
   
   before do
-    @location = mock_model(Location)
-    @location.stub!(:name).and_return("MyString")
-    @location.stub!(:type_id).and_return("1")
-    @location.stub!(:street_address).and_return("MyString")
-    @location.stub!(:city).and_return("MyString")
-    @location.stub!(:state).and_return("MyString")
-    @location.stub!(:zip_code).and_return("MyString")
-    @location.stub!(:phone_number).and_return("MyString")
-    @location.stub!(:hours).and_return("MyString")
-    @location.stub!(:lat).and_return("MyString")
-    @location.stub!(:lng).and_return("MyString")
+    @location = mock_model(Location, Location.valid_options)
     assigns[:location] = @location
   end
 
   it "should render edit form" do
     render "/locations/edit.html.erb"
-    
+
     response.should have_tag("form[action=#{location_path(@location)}][method=post]") do
       with_tag('input#location_name[name=?]', "location[name]")
       with_tag('input#location_street_address[name=?]', "location[street_address]")
