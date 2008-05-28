@@ -40,4 +40,22 @@ describe SearchController do
 
     flash.now[:error].should == "No locations matched your search"
   end
+
+  describe "with type" do
+    it "should search only go clubs when go_clubs type is present" do
+      params = {"street_address" => "169 N. Berkeley Ave.", "city" => "Pasadena", "state" => "CA", "zip_code" => "91107"}
+      origin = Location.new(params)
+
+      go_club = mock_model(Type, :name => "Go Club")
+      Type.should_receive(:find_by_name).with("Go Club").and_return(go_club)
+
+      Location.should_receive(:new).with(params).and_return(origin)
+      Location.should_receive(:find).with(:all, :origin => origin, :within => 5, :conditions => ["type_id = ?", go_club.id]).and_return([])
+
+      get :radius, "type" => "go_clubs", :radius => "5", "location" => params
+    end
+
+    it 'should search only go clubs when go clubs is selected'
+    it 'should redirect with a message when type is invalid'
+  end
 end
