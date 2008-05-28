@@ -1,0 +1,448 @@
+simian:
+  version: "2.2.22"
+  checks:
+    - failOnDuplication: true
+      ignoreCharacterCase: true
+      ignoreCurlyBraces: true
+      ignoreIdentifierCase: true
+      ignoreModifiers: true
+      ignoreStringCase: true
+      threshold: 6
+      sets:
+        - lineCount: 6
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/z-not-used/_recommend_linqia_bar.rhtml"
+              startLineNumber: 37
+              endLineNumber: 44
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/z-not-used/_recommend_linqia_bar.rhtml"
+              startLineNumber: 26
+              endLineNumber: 33
+        - lineCount: 6
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/feedback/_sendmessage.rhtml"
+              startLineNumber: 12
+              endLineNumber: 17
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/feedback/z-not-used/_tellfriend.rhtml"
+              startLineNumber: 14
+              endLineNumber: 19
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/feedback/_feedback.rhtml"
+              startLineNumber: 10
+              endLineNumber: 16
+        - lineCount: 6
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/directory/index.rhtml"
+              startLineNumber: 2
+              endLineNumber: 7
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/directory/_show.rhtml"
+              startLineNumber: 3
+              endLineNumber: 8
+        - lineCount: 6
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/community/edit.rhtml"
+              startLineNumber: 14
+              endLineNumber: 20
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/community/new.rhtml"
+              startLineNumber: 23
+              endLineNumber: 31
+        - lineCount: 6
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/home.rhtml"
+              startLineNumber: 1
+              endLineNumber: 6
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/search.rhtml"
+              startLineNumber: 1
+              endLineNumber: 7
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/z-not-used/linqia_search_results.rhtml"
+              startLineNumber: 1
+              endLineNumber: 7
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/z-not-used/linqia_addgroup.rhtml"
+              startLineNumber: 1
+              endLineNumber: 6
+        - lineCount: 6
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/feedback/_tellfriend_group.rhtml"
+              startLineNumber: 19
+              endLineNumber: 24
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/feedback/_temporary_notice_for_claiming_group.rhtml"
+              startLineNumber: 46
+              endLineNumber: 51
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/feedback/_invitefriend.rhtml"
+              startLineNumber: 16
+              endLineNumber: 22
+        - lineCount: 6
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/signup/resend_activation_code.rhtml"
+              startLineNumber: 15
+              endLineNumber: 23
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/signup/_forgot_password_form.rhtml"
+              startLineNumber: 13
+              endLineNumber: 19
+        - lineCount: 7
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/z-not-used/linqia_static.rhtml"
+              startLineNumber: 1
+              endLineNumber: 7
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/linqia.rhtml"
+              startLineNumber: 1
+              endLineNumber: 7
+        - lineCount: 7
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/search.rhtml"
+              startLineNumber: 1
+              endLineNumber: 9
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/home.rhtml"
+              startLineNumber: 1
+              endLineNumber: 7
+        - lineCount: 7
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/community/_group_fields.rhtml"
+              startLineNumber: 77
+              endLineNumber: 83
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/user/_known_languages.rhtml"
+              startLineNumber: 20
+              endLineNumber: 26
+        - lineCount: 7
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/controllers/community_controller.rb"
+              startLineNumber: 178
+              endLineNumber: 189
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/controllers/community_controller.rb"
+              startLineNumber: 314
+              endLineNumber: 333
+        - lineCount: 7
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/controllers/feedback_controller.rb"
+              startLineNumber: 89
+              endLineNumber: 98
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/controllers/feedback_controller.rb"
+              startLineNumber: 125
+              endLineNumber: 134
+        - lineCount: 7
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/z-not-used/linqia_signup.rhtml"
+              startLineNumber: 32
+              endLineNumber: 39
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/z-not-used/linqia_group.rhtml"
+              startLineNumber: 33
+              endLineNumber: 40
+        - lineCount: 7
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/home/index.rhtml"
+              startLineNumber: 40
+              endLineNumber: 46
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/home/main_banner.rhtml"
+              startLineNumber: 8
+              endLineNumber: 14
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/home/index.rhtml"
+              startLineNumber: 57
+              endLineNumber: 63
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/home/index.rhtml"
+              startLineNumber: 74
+              endLineNumber: 80
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/home/index.rhtml"
+              startLineNumber: 91
+              endLineNumber: 97
+        - lineCount: 7
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/z-not-used/linqia_community.rhtml"
+              startLineNumber: 29
+              endLineNumber: 37
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/user.rhtml"
+              startLineNumber: 42
+              endLineNumber: 49
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/community.rhtml"
+              startLineNumber: 26
+              endLineNumber: 32
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/linqia.rhtml"
+              startLineNumber: 24
+              endLineNumber: 31
+        - lineCount: 7
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/community/_group_fields.rhtml"
+              startLineNumber: 76
+              endLineNumber: 82
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/user/_additional_details.rhtml"
+              startLineNumber: 87
+              endLineNumber: 93
+        - lineCount: 8
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/notifier/email_to_owner_with_instructions_about_adding_a_group.rhtml"
+              startLineNumber: 5
+              endLineNumber: 20
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/notifier/email_to_moderator_with_instructions_about_adding_a_group.rhtml"
+              startLineNumber: 5
+              endLineNumber: 20
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/notifier/temporary_claiming_group.rhtml"
+              startLineNumber: 4
+              endLineNumber: 13
+        - lineCount: 8
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/linqia/about_us.rhtml"
+              startLineNumber: 202
+              endLineNumber: 209
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/linqia/about_us.rhtml"
+              startLineNumber: 137
+              endLineNumber: 144
+        - lineCount: 8
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/linqia/feedback.rhtml"
+              startLineNumber: 20
+              endLineNumber: 31
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/linqia/contact_us.rhtml"
+              startLineNumber: 21
+              endLineNumber: 31
+        - lineCount: 8
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/linqia/about_us.rhtml"
+              startLineNumber: 59
+              endLineNumber: 67
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/linqia/about_us.rhtml"
+              startLineNumber: 27
+              endLineNumber: 35
+        - lineCount: 8
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/community.rhtml"
+              startLineNumber: 1
+              endLineNumber: 8
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/z-not-used/linqia_home.rhtml"
+              startLineNumber: 1
+              endLineNumber: 8
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/z-not-used/linqia_show_community.rhtml"
+              startLineNumber: 1
+              endLineNumber: 8
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/z-not-used/linqia_community.rhtml"
+              startLineNumber: 1
+              endLineNumber: 8
+        - lineCount: 8
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/linqia/contact_us.rhtml"
+              startLineNumber: 22
+              endLineNumber: 32
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/linqia/community_benefits.rhtml"
+              startLineNumber: 39
+              endLineNumber: 48
+        - lineCount: 9
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/z-not-used/linqia_home.rhtml"
+              startLineNumber: 19
+              endLineNumber: 31
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/home.rhtml"
+              startLineNumber: 18
+              endLineNumber: 30
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/z-not-used/linqia_addgroup.rhtml"
+              startLineNumber: 23
+              endLineNumber: 35
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/z-not-used/linqia_static.rhtml"
+              startLineNumber: 24
+              endLineNumber: 36
+        - lineCount: 9
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/linqia/contact_us.rhtml"
+              startLineNumber: 9
+              endLineNumber: 19
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/linqia/community_benefits.rhtml"
+              startLineNumber: 26
+              endLineNumber: 36
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/linqia/feedback.rhtml"
+              startLineNumber: 7
+              endLineNumber: 18
+        - lineCount: 9
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/z-not-used/linqia_community.rhtml"
+              startLineNumber: 1
+              endLineNumber: 9
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/z-not-used/linqia_show_community.rhtml"
+              startLineNumber: 1
+              endLineNumber: 9
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/community.rhtml"
+              startLineNumber: 1
+              endLineNumber: 9
+        - lineCount: 9
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/controllers/linqia_controller.rb"
+              startLineNumber: 45
+              endLineNumber: 57
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/controllers/linqia_controller.rb"
+              startLineNumber: 67
+              endLineNumber: 79
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/controllers/linqia_controller.rb"
+              startLineNumber: 89
+              endLineNumber: 101
+        - lineCount: 9
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/z-not-used/linqia_signup.rhtml"
+              startLineNumber: 40
+              endLineNumber: 50
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/z-not-used/linqia_group.rhtml"
+              startLineNumber: 42
+              endLineNumber: 53
+        - lineCount: 9
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/user.rhtml"
+              startLineNumber: 45
+              endLineNumber: 56
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/z-not-used/linqia_user.rhtml"
+              startLineNumber: 45
+              endLineNumber: 57
+        - lineCount: 9
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/_sidebar.rhtml"
+              startLineNumber: 9
+              endLineNumber: 18
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/user/z-not-used/_sidebar_without_login_status_box.rhtml"
+              startLineNumber: 3
+              endLineNumber: 12
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/user/z-not-used/_sidebar.rhtml"
+              startLineNumber: 5
+              endLineNumber: 14
+        - lineCount: 10
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/community/z-not-used/index.rhtml"
+              startLineNumber: 2
+              endLineNumber: 11
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/community/z-not-used/tag.rhtml"
+              startLineNumber: 2
+              endLineNumber: 11
+        - lineCount: 10
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/linqia/community_benefits.rhtml"
+              startLineNumber: 26
+              endLineNumber: 37
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/linqia/contact_us.rhtml"
+              startLineNumber: 9
+              endLineNumber: 20
+        - lineCount: 10
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/z-not-used/linqia.rhtml"
+              startLineNumber: 10
+              endLineNumber: 21
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/z-not-used/linqia_signup.rhtml"
+              startLineNumber: 16
+              endLineNumber: 28
+        - lineCount: 10
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/_sidebar.rhtml"
+              startLineNumber: 20
+              endLineNumber: 30
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/user/z-not-used/_sidebar.rhtml"
+              startLineNumber: 16
+              endLineNumber: 26
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/user/z-not-used/_sidebar_without_login_status_box.rhtml"
+              startLineNumber: 14
+              endLineNumber: 24
+        - lineCount: 11
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/z-not-used/linqia_home.rhtml"
+              startLineNumber: 17
+              endLineNumber: 31
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/home.rhtml"
+              startLineNumber: 16
+              endLineNumber: 30
+        - lineCount: 11
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/z-not-used/linqia_user.rhtml"
+              startLineNumber: 1
+              endLineNumber: 12
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/user.rhtml"
+              startLineNumber: 1
+              endLineNumber: 12
+        - lineCount: 12
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/linqia.rhtml"
+              startLineNumber: 17
+              endLineNumber: 33
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/community.rhtml"
+              startLineNumber: 22
+              endLineNumber: 33
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/user.rhtml"
+              startLineNumber: 36
+              endLineNumber: 51
+        - lineCount: 13
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/notifier/email_to_moderator_with_instructions_about_adding_a_group.rhtml"
+              startLineNumber: 1
+              endLineNumber: 27
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/notifier/email_to_owner_with_instructions_about_adding_a_group.rhtml"
+              startLineNumber: 1
+              endLineNumber: 27
+        - lineCount: 14
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/home/index.rhtml"
+              startLineNumber: 33
+              endLineNumber: 46
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/home/index.rhtml"
+              startLineNumber: 84
+              endLineNumber: 97
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/home/index.rhtml"
+              startLineNumber: 67
+              endLineNumber: 80
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/home/index.rhtml"
+              startLineNumber: 50
+              endLineNumber: 63
+        - lineCount: 15
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/home/index.rhtml"
+              startLineNumber: 48
+              endLineNumber: 63
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/home/index.rhtml"
+              startLineNumber: 65
+              endLineNumber: 80
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/home/index.rhtml"
+              startLineNumber: 82
+              endLineNumber: 97
+        - lineCount: 17
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/z-not-used/linqia_search_results.rhtml"
+              startLineNumber: 19
+              endLineNumber: 37
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/search.rhtml"
+              startLineNumber: 19
+              endLineNumber: 37
+        - lineCount: 18
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/linqia.rhtml"
+              startLineNumber: 12
+              endLineNumber: 38
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/layouts/community.rhtml"
+              startLineNumber: 18
+              endLineNumber: 36
+        - lineCount: 19
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/community/new.rhtml"
+              startLineNumber: 34
+              endLineNumber: 53
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/community/edit.rhtml"
+              startLineNumber: 23
+              endLineNumber: 42
+        - lineCount: 22
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/controllers/translation_manager_controller.rb"
+              startLineNumber: 76
+              endLineNumber: 103
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/controllers/translation_manager_controller.rb"
+              startLineNumber: 5
+              endLineNumber: 32
+        - lineCount: 26
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../lib/api/authentication.rb"
+              startLineNumber: 71
+              endLineNumber: 96
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../lib/api/authentication.rb"
+              startLineNumber: 42
+              endLineNumber: 67
+        - lineCount: 30
+          blocks:
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/user/z-not-used/_sidebar.rhtml"
+              startLineNumber: 3
+              endLineNumber: 34
+            - sourceFile: "/home/jeanmichel/ruby/projects/linqia_portal/config/../app/views/user/z-not-used/_sidebar_without_login_status_box.rhtml"
+              startLineNumber: 1
+              endLineNumber: 32
+      summary:
+        duplicateFileCount: 50
+        duplicateLineCount: 889
+        duplicateBlockCount: 86
+        totalFileCount: 249
+        totalRawLineCount: 11191
+        totalSignificantLineCount: 7031
+        processingTime: 7188

@@ -1,0 +1,83 @@
+require 'rubygems'
+require 'rake'
+
+rspec_base = File.expand_path(File.dirname(__FILE__) + '/../rspec/lib')
+$LOAD_PATH.unshift(rspec_base) if File.exist?(rspec_base)
+require 'spec/rake/spectask'
+
+desc 'Default: run specs.'
+task :default => :spec
+
+desc "Run all specs"
+Spec::Rake::SpecTask.new do |t|
+  t.spec_files = FileList['spec/**/*_spec.rb']
+  t.spec_opts = ['--options', 'spec/spec.opts']  
+end
+
+desc "Generate documentation for the dont_repeat_yourself plugin and store html output in doc.html"
+Spec::Rake::SpecTask.new('doc') do |t|
+  t.spec_files = FileList['spec/**/*_spec.rb']
+#  t.spec_opts = ['--format html:./doc.html']
+  t.spec_opts = ['--format specdoc:./doc.txt']
+end
+
+desc "Run all examples with RCov"
+Spec::Rake::SpecTask.new('coverage') do |t|
+  t.spec_files = FileList['spec/**/*_spec.rb']
+  t.rcov = true
+  t.rcov_opts = ['--exclude', 'spec,boot.rb']
+end
+
+#desc "rubyforge doc"
+#How do I upload pages to myproject.rubyforge.org?
+#You can put web pages for your project on RubyForge at /var/www/gforge-projects/[yourproject]/. You can copy content into that directory using SCP (secure copy). Here's an example:
+#
+#$ scp index.html tom@rubyforge.org:/var/www/gforge-projects/support/
+#index.html    
+
+#require 'spec/rake/verify_rcov'
+#
+#RCov::VerifyTask.new(:verify_rcov => :spec) do |t|
+#  t.threshold = 100.0 # Make sure you have rcov 0.7 or higher!
+#  t.index_html = './doc/coverage/index.html'
+#end
+
+
+def egrep(pattern)
+  Dir['**/*.rb'].each do |fn|
+    count = 0
+    open(fn) do |f|
+      while line = f.gets
+        count += 1
+        if line =~ pattern
+          puts "#{fn}:#{count}:#{line}"
+        end
+      end
+    end
+  end
+end
+
+desc "Look for TODO and FIXME tags in the code"
+task :todo do
+  egrep /(FIXME|TODO|TBD)/
+end
+
+#desc "Creates a tag in svn"
+#task :tag do
+#  from = `svn info #{File.dirname(__FILE__)}`.match(/URL: (.*)\/rspec/n)[1]
+#  to = from.gsub(/trunk/, "tags/#{Spec::VERSION::TAG}")
+#  current = from.gsub(/trunk/, "tags/CURRENT")
+#
+#  puts "Creating tag in SVN"
+#  tag_cmd = "svn cp #{from} #{to} -m \"Tag release #{Spec::VERSION::FULL_VERSION}\""
+#  `#{tag_cmd}` ; raise "ERROR: #{tag_cmd}" unless $? == 0
+#
+#  puts "Removing CURRENT"
+#  remove_current_cmd = "svn rm #{current} -m \"Remove tags/CURRENT\""
+#  `#{remove_current_cmd}` ; raise "ERROR: #{remove_current_cmd}" unless $? == 0
+#
+#  puts "Re-Creating CURRENT"
+#  create_current_cmd = "svn cp #{to} #{current} -m \"Copy #{Spec::VERSION::TAG} to tags/CURRENT\""
+#  `#{create_current_cmd}` ; "ERROR: #{create_current_cmd}" unless $? == 0
+#end
+

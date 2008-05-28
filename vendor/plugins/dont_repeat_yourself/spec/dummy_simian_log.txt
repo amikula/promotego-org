@@ -1,0 +1,11 @@
+Similarity Analyser 2.2.13 - http://www.redhillconsulting.com.au/products/simian/index.html
+Copyright (c) 2003-07 RedHill Consulting Pty. Ltd.  All rights reserved.
+Simian is not free unless used solely for non-commercial or evaluation purposes.
+{failOnDuplication=true, ignoreCharacterCase=true, ignoreCurlyBraces=true, ignoreIdentifierCase=true, ignoreModifiers=true, ignoreStringCase=true, threshold=5}
+Loading (recursively) *.rb from /home/jeanmichel/ruby/projects/21croissants_plugins/app
+Found 6 duplicate lines in the following files:
+ Between lines 4 and 9 in /home/jeanmichel/ruby/projects/21croissants_plugins/app/models/dummy_model.rb
+ Between lines 5 and 10 in /home/jeanmichel/ruby/projects/21croissants_plugins/app/models/dummy_model2.rb
+Found 12 duplicate lines in 2 blocks in 2 files
+Processed a total of 19 significant (37 raw) lines in 4 files
+Processing time: 0.049sec
