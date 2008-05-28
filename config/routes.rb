@@ -1,15 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :locations
 
-  map.resources :locations
-
-  map.resources :locations
-
   map.resources :types
-
-  map.resources :users
-
-  map.resource :session
 
   map.resources :users
 
@@ -49,6 +41,8 @@ ActionController::Routing::Routes.draw do |map|
   map.root :controller => 'home'
   map.home ':page', :controller => 'home', :action => 'show', :page => /about|contact/
 
+  map.connect 'search/:action', :controller => 'search'
+  map.connect 'search/:type/:action', :controller => 'search'
 
   # Install the default routes as the lowest priority.
   map.connect ':controller/:action/:id'

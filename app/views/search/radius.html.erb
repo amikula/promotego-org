@@ -18,7 +18,7 @@
         <select id="type" name="type">
           <option value="0">Any</option>
           <% @types.each do |type| %>
-            <option value="<%= type.id %>"<%=' selected="selected"' if type.id == @type %>><%= type.name %></option>
+            <option value="<%= type.id %>"<%=' selected="selected"' if type.id == @type_id %>><%= type.name %></option>
           <% end %>
         </select>
       </td>
