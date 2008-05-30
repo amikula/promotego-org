@@ -1,4 +1,4 @@
-<% form_for :location, @location, :html => {:method => :get} do |f| %>
+<% form_for :location, @location, :html => {:method => :get}, :url => {:action => "radius", :type => params[:type]} do |f| %>
   <table>
     <tr><td>Address:</td><td><%= f.text_field :street_address %></td></tr>
     <tr><td>City:</td><td><%= f.text_field :city %></td></tr>
@@ -16,7 +16,7 @@
     <% unless params[:type] %>
       <tr><td>Type:</td>
         <td>
-          <select id="type" name="type">
+          <select id="type_id" name="type_id">
             <option value="0">Any</option>
             <% @types.each do |type| %>
               <option value="<%= type.id %>"<%=' selected="selected"' if type.id == @type_id %>><%= type.name %></option>

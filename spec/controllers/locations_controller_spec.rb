@@ -163,6 +163,12 @@ describe LocationsController do
       do_get
       assigns[:location].should equal(@location)
     end
+
+    it "should assign types" do
+      Type.should_receive(:find).with(:all).and_return :types
+      do_get
+      assigns[:types].should == :types
+    end
   end
 
   describe "handling GET /locations/1/edit" do
@@ -195,6 +201,12 @@ describe LocationsController do
     it "should assign the found Location for the view" do
       do_get
       assigns[:location].should equal(@location)
+    end
+
+    it "should assign types" do
+      Type.should_receive(:find).with(:all).and_return :types
+      do_get
+      assigns[:types].should == :types
     end
   end
 
