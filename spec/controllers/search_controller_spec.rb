@@ -84,5 +84,18 @@ describe SearchController do
       flash[:error].should == "Type 'bogus_type' is invalid."
       response.should redirect_to(:action => "radius")
     end
+
+    it "should not filter by type id when type_id == 0" do
+      origin = Location.new(@params)
+
+      go_club = mock_model(Type, :name => "Go Club")
+
+      Location.should_receive(:new).with(@params).and_return(origin)
+      Location.should_receive(:find).
+        with(:all, :origin => origin, :within => 5).and_return([])
+
+      get :radius, "type_id" => 0, :radius => "5",
+        "location" => @params
+    end
   end
 end

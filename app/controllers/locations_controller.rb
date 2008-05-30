@@ -27,6 +27,7 @@ class LocationsController < ApplicationController
   # GET /locations/new.xml
   def new
     @location = Location.new
+    @types = Type.find(:all)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -36,6 +37,7 @@ class LocationsController < ApplicationController
 
   # GET /locations/1/edit
   def edit
+    @types = Type.find(:all)
     @location = Location.find(params[:id])
   end
 

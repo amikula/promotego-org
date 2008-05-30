@@ -6,7 +6,7 @@
 
   <p>
     <b>Type</b><br />
-    <%= f.text_field :type_id %>
+    <%= collection_select :location, :type_id, @types, :id, :name %>
   </p>
 
   <p>

@@ -5,7 +5,7 @@ class Location < ActiveRecord::Base
   def self.valid_options
     {
       :name => "LocationName",
-      :type_id => 1,
+      :type_id => Type.find(:first),
       :street_address => "Street Address",
       :city => "Anytown",
       :state => "US",

@@ -21,7 +21,7 @@ class SearchController < ApplicationController
     if(params[:location])
       @location.geocode
       find_params = {:origin => @location, :within => @radius}
-      find_params.merge!(:conditions => ['type_id = ?', @type_id]) if @type_id
+      find_params.merge!(:conditions => ['type_id = ?', @type_id]) if @type_id && @type_id > 0
       @results = Location.find(:all, find_params)
 
       flash.now[:error] = "No locations matched your search" if @results.blank?

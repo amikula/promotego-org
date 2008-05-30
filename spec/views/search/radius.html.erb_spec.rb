@@ -14,7 +14,7 @@ describe "/search/radius.html.erb" do
   it 'should display type selector when type parameter is not present' do
     render "/search/radius.html.erb"
 
-    response.should have_tag("select[name=type]")
+    response.should have_tag("select[name=type_id]")
   end
 
   it 'should not display type selector when type parameter is present' do
@@ -22,7 +22,20 @@ describe "/search/radius.html.erb" do
 
     render "/search/radius.html.erb"
 
-    response.should_not have_tag("select[name=type]")
+    response.should_not have_tag("select[name=type_id]")
+  end
+
+  it 'should have an action of /search/radius when type parameter is not present' do
+    render '/search/radius.html.erb'
+
+    response.should have_tag("form[action=/search/radius]")
+  end
+
+  it 'should have an action of /search/type/radius when type parameter is present' do
+    params[:type] = "type"
+    render '/search/radius.html.erb'
+
+    response.should have_tag("form[action=/search/type/radius]")
   end
 
   it 'should select first type when @type_id matches first type' do

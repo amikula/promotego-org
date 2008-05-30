@@ -7,6 +7,10 @@ describe "/locations/new.html.erb" do
     @location = mock_model(Location, Location.valid_options)
     @location.stub!(:new_record?).and_return(true)
     assigns[:location] = @location
+    @types = [mock_model(Type, :name => "Type1"),
+              mock_model(Type, :name => "Type2"),
+              mock_model(Type, :name => "Type3")]
+    assigns[:types] = @types
   end
 
   it "should render new form" do
@@ -14,6 +18,11 @@ describe "/locations/new.html.erb" do
 
     response.should have_tag("form[action=?][method=post]", locations_path) do
       with_tag("input#location_name[name=?]", "location[name]")
+      with_tag('select#location_type_id[name=?]', "location[type_id]") do
+        @types.each do |type|
+          with_tag('option[value=?]', type.id, type.name)
+        end
+      end
       with_tag("input#location_street_address[name=?]", "location[street_address]")
       with_tag("input#location_city[name=?]", "location[city]")
       with_tag("input#location_state[name=?]", "location[state]")
