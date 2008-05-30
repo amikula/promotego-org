@@ -5,6 +5,7 @@ describe "/locations/show.html.erb" do
   
   before(:each) do
     @location = mock_model(Location, Location.valid_options)
+    @location.stub!(:type).and_return(mock_model(Type, :name => "Foo"))
 
     assigns[:location] = @location
   end
