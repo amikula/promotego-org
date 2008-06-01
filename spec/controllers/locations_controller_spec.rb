@@ -351,4 +351,25 @@ describe LocationsController do
       response.should redirect_to(locations_url)
     end
   end
+
+  describe "with normal user access" do
+    it "should only show user's own locations in locations list"
+
+    it "should allow access to edit form for user's own locations"
+    it "should not allow access to edit form for other users' locations"
+
+    it "should allow saving of user's own locations"
+    it "should not allow saving of other users' locations"
+  end
+
+  describe "with administrative user access" do
+    it "should list all locations in locations list, regardless of ownership"
+    it "should display other users' locations with a special style"
+
+    it "should allow access to edit form for user's own locations"
+    it "should allow access to edit form for other users' locations"
+
+    it "should allow saving of user's own locations"
+    it "should allow saving of other users' locations"
+  end
 end
