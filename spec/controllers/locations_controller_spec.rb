@@ -352,6 +352,10 @@ describe LocationsController do
     end
   end
 
+  describe "with authenticated user" do
+    it "should save the current user as the location's owner"
+  end
+
   describe "with normal user access" do
     it "should only show user's own locations in locations list"
 
