@@ -149,7 +149,7 @@ describe LocationsController do
       response.should render_template('new')
     end
   
-    it "should create an new location" do
+    it "should create a new location" do
       Location.should_receive(:new).and_return(@location)
       do_get
     end
@@ -213,8 +213,10 @@ describe LocationsController do
   describe "handling POST /locations" do
 
     before(:each) do
-      @controller.stub!(:login_required).and_return(true)
+      @user = mock_model(User, :name => "Test user")
+      @controller.stub!(:current_user).and_return(@user)
       @location = mock_model(Location, :to_param => "1")
+      @location.stub!(:user=)
       Location.stub!(:new).and_return(@location)
     end
     
@@ -222,27 +224,25 @@ describe LocationsController do
   
       def do_post
         @location.should_receive(:save).and_return(true)
+        @location.should_receive(:geocode)
         post :create, :location => {}
       end
   
       it "should create a new location" do
         Location.should_receive(:new).with({}).and_return(@location)
-        @location.stub!(:geocode)
         do_post
       end
 
       it "should redirect to the new location" do
-        @location.stub!(:geocode)
         do_post
         response.should redirect_to(location_url("1"))
       end
 
-      it "should geocode the new location" do
-        Location.should_receive(:new).with({}).and_return(@location)
-        @location.should_receive(:geocode)
+      it "should save the current user as the location's owner" do
+        @location.should_receive(:user=).with(@user)
         do_post
       end
-      
+
     end
     
     describe "with failed save" do
@@ -350,10 +350,6 @@ describe LocationsController do
       do_delete
       response.should redirect_to(locations_url)
     end
-  end
-
-  describe "with authenticated user" do
-    it "should save the current user as the location's owner"
   end
 
   describe "with normal user access" do
