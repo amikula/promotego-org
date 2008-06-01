@@ -108,6 +108,12 @@ describe User do
     users(:quentin).remember_token_expires_at.between?(before, after).should be_true
   end
 
+  it "should have many locations" do
+    user = User.new
+    user.locations << Location.new
+    user.locations << Location.new
+  end
+
 protected
   def create_user(options = {})
     record = User.new({ :login => 'quire', :email => 'quire@example.com', :password => 'quire', :password_confirmation => 'quire' }.merge(options))
