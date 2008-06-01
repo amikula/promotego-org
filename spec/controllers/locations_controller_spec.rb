@@ -305,6 +305,9 @@ describe LocationsController do
         put :update, :id => "1"
       end
 
+      it "should allow administrators to change user"
+      it "should not allow non-administrators to change user"
+
     end
     
     describe "with failed update" do
