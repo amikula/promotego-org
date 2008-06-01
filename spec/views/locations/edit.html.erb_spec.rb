@@ -32,4 +32,7 @@ describe "/locations/edit.html.erb" do
       with_tag('input#location_lng[name=?]', "location[lng]")
     end
   end
+
+  it "should include users dropdown in edit form for administrators"
+  it "should not include users dropdown in edit form for non-administrators"
 end
