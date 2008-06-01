@@ -1,6 +1,7 @@
 class Location < ActiveRecord::Base
   acts_as_mappable
   belongs_to :type
+  belongs_to :user
 
   def self.valid_options
     {

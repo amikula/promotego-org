@@ -45,4 +45,11 @@ describe Location do
     @location.geocode.should == nil
     @location.errors.should_not be_empty
   end
+
+  it "should belong to a user" do
+    # Just checking that I can assign user an location without throwing an error
+    # Is there a better way?
+    location = Location.new
+    location.user = User.new
+  end
 end
