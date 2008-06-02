@@ -6,6 +6,7 @@ describe "/locations/show.html.erb" do
   before(:each) do
     @location = mock_model(Location, Location.valid_options)
     @location.stub!(:type).and_return(mock_model(Type, :name => "Foo"))
+    @location.stub!(:user).and_return(mock_model(User, :name => "Test User"))
 
     assigns[:location] = @location
   end
@@ -14,7 +15,7 @@ describe "/locations/show.html.erb" do
     render "/locations/show.html.erb"
     response.should have_text(/#{@location.name}/)
     response.should have_text(/#{@location.type.name}/)
-    response.should have_text(/#{@location.type_id}/)
+    response.should have_text(/#{@location.user.name}/)
     response.should have_text(/#{@location.street_address}/)
     response.should have_text(/#{@location.city}/)
     response.should have_text(/#{@location.state}/)
@@ -23,7 +24,5 @@ describe "/locations/show.html.erb" do
     response.should have_text(/#{@location.lat}/)
     response.should have_text(/#{@location.lng}/)
   end
-
-  it "should also display user name"
 end
 
