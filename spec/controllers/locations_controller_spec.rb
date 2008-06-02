@@ -4,7 +4,9 @@ describe LocationsController do
   describe "handling GET /locations" do
 
     before(:each) do
-      @controller.stub!(:login_required).and_return(true)
+      @user = mock_model(User)
+      @user.stub!(:locations).and_return(:locations)
+      @controller.stub!(:current_user).and_return(@user)
       @location = mock_model(Location)
       Location.stub!(:find).and_return([@location])
     end
@@ -23,12 +25,13 @@ describe LocationsController do
       response.should render_template('index')
     end
   
-    it "should find all locations" do
-      Location.should_receive(:find).with(:all).and_return([@location])
+    it "should find the user's locations" do
+      @user.should_receive(:locations).and_return([@location])
       do_get
     end
   
     it "should assign the found locations for the view" do
+      @user.should_receive(:locations).and_return([@location])
       do_get
       assigns[:locations].should == [@location]
     end
@@ -37,7 +40,8 @@ describe LocationsController do
   describe "handling GET /locations.xml" do
 
     before(:each) do
-      @controller.stub!(:login_required).and_return(true)
+      @user = mock_model(User, :locations => :locations)
+      @controller.stub!(:current_user).and_return(@user)
       @location = mock_model(Location, :to_xml => "XML")
       Location.stub!(:find).and_return(@location)
     end
@@ -53,12 +57,13 @@ describe LocationsController do
     end
 
     it "should find all locations" do
-      Location.should_receive(:find).with(:all).and_return([@location])
+      @user.should_receive(:locations).and_return([@location])
       do_get
     end
   
     it "should render the found locations as xml" do
       @location.should_receive(:to_xml).and_return("XML")
+      @user.should_receive(:locations).and_return(@location)
       do_get
       response.body.should == "XML"
     end
@@ -356,7 +361,17 @@ describe LocationsController do
   end
 
   describe "with normal user access" do
-    it "should only show user's own locations in locations list"
+    before(:each) do
+      @user = mock_model(User, :name => "Test User")
+
+      @controller.stub!(:current_user).and_return(@user)
+    end
+
+    it "should only show user's own locations in locations list" do
+      @user.should_receive(:locations).and_return(:locations)
+      get :index
+      assigns[:locations].should == :locations
+    end
 
     it "should allow access to edit form for user's own locations"
     it "should not allow access to edit form for other users' locations"
