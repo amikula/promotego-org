@@ -38,7 +38,12 @@ class LocationsController < ApplicationController
   # GET /locations/1/edit
   def edit
     @types = Type.find(:all)
-    @location = Location.find(params[:id])
+    @location = current_user.locations.find(params[:id])
+
+    unless @location
+      flash[:error] = 'Location does not exist'
+      redirect_to locations_url
+    end
   end
 
   # POST /locations
