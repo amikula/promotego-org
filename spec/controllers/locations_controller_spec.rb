@@ -1,12 +1,16 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe LocationsController do
+  before(:each) do
+    @user = mock_model(User, :name => "Test User")
+    @user.stub!(:locations).and_return(:locations)
+    @other_user = mock_model(User, :name => "Other User")
+    @controller.stub!(:current_user).and_return(@user)
+  end
+
   describe "handling GET /locations" do
 
     before(:each) do
-      @user = mock_model(User)
-      @user.stub!(:locations).and_return(:locations)
-      @controller.stub!(:current_user).and_return(@user)
       @location = mock_model(Location)
       Location.stub!(:find).and_return([@location])
     end
@@ -40,8 +44,6 @@ describe LocationsController do
   describe "handling GET /locations.xml" do
 
     before(:each) do
-      @user = mock_model(User, :locations => :locations)
-      @controller.stub!(:current_user).and_return(@user)
       @location = mock_model(Location, :to_xml => "XML")
       Location.stub!(:find).and_return(@location)
     end
@@ -72,7 +74,6 @@ describe LocationsController do
   describe "handling GET /locations/1" do
 
     before(:each) do
-      @controller.stub!(:login_required).and_return(true)
       @location = mock_model(Location)
       Location.stub!(:find).and_return(@location)
     end
@@ -105,7 +106,6 @@ describe LocationsController do
   describe "handling GET /locations/1.xml" do
 
     before(:each) do
-      @controller.stub!(:login_required).and_return(true)
       @location = mock_model(Location, :to_xml => "XML")
       Location.stub!(:find).and_return(@location)
     end
@@ -135,7 +135,6 @@ describe LocationsController do
   describe "handling GET /locations/new" do
 
     before(:each) do
-      @controller.stub!(:login_required).and_return(true)
       @location = mock_model(Location)
       Location.stub!(:new).and_return(@location)
     end
@@ -179,13 +178,14 @@ describe LocationsController do
   describe "handling GET /locations/1/edit" do
 
     before(:each) do
-      @controller.stub!(:login_required).and_return(true)
+      @locations = []
+      @user.should_receive(:locations).and_return(@locations)
       @location = mock_model(Location)
-      Location.stub!(:find).and_return(@location)
+      @locations.should_receive(:find).with(@location.id.to_s).and_return(@location)
     end
   
     def do_get
-      get :edit, :id => "1"
+      get :edit, :id => @location.id
     end
 
     it "should be successful" do
@@ -196,11 +196,6 @@ describe LocationsController do
     it "should render edit template" do
       do_get
       response.should render_template('edit')
-    end
-  
-    it "should find the location requested" do
-      Location.should_receive(:find).and_return(@location)
-      do_get
     end
   
     it "should assign the found Location for the view" do
@@ -218,8 +213,6 @@ describe LocationsController do
   describe "handling POST /locations" do
 
     before(:each) do
-      @user = mock_model(User, :name => "Test user")
-      @controller.stub!(:current_user).and_return(@user)
       @location = mock_model(Location, :to_param => "1")
       @location.stub!(:user=)
       Location.stub!(:new).and_return(@location)
@@ -269,7 +262,6 @@ describe LocationsController do
   describe "handling PUT /locations/1" do
 
     before(:each) do
-      @controller.stub!(:login_required).and_return(true)
       @location = mock_model(Location, :to_param => "1")
       Location.stub!(:find).and_return(@location)
     end
@@ -335,7 +327,6 @@ describe LocationsController do
   describe "handling DELETE /locations/1" do
 
     before(:each) do
-      @controller.stub!(:login_required).and_return(true)
       @location = mock_model(Location, :destroy => true)
       Location.stub!(:find).and_return(@location)
     end
@@ -362,22 +353,41 @@ describe LocationsController do
 
   describe "with normal user access" do
     before(:each) do
-      @user = mock_model(User, :name => "Test User")
-
-      @controller.stub!(:current_user).and_return(@user)
+      @location = mock_model(Location)
+      @locations = [@location]
+      @user.should_receive(:locations).and_return(@locations)
     end
 
     it "should only show user's own locations in locations list" do
-      @user.should_receive(:locations).and_return(:locations)
       get :index
-      assigns[:locations].should == :locations
+
+      assigns[:locations].should == @locations
     end
 
-    it "should allow access to edit form for user's own locations"
-    it "should not allow access to edit form for other users' locations"
+    describe "accessing edit form" do
+      it "should allow access to user's own locations" do
+        @locations.should_receive(:find).with(@location.id.to_s).and_return(@location)
+        get :edit, :id => @location.id
 
-    it "should allow saving of user's own locations"
-    it "should not allow saving of other users' locations"
+        response.should be_success
+        assigns[:location].should == @location
+      end
+
+      it "should not allow access to other users' locations" do
+        location = mock_and_find(Location, :user => @other_user)
+        @locations.should_receive(:find).with(location.id.to_s).and_return(nil)
+
+        get :edit, :id => location.id
+
+        response.should redirect_to(locations_url)
+        flash[:error].should == 'Location does not exist'
+      end
+    end
+
+    describe "updating location" do
+      it "should work for user's own locations"
+      it "should not work for other users' locations"
+    end
   end
 
   describe "with administrative user access" do
