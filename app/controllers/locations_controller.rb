@@ -68,18 +68,27 @@ class LocationsController < ApplicationController
   # PUT /locations/1
   # PUT /locations/1.xml
   def update
-    @location = Location.find(params[:id])
+    @location = current_user.locations.find(params[:id])
 
     respond_to do |format|
-      @location.attributes = params[:location]
-      @location.geocode
+      if @location
+        @location.attributes = params[:location]
+        @location.geocode
+      end
 
-      if @location.save
+      if @location && @location.save
         flash[:notice] = 'Location was successfully updated.'
         format.html { redirect_to(@location) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html do
+          if @location
+            render :action => "edit"
+          else
+            flash[:error] = 'Location does not exist'
+            redirect_to locations_url
+          end
+        end
         format.xml  { render :xml => @location.errors, :status => :unprocessable_entity }
       end
     end
