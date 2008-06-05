@@ -263,7 +263,9 @@ describe LocationsController do
 
     before(:each) do
       @location = mock_model(Location, :to_param => "1")
-      Location.stub!(:find).and_return(@location)
+      @locations = [@location]
+      @locations.stub!(:find).with("1").and_return(@location)
+      @user.stub!(:locations).and_return(@locations)
     end
     
     describe "with successful update" do
@@ -276,7 +278,7 @@ describe LocationsController do
       end
 
       it "should find the location requested" do
-        Location.should_receive(:find).with("1").and_return(@location)
+        @locations.should_receive(:find).with("1").and_return(@location)
         do_put
       end
 
@@ -353,7 +355,7 @@ describe LocationsController do
 
   describe "with normal user access" do
     before(:each) do
-      @location = mock_model(Location)
+      @location = mock_model(Location, :user => @user)
       @locations = [@location]
       @user.should_receive(:locations).and_return(@locations)
     end
@@ -385,8 +387,24 @@ describe LocationsController do
     end
 
     describe "updating location" do
-      it "should work for user's own locations"
-      it "should not work for other users' locations"
+      it "should work for user's own locations" do
+        @locations.should_receive(:find).with(@location.id.to_s).and_return(@location)
+        @location.should_receive(:attributes=)
+        @location.should_receive(:geocode)
+        @location.should_receive(:save).and_return(true)
+
+        put :update, :id => @location.id
+      end
+
+      it "should not work for other users' locations" do
+        location = mock_model(Location, :user => @other_user)
+        @locations.should_receive(:find).with(location.id.to_s).and_return(nil)
+
+        put :update, :id => location.id
+
+        response.should redirect_to(locations_url)
+        flash[:error].should == 'Location does not exist'
+      end
     end
   end
 
