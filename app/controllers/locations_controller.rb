@@ -4,7 +4,11 @@ class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.xml
   def index
-    @locations = current_user.locations
+    if(current_user.has_role?(:administrator))
+      @locations = Location.find(:all)
+    else
+      @locations = current_user.locations
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -38,7 +42,11 @@ class LocationsController < ApplicationController
   # GET /locations/1/edit
   def edit
     @types = Type.find(:all)
-    @location = current_user.locations.find(params[:id])
+    if(current_user.has_role?(:administrator))
+      @location = Location.find(params[:id])
+    else
+      @location = current_user.locations.find(params[:id])
+    end
 
     unless @location
       flash[:error] = 'Location does not exist'
@@ -68,7 +76,11 @@ class LocationsController < ApplicationController
   # PUT /locations/1
   # PUT /locations/1.xml
   def update
-    @location = current_user.locations.find(params[:id])
+    if (current_user.has_role?(:administrator))
+      @location = Location.find(params[:id])
+    else
+      @location = current_user.locations.find(params[:id])
+    end
 
     respond_to do |format|
       if @location
