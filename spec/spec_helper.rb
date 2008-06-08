@@ -38,6 +38,8 @@ Spec::Runner.configure do |config|
   # config.mock_with :rr
 
   config.include FixtureReplacement
+  config.include AuthenticatedTestHelper
+
 end
 
 def mock_and_find(clazz, options={})

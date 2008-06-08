@@ -5,6 +5,9 @@ class User < ActiveRecord::Base
 
   has_many :locations
 
+  has_many :user_roles
+  has_many :roles, :through => :user_roles
+
   validates_presence_of     :login, :email
   validates_presence_of     :password,                   :if => :password_required?
   validates_presence_of     :password_confirmation,      :if => :password_required?
@@ -81,6 +84,44 @@ class User < ActiveRecord::Base
   def recently_activated?
     @activated
   end
+
+  def add_role(role_sym, granting_user)
+    case role_sym
+    when :owner
+      if granting_user.has_role(:owner)
+        add_role_internal(role_sym, granting_user)
+      else
+        raise SecurityError.new("Only owners may assign owner role")
+      end
+    when :super_user
+      if granting_user.has_role(:owner)
+        add_role_internal(role_sym, granting_user)
+      else
+        raise SecurityError.new("Only owners may assign super_user role")
+      end
+    when :administrator
+      if granting_user.has_role(:super_user)
+        add_role_internal(role_sym, granting_user)
+      else
+        raise SecurityError.new("Only super_users may assign administrator role")
+      end
+    end
+  end
+  
+  def has_role(role)
+    roles.find_by_name(role.to_s)
+  end
+
+  private
+    def add_role_internal(role_sym, granting_user)
+      user_role = UserRole.new
+      user_role.granting_user = granting_user
+
+      role = Role.find_by_name(role_sym.to_s)
+      user_role.role = role
+
+      user_roles << user_role
+    end
 
   protected
     # before filter 
