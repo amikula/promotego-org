@@ -52,4 +52,26 @@ describe Location do
     location = Location.new
     location.user = User.new
   end
+
+  describe "change_user" do
+    before(:each) do
+      @new_owner = mock_model(User)
+      @administrator = mock_model(User)
+      @administrator.stub!(:has_role?).with(:administrator).and_return(true)
+      @non_administrator = mock_model(User)
+      @non_administrator.stub!(:has_role?).with(:administrator).
+        and_return(false)
+    end
+
+    it "should allow administrators to change user" do
+      @location.should_receive(:user=).with(@new_owner)
+
+      @location.change_user(@new_owner, @administrator)
+    end
+
+    it "should raise SecurityError if non-administrators try to change user" do
+      lambda {@location.change_user(@new_owner, @non_administrator)}.
+        should raise_error(SecurityError)
+    end
+  end
 end

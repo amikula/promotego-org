@@ -58,4 +58,12 @@ class Location < ActiveRecord::Base
     return geo_address
   end
 
+  def change_user(new_user, administrator)
+    if(administrator.has_role?(:administrator))
+      self.user = new_user
+    else
+      raise SecurityError.new("Only administrators may change owning user of a location")
+    end
+  end
+
 end
