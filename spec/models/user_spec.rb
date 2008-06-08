@@ -127,7 +127,7 @@ describe User do
     end
   end
 
-  describe "has_role" do
+  describe "has_role?" do
     before(:each) do
       @user = User.new
     end
@@ -135,7 +135,7 @@ describe User do
     it "should query roles by name, using the given symbol" do
       @user.roles.should_receive(:find_by_name).with("administrator").
         and_return(:administrator_role)
-      @user.has_role(:administrator).should_not be_false
+      @user.has_role?(:administrator).should_not be_false
     end
   end
 
@@ -150,35 +150,35 @@ describe User do
     end
 
     it "should allow owners to create other owners" do
-      @granting_user.should_receive(:has_role).with(:owner).and_return(true)
+      @granting_user.should_receive(:has_role?).with(:owner).and_return(true)
       user_should_add_role(:owner)
 
       @user.add_role(:owner, @granting_user)
     end
 
     it "should raise an error when non-owners try to create owners" do
-      @granting_user.should_receive(:has_role).with(:owner).and_return(false)
+      @granting_user.should_receive(:has_role?).with(:owner).and_return(false)
 
       lambda {@user.add_role(:owner, @granting_user)}.
         should raise_error(SecurityError)
     end
 
     it "should allow owners to create super-users" do
-      @granting_user.should_receive(:has_role).with(:owner).and_return(true)
+      @granting_user.should_receive(:has_role?).with(:owner).and_return(true)
       user_should_add_role(:super_user)
 
       @user.add_role(:super_user, @granting_user)
     end
 
     it "should raise an error when non-owners try to create super-users" do
-      @granting_user.should_receive(:has_role).with(:owner).and_return(false)
+      @granting_user.should_receive(:has_role?).with(:owner).and_return(false)
 
       lambda {@user.add_role(:super_user, @granting_user)}.
         should raise_error(SecurityError)
     end
 
     it "should allow super-users to create administrators" do
-      @granting_user.should_receive(:has_role).with(:super_user).
+      @granting_user.should_receive(:has_role?).with(:super_user).
         and_return(true)
       user_should_add_role(:administrator)
 
@@ -186,7 +186,7 @@ describe User do
     end
 
     it "should raise an error when non-super-users try to create other administrators" do
-      @granting_user.should_receive(:has_role).with(:super_user).
+      @granting_user.should_receive(:has_role?).with(:super_user).
         and_return(false)
 
       lambda {@user.add_role(:administrator, @granting_user)}.

@@ -88,19 +88,19 @@ class User < ActiveRecord::Base
   def add_role(role_sym, granting_user)
     case role_sym
     when :owner
-      if granting_user.has_role(:owner)
+      if granting_user.has_role?(:owner)
         add_role_internal(role_sym, granting_user)
       else
         raise SecurityError.new("Only owners may assign owner role")
       end
     when :super_user
-      if granting_user.has_role(:owner)
+      if granting_user.has_role?(:owner)
         add_role_internal(role_sym, granting_user)
       else
         raise SecurityError.new("Only owners may assign super_user role")
       end
     when :administrator
-      if granting_user.has_role(:super_user)
+      if granting_user.has_role?(:super_user)
         add_role_internal(role_sym, granting_user)
       else
         raise SecurityError.new("Only super_users may assign administrator role")
@@ -108,7 +108,7 @@ class User < ActiveRecord::Base
     end
   end
   
-  def has_role(role)
+  def has_role?(role)
     roles.find_by_name(role.to_s)
   end
 

@@ -3,6 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe LocationsController do
   before(:each) do
     @user = mock_model(User, :name => "Test User")
+    @user.stub!(:has_role?).and_return(false)
     @user.stub!(:locations).and_return(:locations)
     @other_user = mock_model(User, :name => "Other User")
     @controller.stub!(:current_user).and_return(@user)
@@ -409,13 +410,32 @@ describe LocationsController do
   end
 
   describe "with administrative user access" do
-    it "should list all locations in locations list, regardless of ownership"
-    it "should display other users' locations with a special style"
+    before(:each) do
+      @user.stub!(:has_role?).with(:administrator).and_return(true)
+      @location = mock_and_find(Location, :user => @user)
+    end
 
-    it "should allow access to edit form for user's own locations"
-    it "should allow access to edit form for other users' locations"
+    it "should list all locations in locations list, regardless of ownership" do
+      Location.should_receive(:find).with(:all).and_return(:all_locations)
 
-    it "should allow saving of user's own locations"
-    it "should allow saving of other users' locations"
+      get :index
+
+      assigns(:locations).should == :all_locations
+    end
+
+    it "should allow access to edit form for all locations" do
+      get :edit, :id => @location.id
+
+      response.should be_success
+      assigns[:location].should == @location
+    end
+
+    it "should allow saving of all locations" do
+      @location.should_receive(:attributes=)
+      @location.should_receive(:geocode)
+      @location.should_receive(:save).and_return(true)
+
+      put :update, :id => @location.id
+    end
   end
 end
