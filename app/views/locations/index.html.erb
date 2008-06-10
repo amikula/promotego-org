@@ -15,7 +15,7 @@
   </tr>
 
 <% for location in @locations %>
-  <tr>
+  <tr<%=' class="other_users"' unless current_user == location.user%>>
     <td><%=h location.name %></td>
     <td><%=h location.type_id %></td>
     <td><%=h location.street_address %></td>
