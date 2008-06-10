@@ -4,6 +4,10 @@ describe "/locations/new.html.erb" do
   include LocationsHelper
   
   before(:each) do
+    @user = mock_model(User)
+    @user.stub!(:has_role?).and_return(false)
+    @controller.stub!(:current_user).and_return(@user)
+
     @location = mock_model(Location, Location.valid_options)
     @location.stub!(:new_record?).and_return(true)
     assigns[:location] = @location

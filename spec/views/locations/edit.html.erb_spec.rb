@@ -4,6 +4,10 @@ describe "/locations/edit.html.erb" do
   include LocationsHelper
   
   before do
+    @user = mock_model(User)
+    @user.stub!(:has_role?).and_return(false)
+    @controller.stub!(:current_user).and_return(@user)
+
     @location = mock_model(Location, Location.valid_options)
     assigns[:location] = @location
     @types = [mock_model(Type, :name => "Type1"),
@@ -33,6 +37,25 @@ describe "/locations/edit.html.erb" do
     end
   end
 
-  it "should include users dropdown in edit form for administrators"
-  it "should not include users dropdown in edit form for non-administrators"
+  describe "users field" do
+    it "should be included in edit form for super-users" do
+      @user.should_receive(:has_role?).with(:super_user).and_return(true)
+
+      render "/locations/edit.html.erb"
+
+      response.should have_tag("form[action=#{location_path(@location)}][method=post]") do
+        with_tag('input#user_login[name=?]', 'user[login]')
+      end
+    end
+
+    it "should not be included in edit form for non-super-users" do
+      @user.should_receive(:has_role?).with(:super_user).and_return(false)
+
+      render "/locations/edit.html.erb"
+
+      response.should have_tag("form[action=#{location_path(@location)}][method=post]") do
+        without_tag('input#user_login[name=?]', 'user[login]')
+      end
+    end
+  end
 end

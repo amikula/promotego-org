@@ -434,4 +434,8 @@ describe LocationsController do
       put :update, :id => @location.id
     end
   end
+
+  it "should have auto_complete_for_user_login" do
+    get :auto_complete_for_user_login, :user => {:login => "foo"}
+  end
 end
