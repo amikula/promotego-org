@@ -9,6 +9,13 @@
     <%= collection_select :location, :type_id, @types, :id, :name %>
   </p>
 
+  <% if current_user.has_role?(:super_user) %>
+  <p>
+    <b>Owner</b><br />
+    <%= text_field_with_auto_complete :user, :login, :autocomplete => "off" %>
+  </p>
+  <% end %>
+
   <p>
     <b>Address</b><br />
     <%= f.text_field :street_address %>

@@ -1,6 +1,8 @@
 class LocationsController < ApplicationController
   before_filter :login_required
 
+  auto_complete_for :user, :login
+
   # GET /locations
   # GET /locations.xml
   def index
