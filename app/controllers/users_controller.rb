@@ -3,6 +3,26 @@ class UsersController < ApplicationController
   def new
   end
 
+  def edit
+    if (current_user)
+      unless current_user.has_role?(:super_user) ||
+             current_user.has_role?(:owner)
+        redirect_to :action => :new
+      end
+    else
+      redirect_to :action => :new
+    end
+  end
+
+  def update
+    if(current_user && (current_user.has_role?(:owner) ||
+                        current_user.has_role?(:super_user)))
+      User.update(params[:id], params[:user])
+    else
+      redirect_to :action => :new
+    end
+  end
+
   def create
     cookies.delete :auth_token
     # protects against session fixation attacks, wreaks havoc with 
@@ -28,5 +48,4 @@ class UsersController < ApplicationController
     end
     redirect_back_or_default('/')
   end
-
 end
