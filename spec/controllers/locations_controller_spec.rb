@@ -242,6 +242,7 @@ describe LocationsController do
         do_post
       end
 
+      it "should save the user value posted if current user is administrator"
     end
     
     describe "with failed save" do
@@ -304,6 +305,8 @@ describe LocationsController do
         @location.should_receive(:save).ordered
         put :update, :id => "1"
       end
+
+      it "should save the user value posted if current user is administrator"
     end
     
     describe "with failed update" do

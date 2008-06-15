@@ -73,6 +73,105 @@ describe UsersController do
     get :activate, :activation_code => ''
     flash[:notice].should be_nil
   end
+
+  describe "edit action" do
+    def do_get
+      get :edit
+    end
+
+    it "redirects nan-logged-in users to 'new' action" do
+      do_get
+
+      response.should redirect_to(:action => :new)
+    end
+
+    describe "with logged in user" do
+      before(:each) do
+        @user = mock_model(User)
+        @controller.stub!(:current_user).and_return(@user)
+        @user.stub!(:has_role?).and_return(false)
+      end
+
+      it "redirects non-super-users to 'new' action" do
+        @user.should_receive(:has_role?).with(:super_user).and_return(false)
+
+        do_get
+
+        response.should redirect_to(:action => :new)
+      end
+
+      it "renders edit form for super-users" do
+        @user.should_receive(:has_role?).with(:super_user).and_return(true)
+
+        do_get
+
+        response.should render_template("edit")
+      end
+
+      it "redirects non-owners to 'new' action" do
+        @user.should_receive(:has_role?).with(:owner).and_return(false)
+
+        do_get
+
+        response.should redirect_to(:action => :new)
+      end
+
+      it "renders edit form for owners" do
+        @user.should_receive(:has_role?).with(:owner).and_return(true)
+
+        do_get
+
+        response.should render_template("edit")
+      end
+    end
+  end
+
+  describe "update action" do
+    def do_post
+      post :update
+    end
+
+    it "redirects non-logged-in users to 'new' action" do
+      do_post
+
+      response.should redirect_to(:action => :new)
+    end
+
+    describe "with logged in user" do
+      before(:each) do
+        @user = mock_model(User)
+        @edit_user = mock_model(User)
+        @controller.stub!(:current_user).and_return(@user)
+        @user.stub!(:has_role?).and_return(false)
+      end
+
+      it "redirects non-owners and non-super-users to 'new' action" do
+        do_post
+
+        response.should redirect_to(:action => :new)
+      end
+
+      it "allows owners to update user metdata" do
+        user_params = {"login" => "newlogin"}
+        User.should_receive(:update).with(@edit_user.id.to_s, user_params)
+        @user.should_receive(:has_role?).with(:owner).and_return(true)
+
+        post :update, :id => @edit_user.id, :user => user_params
+      end
+
+      it "allows super-users to update user metdata" do
+        user_params = {"login" => "newlogin"}
+        User.should_receive(:update).with(@edit_user.id.to_s, user_params)
+        @user.should_receive(:has_role?).with(:super_user).and_return(true)
+
+        post :update, :id => @edit_user.id, :user => user_params
+      end
+
+      it "allows owners to set roles"
+
+      it "allows super-users to set roles"
+    end
+  end
   
   def create_user(options = {})
     post :create, :user => { :login => 'quire', :email => 'quire@example.com',
