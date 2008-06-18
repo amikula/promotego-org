@@ -123,6 +123,8 @@ describe UsersController do
 
         response.should render_template("edit")
       end
+      
+      it "assigns @roles and filters owner role if user is not owner"
     end
   end
 

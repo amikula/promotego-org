@@ -22,32 +22,42 @@ describe "/users/edit.html.erb" do
     end
   end
 
-  it "should have a drop-down multi-selection list of roles for owners" do
-    @user.should_receive(:has_role?).with(:owner).and_return(true)
+  describe "with logged-in user" do
+    before(:each) do
+      @roles = [ mock_model(Role, :name => "owner"),
+                mock_model(Role, :name => "super_user"),
+                mock_model(Role, :name => "administrator") ]
 
-    roles = [ mock_model(Role, :name => "owner"),
-              mock_model(Role, :name => "super_user"),
-              mock_model(Role, :name => "administrator") ]
+      @user.should_receive(:roles).and_return(@roles[1,2])
 
-    @user.should_receive(:roles).and_return(roles[1,2])
+      assigns[:roles] = @roles
+    end
 
-    assigns[:roles] = roles
+    it "should have a drop-down multi-selection list of roles" do
+      render "/users/edit.html.erb"
 
-    render "/users/edit.html.erb"
+      should_have_form_with_roles(true)
+    end
+  end
+end
 
-    response.should have_tag("form[action=/users][method=post]") do
-      with_tag('select[multiple=multiple]') do
-        roles.each do |role|
+def should_have_form_with_roles(show_owner = false)
+  response.should have_tag("form[action=/users][method=post]") do
+    with_tag('select[multiple=multiple]') do
+      @roles.each do |role|
+        if !show_owner && role.name == "owner"
+          without_tag("option[value=?]", role.id, role.name)
+        else
           with_tag("option[value=?]", role.id, role.name)
         end
-
-        without_tag("option[value=?][selected=selected]", roles[0].id,
-                    roles[0].name)
-        with_tag("option[value=?][selected=selected]", roles[1].id,
-                 roles[1].name)
-        with_tag("option[value=?][selected=selected]", roles[2].id,
-                 roles[2].name)
       end
+
+      without_tag("option[value=?][selected=selected]", @roles[0].id,
+                  @roles[0].name)
+      with_tag("option[value=?][selected=selected]", @roles[1].id,
+               @roles[1].name)
+      with_tag("option[value=?][selected=selected]", @roles[2].id,
+               @roles[2].name)
     end
   end
 end
