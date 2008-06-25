@@ -13,8 +13,8 @@
 
 <% if current_user && @roles %>
   <p><label for="roles">Roles</label><br/>
-  <select multiple="multiple">
-    <%= options_from_collection_for_select(@roles, "id", "name", current_user.roles.collect{|r| r.id}) %>
+  <select name="user[roles][]" multiple="multiple">
+    <%= options_from_collection_for_select(@roles, "id", "name", @user.roles.collect{|r| r.id}) %>
   </select>
   </p>
 <% end %>

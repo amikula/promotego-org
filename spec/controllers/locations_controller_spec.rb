@@ -242,7 +242,14 @@ describe LocationsController do
         do_post
       end
 
-      it "should save the user value posted if current user is administrator"
+      it "should save the user value posted if current user is administrator" do
+        @user.should_receive(:has_role?).with(:administrator).and_return(true)
+
+        @location.should_receive(:user_id=).with(@other_user.id)
+        @location.should_receive(:save).and_return(true)
+        @location.should_receive(:geocode)
+        post :create, :location => {:user_id => @other_user.id}
+      end
     end
     
     describe "with failed save" do
@@ -306,7 +313,18 @@ describe LocationsController do
         put :update, :id => "1"
       end
 
-      it "should save the user value posted if current user is administrator"
+      it "should save the user value posted if current user is administrator" do
+        Location.should_receive(:find).with("1").and_return(@location)
+
+        @user.should_receive(:has_role?).with(:administrator).and_return(true)
+
+        @location.should_receive(:change_user).with(@other_user.id.to_s, @user)
+        @location.should_receive(:attributes=)
+        @location.should_receive(:geocode)
+        @location.should_receive(:save).and_return(true)
+
+        put :update, :id => "1", :location => {:user_id => @other_user.id.to_s}
+      end
     end
     
     describe "with failed update" do

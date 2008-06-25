@@ -61,7 +61,11 @@ class LocationsController < ApplicationController
   def create
     @location = Location.new(params[:location])
     @location.geocode
-    @location.user = current_user
+    if(current_user.has_role?(:administrator) && params[:location][:user_id])
+      @location.user_id = params[:location][:user_id]
+    else
+      @location.user = current_user
+    end
 
     respond_to do |format|
       if @location.save
@@ -80,6 +84,9 @@ class LocationsController < ApplicationController
   def update
     if (current_user.has_role?(:administrator))
       @location = Location.find(params[:id])
+      if params[:location] && params[:location][:user_id]
+        @location.change_user(params[:location][:user_id], current_user)
+      end
     else
       @location = current_user.locations.find(params[:id])
     end

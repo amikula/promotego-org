@@ -63,10 +63,39 @@ describe Location do
         and_return(false)
     end
 
+    it "should throw an error if user= is called on a record that is not new" do
+      location = Location.new
+      location.should_receive(:new_record?).and_return(false)
+
+      lambda{location.user = @new_owner}.should raise_error
+    end
+
+    it "should throw an error if user_id= is called on a record that is not new" do
+      location = Location.new
+      location.should_receive(:new_record?).and_return(false)
+
+      lambda{location.user_id = @new_owner.id}.should raise_error
+    end
+
     it "should allow administrators to change user" do
-      @location.should_receive(:user=).with(@new_owner)
+      @location.stub!(:new_record?).and_return(false)
+      @location.should_receive(:write_attribute).with(:user, @new_owner)
 
       @location.change_user(@new_owner, @administrator)
+    end
+
+    it "should allow administrators to change user with a user id" do
+      @location.stub!(:new_record?).and_return(false)
+      @location.should_receive(:write_attribute).with(:user_id, @new_owner.id)
+
+      @location.change_user(@new_owner.id, @administrator)
+    end
+
+    it "should allow administrators to change user with a user id string" do
+      @location.stub!(:new_record?).and_return(false)
+      @location.should_receive(:write_attribute).with(:user_id, @new_owner.id)
+
+      @location.change_user(@new_owner.id.to_s, @administrator)
     end
 
     it "should raise SecurityError if non-administrators try to change user" do
