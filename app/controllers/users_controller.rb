@@ -4,20 +4,26 @@ class UsersController < ApplicationController
   end
 
   def edit
-    if (current_user)
-      unless current_user.has_role?(:super_user) ||
-             current_user.has_role?(:owner)
-        redirect_to :action => :new
-      end
-    else
+    unless(current_user && (current_user.has_role?(:super_user) ||
+                            current_user.has_role?(:owner)))
       redirect_to :action => :new
+    else
+      @roles = Role.find(:all)
+      unless(current_user.has_role?(:owner))
+        @roles.delete_if{|role| role.name == "owner"}
+      end
     end
   end
 
   def update
     if(current_user && (current_user.has_role?(:owner) ||
                         current_user.has_role?(:super_user)))
+      roles = params[:user].delete("roles")
       User.update(params[:id], params[:user])
+      if(roles)
+        role_ids = roles.collect{|role| role.to_d}
+        User.find(params[:id]).set_roles(role_ids, current_user)
+      end
     else
       redirect_to :action => :new
     end

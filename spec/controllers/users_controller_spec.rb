@@ -13,9 +13,6 @@ describe UsersController do
       response.should be_redirect
     end.should change(User, :count).by(1)
   end
-
-  
-
   
   it 'signs up user with activation code' do
     create_user
@@ -117,14 +114,38 @@ describe UsersController do
       end
 
       it "renders edit form for owners" do
-        @user.should_receive(:has_role?).with(:owner).and_return(true)
+        @user.should_receive(:has_role?).with(:owner).any_number_of_times.
+          and_return(true)
 
         do_get
 
         response.should render_template("edit")
       end
       
-      it "assigns @roles and filters owner role if user is not owner"
+      it "assigns @roles for owners" do
+        @user.should_receive(:has_role?).with(:owner).any_number_of_times.
+          and_return(true)
+
+        roles = [mock_model(Role, :name => "owner"),
+                 mock_model(Role, :name => "super_user")]
+        Role.should_receive(:find).with(:all).and_return(roles)
+
+        do_get
+
+        assigns[:roles].should == roles
+      end
+
+      it "filters owner role if user is not owner but super-user" do
+        @user.should_receive(:has_role?).with(:super_user).and_return(true)
+
+        roles = [mock_model(Role, :name => "owner"),
+                 mock_model(Role, :name => "super_user")]
+        Role.should_receive(:find).with(:all).and_return(roles.clone)
+
+        do_get
+
+        assigns[:roles].should == roles[1,1]
+      end
     end
   end
 
@@ -169,9 +190,31 @@ describe UsersController do
         post :update, :id => @edit_user.id, :user => user_params
       end
 
-      it "allows owners to set roles"
+      it "allows owners to set roles" do
+        @user.should_receive(:has_role?).with(:owner).and_return(true)
+        user_params = {"login" => "user_login", "roles" => ["1", "2"]}
+        expected_params = user_params.clone
+        expected_params.delete("roles")
+        User.should_receive(:update).with(@edit_user.id.to_s, expected_params)
+        User.should_receive(:find).with(@edit_user.id.to_s).
+          and_return(@edit_user)
+        @edit_user.should_receive(:set_roles).with([1, 2], @user)
 
-      it "allows super-users to set roles"
+        post :update, :id => @edit_user.id, :user => user_params
+      end
+
+      it "allows super-users to set roles" do
+        @user.should_receive(:has_role?).with(:super_user).and_return(true)
+        user_params = {"login" => "user_login", "roles" => ["1", "2"]}
+        expected_params = user_params.clone
+        expected_params.delete("roles")
+        User.should_receive(:update).with(@edit_user.id.to_s, expected_params)
+        User.should_receive(:find).with(@edit_user.id.to_s).
+          and_return(@edit_user)
+        @edit_user.should_receive(:set_roles).with([1, 2], @user)
+
+        post :update, :id => @edit_user.id, :user => user_params
+      end
     end
   end
   

@@ -85,25 +85,66 @@ class User < ActiveRecord::Base
     @activated
   end
 
-  def add_role(role_sym, granting_user)
-    case role_sym
-    when :owner
+  def add_role(role_spec, granting_user)
+    case role_spec
+    when Symbol:
+      role = Role.find_by_name(role_spec.to_s)
+    when Fixnum:
+      role = Role.find(role_spec)
+    else
+      raise ArgumentError.new("Don't know how to handle class #{role_spec.class}")
+    end
+
+    case role.name
+    when "owner"
       if granting_user.has_role?(:owner)
-        add_role_internal(role_sym, granting_user)
+        add_role_internal(role, granting_user)
       else
         raise SecurityError.new("Only owners may assign owner role")
       end
-    when :super_user
+    when "super_user"
       if granting_user.has_role?(:owner)
-        add_role_internal(role_sym, granting_user)
+        add_role_internal(role, granting_user)
       else
         raise SecurityError.new("Only owners may assign super_user role")
       end
-    when :administrator
+    when "administrator"
       if granting_user.has_role?(:super_user)
-        add_role_internal(role_sym, granting_user)
+        add_role_internal(role, granting_user)
       else
         raise SecurityError.new("Only super_users may assign administrator role")
+      end
+    end
+  end
+
+  def remove_role(role_spec, granting_user)
+    case role_spec
+    when Symbol:
+      role = Role.find_by_name(role_spec.to_s)
+    when Fixnum:
+      role = Role.find(role_spec)
+    else
+      raise ArgumentError.new("Don't know how to handle class #{role_spec.class}")
+    end
+
+    case role.name
+    when "owner"
+      if granting_user.has_role?(:owner)
+        remove_role_internal(role)
+      else
+        raise SecurityError.new("Only owners may remove owner role")
+      end
+    when "super_user"
+      if granting_user.has_role?(:owner)
+        remove_role_internal(role)
+      else
+        raise SecurityError.new("Only owners may remove super_user role")
+      end
+    when "administrator"
+      if granting_user.has_role?(:super_user)
+        remove_role_internal(role)
+      else
+        raise SecurityError.new("Only super_users may remove administrator role")
       end
     end
   end
@@ -112,15 +153,35 @@ class User < ActiveRecord::Base
     roles.find_by_name(role.to_s)
   end
 
+  def set_roles(role_ids, granting_user)
+    my_role_ids = roles.collect{|role| role.id}
+
+    my_role_ids.each do |id|
+      unless(role_ids.include?(id))
+        remove_role(id, granting_user)
+      end
+    end
+
+    role_ids.each do |id|
+      unless(my_role_ids.include?(id))
+        add_role(id, granting_user)
+      end
+    end
+  end
+
   private
-    def add_role_internal(role_sym, granting_user)
+    def add_role_internal(role, granting_user)
       user_role = UserRole.new
       user_role.granting_user = granting_user
 
-      role = Role.find_by_name(role_sym.to_s)
       user_role.role = role
 
       user_roles << user_role
+    end
+
+    def remove_role_internal(role)
+      user_role = user_roles.find_by_role(role)
+      user_role.destroy if user_role
     end
 
   protected

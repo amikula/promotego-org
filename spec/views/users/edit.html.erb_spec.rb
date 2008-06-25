@@ -4,7 +4,7 @@ describe "/users/edit.html.erb" do
   include UsersHelper
   
   before(:each) do
-    @user = mock_model(User)
+    @user = mock_model(User, :login => 'user_login', :email => 'user_email', :password => 'user_password', :password_confirmation => 'user_password')
     @user.stub!(:has_role?).and_return(false)
     @controller.stub!(:current_user).and_return(@user)
   end
@@ -29,6 +29,7 @@ describe "/users/edit.html.erb" do
                 mock_model(Role, :name => "administrator") ]
 
       @user.should_receive(:roles).and_return(@roles[1,2])
+      assigns[:user] = @user
 
       assigns[:roles] = @roles
     end
@@ -43,7 +44,7 @@ end
 
 def should_have_form_with_roles(show_owner = false)
   response.should have_tag("form[action=/users][method=post]") do
-    with_tag('select[multiple=multiple]') do
+    with_tag('select[multiple=multiple][name=?]', 'user[roles][]') do
       @roles.each do |role|
         if !show_owner && role.name == "owner"
           without_tag("option[value=?]", role.id, role.name)

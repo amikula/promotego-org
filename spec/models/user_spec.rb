@@ -143,54 +143,73 @@ describe User do
     before(:each) do
       @user = User.new
       @granting_user = mock_model(User)
+
+      @roles = {:owner => mock_model(Role, :name => "owner"),
+                  :administrator => mock_model(Role, :name => "administrator"),
+                  :super_user => mock_model(Role, :name => "super_user")}
     end
 
-    it "should take an argument of role and granting user" do
-      @user.add_role(:role, @granting_user)
+    describe "with role name" do
+      it "should allow owners to create other owners" do
+        @granting_user.should_receive(:has_role?).with(:owner).and_return(true)
+        user_should_add_role(:owner)
+
+        @user.add_role(:owner, @granting_user)
+      end
+
+      it "should raise an error when non-owners try to create owners" do
+        @granting_user.should_receive(:has_role?).with(:owner).and_return(false)
+        Role.should_receive(:find_by_name).with("owner").and_return(mock_model(Role, :name => "owner"))
+
+        lambda {@user.add_role(:owner, @granting_user)}.
+          should raise_error(SecurityError)
+      end
+
+      it "should allow owners to create super-users" do
+        @granting_user.should_receive(:has_role?).with(:owner).and_return(true)
+        user_should_add_role(:super_user)
+
+        @user.add_role(:super_user, @granting_user)
+      end
+
+      it "should raise an error when non-owners try to create super-users" do
+        @granting_user.should_receive(:has_role?).with(:owner).and_return(false)
+        Role.should_receive(:find_by_name).with("super_user").and_return(mock_model(Role, :name => "super_user"))
+
+        lambda {@user.add_role(:super_user, @granting_user)}.
+          should raise_error(SecurityError)
+      end
+
+      it "should allow super-users to create administrators" do
+        @granting_user.should_receive(:has_role?).with(:super_user).
+          and_return(true)
+        user_should_add_role(:administrator)
+
+        @user.add_role(:administrator, @granting_user)
+      end
+
+      it "should raise an error when non-super-users try to create other administrators" do
+        @granting_user.should_receive(:has_role?).with(:super_user).
+          and_return(false)
+        Role.should_receive(:find_by_name).with("administrator").and_return(mock_model(Role, :name => "administrator"))
+
+        lambda {@user.add_role(:administrator, @granting_user)}.
+          should raise_error(SecurityError)
+      end
     end
 
-    it "should allow owners to create other owners" do
-      @granting_user.should_receive(:has_role?).with(:owner).and_return(true)
-      user_should_add_role(:owner)
+    describe "with role id" do
+      it "should take an argument of role id number and granting user" do
+        @granting_user.should_receive(:has_role?).with(:owner).and_return(true)
+        role = mock_and_find_role_by_id("owner")
+        @user.add_role(role.id, @granting_user)
+      end
 
-      @user.add_role(:owner, @granting_user)
-    end
-
-    it "should raise an error when non-owners try to create owners" do
-      @granting_user.should_receive(:has_role?).with(:owner).and_return(false)
-
-      lambda {@user.add_role(:owner, @granting_user)}.
-        should raise_error(SecurityError)
-    end
-
-    it "should allow owners to create super-users" do
-      @granting_user.should_receive(:has_role?).with(:owner).and_return(true)
-      user_should_add_role(:super_user)
-
-      @user.add_role(:super_user, @granting_user)
-    end
-
-    it "should raise an error when non-owners try to create super-users" do
-      @granting_user.should_receive(:has_role?).with(:owner).and_return(false)
-
-      lambda {@user.add_role(:super_user, @granting_user)}.
-        should raise_error(SecurityError)
-    end
-
-    it "should allow super-users to create administrators" do
-      @granting_user.should_receive(:has_role?).with(:super_user).
-        and_return(true)
-      user_should_add_role(:administrator)
-
-      @user.add_role(:administrator, @granting_user)
-    end
-
-    it "should raise an error when non-super-users try to create other administrators" do
-      @granting_user.should_receive(:has_role?).with(:super_user).
-        and_return(false)
-
-      lambda {@user.add_role(:administrator, @granting_user)}.
-        should raise_error(SecurityError)
+      def mock_and_find_role_by_id(role_name)
+        role = mock_model(Role, :name => role_name)
+        Role.should_receive(:find).with(role.id).and_return(role)
+        return role
+      end
     end
 
     def user_should_add_role(role_sym)
@@ -198,11 +217,160 @@ describe User do
       UserRole.should_receive(:new).and_return(user_role)
       user_role.should_receive(:granting_user=).with(@granting_user)
 
+      role = mock_model(Role, :name => role_sym.to_s)
       Role.should_receive(:find_by_name).with(role_sym.to_s).
-        and_return(:role)
-      user_role.should_receive(:role=).with(:role)
+        and_return(role)
+      user_role.should_receive(:role=).with(role)
 
       @user.user_roles.should_receive(:<<).with(user_role)
+    end
+  end
+
+  describe "remove_role" do
+    before(:each) do
+      @user = User.new
+      @granting_user = mock_model(User)
+
+      @roles = {:owner => mock_model(Role, :name => "owner"),
+                :administrator => mock_model(Role, :name => "administrator"),
+                :super_user => mock_model(Role, :name => "super_user")}
+    end
+
+    describe "with role symbol" do
+      it "should allow owners to revoke other owners" do
+        @granting_user.should_receive(:has_role?).with(:owner).and_return(true)
+        user_should_remove_role(:owner)
+
+        @user.remove_role(:owner, @granting_user)
+      end
+
+      it "should raise an error when non-owners try to revoke owners" do
+        @granting_user.should_receive(:has_role?).with(:owner).and_return(false)
+        mock_and_find_role_by_name("owner")
+
+        lambda {@user.remove_role(:owner, @granting_user)}.
+          should raise_error(SecurityError)
+      end
+
+      it "should allow owners to revoke super-users" do
+        @granting_user.should_receive(:has_role?).with(:owner).and_return(true)
+        user_should_remove_role(:super_user)
+
+        @user.remove_role(:super_user, @granting_user)
+      end
+
+      it "should raise an error when non-owners try to revoke super-users" do
+        @granting_user.should_receive(:has_role?).with(:owner).and_return(false)
+        mock_and_find_role_by_name("super_user")
+
+        lambda {@user.remove_role(:super_user, @granting_user)}.
+          should raise_error(SecurityError)
+      end
+
+      it "should allow super-users to revoke administrators" do
+        @granting_user.should_receive(:has_role?).with(:super_user).
+          and_return(true)
+        user_should_remove_role(:administrator)
+
+        @user.remove_role(:administrator, @granting_user)
+      end
+
+      it "should raise an error when non-super-users try to revoke administrators" do
+        @granting_user.should_receive(:has_role?).with(:super_user).
+          and_return(false)
+        mock_and_find_role_by_name("administrator")
+
+        lambda {@user.remove_role(:administrator, @granting_user)}.
+          should raise_error(SecurityError)
+      end
+
+      def user_should_remove_role(role_sym)
+        user_roles = Object.new
+        role = mock_model(Role, :name => role_sym.to_s)
+        Role.should_receive(:find_by_name).with(role_sym.to_s).and_return(role)
+        user_role = mock_model(UserRole)
+        user_roles.should_receive(:find_by_role).with(role).and_return(user_role)
+        @user.should_receive(:user_roles).and_return(user_roles)
+        user_role.should_receive(:destroy)
+      end
+
+      def mock_and_find_role_by_name(role_name)
+        role = mock_model(Role, :name => role_name)
+        Role.should_receive(:find_by_name).with(role_name).and_return(role)
+        return role
+      end
+    end
+
+    describe "with role id" do
+      it "should allow owners to revoke other owners" do
+        @granting_user.should_receive(:has_role?).with(:owner).and_return(true)
+        user_should_remove_role(:owner)
+
+        @user.remove_role(@roles[:owner].id, @granting_user)
+      end
+
+      it "should raise an error when non-owners try to revoke owners" do
+        @granting_user.should_receive(:has_role?).with(:owner).and_return(false)
+        role = mock_and_find_role_by_id("owner")
+
+        lambda {@user.remove_role(role.id, @granting_user)}.
+          should raise_error(SecurityError)
+      end
+
+      def user_should_remove_role(role_sym)
+        user_roles = Object.new
+        role = @roles[role_sym]
+        Role.should_receive(:find).with(role.id).and_return(role)
+        user_role = mock_model(UserRole)
+        user_roles.should_receive(:find_by_role).with(role).and_return(user_role)
+        @user.should_receive(:user_roles).and_return(user_roles)
+        user_role.should_receive(:destroy)
+      end
+
+      def mock_and_find_role_by_id(role_name)
+        role = mock_model(Role, :name => role_name)
+        Role.should_receive(:find).with(role.id).and_return(role)
+        return role
+      end
+    end
+  end
+
+  describe "set_roles" do
+    before(:each) do
+      @user = User.new
+      @granting_user = mock_model(User)
+
+      @roles = {:owner => mock_model(Role, :name => "owner"),
+                :administrator => mock_model(Role, :name => "administrator"),
+                :super_user => mock_model(Role, :name => "super_user")}
+    end
+
+    it "should remove roles previously on the user's list of roles" do
+      @user.should_receive(:roles).and_return([@roles[:administrator],
+        @roles[:super_user]])
+      @user.should_receive(:remove_role).
+        with(@roles[:super_user].id, @granting_user)
+
+      @user.set_roles([@roles[:administrator].id], @granting_user)
+    end
+
+    it "should add roles previously not on the user's list of roles" do
+      @user.should_receive(:roles).and_return([@roles[:administrator]])
+      @user.should_receive(:add_role).
+        with(@roles[:super_user].id, @granting_user)
+
+      @user.set_roles([@roles[:administrator].id, @roles[:super_user].id],
+                      @granting_user)
+    end
+
+    it "should both add and remove roles" do
+      @user.should_receive(:roles).and_return([@roles[:administrator]])
+      @user.should_receive(:add_role).
+        with(@roles[:super_user].id, @granting_user)
+      @user.should_receive(:remove_role).
+        with(@roles[:administrator].id, @granting_user)
+
+      @user.set_roles([@roles[:super_user].id], @granting_user)
     end
   end
 
@@ -213,3 +381,4 @@ protected
     record
   end
 end
+

@@ -2,6 +2,7 @@ class Location < ActiveRecord::Base
   acts_as_mappable
   belongs_to :type
   belongs_to :user
+  attr_protected :user
 
   def self.valid_options
     {
@@ -17,6 +18,19 @@ class Location < ActiveRecord::Base
       :lng => "0"
     }
   end
+
+  def user=(new_user)
+    raise SecurityError.new("Must call change_user on objects already in the database") unless new_record?
+
+    write_attribute(:user, new_user)
+  end
+
+  def user_id=(new_user_id)
+    raise SecurityError.new("Must call change_user on objects already in the database") unless new_record?
+
+    write_attribute(:user_id, new_user_id)
+  end
+    
 
   # Geocode the address represented by this location, storing the result in
   # lat and lng and returning the geocode object if it was successful, or nil
@@ -60,7 +74,14 @@ class Location < ActiveRecord::Base
 
   def change_user(new_user, administrator)
     if(administrator.has_role?(:administrator))
-      self.user = new_user
+      case new_user
+      when User:
+        write_attribute(:user, new_user)
+      when Fixnum:
+        write_attribute(:user_id, new_user)
+      when String:
+        write_attribute(:user_id, new_user.to_d)
+      end
     else
       raise SecurityError.new("Only administrators may change owning user of a location")
     end
