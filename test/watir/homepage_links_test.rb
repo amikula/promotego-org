@@ -8,6 +8,12 @@ class WatirTest < Test::Unit::TestCase
     ff.goto("http://localhost:3000")
   end
 
+  def test_has_links
+    assert_equal("Home", ff.link(:url, "/").text)
+    assert_equal("About", ff.link(:url, "/about").text)
+    assert_equal("Contact", ff.link(:url, "/contact").text)
+  end
+
 #  def test_make_a_reservation
 #    ff.link(:text, "Make a reservation").click
 #    ff.text_field(:id, "reservation_name").value = "Bill"
