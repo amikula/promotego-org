@@ -50,7 +50,7 @@
 
 <p>
   <b>Owner:</b>
-  <%=h @location.user.name if @location.user %>
+  <%=h @location.user.login if @location.user %>
 </p>
 
 <%= link_to 'Edit', edit_location_path(@location) %> |
