@@ -1,4 +1,5 @@
 *.swp
+*.bak
 tags
 coverage
 DRY_report.html
