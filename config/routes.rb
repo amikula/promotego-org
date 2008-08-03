@@ -43,6 +43,8 @@ ActionController::Routing::Routes.draw do |map|
   map.root :controller => 'home'
   map.home ':page', :controller => 'home', :action => 'show', :page => /about|contact/
 
+  map.activate 'activate/:activation_code', :controller => 'users', :action => 'activate'
+
   map.connect 'search/:action', :controller => 'search'
   map.connect 'search/:type/:action', :controller => 'search'
 
