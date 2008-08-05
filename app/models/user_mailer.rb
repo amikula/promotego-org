@@ -3,7 +3,8 @@ class UserMailer < ActionMailer::Base
     setup_email(user)
     @subject    += 'Please activate your new account'
   
-    url_options = {:activation_code => user.activation_code, :host => PUBLIC_HOSTNAME}
+    url_options = {:activation_code => user.activation_code}
+    url_options[:host] = PUBLIC_HOSTNAME if defined? PUBLIC_HOSTNAME
     url_options[:port] = PUBLIC_PORT if defined? PUBLIC_PORT
     @body[:url]  = activate_url(url_options)
   
