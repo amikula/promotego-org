@@ -25,9 +25,14 @@
           <li>
             <%= link_to "Contact", :controller => :home, :action => :show, :page => :contact %>
           </li>
-          <li>
-            <%= link_to "Log in", :controller => :session, :action => :new %>
-          </li>
+          <% unless current_user %>
+            <li>
+              <%= link_to "Log in", :controller => :session, :action => :new %>
+            </li>
+            <li>
+              <%= link_to "Register", :controller => :users, :action => :new %>
+            </li>
+          <% end %>
         </ul>
       </div>
       <div id="navlinks">
