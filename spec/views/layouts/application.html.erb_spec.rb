@@ -53,7 +53,7 @@ describe "/layouts/application.html.erb" do
   end
 
   it "should not display a login or register link if a user is logged in" do
-    template.should_receive(:current_user).and_return(:current_user)
+    template.stub!(:current_user).and_return(mock_model(User, :login => "test_user_login"))
 
     do_render
 
@@ -61,7 +61,21 @@ describe "/layouts/application.html.erb" do
     response.should_not have_tag("a[href=/session/new]", "Log in")
   end
 
-  it "should display the user name if a user is logged in"
+  it "should display the user name if a user is logged in" do
+    template.stub!(:current_user).and_return(mock_model(User, :login => "test_user_login"))
+
+    do_render
+
+    response.should have_text(/test_user_login/)
+  end
+
+  it "should display a logout link if a user is logged in" do
+    template.stub!(:current_user).and_return(mock_model(User, :login => "test_user_login"))
+
+    do_render
+
+    response.should have_tag("a[href=/session/destroy]", "Log out")
+  end
 end
 
 
