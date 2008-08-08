@@ -27,11 +27,12 @@
     <% end %>
   </table>
   <%= submit_tag 'Search' %>
+  <br><br>
   <% unless @results.blank? %>
     <table>
       <tr><th>Name</th><th>Address</th></tr>
       <% @results.each do |result| %>
-        <tr><td><%= result.name %></td><td><%= result.geocode_address %></td></tr>
+        <tr><td><%= link_to(result.name, location_path(result)) %></td><td><%= result.geocode_address %></td></tr>
       <% end %>
     </table>
   <% end %>

@@ -12,7 +12,7 @@ describe "/search/radius.html.erb" do
   end
 
   it 'should display type selector when type parameter is not present' do
-    render "/search/radius.html.erb"
+    do_render
 
     response.should have_tag("select[name=type_id]")
   end
@@ -20,20 +20,20 @@ describe "/search/radius.html.erb" do
   it 'should not display type selector when type parameter is present' do
     params[:type] = :anything
 
-    render "/search/radius.html.erb"
+    do_render
 
     response.should_not have_tag("select[name=type_id]")
   end
 
   it 'should have an action of /search/radius when type parameter is not present' do
-    render '/search/radius.html.erb'
+    do_render
 
     response.should have_tag("form[action=/search/radius]")
   end
 
   it 'should have an action of /search/type/radius when type parameter is present' do
     params[:type] = "type"
-    render '/search/radius.html.erb'
+    do_render
 
     response.should have_tag("form[action=/search/type/radius]")
   end
@@ -50,9 +50,27 @@ describe "/search/radius.html.erb" do
     check_type_selected(@types[2])
   end
 
+  describe 'with results' do
+    before(:each) do
+      @results = [mock_model(Location, :name => "The Club", :geocode_address => "The Address")]
+      assigns[:results] = @results
+    end
+
+    it 'should link names of results to their display pages' do
+      do_render
+
+      puts response.body
+      response.should have_tag("a[href=?]", "/locations/#{@results[0].id}", @results[0].name)
+    end
+  end
+
+  def do_render
+    render '/search/radius.html.erb'
+  end
+
   def check_type_selected(type)
     assigns[:type_id] = type.id
-    render "/search/radius.html.erb"
+    do_render
 
     response.should have_tag("option[value=#{type.id}][selected=selected]")
 
