@@ -43,13 +43,13 @@ describe "/layouts/application.html.erb" do
   it "should have a link to log in if no user is logged in" do
     do_render
 
-    response.should have_tag("a[href=/session/new]", "Log in")
+    response.should have_tag("a[href=/login]", "Log in")
   end
 
   it "should display a register link if no user is logged in" do
     do_render
 
-    response.should have_tag("a[href=/users/new]", "Register")
+    response.should have_tag("a[href=/signup]", "Register")
   end
 
   it "should not display a login or register link if a user is logged in" do
@@ -57,8 +57,8 @@ describe "/layouts/application.html.erb" do
 
     do_render
 
-    response.should_not have_tag("a[href=/users/new]", "Register")
-    response.should_not have_tag("a[href=/session/new]", "Log in")
+    response.should_not have_tag("a[href=/register]", "Register")
+    response.should_not have_tag("a[href=/login]", "Log in")
   end
 
   it "should display the user name if a user is logged in" do
@@ -74,7 +74,7 @@ describe "/layouts/application.html.erb" do
 
     do_render
 
-    response.should have_tag("a[href=/session/destroy]", "Log out")
+    response.should have_tag("a[href=/logout]", "Log out")
   end
 end
 
