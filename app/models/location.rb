@@ -22,7 +22,7 @@ class Location < ActiveRecord::Base
   def user=(new_user)
     raise SecurityError.new("Must call change_user on objects already in the database") unless new_record?
 
-    write_attribute(:user, new_user)
+    self.user_id = new_user.id
   end
 
   def user_id=(new_user_id)
