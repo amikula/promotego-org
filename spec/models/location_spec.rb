@@ -53,7 +53,7 @@ describe Location do
     location.user = User.new
   end
 
-  describe "change_user" do
+  describe :user= do
     before(:each) do
       @new_owner = mock_model(User)
       @administrator = mock_model(User)
@@ -68,6 +68,25 @@ describe Location do
       location.should_receive(:new_record?).and_return(false)
 
       lambda{location.user = @new_owner}.should raise_error
+    end
+
+    it "should assign user_id if user= is called on a new record" do
+      location = Location.new
+
+      location.should_receive(:user_id=).with(@new_owner.id)
+
+      location.user = @new_owner
+    end
+  end
+
+  describe "change_user" do
+    before(:each) do
+      @new_owner = mock_model(User)
+      @administrator = mock_model(User)
+      @administrator.stub!(:has_role?).with(:administrator).and_return(true)
+      @non_administrator = mock_model(User)
+      @non_administrator.stub!(:has_role?).with(:administrator).
+        and_return(false)
     end
 
     it "should throw an error if user_id= is called on a record that is not new" do
