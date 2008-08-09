@@ -59,7 +59,6 @@ describe "/search/radius.html.erb" do
     it 'should link names of results to their display pages' do
       do_render
 
-      puts response.body
       response.should have_tag("a[href=?]", "/locations/#{@results[0].id}", @results[0].name)
     end
   end
