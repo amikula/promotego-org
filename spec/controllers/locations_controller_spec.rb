@@ -30,13 +30,12 @@ describe LocationsController do
       response.should render_template('index')
     end
   
-    it "should find the user's locations" do
-      @user.should_receive(:locations).and_return([@location])
+    it "should find all locations" do
+      Location.should_receive(:find).with(:all).and_return([@location])
       do_get
     end
   
     it "should assign the found locations for the view" do
-      @user.should_receive(:locations).and_return([@location])
       do_get
       assigns[:locations].should == [@location]
     end
@@ -60,13 +59,11 @@ describe LocationsController do
     end
 
     it "should find all locations" do
-      @user.should_receive(:locations).and_return([@location])
       do_get
     end
   
     it "should render the found locations as xml" do
       @location.should_receive(:to_xml).and_return("XML")
-      @user.should_receive(:locations).and_return(@location)
       do_get
       response.body.should == "XML"
     end
@@ -348,7 +345,10 @@ describe LocationsController do
 
     before(:each) do
       @location = mock_model(Location, :destroy => true)
-      Location.stub!(:find).and_return(@location)
+      @locations = [@location]
+
+      @user.should_receive(:locations).and_return(@locations)
+      @locations.should_receive(:find).with("1").and_return(@location)
     end
   
     def do_delete
@@ -356,7 +356,6 @@ describe LocationsController do
     end
 
     it "should find the location requested" do
-      Location.should_receive(:find).with("1").and_return(@location)
       do_delete
     end
   
@@ -376,12 +375,6 @@ describe LocationsController do
       @location = mock_model(Location, :user => @user)
       @locations = [@location]
       @user.should_receive(:locations).and_return(@locations)
-    end
-
-    it "should only show user's own locations in locations list" do
-      get :index
-
-      assigns[:locations].should == @locations
     end
 
     describe "accessing edit form" do

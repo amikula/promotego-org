@@ -6,11 +6,7 @@ class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.xml
   def index
-    if(current_user.has_role?(:administrator))
-      @locations = Location.find(:all)
-    else
-      @locations = current_user.locations
-    end
+    @locations = Location.find(:all)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -118,7 +114,7 @@ class LocationsController < ApplicationController
   # DELETE /locations/1
   # DELETE /locations/1.xml
   def destroy
-    @location = Location.find(params[:id])
+    @location = current_user.locations.find(params[:id])
     @location.destroy
 
     respond_to do |format|
