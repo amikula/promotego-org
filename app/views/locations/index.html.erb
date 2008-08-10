@@ -10,13 +10,11 @@
     <th>Zip code</th>
     <th>Phone number</th>
     <th>Hours</th>
-    <th>Latitude</th>
-    <th>Longitude</th>
   </tr>
 
 <% for location in @locations %>
   <tr<%=' class="other_users"' unless current_user == location.user%>>
-    <td><%=h location.name %></td>
+    <td><%= link_to h(location.name), location %></td>
     <td><%=h location.type_id %></td>
     <td><%=h location.street_address %></td>
     <td><%=h location.city %></td>
@@ -24,11 +22,6 @@
     <td><%=h location.zip_code %></td>
     <td><%=h location.phone_number %></td>
     <td><%=h location.hours %></td>
-    <td><%=h location.lat %></td>
-    <td><%=h location.lng %></td>
-    <td><%= link_to 'Show', location %></td>
-    <td><%= link_to 'Edit', edit_location_path(location) %></td>
-    <td><%= link_to 'Destroy', location, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
