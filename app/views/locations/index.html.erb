@@ -7,21 +7,15 @@
     <th>Address</th>
     <th>City</th>
     <th>State</th>
-    <th>Zip code</th>
-    <th>Phone number</th>
-    <th>Hours</th>
   </tr>
 
 <% for location in @locations %>
   <tr<%=' class="other_users"' unless current_user == location.user%>>
     <td><%= link_to h(location.name), location %></td>
-    <td><%=h location.type_id %></td>
+    <td><%=h location.type.name %></td>
     <td><%=h location.street_address %></td>
     <td><%=h location.city %></td>
     <td><%=h location.state %></td>
-    <td><%=h location.zip_code %></td>
-    <td><%=h location.phone_number %></td>
-    <td><%=h location.hours %></td>
   </tr>
 <% end %>
 </table>
