@@ -2,6 +2,7 @@ class Location < ActiveRecord::Base
   acts_as_mappable
   belongs_to :type
   belongs_to :user
+  serialize :contacts
   attr_protected :user
 
   def self.valid_options

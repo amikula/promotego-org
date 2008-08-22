@@ -8,10 +8,13 @@ class CreateLocations < ActiveRecord::Migration
       t.string :city
       t.string :state
       t.string :zip_code
-      t.string :phone_number
       t.string :hours
       t.float :lat
       t.float :lng
+      t.string :url
+      t.string :description
+      t.boolean :is_aga
+      t.text :contacts
 
       t.timestamps
     end
