@@ -13,8 +13,12 @@ namespace :scraper do
       if club[:phone]
         location.phone_number = club[:phone][0][:number]
       end
+      location.contacts = club[:contacts]
+      location.url = club[:url]
+      location.description = club[:info]
+      location.is_aga = club[:is_aga?]
 
-      location.geocode
+      #location.geocode
       
       location.save!
     end

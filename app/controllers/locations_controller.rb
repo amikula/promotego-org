@@ -1,5 +1,5 @@
 class LocationsController < ApplicationController
-  before_filter :login_required
+  before_filter :login_required, :only => [:new, :edit, :create, :update, :destroy]
 
   auto_complete_for :user, :login
 
