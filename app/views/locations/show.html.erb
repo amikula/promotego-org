@@ -1,7 +1,4 @@
-<p>
-  <b>Name:</b>
-  <%=h @location.name %>
-</p>
+<h1><%=h @location.name %></h1>
 
 <p>
   <b>Type:</b>
@@ -9,45 +6,53 @@
 </p>
 
 <p>
-  <b>Address:</b>
-  <%=h @location.street_address %>
+  <b>Address:</b><br>
+  <%=h @location.street_address %><br>
+  <%=h @location.city %>, <%=h @location.state %> <%=h @location.zip_code %>
 </p>
 
 <p>
-  <b>City:</b>
-  <%=h @location.city %>
+  <b>Description:</b><br>
+  <%= (h @location.description).gsub(/\n/, '<br>') %>
 </p>
 
 <p>
-  <b>State:</b>
-  <%=h @location.state %>
+  <b>Contacts:</b>
+  <% @location.contacts.each do |contact| %>
+    <br>
+    <% if contact[:name] && contact[:email] %>
+      <%= link_to contact[:name], "mailto:#{contact[:email]}" %><br>
+    <% elsif contact[:name] %>
+      <%=h contact[:name] %><br>
+    <% end %>
+
+    <% unless contact[:phone].blank? %>
+      <% contact[:phone].each do |phone| %>
+        <%= phone[:number] %>
+        <% unless phone[:type].blank? %>
+          (<%= phone[:type] %>)
+        <% end %>
+        <br>
+      <% end %>
+    <% end %>
+  <% end %>
 </p>
 
-<p>
-  <b>Zip code:</b>
-  <%=h @location.zip_code %>
-</p>
-
+<% unless @location.hours.blank? %>
 <p>
   <b>Hours:</b>
   <%=h @location.hours %>
 </p>
+<% end %>
 
-<p>
-  <b>Latitude:</b>
-  <%=h @location.lat %>
-</p>
-
-<p>
-  <b>Longitude:</b>
-  <%=h @location.lng %>
-</p>
-
+<% unless @location.user.blank? %>
 <p>
   <b>Owner:</b>
   <%=h @location.user.login if @location.user %>
 </p>
+<% end %>
 
+<br>
 <%= link_to 'Edit', edit_location_path(@location) %> |
 <%= link_to 'Back', locations_path %>
 <%= link_to 'Destroy', @location, :confirm => 'Are you sure?', :method => :delete %>
