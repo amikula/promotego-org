@@ -13,7 +13,6 @@ class Location < ActiveRecord::Base
       :city => "Anytown",
       :state => "US",
       :zip_code => "00000",
-      :phone_number => "123-456-7890",
       :hours => "",
       :lat => "0",
       :lng => "0"
