@@ -31,7 +31,6 @@ describe "/locations/new.html.erb" do
       with_tag("input#location_city[name=?]", "location[city]")
       with_tag("input#location_state[name=?]", "location[state]")
       with_tag("input#location_zip_code[name=?]", "location[zip_code]")
-      with_tag("input#location_phone_number[name=?]", "location[phone_number]")
       with_tag("input#location_hours[name=?]", "location[hours]")
       with_tag("input#location_lat[name=?]", "location[lat]")
       with_tag("input#location_lng[name=?]", "location[lng]")

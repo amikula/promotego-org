@@ -20,7 +20,6 @@ describe "/locations/show.html.erb" do
     response.should have_text(/#{@location.city}/)
     response.should have_text(/#{@location.state}/)
     response.should have_text(/#{@location.zip_code}/)
-    response.should have_text(/#{@location.phone_number}/)
     response.should have_text(/#{@location.lat}/)
     response.should have_text(/#{@location.lng}/)
   end
