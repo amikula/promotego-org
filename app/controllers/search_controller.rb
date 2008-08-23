@@ -16,7 +16,7 @@ class SearchController < ApplicationController
       @type_id = params[:type_id].to_d if params[:type_id]
     end
 
-    @radii = [1,5,10,25,50,100]
+    @radii = [5,10,25,50,100]
     @types = Type.find(:all)
     if(params[:location])
       @location.geocode
