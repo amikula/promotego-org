@@ -18,7 +18,7 @@ namespace :scraper do
       location.description = club[:info]
       location.is_aga = club[:is_aga?]
 
-      #location.geocode
+      location.geocode
       
       location.save!
     end
