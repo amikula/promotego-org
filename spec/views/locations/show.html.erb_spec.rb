@@ -6,7 +6,12 @@ describe "/locations/show.html.erb" do
   before(:each) do
     @location = mock_model(Location, Location.valid_options)
     @location.stub!(:type).and_return(mock_model(Type, :name => "Foo"))
-    @location.stub!(:user).and_return(mock_model(User, :login => "testguy"))
+    @owner = mock_model(User, :login => "owner", :has_role? => false)
+    @normal = mock_model(User, :login => "normal", :has_role? => false)
+    @location.stub!(:user).and_return(@owner)
+
+    @administrator = mock_model(User, :login => "administrator")
+    @administrator.stub!(:has_role?).with(:administrator).and_return(true)
 
     assigns[:location] = @location
   end
@@ -23,6 +28,39 @@ describe "/locations/show.html.erb" do
     response.should have_text(/#{@location.description}/)
     response.should have_text(/#{@location.lat}/)
     response.should have_text(/#{@location.lng}/)
+  end
+
+  describe "edit and destroy links" do
+    describe "don't display" do
+      it "when no user is logged in" do
+        render "/locations/show.html.erb"
+        response.should_not have_tag('a', 'Edit')
+        response.should_not have_tag('a', 'Destroy')
+      end
+
+      it "when normal user is logged in" do
+        template.stub!(:current_user).and_return(@normal)
+        render "/locations/show.html.erb"
+        response.should_not have_tag('a', 'Edit')
+        response.should_not have_tag('a', 'Destroy')
+      end
+    end
+
+    describe "display" do
+      it "when location's owner is logged in" do
+        template.stub!(:current_user).and_return(@owner)
+        render "/locations/show.html.erb"
+        response.should have_tag('a', 'Edit')
+        response.should have_tag('a', 'Destroy')
+      end
+
+      it "when administrator is logged in" do
+        template.stub!(:current_user).and_return(@administrator)
+        render "/locations/show.html.erb"
+        response.should have_tag('a', 'Edit')
+        response.should have_tag('a', 'Destroy')
+      end
+    end
   end
 end
 
