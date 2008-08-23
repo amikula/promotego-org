@@ -12,7 +12,6 @@ class SearchController < ApplicationController
 
       @type_id = @type.id
     elsif params[:type_id]
-      # Todo turn this into a search for type by ID
       @type_id = params[:type_id].to_d if params[:type_id]
     end
 
