@@ -1,6 +1,6 @@
 class SearchController < ApplicationController
   def radius
-    @location = Location.new(params[:location])
+    @address = params[:address]
     @radius = params[:radius].to_d if params[:radius]
     if params[:type]
       @type = Type.find_by_name(params[:type].gsub(/_/, ' ').singularize.titleize)
@@ -17,10 +17,12 @@ class SearchController < ApplicationController
 
     @radii = [5,10,25,50,100]
     @types = Type.find(:all)
-    if(params[:location])
-      @location.geocode
-      find_params = {:origin => @location, :within => @radius}
-      find_params.merge!(:conditions => ['type_id = ?', @type_id]) if @type_id && @type_id > 0
+    if(@address)
+      find_params = {:origin => @address, :within => @radius}
+      if @type_id && @type_id > 0
+        find_params[:conditions] = ['type_id = ?', @type_id]
+      end
+
       @results = Location.find(:all, find_params)
 
       flash.now[:error] = "No locations matched your search" if @results.blank?

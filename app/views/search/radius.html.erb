@@ -1,9 +1,11 @@
-<% form_for :location, @location, :html => {:method => :get}, :url => {:action => "radius", :type => params[:type]} do |f| %>
+<p>
+Enter a full address, a city and state, or a zip code to find locations to
+play Go in your area.  Your information won't be shared, and the more
+information you provide, the more accurate the search will be.
+</p>
+<% form_tag ({:action => "radius", :type => params[:type]}) do %>
   <table>
-    <tr><td>Address:</td><td><%= f.text_field :street_address %></td></tr>
-    <tr><td>City:</td><td><%= f.text_field :city %></td></tr>
-    <tr><td>State:</td><td><%= f.text_field :state %></td></tr>
-    <tr><td>Zip Code:</td><td><%= f.text_field :zip_code %></td></tr>
+    <tr><td>Address, City, State, or Zip:</td><td><%= text_field_tag :address, @address, :size => 30 %></td></tr>
     <tr><td>Radius:</td>
       <td>
         <select id="radius" name="radius">
