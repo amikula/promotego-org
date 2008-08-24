@@ -3,7 +3,6 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe "TODO:" do
   it "get site online"
   it "edit contacts"
-  it "display home page URL"
   it "fix ownership editing"
   it "improve display of email addresses on club page"
   it "email address obfuscator"
