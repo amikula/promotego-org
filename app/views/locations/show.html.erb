@@ -5,6 +5,13 @@
   <%=h @location.type.name %>
 </p>
 
+<% if @location.url %>
+  <p>
+    <b>Home page:</b>
+    <%= link_to @location.url, @location.url %>
+  </p>
+<% end %>
+
 <p>
   <b>Address:</b><br>
   <% unless @location.street_address.blank? %>
