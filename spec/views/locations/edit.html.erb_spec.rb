@@ -38,7 +38,7 @@ describe "/locations/edit.html.erb" do
 
   describe "users field" do
     it "should be included in edit form for super-users" do
-      @user.should_receive(:has_role?).with(:super_user).and_return(true)
+      @user.should_receive(:has_role?).with(:administrator).and_return(true)
 
       render "/locations/edit.html.erb"
 
@@ -48,7 +48,7 @@ describe "/locations/edit.html.erb" do
     end
 
     it "should not be included in edit form for non-super-users" do
-      @user.should_receive(:has_role?).with(:super_user).and_return(false)
+      @user.should_receive(:has_role?).with(:administrator).and_return(false)
 
       render "/locations/edit.html.erb"
 
