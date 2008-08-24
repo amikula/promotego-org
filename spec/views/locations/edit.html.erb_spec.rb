@@ -31,8 +31,8 @@ describe "/locations/edit.html.erb" do
       with_tag('input#location_state[name=?]', "location[state]")
       with_tag('input#location_zip_code[name=?]', "location[zip_code]")
       with_tag('input#location_hours[name=?]', "location[hours]")
-      with_tag('input#location_lat[name=?]', "location[lat]")
-      with_tag('input#location_lng[name=?]', "location[lng]")
+      with_tag('textarea#location_description[name=?]', "location[description]")
+      with_tag('input#location_url[name=?]', "location[url]")
     end
   end
 

@@ -16,8 +16,7 @@ class Location < ActiveRecord::Base
       :description => "description",
       :contacts => [],
       :hours => "",
-      :lat => "0",
-      :lng => "0"
+      :url => 'http://domain.com'
     }
   end
 
