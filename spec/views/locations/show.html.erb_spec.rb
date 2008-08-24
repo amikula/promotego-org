@@ -26,8 +26,6 @@ describe "/locations/show.html.erb" do
     response.should have_text(/#{@location.state}/)
     response.should have_text(/#{@location.zip_code}/)
     response.should have_text(/#{@location.description}/)
-    response.should have_text(/#{@location.lat}/)
-    response.should have_text(/#{@location.lng}/)
   end
 
   describe "edit and destroy links" do
