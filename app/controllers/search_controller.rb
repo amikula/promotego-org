@@ -18,7 +18,8 @@ class SearchController < ApplicationController
     @radii = [5,10,25,50,100]
     @types = Type.find(:all)
     if(@address)
-      find_params = {:origin => @address, :within => @radius}
+      find_params = {:origin => @address, :within => @radius,
+        :order => :distance}
       if @type_id && @type_id > 0
         find_params[:conditions] = ['type_id = ?', @type_id]
       end

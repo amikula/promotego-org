@@ -32,9 +32,9 @@ information you provide, the more accurate the search will be.
   <br><br>
   <% unless @results.blank? %>
     <table>
-      <tr><th>Name</th><th>Address</th></tr>
+      <tr><th>Name</th><th>Address</th><th>Miles</th></tr>
       <% @results.each do |result| %>
-        <tr><td><%= link_to(result.name, location_path(result)) %></td><td><%= result.geocode_address %></td></tr>
+        <tr><td><%= link_to(result.name, location_path(result)) %></td><td><%= result.geocode_address %></td><td><%= ((result.distance.to_f*10).round)/10.0 %></td></tr>
       <% end %>
     </table>
   <% end %>

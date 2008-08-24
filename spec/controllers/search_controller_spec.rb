@@ -14,7 +14,7 @@ describe SearchController do
 
   it "should perform a search if location is provided" do
     Location.should_receive(:find).
-      with(:all, :origin => @address, :within => 5).and_return([])
+      with(:all, :origin => @address, :within => 5, :order => :distance).and_return([])
     get :radius, :address => @address, :radius => "5"
   end
 
@@ -34,7 +34,7 @@ describe SearchController do
 
   it "should set a message if no search results are present" do
     Location.should_receive(:find).with(:all, :origin => @address,
-                                        :within => 5).and_return([])
+                                        :within => 5, :order => :distance).and_return([])
 
     # stub out sweep so we can read flash.now
     @controller.instance_eval{flash.stub!(:sweep)}
@@ -51,7 +51,7 @@ describe SearchController do
 
       Location.should_receive(:find).
         with(:all, :origin => @address, :within => 5,
-             :conditions => ["type_id = ?", go_club.id]).
+             :conditions => ["type_id = ?", go_club.id], :order => :distance).
         and_return([])
 
       get :radius, :type => "go_clubs", :radius => "5", :address => @address
@@ -62,7 +62,7 @@ describe SearchController do
 
       Location.should_receive(:find).
         with(:all, :origin => @address, :within => 5,
-             :conditions => ["type_id = ?", go_club.id]).and_return([])
+             :conditions => ["type_id = ?", go_club.id], :order => :distance).and_return([])
 
       get :radius, :type_id => go_club.id, :radius => "5",
         :address => @address
@@ -79,7 +79,7 @@ describe SearchController do
       go_club = mock_model(Type, :name => "Go Club")
 
       Location.should_receive(:find).
-        with(:all, :origin => @address, :within => 5).and_return([])
+        with(:all, :origin => @address, :within => 5, :order => :distance).and_return([])
 
       get :radius, :type_id => 0, :radius => "5", :address => @address
     end
