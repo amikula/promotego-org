@@ -32,7 +32,16 @@ describe "/locations/show.html.erb" do
 
   describe "edit and destroy links" do
     describe "don't display" do
+      it "when no user is logged in and no user owns the record" do
+        template.stub!(:current_user).and_return(nil)
+        @location.stub!(:user).and_return(nil)
+        render "/locations/show.html.erb"
+        response.should_not have_tag('a', 'Edit')
+        response.should_not have_tag('a', 'Destroy')
+      end
+
       it "when no user is logged in" do
+        template.stub!(:current_user).and_return(nil)
         render "/locations/show.html.erb"
         response.should_not have_tag('a', 'Edit')
         response.should_not have_tag('a', 'Destroy')

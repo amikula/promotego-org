@@ -52,7 +52,7 @@ describe "/search/radius.html.erb" do
 
   describe 'with results' do
     before(:each) do
-      @results = [mock_model(Location, :name => "The Club", :geocode_address => "The Address")]
+      @results = [mock_model(Location, :name => "The Club", :geocode_address => "The Address", :distance => 5)]
       assigns[:results] = @results
     end
 
