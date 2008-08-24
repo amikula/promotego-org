@@ -114,6 +114,8 @@ class ClubScraper
 
           if child[:href] =~ /:/
             email = child[:href].split(/:/)[1]
+          elsif child[:href] =~ /^mailto(.*)$/
+            email = $1
           else
             email = child[:href]
           end

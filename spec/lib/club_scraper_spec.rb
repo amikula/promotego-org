@@ -151,65 +151,14 @@ describe ClubScraper do
   end
 
   describe :get_club_contacts do
-    before(:all) do
-      @email_only = Hpricot(<<-EOF).at('td')
+    it "should handle email only" do
+      element = Hpricot(<<-EOF).at('td')
       <td>
         email@domain.com
       </td>
       EOF
 
-      @name_email_link_extra_space = Hpricot(<<-EOF).at('td')
-      <td>
-        <a href="mailto:anotheremail@anotherdomain.com  ">Contact Name</a>
-      </td>
-      EOF
-
-      @phone_only = Hpricot(<<-EOF).at('td')
-      <td>
-        626-555-1212
-      </td>
-      EOF
-
-      @name_only = Hpricot(<<-EOF).at('td')
-      <td>
-        Joe Contact
-      </td>
-      EOF
-
-      @name_and_phone_number = Hpricot(<<-EOF).at('td')
-      <td>
-        Contact Guy<br>
-        213-555-1212
-      </td> 
-      EOF
-
-      @multiple_contacts = Hpricot(<<-EOF).at('td')
-      <td>
-        <a href="mailto:email@domain.com">Contact Guy</a><br>
-        479-555-1212<br>
-
-        Joe Contact<br>
-        478-555-1212
-      </td> 
-      EOF
-
-      @prefix_phone_number_designation = Hpricot(<<-EOF).at('td')
-      <td>
-        <a href="mailto:email@domain.com">Foo Contact</a><br>
-        Cell: 626-555-1212
-      </td> 
-      EOF
-
-      @postfix_phone_number_designation = Hpricot(<<-EOF).at('td')
-      <td>
-        Bar Contact<br>
-        281-555-1212 home
-      </td> 
-      EOF
-    end
-
-    it "should handle email only" do
-      ClubScraper.get_club_contacts(@email_only).should ==
+      ClubScraper.get_club_contacts(element).should ==
         [{:email => "email@domain.com"}]
     end
 
@@ -249,40 +198,100 @@ describe ClubScraper do
     end
 
     it "should handle name with email link with extra space" do
-      ClubScraper.get_club_contacts(@name_email_link_extra_space).should ==
+      element = Hpricot(<<-EOF).at('td')
+      <td>
+        <a href="mailto:anotheremail@anotherdomain.com  ">Contact Name</a>
+      </td>
+      EOF
+
+      ClubScraper.get_club_contacts(element).should ==
+        [{:name => "Contact Name", :email => "anotheremail@anotherdomain.com"}]
+    end
+
+    it "should handle mailto with missing colon" do
+      element = Hpricot(<<-EOF).at('td')
+      <td>
+        <a href="mailtoanotheremail@anotherdomain.com">Contact Name</a>
+      </td>
+      EOF
+
+      ClubScraper.get_club_contacts(element).should ==
         [{:name => "Contact Name", :email => "anotheremail@anotherdomain.com"}]
     end
 
     it "should handle phone number only" do
-      ClubScraper.get_club_contacts(@phone_only).should ==
+      element = Hpricot(<<-EOF).at('td')
+      <td>
+        626-555-1212
+      </td>
+      EOF
+
+      ClubScraper.get_club_contacts(element).should ==
         [{:phone => [{:number => "626-555-1212"}]}]
     end
 
     it "should handle name only" do
-      ClubScraper.get_club_contacts(@name_only).should ==
+      element = Hpricot(<<-EOF).at('td')
+      <td>
+        Joe Contact
+      </td>
+      EOF
+
+      ClubScraper.get_club_contacts(element).should ==
         [{:name => "Joe Contact"}]
     end
 
     it "should handle name followed by phone number" do
-      ClubScraper.get_club_contacts(@name_and_phone_number).should ==
+      element = Hpricot(<<-EOF).at('td')
+      <td>
+        Contact Guy<br>
+        213-555-1212
+      </td> 
+      EOF
+
+      ClubScraper.get_club_contacts(element).should ==
         [{:name => "Contact Guy", :phone => [{:number => "213-555-1212"}]}]
     end
 
     it "should handle multiple contacts" do
-      ClubScraper.get_club_contacts(@multiple_contacts).should ==
+      element = Hpricot(<<-EOF).at('td')
+      <td>
+        <a href="mailto:email@domain.com">Contact Guy</a><br>
+        479-555-1212<br>
+
+        Joe Contact<br>
+        478-555-1212
+      </td> 
+      EOF
+
+      ClubScraper.get_club_contacts(element).should ==
         [{:name => "Contact Guy", :email => "email@domain.com",
           :phone => [{:number => "479-555-1212"}]},
          {:name => "Joe Contact", :phone => [{:number => "478-555-1212"}]}]
     end
 
     it "should handle prefix phone number designations" do
-      ClubScraper.get_club_contacts(@prefix_phone_number_designation).should ==
+      element = Hpricot(<<-EOF).at('td')
+      <td>
+        <a href="mailto:email@domain.com">Foo Contact</a><br>
+        Cell: 626-555-1212
+      </td> 
+      EOF
+
+      ClubScraper.get_club_contacts(element).should ==
         [{:name => "Foo Contact", :email => "email@domain.com",
           :phone => [{:type => "cell", :number => "626-555-1212"}]}]
     end
 
     it "should handle postfix phone number designations" do
-      ClubScraper.get_club_contacts(@postfix_phone_number_designation).should ==
+      element = Hpricot(<<-EOF).at('td')
+      <td>
+        Bar Contact<br>
+        281-555-1212 home
+      </td> 
+      EOF
+
+      ClubScraper.get_club_contacts(element).should ==
         [{:name => "Bar Contact",
           :phone => [{:type => "home", :number => "281-555-1212"}]}]
     end
