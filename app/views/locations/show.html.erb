@@ -29,10 +29,12 @@
   <b>Contacts:</b>
   <% @location.contacts.each do |contact| %>
     <br>
-    <% if contact[:name] && contact[:email] %>
-      <%= link_to contact[:name], "mailto:#{contact[:email]}" %><br>
-    <% elsif contact[:name] %>
+    <% if contact[:name] %>
       <%=h contact[:name] %><br>
+    <% end %>
+
+    <% if contact[:email] %>
+      <%= link_to(h(contact[:email]), contact[:email]) %><br>
     <% end %>
 
     <% unless contact[:phone].blank? %>
