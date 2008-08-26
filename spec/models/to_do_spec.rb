@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe "TODO:" do
-  it "improve display of email addresses on club page"
   it "add github wiki link"
   it "email address obfuscator"
   it "expand address recognition in ClubScraper ('1635 N Nash St..', '(807 E 10th St)', suite #'s, etc.)"
