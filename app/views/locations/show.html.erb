@@ -34,7 +34,7 @@
     <% end %>
 
     <% if contact[:email] %>
-      <%= link_to(h(contact[:email]), contact[:email]) %><br>
+      <%= mail_to(contact[:email]) %><br>
     <% end %>
 
     <% unless contact[:phone].blank? %>
