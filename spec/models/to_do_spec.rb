@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe "TODO:" do
-  it "email address obfuscator"
+  it "graceful fallback of obfuscated email links"
   it "expand address recognition in ClubScraper ('1635 N Nash St..', '(807 E 10th St)', suite #'s, etc.)"
   it "show closest club when none in radius"
   it "show link to propose club when none in radius"
