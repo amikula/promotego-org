@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe "TODO:" do
   it "graceful fallback of obfuscated email links"
+  it "configure outgoing email for production"
   it "experiment with grouping clubs with city only"
   it "expand address recognition in ClubScraper ('1635 N Nash St..', '(807 E 10th St)', suite #'s, etc.)"
   it "show closest club when none in radius"
@@ -9,10 +10,10 @@ describe "TODO:" do
   it "fix ownership editing"
   it "edit contacts"
   it "restyle, adding color and fonts, and moving contact and about to bottom"
+  it "add map to club"
   it "add AGA icon"
   it "add aga representative role"
   it "add editing of AGA status for aga rep only"
   it "add club name to title of page for SEO"
   it "add club slug to url for SEO"
-  it "add map to club"
 end
