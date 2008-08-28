@@ -3,7 +3,7 @@ Enter a full address, a city and state, or a zip code to find locations to
 play Go in your area.  Your information won't be shared, and the more
 information you provide, the more accurate the search will be.
 </p>
-<% form_tag ({:action => "radius", :type => params[:type]}) do %>
+<% form_tag({:action => "radius", :type => params[:type]}, :method => :get) do %>
   <table>
     <tr><td>Address, City, State, or Zip:</td><td><%= text_field_tag :address, @address, :size => 30 %></td></tr>
     <tr><td>Radius:</td>
