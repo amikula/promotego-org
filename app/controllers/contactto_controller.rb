@@ -3,6 +3,13 @@ class ContacttoController < ApplicationController
   end
 
   def send_mail
-    #decoded_email = Loopy::EmailObfuscator.decode_email(CGI.escape(params[:email]))
+    to = Loopy::EmailObfuscator.decode_email(params[:email])
+    from = params[:from]
+    message = params[:message]
+    subject = "[PromoteGo] A message from a PromoteGo.org user"
+
+    Obfuscated.deliver_contact(to, from, subject, message)
+
+    flash[:info] = "Your message has been sent"
   end
 end
