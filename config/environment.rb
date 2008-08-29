@@ -110,3 +110,7 @@ GeoKit::Geocoders::geocoder_ca = false
 # various geocoders.  Make sure you read up on relevant Terms of Use for each
 # geocoder you are going to use.
 GeoKit::Geocoders::provider_order = [:google]
+
+
+ENV['RECAPTCHA_PUBLIC_KEY'] = '6Ldu-AIAAAAAAG7LIohw_Gx3HoB7aWL3a_k9jNpS'
+ENV['RECAPTCHA_PRIVATE_KEY'] = '6Ldu-AIAAAAAALXrp6fSj3VOs6rk_FEln-ZTl33O'
