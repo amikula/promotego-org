@@ -13,10 +13,11 @@ describe ContacttoController do
       encoded_email = Loopy::EmailObfuscator.obfuscate_email("email@domain.com")
       Obfuscated.should_receive(:deliver_contact).
         with("email@domain.com", "from_address",
-             "[PromoteGo] A message from a PromoteGo.org user", "message")
+             "[PromoteGo] A message from a PromoteGo.org user", "message",
+             "club url")
 
       get 'send_mail', :email => encoded_email, :from => "from_address",
-        :message => "message"
+        :message => "message", :url => "club url"
     end
 
     it "should set a flash info message" do
@@ -24,9 +25,15 @@ describe ContacttoController do
 
       get 'send_mail', :email => ""
 
-      flash[:info].should_not be_nil
+      flash[:notice].should_not be_nil
     end
 
-    it "should redirect to home"
+    it "should redirect to home" do
+      Obfuscated.should_receive(:deliver_contact)
+
+      get 'send_mail', :email => ""
+
+      response.should redirect_to('/')
+    end
   end
 end

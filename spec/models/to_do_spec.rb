@@ -1,8 +1,8 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe "TODO:" do
-  it "graceful fallback of obfuscated email links"
-  it "doesn't allow form user to specify 'from' address"
+  it "add captcha"
+  it "disable authenticity token"
   it "automatically put cursor in search window"
   it "configure outgoing email for production"
   it "experiment with grouping clubs with city only"
