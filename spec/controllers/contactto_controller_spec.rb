@@ -17,7 +17,7 @@ describe ContacttoController do
              "club url")
 
       get 'send_mail', :email => encoded_email, :from => "from_address",
-        :message => "message", :url => "club url"
+        :message => "message", :listing_url => "club url"
     end
 
     it "should set a flash info message" do

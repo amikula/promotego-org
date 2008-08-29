@@ -4,16 +4,22 @@ class ContacttoController < ApplicationController
   end
 
   def send_mail
-    to = Loopy::EmailObfuscator.decode_email(params[:email])
-    from = params[:from]
-    message = params[:message]
-    subject = "[PromoteGo] A message from a PromoteGo.org user"
-    url = params[:url]
+    @email = params[:email]
+    to = Loopy::EmailObfuscator.decode_email(@email)
+    @from = params[:from]
+    @message = params[:message]
+    @subject = "[PromoteGo] A message from a PromoteGo.org user"
+    @listing_url = params[:listing_url]
 
-    Obfuscated.deliver_contact(to, from, subject, message, url)
+    if verify_recaptcha
+      Obfuscated.deliver_contact(to, @from, @subject, @message, @listing_url)
 
-    flash[:notice] = "Your message has been sent"
+      flash[:notice] = "Your message has been sent"
 
-    redirect_to('/')
+      redirect_to('/')
+    else
+      flash[:error] = "Captcha challenge failed"
+      render :action => "new"
+    end
   end
 end
