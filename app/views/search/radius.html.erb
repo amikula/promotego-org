@@ -1,3 +1,9 @@
+<% content_for("page_scripts") do %>
+  Event.observe(window, 'load',
+    function() { $('address').focus() }
+  );
+<% end %>
+
 <p>
 Enter a full address, a city and state, or a zip code to find locations to
 play Go in your area.  Your information won't be shared, and the more
