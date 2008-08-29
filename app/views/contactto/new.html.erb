@@ -1,6 +1,7 @@
 <h1>Send Message</h1>
 <% form_tag :action => :send_mail do %>
   <%= hidden_field_tag :email, (@email || params[:id]) %>
+  <%= hidden_field_tag :url, request.referer %>
   From: <%= text_field_tag("from", @from) %><br>
   Message:<br>
   <%= text_area_tag("message", @message, :rows => 10, :cols => 80) %><br>
