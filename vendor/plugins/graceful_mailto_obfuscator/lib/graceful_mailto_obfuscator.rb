@@ -5,13 +5,14 @@ module Loopy
     end
     
     def self.obfuscate_email(email)
-      email = email.gsub /@|\./, "+"
+      email = email.gsub /@/, "^"
+      email = email.gsub /\./, "$"
       email.tr "a-z", "n-za-m"
     end
     
     def self.decode_email(email)
-      email = email.gsub /^(.*?)(\+)/, '\1@'
-      email = email.gsub /\+/, "."
+      email = email.gsub /\^/, '@'
+      email = email.gsub /\$/, '.'
       email.tr "a-z", "n-za-m"
     end
     

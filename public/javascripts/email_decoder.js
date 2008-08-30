@@ -2,7 +2,7 @@ EmailDecoder = Behavior.create({
   initialize: function() {
     var anchor = this.element;
     var href = anchor.getAttribute('href');
-    var address = href.replace(/.*contactto\/new\/([a-z0-9._%-]+)\+([a-z0-9._%-]+)\+([a-z.]+)/i, '$1' + '@' + '$2' + '.' + '$3'); 
+    var address = href.replace(/.*contactto\/new\/([a-z0-9._%$-]+)\^([a-z0-9._%$-]+)/i, '$1' + '@' + '$2').replace(/\$/g, '.');
     
     if (href != address) {
       anchor.setAttribute('href', 'mailto:' + this.decode(address));
