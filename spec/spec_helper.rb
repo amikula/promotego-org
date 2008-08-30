@@ -71,7 +71,7 @@ class MatchHash
         return false
       elsif ((extra = target_keys - expected_keys).size > 0)
         @failure_message = failure_start + "target has extra keys " +
-          extra.join(", ")
+          extra.inject(""){|string, key| string + "#{key.to_s}=#{target[key]} "}
         return false
       else
         mismatched_keys = []
