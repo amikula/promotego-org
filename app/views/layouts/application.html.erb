@@ -17,6 +17,11 @@
     <script type="text/javascript">
       <%= @content_for_page_scripts %>
     </script>
+
+    <% if @map %>
+      <%= GMap.header %>
+      <%= @map.to_html %>
+    <% end %>
     
   </head>
   <body>

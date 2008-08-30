@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe "TODO:" do
-  it "add map to club"
   it "show closest club when none in radius"
   it "experiment with grouping clubs with city only"
   it "show link to propose club when none in radius"

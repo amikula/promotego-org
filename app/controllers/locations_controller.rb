@@ -20,7 +20,25 @@ class LocationsController < ApplicationController
     @location = Location.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html do
+        @map = GMap.new("map_div")
+        @map.control_init(:large_map => true,:map_type => true)
+        if(@location.precision == :address)
+          @map.center_zoom_init([@location.lat,@location.lng],15)
+        else
+          @map.center_zoom_init([@location.lat,@location.lng],12)
+        end
+
+        info_window = render_to_string :partial => "gmap_info_window",
+          :locals => {:location => @location}
+        info_window.gsub!(/\n/, '')
+
+        club = GMarker.new([@location.lat,@location.lng],
+                           :info_window => info_window)
+        @map.record_global_init(club.declare("club"))
+        @map.overlay_init(club)
+        @map.record_init("club.openInfoWindowHtml(\"#{club.info_window}\");\n")
+      end
       format.xml  { render :xml => @location }
     end
   end
