@@ -88,4 +88,11 @@ class Location < ActiveRecord::Base
     end
   end
 
+  def precision
+    unless street_address.blank?
+      :address
+    else
+      :city
+    end
+  end
 end
