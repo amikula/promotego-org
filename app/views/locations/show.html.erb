@@ -1,71 +1,79 @@
 <h1><%=h @location.name %></h1>
 
-<p>
-  <b>Type:</b>
-  <%=h @location.type.name %>
-</p>
-
-<% if @location.url %>
+<div id='club_info' style='float: left;'>
   <p>
-    <b>Home page:</b>
-    <%= link_to @location.url, @location.url %>
+    <b>Type:</b>
+    <%=h @location.type.name %>
   </p>
-<% end %>
 
-<p>
-  <b>Address:</b><br>
-  <% unless @location.street_address.blank? %>
-    <%=h @location.street_address %><br>
+  <% if @location.url %>
+    <p>
+      <b>Home page:</b>
+      <%= link_to @location.url, @location.url %>
+    </p>
   <% end %>
-  <%=h @location.city %>, <%=h @location.state %> <%=h @location.zip_code %>
-</p>
 
-<p>
-  <b>Description:</b><br>
-  <%= (h @location.description).gsub(/\n/, '<br>') %>
-</p>
-
-<p>
-  <b>Contacts:</b>
-  <% @location.contacts.each do |contact| %>
-    <br>
-    <% if contact[:name] %>
-      <%=h contact[:name] %><br>
+  <p>
+    <b>Address:</b><br>
+    <% unless @location.street_address.blank? %>
+      <%=h @location.street_address %><br>
     <% end %>
+    <%=h @location.city %>, <%=h @location.state %> <%=h @location.zip_code %>
+  </p>
 
-    <% if contact[:email] %>
-      <%= mail_to(contact[:email], "Email this contact") %><br>
-    <% end %>
+  <p>
+    <b>Description:</b><br>
+    <%= (h @location.description).gsub(/\n/, '<br>') %>
+  </p>
 
-    <% unless contact[:phone].blank? %>
-      <% contact[:phone].each do |phone| %>
-        <%= phone[:number] %>
-        <% unless phone[:type].blank? %>
-          (<%= phone[:type] %>)
+  <p>
+    <b>Contacts:</b>
+    <% @location.contacts.each do |contact| %>
+      <br>
+      <% if contact[:name] %>
+        <%=h contact[:name] %><br>
+      <% end %>
+
+      <% if contact[:email] %>
+        <%= mail_to(contact[:email], "Email this contact") %><br>
+      <% end %>
+
+      <% unless contact[:phone].blank? %>
+        <% contact[:phone].each do |phone| %>
+          <%= phone[:number] %>
+          <% unless phone[:type].blank? %>
+            (<%= phone[:type] %>)
+          <% end %>
+          <br>
         <% end %>
-        <br>
       <% end %>
     <% end %>
+  </p>
+
+  <% unless @location.hours.blank? %>
+  <p>
+    <b>Hours:</b>
+    <%=h @location.hours %>
+  </p>
   <% end %>
-</p>
 
-<% unless @location.hours.blank? %>
-<p>
-  <b>Hours:</b>
-  <%=h @location.hours %>
-</p>
-<% end %>
+  <% unless @location.user.blank? %>
+  <p>
+    <b>Owner:</b>
+    <%=h @location.user.login if @location.user %>
+  </p>
+  <% end %>
 
-<% unless @location.user.blank? %>
-<p>
-  <b>Owner:</b>
-  <%=h @location.user.login if @location.user %>
-</p>
-<% end %>
+  <br>
+  <% if(current_user && (current_user == @location.user || current_user.has_role?(:administrator))) %>
+    <%= link_to 'Edit', edit_location_path(@location) %> |
+    <%= link_to 'Destroy', @location, :confirm => 'Are you sure?', :method => :delete %> |
+  <% end %>
+  <%= link_to 'Back', 'javascript:history.go(-1)' %>
+</div>
 
-<br>
-<% if(current_user && (current_user == @location.user || current_user.has_role?(:administrator))) %>
-  <%= link_to 'Edit', edit_location_path(@location) %> |
-  <%= link_to 'Destroy', @location, :confirm => 'Are you sure?', :method => :delete %> |
+<% if @map %>
+  <div id='right_column' style='float: right;'>
+    <%= @map.div(:width => 350, :height => 300) %>
+  </div>
 <% end %>
-<%= link_to 'Back', 'javascript:history.go(-1)' %>

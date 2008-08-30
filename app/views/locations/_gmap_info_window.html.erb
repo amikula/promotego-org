@@ -1,0 +1,10 @@
+<b><%= location.name %></b><br>
+<% if location.precision == :address %>
+  <%= location.street_address %>
+<% else %>
+  No street address available
+<% end %><br>
+<%= "#{@location.city}, #{@location.state}&nbsp; #{@location.zip_code}" %>
+<% if location.precision == :address %>
+  <br><a href='http://maps.google.com/maps?saddr=&daddr=<%= @location.geocode_address %>'>Directions</a>
+<% end %>

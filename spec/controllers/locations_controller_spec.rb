@@ -72,7 +72,10 @@ describe LocationsController do
   describe "handling GET /locations/1" do
 
     before(:each) do
-      @location = mock_model(Location)
+      @location = mock_model(Location, :precision => :city,
+                             :name => "Location Name", :lat => 0, :lng => 0,
+                             :city => "Location City",
+                             :state => "Location State", :zip_code => "00000")
       Location.stub!(:find).and_return(@location)
     end
   
@@ -83,11 +86,6 @@ describe LocationsController do
     it "should be successful" do
       do_get
       response.should be_success
-    end
-  
-    it "should render show template" do
-      do_get
-      response.should render_template('show')
     end
   
     it "should find the location requested" do
