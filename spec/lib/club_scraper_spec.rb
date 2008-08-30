@@ -422,6 +422,30 @@ describe ClubScraper do
       end
     end
 
+    it "should find addresses in other formats" do
+      addresses = ['1635 N Nash St..', '807 E 10th St',
+        '11772 Parklawn Drive', '64 East Broadway']
+
+      elements = Hpricot(<<-EOF)
+      <td>
+        1635 N Nash St..
+      </td> 
+      <td>
+        (807 E 10th St)
+      </td> 
+      <td>
+        11772 Parklawn Drive, Rockville, MD 20852
+      </td> 
+      <td>
+        64 East Broadway
+      </td> 
+      EOF
+
+      (elements/'td').each_with_index do |element, i|
+        ClubScraper.get_club_info(element)[:address].should == addresses[i]
+      end
+    end
+
     it "should use only the first address it finds" do
       element = Hpricot(<<-EOF).at('td')
       <td>

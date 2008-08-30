@@ -145,8 +145,11 @@ class ClubScraper
     element.children.each do |child|
       if (child.text?)
         tmp = child.inner_text.strip
-        if !address && tmp =~ /^([0-9]+\s+[a-z\.\s]+\s+(lane|ln|street|st|ave|avenue|bl|blvd|boulevard|road|rd|place|pl|square|sq|court|ct|drive|dr|highway|hwy|parkway|pkwy)[\.,]?)$/i
+        if !address && tmp =~ /([0-9]+[ \t]+[a-z0-9\. \t]+([ \t]+(lane|ln|street|st|avenue|ave|blvd|bl|boulevard|road|rd|place|pl|square|sq|court|ct|drive|dr|highway|hwy|parkway|pkwy))?\.?)/i
           address = $1
+
+          # Handle case of matching time string
+          address = nil if address =~ /^[0-9]+ (am|pm)$/i
         end
       end
     end
