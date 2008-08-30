@@ -7,13 +7,13 @@ module Loopy
     def self.obfuscate_email(email)
       email = email.gsub /@/, "^"
       email = email.gsub /\./, "$"
-      email.tr "a-z", "n-za-m"
+      email.tr "a-zA-Z", "n-za-mN-ZA-M"
     end
     
     def self.decode_email(email)
       email = email.gsub /\^/, '@'
       email = email.gsub /\$/, '.'
-      email.tr "a-z", "n-za-m"
+      email.tr "a-zA-Z", "n-za-mN-ZA-M"
     end
     
     def mail_to_with_graceful_obfuscation(*args)
