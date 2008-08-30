@@ -4,6 +4,33 @@
   );
 <% end %>
 
+<% if !@results.blank? %>
+  <h1>Search Results</h1>
+  <table>
+    <tr><th>Name</th><th>Address</th><th>Miles</th></tr>
+    <% @results.each do |result| %>
+      <tr><td><%= link_to(result.name, location_path(result)) %></td><td><%= result.geocode_address %></td><td><%= ((result.distance.to_f*10).round)/10.0 %></td></tr>
+    <% end %>
+  </table>
+  <br><br>
+<% elsif @closest %>
+  <h1>No Match</h1>
+  <p>
+    No locations matched your search.  However, here is the closest match in
+    our database:
+  </p>
+  <table>
+    <tr><th>Name</th><th>Address</th><th>Miles</th></tr>
+    <tr><td><%= link_to(@closest.name, location_path(@closest)) %></td><td><%= @closest.geocode_address %></td><td><%= ((@closest.distance.to_f*10).round)/10.0 %></td></tr>
+  </table>
+  <br><br>
+<% end %>
+
+<% if @results.blank? && @closest.blank? %>
+  <h1>Search</h1>
+<% else %>
+  <h2>Search again</h2>
+<% end %>
 <p>
 Enter a full address, a city and state, or a zip code to find locations to
 play Go in your area.  Your information won't be shared, and the more
@@ -35,13 +62,4 @@ information you provide, the more accurate the search will be.
     <% end %>
   </table>
   <%= submit_tag 'Search' %>
-  <br><br>
-  <% unless @results.blank? %>
-    <table>
-      <tr><th>Name</th><th>Address</th><th>Miles</th></tr>
-      <% @results.each do |result| %>
-        <tr><td><%= link_to(result.name, location_path(result)) %></td><td><%= result.geocode_address %></td><td><%= ((result.distance.to_f*10).round)/10.0 %></td></tr>
-      <% end %>
-    </table>
-  <% end %>
 <% end %>

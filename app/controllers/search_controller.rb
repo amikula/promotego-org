@@ -26,7 +26,20 @@ class SearchController < ApplicationController
 
       @results = Location.find(:all, find_params)
 
-      flash.now[:error] = "No locations matched your search" if @results.blank?
+      if (@results.blank?)
+        closest_params = {:origin => @address, :within => 100}
+        if (@type_id && @type_id > 0)
+          closest_params[:conditions] = ['lat is not null and lng is not null and type_id = ?', @type_id]
+        else
+          closest_params[:conditions] = 'lat is not null and lng is not null'
+        end
+
+        @closest = Location.find_closest(closest_params)
+      end
+
+      if @results.blank? && @closest.blank?
+        flash.now[:error] = "No locations matched your search within 100 miles"
+      end
     end
   end
 end

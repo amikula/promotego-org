@@ -14,7 +14,7 @@ describe SearchController do
 
   it "should perform a search if location is provided" do
     Location.should_receive(:find).
-      with(:all, :origin => @address, :within => 5, :order => :distance).and_return([])
+      with(:all, :origin => @address, :within => 5, :order => :distance).and_return([:result])
     get :radius, :address => @address, :radius => "5"
   end
 
@@ -32,16 +32,14 @@ describe SearchController do
     assigns[:results].size.should == 1
   end
 
-  it "should set a message if no search results are present" do
+  it "should find the closest result if no search results are present" do
     Location.should_receive(:find).with(:all, :origin => @address,
-                                        :within => 5, :order => :distance).and_return([])
+                            :within => 5, :order => :distance).and_return([])
 
-    # stub out sweep so we can read flash.now
-    @controller.instance_eval{flash.stub!(:sweep)}
+    Location.should_receive(:find_closest).with(:origin => @address,
+        :within => 100, :conditions => 'lat is not null and lng is not null')
 
     get :radius, :address => @address, :radius => "5"
-
-    flash.now[:error].should == "No locations matched your search"
   end
 
   describe "with type" do
@@ -52,7 +50,7 @@ describe SearchController do
       Location.should_receive(:find).
         with(:all, :origin => @address, :within => 5,
              :conditions => ["type_id = ?", go_club.id], :order => :distance).
-        and_return([])
+        and_return([:result])
 
       get :radius, :type => "go_clubs", :radius => "5", :address => @address
     end
@@ -62,7 +60,7 @@ describe SearchController do
 
       Location.should_receive(:find).
         with(:all, :origin => @address, :within => 5,
-             :conditions => ["type_id = ?", go_club.id], :order => :distance).and_return([])
+             :conditions => ["type_id = ?", go_club.id], :order => :distance).and_return([:result])
 
       get :radius, :type_id => go_club.id, :radius => "5",
         :address => @address
@@ -79,9 +77,27 @@ describe SearchController do
       go_club = mock_model(Type, :name => "Go Club")
 
       Location.should_receive(:find).
-        with(:all, :origin => @address, :within => 5, :order => :distance).and_return([])
+        with(:all, :origin => @address, :within => 5, :order => :distance).and_return([:result])
 
       get :radius, :type_id => 0, :radius => "5", :address => @address
+    end
+
+    it "should find the closest result if no search results are present" do
+      go_club = mock_model(Type, :name => "Go Club")
+
+      Location.should_receive(:find).
+        with(:all, :origin => @address, :within => 5,
+             :conditions => ["type_id = ?", go_club.id], :order => :distance).and_return([])
+
+      Location.should_receive(:find_closest).
+        with(:origin => @address, :within => 100,
+             :conditions => ['lat is not null and lng is not null and type_id = ?', go_club.id]).
+             and_return(:closest)
+
+      get :radius, :type_id => go_club.id, :radius => "5",
+        :address => @address
+
+      assigns[:closest].should == :closest
     end
   end
 end
