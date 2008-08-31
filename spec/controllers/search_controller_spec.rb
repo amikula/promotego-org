@@ -12,12 +12,6 @@ describe SearchController do
     assigns[:types]
   end
 
-  it "should perform a search if location is provided" do
-    Location.should_receive(:find).
-      with(:all, :origin => @address, :within => 5, :order => :distance).and_return([:result])
-    get :radius, :address => @address, :radius => "5"
-  end
-
   it "should retrieve expected locations on search" do
     new_location(:name => "EarthLink Office",
                  :street_address => "2947 Bradley St.", :city => "Pasadena",
@@ -29,7 +23,7 @@ describe SearchController do
 
     get :radius, :address => @address, :radius => "5"
 
-    assigns[:results].size.should == 1
+    assigns[:results].delete_if{|result| result.is_a?(Location::LocationHeader)}.size.should == 1
   end
 
   it "should find the closest result if no search results are present" do
@@ -50,7 +44,7 @@ describe SearchController do
       Location.should_receive(:find).
         with(:all, :origin => @address, :within => 5,
              :conditions => ["type_id = ?", go_club.id], :order => :distance).
-        and_return([:result])
+        and_return([mock_location(:precision => :address, :geocode_address => "City, State")])
 
       get :radius, :type => "go_clubs", :radius => "5", :address => @address
     end
@@ -60,24 +54,21 @@ describe SearchController do
 
       Location.should_receive(:find).
         with(:all, :origin => @address, :within => 5,
-             :conditions => ["type_id = ?", go_club.id], :order => :distance).and_return([:result])
+             :conditions => ["type_id = ?", go_club.id], :order => :distance).and_return([mock_location(:precision => :address, :geocode_address => "123 Fake Lane, City, State")])
 
       get :radius, :type_id => go_club.id, :radius => "5",
         :address => @address
     end
 
-    it 'should redirect with a message when type is invalid' do
-      get :radius, :type => "bogus_type", :radius => "5", :address => @address
-
-      flash[:error].should == "Type 'bogus_type' is invalid."
-      response.should redirect_to(:action => "radius")
+    it 'should not raise error when type is invalid' do
+      lambda{get :radius, :type => "bogus_type", :radius => "5", :address => @address}.should_not raise_error
     end
 
     it "should not filter by type id when type_id == 0" do
       go_club = mock_model(Type, :name => "Go Club")
 
       Location.should_receive(:find).
-        with(:all, :origin => @address, :within => 5, :order => :distance).and_return([:result])
+        with(:all, :origin => @address, :within => 5, :order => :distance).and_return([mock_location(:precision => :address)])
 
       get :radius, :type_id => 0, :radius => "5", :address => @address
     end
@@ -99,5 +90,101 @@ describe SearchController do
 
       assigns[:closest].should == :closest
     end
+  end
+
+  describe "should add location headings" do
+    it "when results have no address" do
+      view_results = [
+        Location::LocationHeader.new("City, State", :city, "4.1"),
+        mock_location(:type => :go_club, :name => "Location 1", :precision => :city, :geocode_address => "City, State", :distance => "4.1"),
+        mock_location(:type => :go_club, :name => "Location 2", :precision => :city, :geocode_address => "City, State", :distance => "4.1")
+      ]
+
+      db_results = view_results.clone.delete_if{|loc| loc.is_a? Location::LocationHeader}
+
+      Location.should_receive(:find).and_return(db_results)
+
+      get :radius, :radius => "5", :address => '00000'
+
+      assigns[:results].should == view_results
+    end
+
+    it "when results have addresses, use average distance" do
+      view_results = [
+        Location::LocationHeader.new("City, State", :city, "4.1"),
+        mock_location(:type => :go_club, :name => "Location 1", :precision => :address, :geocode_address => '234 Sesame St., City, State', :distance => "4.0"),
+        mock_location(:type => :go_club, :name => "Location 2", :precision => :address, :geocode_address => '123 Sesame St., City, State', :distance => "4.2")
+      ]
+
+      db_results = view_results.clone.delete_if{|loc| loc.is_a? Location::LocationHeader}
+
+      Location.should_receive(:find).and_return(db_results)
+
+      get :radius, :radius => "5", :address => '00000'
+
+      assigns[:results].should == view_results
+    end
+
+    it "when some results have addresses and some don't" do
+      view_results = [
+        Location::LocationHeader.new("City, State", :city, "4.2"),
+        mock_location(:type => :go_club, :name => "Location 1", :precision => :address, :geocode_address => '234 Sesame St., City, State', :distance => "4.0"),
+        mock_location(:type => :go_club, :name => "Location 2", :precision => :city, :geocode_address => 'City, State', :distance => "4.2")
+      ]
+
+      db_results = view_results.clone.delete_if{|loc| loc.is_a? Location::LocationHeader}
+
+      Location.should_receive(:find).and_return(db_results)
+
+      get :radius, :radius => "5", :address => '00000'
+
+      assigns[:results].should == view_results
+    end
+
+    it "for each city" do
+      view_results = [
+        Location::LocationHeader.new("City, State", :city, "4.2"),
+        mock_location(:type => :go_club, :name => "Location 1", :precision => :address, :geocode_address => '234 Sesame St., City, State', :distance => "4.0"),
+        mock_location(:type => :go_club, :name => "Location 2", :precision => :city, :geocode_address => 'City, State', :distance => "4.2"),
+        Location::LocationHeader.new("City 2, State", :city, "5.2"),
+        mock_location(:type => :go_club, :name => "Location 1", :precision => :address, :geocode_address => '234 Sesame St., City 2, State', :distance => "5.0"),
+        mock_location(:type => :go_club, :name => "Location 2", :precision => :city, :geocode_address => 'City 2, State', :distance => "5.2")
+      ]
+
+      db_results = view_results.clone.delete_if{|loc| loc.is_a? Location::LocationHeader}
+
+      Location.should_receive(:find).and_return(db_results)
+
+      get :radius, :radius => "5", :address => '00000'
+
+      assigns[:results].should == view_results
+    end
+  end
+
+  def mock_location(options)
+    options[:precision] ||= :city
+
+    options[:geocode_address] ||= case options[:precision]
+                                  when :address
+                                    "123 Number St., City, State"
+                                  when :city
+                                    "City, State"
+                                  end
+
+    components = options[:geocode_address].split(/,/)
+    if components.size == 3  # address, city, state
+      options[:street_address] ||= components[0].strip
+      options[:city] ||= components[1].strip
+      options[:state] ||= components[2].strip
+    elsif components.size == 2  # city, state
+      options[:city] ||= components[0].strip
+      options[:state] ||= components[1].strip
+    else
+      raise "Invalid number of components in address"
+    end
+
+    options[:distance] ||= "0"
+
+    mock_model(Location, options)
   end
 end
