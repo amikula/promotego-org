@@ -1,15 +1,18 @@
-<% content_for("page_scripts") do %>
+<% unless @results %>
+  <% content_for("page_scripts") do %>
   Event.observe(window, 'load',
     function() { $('address').focus() }
   );
+  <% end %>
 <% end %>
 
 <% if !@results.blank? %>
   <h1>Search Results</h1>
-  <table>
+  <table class='results'>
     <tr><th>Name</th><th>Address</th><th>Miles</th></tr>
     <% @results.each do |result| %>
-      <tr><td><%= link_to(result.name, location_path(result)) %></td><td><%= result.geocode_address %></td><td><%= ((result.distance.to_f*10).round)/10.0 %></td></tr>
+      <%= render :partial => "result_row",
+        :locals => {:result => result} %>
     <% end %>
   </table>
   <br><br>
@@ -19,9 +22,9 @@
     No locations matched your search.  However, here is the closest match in
     our database:
   </p>
-  <table>
+  <table class='results'>
     <tr><th>Name</th><th>Address</th><th>Miles</th></tr>
-    <tr><td><%= link_to(@closest.name, location_path(@closest)) %></td><td><%= @closest.geocode_address %></td><td><%= ((@closest.distance.to_f*10).round)/10.0 %></td></tr>
+    <%= render :partial => "result_row", :locals => {:result => @closest} %>
   </table>
   <br><br>
 <% end %>

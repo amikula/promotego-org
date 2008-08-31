@@ -36,10 +36,6 @@
   clear: both;
 }
 
-.noquorum {
-  text-decoration: line-through;
-}
-
 .error {
   border: 1px solid red;
   text-align: center;
@@ -47,4 +43,13 @@
   margin-right: auto;
   padding: 10px;
   color: red;
+}
+
+table.results > tbody > tr > td {
+  padding-right: 20px;
+}
+
+tr.location_header > td {
+  padding-top: 15px;
+  font-weight: bold;
 }
