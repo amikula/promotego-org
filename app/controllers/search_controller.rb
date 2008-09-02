@@ -8,6 +8,18 @@ class SearchController < ApplicationController
       if (db_results.blank?)
         find_closest
       else
+        db_results.sort! do |a,b|
+          if a.city == b.city && a.state == b.state && a.precision != b.precision
+            if a.precision == :address
+              -1
+            else
+              1
+            end
+          else
+            a.distance.to_f <=> b.distance.to_f
+          end
+        end
+
         @results = process_location_headings(db_results)
       end
 
