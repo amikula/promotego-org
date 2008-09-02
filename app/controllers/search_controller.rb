@@ -32,6 +32,7 @@ class SearchController < ApplicationController
   private
   def set_display_variables
     @address = params[:address]
+    session[:last_search_address] = @address
     @radius = params[:radius].to_d if params[:radius]
 
     if params[:type]
