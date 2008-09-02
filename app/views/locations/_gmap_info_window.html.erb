@@ -6,5 +6,5 @@
 <% end %><br>
 <%= "#{@location.city}, #{@location.state}&nbsp; #{@location.zip_code}" %>
 <% if location.precision == :address %>
-  <br><a href='http://maps.google.com/maps?saddr=&daddr=<%= @location.geocode_address %>'>Directions</a>
+  <br><a href='http://maps.google.com/maps?saddr=<%= session[:last_search_address] %>&daddr=<%= @location.geocode_address %>'>Directions</a>
 <% end %>
