@@ -1,3 +1,9 @@
+<% content_for("page_scripts") do %>
+Event.observe(window, 'load',
+  function() { $('login').focus() }
+);
+<% end %>
+
 <% form_tag sessions_path do -%>
 <p><label for="login">Login</label><br/>
 <%= text_field_tag 'login' %></p>
