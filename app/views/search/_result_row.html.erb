@@ -5,7 +5,7 @@
   </tr>
 <% else %>
   <tr class='location'>
-    <td<%= ' colspan="2"' unless result.precision == :address %>><%= link_to(result.name, location_path(result)) %></td>
+    <td><%= link_to(result.name, location_path(result)) %></td>
     <td><%= result.street_address if result.precision == :address %></td>
     <td><%= ((result.distance.to_f*10).round)/10.0 if result.precision == :address %></td>
   </tr>

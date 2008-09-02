@@ -98,7 +98,7 @@ describe "/search/radius.html.erb" do
       do_render
 
       response.should have_tag("tr[class=?]", "location") do
-        with_tag("td[colspan=2]", "Club 1")
+        with_tag("td", "Club 1")
         without_tag("td", "Club Address 1")
         without_tag("td", "5.1")
       end
@@ -113,7 +113,7 @@ describe "/search/radius.html.erb" do
       end
 
       response.should have_tag("tr[class=?]", "location") do
-        with_tag("td[colspan=2]", "Club 3")
+        with_tag("td", "Club 3")
         without_tag("td", "Club Address 3")
         without_tag("td", "5.8")
       end
@@ -124,7 +124,7 @@ describe "/search/radius.html.erb" do
       end
 
       response.should have_tag("tr[class=?]", "location") do
-        with_tag("td[colspan=2]", "Club 4")
+        with_tag("td", "Club 4")
         without_tag("td", "Club Address 4")
         without_tag("td", "5.9")
       end
