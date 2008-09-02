@@ -1,6 +1,8 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe "TODO:" do
+  it "change to yield :title"
+  it "fix page title in club display"
   it "fix ownership editing"
   it "edit contacts"
   it "show link to propose club when none in radius"
