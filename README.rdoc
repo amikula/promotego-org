@@ -4,4 +4,6 @@ PromoteGo.org is a Ruby on Rails application built to help promote Go in the
 United States.  Theoretically it can be used to promote Go anywhere in the
 world, but the United States is our first goal.
 
-For more information, see http://promotego.org/.
+PromoteGo.org is open source software, and is released under the MIT License.
+
+For more information, see http://promotego.org/about
