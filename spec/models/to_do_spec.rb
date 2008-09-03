@@ -6,6 +6,8 @@ describe "TODO:" do
   it "fix page title in club display"
   it "fix ownership editing"
   it "edit contacts"
+  it "add RSS icon with link to club blog feed"
+  it "add email icon with link to club mailing list"
   it "show link to propose club when none in radius"
   it "show all search results on map"
   it "restyle, adding color and fonts, and moving contact and about to bottom"
