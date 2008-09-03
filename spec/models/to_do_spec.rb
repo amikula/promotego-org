@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe "TODO:" do
-  it "confirm that logout/login resets session data"
+  it "green styling for regular info messages"
   it "change to yield :title"
   it "fix page title in club display"
   it "fix ownership editing"
