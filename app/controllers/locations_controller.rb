@@ -21,6 +21,8 @@ class LocationsController < ApplicationController
 
     respond_to do |format|
       format.html do
+        @title = @location.name
+
         @map = GMap.new("map_div")
         @map.control_init(:large_map => true,:map_type => true)
         if(@location.precision == :address)

@@ -97,6 +97,11 @@ describe LocationsController do
       do_get
       assigns[:location].should equal(@location)
     end
+
+    it "should set the page title to the location name" do
+      do_get
+      assigns[:title].should == @location.name
+    end
   end
 
   describe "handling GET /locations/1.xml" do
