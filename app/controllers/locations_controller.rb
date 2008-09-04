@@ -58,10 +58,14 @@ class LocationsController < ApplicationController
   # GET /locations/1/edit
   def edit
     @types = Type.find(:all)
-    if(current_user.has_role?(:administrator))
-      @location = Location.find(params[:id])
-    else
-      @location = current_user.locations.find(params[:id])
+    begin
+      @location = if(current_user.has_role?(:administrator))
+                    @location = Location.find(params[:id])
+                  else
+                    @location = current_user.locations.find(params[:id])
+                  end
+    rescue
+      # just continue executing.  location doesn't exist.
     end
 
     unless @location
@@ -96,13 +100,20 @@ class LocationsController < ApplicationController
   # PUT /locations/1
   # PUT /locations/1.xml
   def update
+    begin
+      @location = if (current_user.has_role?(:administrator))
+                    Location.find(params[:id])
+                  else
+                    current_user.locations.find(params[:id])
+                  end
+    rescue
+      # Just continue -- no location found
+    end
+
     if (current_user.has_role?(:administrator))
-      @location = Location.find(params[:id])
       if params[:location] && params[:location][:user_id]
         @location.change_user(params[:location][:user_id], current_user)
       end
-    else
-      @location = current_user.locations.find(params[:id])
     end
 
     respond_to do |format|

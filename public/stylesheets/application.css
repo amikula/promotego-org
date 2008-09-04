@@ -36,13 +36,34 @@
   clear: both;
 }
 
-.error {
-  border: 1px solid red;
+.notice {
+  border: 1px solid green;
+  color: green;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
   padding: 10px;
+  background: #aaffaa;
+}
+
+.warning {
+  border: 1px solid yellow;
+  color: #666600;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  background: #ffffaa;
+}
+
+.error {
+  border: 1px solid red;
   color: red;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  background: #ffaaaa;
 }
 
 table.results > tbody > tr > td {

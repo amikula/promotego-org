@@ -311,7 +311,7 @@ describe LocationsController do
       it "should save the user value posted if current user is administrator" do
         Location.should_receive(:find).with("1").and_return(@location)
 
-        @user.should_receive(:has_role?).with(:administrator).and_return(true)
+        @user.stub!(:has_role?).with(:administrator).and_return(true)
 
         @location.should_receive(:change_user).with(@other_user.id.to_s, @user)
         @location.should_receive(:attributes=)
@@ -386,7 +386,7 @@ describe LocationsController do
 
       it "should not allow access to other users' locations" do
         location = mock_and_find(Location, :user => @other_user)
-        @locations.should_receive(:find).with(location.id.to_s).and_return(nil)
+        @locations.should_receive(:find).with(location.id.to_s).and_raise(ActiveRecord::RecordNotFound.new("RSpec test exception"))
 
         get :edit, :id => location.id
 
@@ -407,7 +407,7 @@ describe LocationsController do
 
       it "should not work for other users' locations" do
         location = mock_model(Location, :user => @other_user)
-        @locations.should_receive(:find).with(location.id.to_s).and_return(nil)
+        @locations.should_receive(:find).with(location.id.to_s).and_raise(ActiveRecord::RecordNotFound.new("RSpec test exception"))
 
         put :update, :id => location.id
 
