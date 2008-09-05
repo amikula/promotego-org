@@ -66,7 +66,8 @@ class LocationsController < ApplicationController
                   else
                     @location = current_user.locations.find(params[:id])
                   end
-    rescue
+      @user = @location.user
+    rescue ActiveRecord::RecordNotFound
       # just continue executing.  location doesn't exist.
     end
 
@@ -113,8 +114,9 @@ class LocationsController < ApplicationController
     end
 
     if (current_user.has_role?(:administrator))
-      if params[:location] && params[:location][:user_id]
-        @location.change_user(params[:location][:user_id], current_user)
+      if params[:user] && params[:user][:login]
+        new_owner = User.find_by_login(params[:user][:login])
+        @location.change_user(new_owner.id, current_user)
       end
     end
 

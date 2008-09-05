@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe "TODO:" do
-  it "fix ownership editing"
   it "edit contacts"
   it "add RSS icon with link to club blog feed"
   it "add email icon with link to club mailing list"
