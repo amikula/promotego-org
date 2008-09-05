@@ -2,10 +2,11 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe LocationsController do
   before(:each) do
-    @user = mock_model(User, :name => "Test User")
+    @user = mock_model(User, :name => "Test User", :login => "testuser")
     @user.stub!(:has_role?).and_return(false)
     @user.stub!(:locations).and_return(:locations)
-    @other_user = mock_model(User, :name => "Other User")
+    @other_user = mock_model(User, :name => "Other User",
+                             :login => 'otheruser')
     @controller.stub!(:current_user).and_return(@user)
   end
 
@@ -181,7 +182,8 @@ describe LocationsController do
     before(:each) do
       @locations = []
       @user.should_receive(:locations).and_return(@locations)
-      @location = mock_model(Location)
+      owner = mock_model(User, :login => "login")
+      @location = mock_model(Location, :user => owner)
       @locations.should_receive(:find).with(@location.id.to_s).and_return(@location)
     end
   
@@ -197,6 +199,11 @@ describe LocationsController do
     it "should render edit template" do
       do_get
       response.should render_template('edit')
+    end
+
+    it "should assign @user to be owner of the current location" do
+      do_get
+      assigns[:user].should equal(@location.user)
     end
   
     it "should assign the found Location for the view" do
@@ -315,15 +322,17 @@ describe LocationsController do
 
       it "should save the user value posted if current user is administrator" do
         Location.should_receive(:find).with("1").and_return(@location)
+        User.should_receive(:find_by_login).with(@other_user.login).
+          and_return(@other_user)
 
         @user.stub!(:has_role?).with(:administrator).and_return(true)
 
-        @location.should_receive(:change_user).with(@other_user.id.to_s, @user)
+        @location.should_receive(:change_user).with(@other_user.id, @user)
         @location.should_receive(:attributes=)
         @location.should_receive(:geocode)
         @location.should_receive(:save).and_return(true)
 
-        put :update, :id => "1", :location => {:user_id => @other_user.id.to_s}
+        put :update, :id => "1", :user => {:login => @other_user.login}
       end
     end
     

@@ -60,13 +60,6 @@
   </p>
   <% end %>
 
-  <% unless @location.user.blank? %>
-  <p>
-    <b>Owner:</b>
-    <%=h @location.user.login if @location.user %>
-  </p>
-  <% end %>
-
   <br>
   <% if(current_user && (current_user == @location.user || current_user.has_role?(:administrator))) %>
     <%= link_to 'Edit', edit_location_path(@location) %> |

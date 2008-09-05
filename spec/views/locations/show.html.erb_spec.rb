@@ -21,7 +21,6 @@ describe "/locations/show.html.erb" do
     render "/locations/show.html.erb"
     response.should have_text(/#{@location.name}/)
     response.should have_text(/#{@location.type.name}/)
-    response.should have_text(/#{@location.user.login}/)
     response.should have_text(/#{@location.street_address}/)
     response.should have_text(/#{@location.city}/)
     response.should have_text(/#{@location.state}/)
