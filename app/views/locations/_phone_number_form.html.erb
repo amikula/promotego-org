@@ -1,0 +1,3 @@
+Phone Number: <%= text_field_tag "location[contacts][#{contact_idx}][phone][#{phone_idx}][number]", phone[:number] %>
+<%= phone_number_type_select phone[:type], contact_idx, phone_idx %>
+<br>

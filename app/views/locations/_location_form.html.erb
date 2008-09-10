@@ -47,6 +47,20 @@
   </p>
 
   <p>
+    <b>Contacts</b><br />
+    <% location.contacts.each_with_index do |contact, i| %>
+      Name: <%= text_field_tag "location[contacts][#{i}][name]", contact[:name] %><br>
+      Email: <%= text_field_tag "location[contacts][#{i}][email]", contact[:email] %><br>
+      <% if contact[:phone] %>
+        <% contact[:phone].each_with_index do |phone, j| %>
+          <%= render :partial => "phone_number_form", :locals => {:phone => phone, :contact_idx => i, :phone_idx => j } %>
+        <% end %>
+      <% end %>
+      <br>
+    <% end %>
+  </p>
+
+  <p>
     <b>Hours</b><br />
     <%= f.text_field :hours %>
   </p>

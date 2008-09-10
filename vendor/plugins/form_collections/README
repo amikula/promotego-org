@@ -1,0 +1,61 @@
+FormCollections
+===============
+
+This plugin effectively rewrites UrlEncodedPairParser and provides the
+following features/changes:
+
+1. The parameter parsing algorithm is much simpler
+
+There's all sorts of wacky stuff happening in the current implementation of
+UrlEncodedPairParser#parse. This plugin does away with that. A stack is no
+longer used during the parse. Parsing an Array vs. parsing a Hash is no longer
+all that different.  See lib/patch_url_encoded_pair_parser.rb.
+
+2. Parsing "a[b][0][c]=6" yields {"a" => {"b" => [{"c" => "6"}]}}
+
+Previously this would be parsed to: {"a" => {"b" => {"0" => {"c" => "6"}}}}
+
+In other words, parameters that were formerly treated as hashes with a numeric
+index are now actually arrays.
+
+This is important, because the order in which form fields are present may be
+important to the back-end processing code. Here, the array in "b" will
+preserve the ordering specified -- generating an Array rather than a Hash for
+numeric indices. Most other scenarios should essentially work as before, with
+the exception of a few error cases (e.g. parsing "a/b@[c][d[e][]=f" yields
+{"a/b@" => {"c" => {"d[e" => ["f"]}}} instead of {"a/b@" => {"c" => {}}}).
+
+The main problem here is that if an array is instantiated with a value at
+index 1000000, then we'll have 999999 nil elements. I figure this can easily
+be worked around with an Array-like structure that consumes only as much memory
+as it needs but otherwise acts as an Array, or a hard limit set via
+configuration variable.
+
+3. fields_for now treats Arrays properly ...
+
+Example:
+
+  <% fields_for @post.comments do |comment_form, comment| %>
+    <%= comment.new_record? ? "" : comment_form.hidden_field(:id) %>
+    <%= comment_form.hidden_field :post_id %>
+    <%= comment_form.text_field :content %>
+    <hr />
+  <% end %>
+
+This will generate the following HTML for an array with two elements (one a new_record?, the other existing):
+
+  <input id="comments_0_id" name="comments[0][id]" type="hidden" value="1" />
+  <input id="comments_0_post_id" name="comments[0][post_id]" type="hidden" value="1" />
+  <input id="comments_0_content" name="comments[0][content]" size="30" type="text" value="a test comment" /> 
+  <hr />
+  <input id="comments_1_id" name="comments[1][post_id]" type="hidden" value="1" />
+  <input id="comments_1_content" name="comments[1][content]" size="30" type="text" value="" /> 
+  <hr />
+
+
+Example
+=======
+
+Just install the plugin, and the new behavior should already be in effect.
+
+Copyright (c) 2008 Thomas Lee <tom@vector-seven.com>, released under the MIT license
