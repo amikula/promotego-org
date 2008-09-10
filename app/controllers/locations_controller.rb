@@ -103,6 +103,8 @@ class LocationsController < ApplicationController
   # PUT /locations/1
   # PUT /locations/1.xml
   def update
+    logger.debug params.inspect
+
     begin
       @location = if (current_user.has_role?(:administrator))
                     Location.find(params[:id])
@@ -114,7 +116,7 @@ class LocationsController < ApplicationController
     end
 
     if (current_user.has_role?(:administrator))
-      if params[:user] && params[:user][:login]
+      unless params[:user].blank? || params[:user][:login].blank?
         new_owner = User.find_by_login(params[:user][:login])
         @location.change_user(new_owner.id, current_user)
       end
