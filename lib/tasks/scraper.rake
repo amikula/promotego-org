@@ -18,9 +18,16 @@ namespace :scraper do
       location.description = club[:info]
       location.is_aga = club[:is_aga?]
 
-      location.geocode
-      
       location.save!
+    end
+  end
+
+  task :geocode_clubs => :environment do
+    Location.find(:all,
+      :conditions => "lat is null or lng is null").each_with_index do |loc, i|
+      loc.geocode
+      loc.save!
+      puts "#{i+1} records completed" if (i+1)%10 == 0
     end
   end
 end
