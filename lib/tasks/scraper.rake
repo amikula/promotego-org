@@ -1,6 +1,12 @@
+require 'progressbar'
+
 namespace :scraper do
   task :scrape_clubs => :environment do
+    print "Scraping clubs from usgo.org..."
+    STDOUT.flush
+
     type_id = Type.find_by_name("Go Club").id
+    count = 0
 
     ClubScraper.get_clubs_from_url("http://usgo.org/cgi-bin/chapters.cgi?state=ALL") do |club|
       location = Location.new
@@ -19,15 +25,23 @@ namespace :scraper do
       location.is_aga = club[:is_aga?]
 
       location.save!
+
+      count += 1
     end
+
+    puts "done!"
+    puts "Got #{count} clubs from usgo.org"
   end
 
   task :geocode_clubs => :environment do
-    Location.find(:all,
-      :conditions => "lat is null or lng is null").each_with_index do |loc, i|
+    clubs = Location.find(:all, :conditions => "lat is null or lng is null")
+    puts "#{clubs.size} clubs to geocode"
+
+    ProgressBar.with_progress("geocoding", clubs) do |loc|
       loc.geocode
       loc.save!
-      puts "#{i+1} records completed" if (i+1)%10 == 0
     end
+
+    puts "Finished!"
   end
 end
