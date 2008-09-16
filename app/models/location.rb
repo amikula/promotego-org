@@ -23,6 +23,10 @@ class Location < ActiveRecord::Base
     }
   end
 
+  def before_save
+    clean_empty_contacts
+  end
+
   def user=(new_user)
     raise SecurityError.new("Must call change_user on objects already in the database") unless new_record?
 
@@ -97,5 +101,37 @@ class Location < ActiveRecord::Base
     else
       :city
     end
+  end
+
+  private
+  def clean_empty_contacts
+    return if contacts.nil?
+
+    contacts.delete_if do |contact|
+      clean_blanks(contact)
+
+      contact.blank? || has_only_blank_phones(contact)
+    end
+
+    self.contacts = nil if contacts.blank?
+  end
+
+  def has_only_blank_phones(contact)
+    if contact.keys == [:phone]
+      phone_array = contact[:phone]
+      phone_array.delete_if do |phone|
+        clean_blanks(phone)
+
+        phone.keys == [:type]
+      end
+
+      return phone_array.blank?
+    else
+      return false
+    end
+  end
+
+  def clean_blanks(hash)
+    hash.delete_if{|key,value| value.blank?}
   end
 end

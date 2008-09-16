@@ -140,4 +140,47 @@ describe Location do
       location.precision.should == :city
     end
   end
+
+  describe :before_save do
+    it "should clean blank contacts from the contacts array" do
+      location = Location.new(Location.valid_options)
+      location.should_receive(:clean_empty_contacts)
+      location.before_save
+    end
+  end
+
+  describe :clean_empty_contacts do
+    before(:each) do
+      @location = Location.new(Location.valid_options)
+    end
+
+    it "shouldn't fail if contacts is nil" do
+      @location.contacts = nil
+      lambda{@location.send(:clean_empty_contacts)}.should_not raise_error
+    end
+
+    it "should remove empty hashes from the contacts array" do
+      @location.contacts = [{:name => ""}, {:foo => :bar}, {}]
+      @location.send(:clean_empty_contacts)
+      @location.contacts.should == [{:foo => :bar}]
+    end
+
+    it "should treat hashes with only blank phone numbers as blank" do
+      @location.contacts = [{:email => "", :phone => [{:number => "", :type => "cell"}]}, {:foo => :bar}]
+      @location.send(:clean_empty_contacts)
+      @location.contacts.should == [{:foo => :bar}]
+    end
+
+    it "should not treat hashes with actual phone numbers as blank" do
+      @location.contacts = [{:phone => [{:number => "626-555-1212", :type => "cell"}]}, {:foo => :bar}]
+      @location.send(:clean_empty_contacts)
+      @location.contacts.should == [{:phone => [{:number => "626-555-1212", :type => "cell"}]}, {:foo => :bar}]
+    end
+
+    it "should leave empty arrays as nil" do
+      @location.contacts = [{}]
+      @location.send(:clean_empty_contacts)
+      @location.contacts.should == nil
+    end
+  end
 end
