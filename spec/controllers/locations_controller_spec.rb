@@ -139,6 +139,7 @@ describe LocationsController do
     before(:each) do
       @location = mock_model(Location)
       Location.stub!(:new).and_return(@location)
+      @location.stub!(:contacts=)
     end
   
     def do_get
@@ -174,6 +175,11 @@ describe LocationsController do
       Type.should_receive(:find).with(:all).and_return :types
       do_get
       assigns[:types].should == :types
+    end
+
+    it "should contain an empty contact object" do
+      @location.should_receive(:contacts=).with([{:phone => [{}]}])
+      do_get
     end
   end
 

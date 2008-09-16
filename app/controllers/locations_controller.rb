@@ -49,6 +49,7 @@ class LocationsController < ApplicationController
   # GET /locations/new.xml
   def new
     @location = Location.new
+    @location.contacts = [{:phone => [{}]}]
     @types = Type.find(:all)
 
     respond_to do |format|
