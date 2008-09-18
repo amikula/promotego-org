@@ -60,6 +60,7 @@ class LocationsController < ApplicationController
 
   # GET /locations/1/edit
   def edit
+    @contact_form = render_to_string(:partial => 'contact_form', :locals => {:contact_idx => 'IDX', :contact => {:phone => [{}]}}).gsub(/\n/, '').gsub(/'/, '"')
     @types = Type.find(:all)
     begin
       @location = if(current_user.has_role?(:administrator))

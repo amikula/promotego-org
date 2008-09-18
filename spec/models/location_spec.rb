@@ -171,6 +171,18 @@ describe Location do
       @location.contacts.should == [{:foo => :bar}]
     end
 
+    it "should recognize blank phone numbers with string keys" do
+      @location.contacts = [{"email" => "", "phone" => [{"number" => "", "type" => "cell"}]}, {:foo => :bar}]
+      @location.send(:clean_empty_contacts)
+      @location.contacts.should == [{:foo => :bar}]
+    end
+
+    it "should treat hashes with phone numbers with empty types as blank" do
+      @location.contacts = [{:email => "", :phone => [{:number => "", :type => ""}]}, {:foo => :bar}]
+      @location.send(:clean_empty_contacts)
+      @location.contacts.should == [{:foo => :bar}]
+    end
+
     it "should not treat hashes with actual phone numbers as blank" do
       @location.contacts = [{:phone => [{:number => "626-555-1212", :type => "cell"}]}, {:foo => :bar}]
       @location.send(:clean_empty_contacts)

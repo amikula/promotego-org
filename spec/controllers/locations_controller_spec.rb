@@ -202,11 +202,6 @@ describe LocationsController do
       response.should be_success
     end
   
-    it "should render edit template" do
-      do_get
-      response.should render_template('edit')
-    end
-
     it "should assign @user to be owner of the current location" do
       do_get
       assigns[:user].should equal(@location.user)
