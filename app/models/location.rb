@@ -117,12 +117,12 @@ class Location < ActiveRecord::Base
   end
 
   def has_only_blank_phones(contact)
-    if contact.keys == [:phone]
-      phone_array = contact[:phone]
+    if contact.keys.map(&:to_sym) == [:phone]
+      phone_array = contact[:phone] || contact["phone"]
       phone_array.delete_if do |phone|
         clean_blanks(phone)
 
-        phone.keys == [:type]
+        phone.blank? || phone.keys.map(&:to_sym) == [:type]
       end
 
       return phone_array.blank?

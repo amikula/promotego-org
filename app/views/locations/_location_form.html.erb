@@ -47,10 +47,16 @@
   </p>
 
   <p>
-    <b>Contacts</b><br />
-    <% location.contacts.each_with_index do |contact, i| %>
-      <%= render :partial => "contact_form", :locals => {:contact => contact, :contact_idx => i } %>
-    <% end %>
+    <b>Contacts</b>
+    <div id='contacts'>
+      <% location.contacts.each_with_index do |contact, i| %>
+        <%= render :partial => "contact_form", :locals => {:contact => contact, :contact_idx => i } %>
+      <% end %>
+    </div>
+    <script language='javascript'>
+      current_contacts = <%= location.contacts.length %>
+      $('contacts').innerHTML += '<%= @contact_form %>'.replace(/IDX/g, current_contacts)
+    </script>
   </p>
 
   <p>
