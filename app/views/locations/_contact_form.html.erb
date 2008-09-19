@@ -2,9 +2,12 @@ Name: <%= text_field_tag "location[contacts][#{contact_idx}][name]", contact[:na
 <br>
 Email: <%= text_field_tag "location[contacts][#{contact_idx}][email]", contact[:email] %>
 <br>
+Phone: <%= link_to "add phone", "javascript:add_phone(#{contact_idx})" %>
+<div id="phones_<%= contact_idx %>">
 <% if contact[:phone] %>
   <% contact[:phone].each_with_index do |phone, j| %>
     <%= render :partial => "phone_number_form", :locals => {:phone => phone, :contact_idx => contact_idx, :phone_idx => j } %>
   <% end %>
 <% end %>
+</div>
 <br>

@@ -48,6 +48,8 @@ class LocationsController < ApplicationController
   # GET /locations/new
   # GET /locations/new.xml
   def new
+    render_contact_partials
+
     @location = Location.new
     @location.contacts = [{:phone => [{}]}]
     @types = Type.find(:all)
@@ -60,7 +62,8 @@ class LocationsController < ApplicationController
 
   # GET /locations/1/edit
   def edit
-    @contact_form = render_to_string(:partial => 'contact_form', :locals => {:contact_idx => 'IDX', :contact => {:phone => [{}]}}).gsub(/\n/, '').gsub(/'/, '"')
+    render_contact_partials
+
     @types = Type.find(:all)
     begin
       @location = if(current_user.has_role?(:administrator))
@@ -158,5 +161,11 @@ class LocationsController < ApplicationController
       format.html { redirect_to(locations_url) }
       format.xml  { head :ok }
     end
+  end
+
+  private
+  def render_contact_partials
+    @contact_form = render_to_string(:partial => 'contact_form', :locals => {:contact_idx => 'CONTACT_IDX', :contact => {:phone => [{}]}}).gsub(/\n/, '\n').gsub(/'/, '"')
+    @phone_form = render_to_string(:partial => 'phone_number_form', :locals => {:phone => {}, :contact_idx => 'CONTACT_IDX', :phone_idx => 'PHONE_IDX'}).gsub(/\n/, '\n').gsub(/'/, '"')
   end
 end

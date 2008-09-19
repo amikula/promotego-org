@@ -47,15 +47,37 @@
   </p>
 
   <p>
-    <b>Contacts</b>
+    <b>Contacts</b> <%= link_to "add contact", "javascript:add_contact()" %>
     <div id='contacts'>
       <% location.contacts.each_with_index do |contact, i| %>
         <%= render :partial => "contact_form", :locals => {:contact => contact, :contact_idx => i } %>
       <% end %>
     </div>
     <script language='javascript'>
-      current_contacts = <%= location.contacts.length %>
-      $('contacts').innerHTML += '<%= @contact_form %>'.replace(/IDX/g, current_contacts)
+      current_contacts = <%= location.contacts.length %>;
+      current_phones = [<%= location.contacts.collect{|c| c[:phone] ? c[:phone].length : 0}.join(', ') %>]
+      function add_contact() {
+        new_contact =
+          '<%= @contact_form %>'.replace(/CONTACT_IDX/g, current_contacts);
+        appendHTML($('contacts'), new_contact);
+        current_phones[current_contacts] = 1
+        current_contacts++;
+      }
+
+      function add_phone(contact_idx) {
+        new_phone = '<%= @phone_form %>';
+        new_phone = new_phone.replace(/CONTACT_IDX/g, contact_idx);
+        new_phone = new_phone.replace(/PHONE_IDX/g, current_phones[contact_idx]);
+
+        appendHTML($('phones_'+contact_idx), new_phone)
+        current_phones[contact_idx]++;
+      }
+
+      function appendHTML(elem, html) {
+        newdiv = document.createElement("div")
+        newdiv.innerHTML = html
+        elem.appendChild(newdiv);
+      }
     </script>
   </p>
 

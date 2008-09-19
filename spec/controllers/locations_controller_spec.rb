@@ -151,11 +151,6 @@ describe LocationsController do
       response.should be_success
     end
   
-    it "should render new template" do
-      do_get
-      response.should render_template('new')
-    end
-  
     it "should create a new location" do
       Location.should_receive(:new).and_return(@location)
       do_get
