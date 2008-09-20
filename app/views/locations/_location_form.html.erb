@@ -49,13 +49,14 @@
   <p>
     <b>Contacts</b> <%= link_to "add contact", "javascript:add_contact()" %>
     <div id='contacts'>
-      <% location.contacts.each_with_index do |contact, i| %>
+      <% contacts = location.contacts || [{:phone => [{}]}] %>
+      <% contacts.each_with_index do |contact, i| %>
         <%= render :partial => "contact_form", :locals => {:contact => contact, :contact_idx => i } %>
       <% end %>
     </div>
     <script language='javascript'>
-      current_contacts = <%= location.contacts.length %>;
-      current_phones = [<%= location.contacts.collect{|c| c[:phone] ? c[:phone].length : 0}.join(', ') %>]
+      current_contacts = <%= contacts.length %>;
+      current_phones = [<%= contacts.collect{|c| c[:phone] ? c[:phone].length : 0}.join(', ') %>]
       function add_contact() {
         new_contact =
           '<%= @contact_form %>'.replace(/CONTACT_IDX/g, current_contacts);
