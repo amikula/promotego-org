@@ -189,6 +189,12 @@ describe Location do
       @location.contacts.should == [{:phone => [{:number => "626-555-1212", :type => "cell"}]}, {:foo => :bar}]
     end
 
+    it "should clean phone numbers even if contact is not blank" do
+      @location.contacts = [{:name => "Name", :phone => [{:number => "626-555-1212", :type => "cell"}, {:number => "", :type => ""}]}, {:foo => :bar}]
+      @location.send(:clean_empty_contacts)
+      @location.contacts.should == [{:name => "Name", :phone => [{:number => "626-555-1212", :type => "cell"}]}, {:foo => :bar}]
+    end
+
     it "should leave empty arrays as nil" do
       @location.contacts = [{}]
       @location.send(:clean_empty_contacts)
