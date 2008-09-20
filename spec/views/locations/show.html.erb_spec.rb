@@ -69,5 +69,12 @@ describe "/locations/show.html.erb" do
       end
     end
   end
+
+  describe "with nil contacts" do
+    it "shouldn't break with nil contacts" do
+      @location.stub!(:contacts).and_return(nil)
+      lambda{render "/locations/show.html.erb"}.should_not raise_error
+    end
+  end
 end
 

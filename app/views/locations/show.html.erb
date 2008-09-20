@@ -29,6 +29,7 @@
     <%= (h @location.description).gsub(/\n/, '<br>') %>
   </p>
 
+  <% if @location.contacts %>
   <p>
     <b>Contacts:</b>
     <% @location.contacts.each do |contact| %>
@@ -52,6 +53,7 @@
       <% end %>
     <% end %>
   </p>
+  <% end %>
 
   <% unless @location.hours.blank? %>
   <p>
