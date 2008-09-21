@@ -49,7 +49,7 @@
   <p>
     <b>Contacts</b> <%= link_to "add contact", "javascript:add_contact()" %>
     <div id='contacts'>
-      <% contacts = location.contacts || [{:phone => [{}]}] %>
+      <% contacts = location.contacts || [{}] %>
       <% contacts.each_with_index do |contact, i| %>
         <%= render :partial => "contact_form", :locals => {:contact => contact, :contact_idx => i } %>
       <% end %>
