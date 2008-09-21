@@ -18,10 +18,7 @@
 
   <p>
     <b>Address:</b><br>
-    <% unless @location.street_address.blank? %>
-      <%=h @location.street_address %><br>
-    <% end %>
-    <%=h @location.city %>, <%=h @location.state %> <%=h @location.zip_code %>
+    <%= render :partial => "address", :locals => {:location => @location} %>
   </p>
 
   <p>

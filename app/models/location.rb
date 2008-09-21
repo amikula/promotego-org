@@ -13,7 +13,8 @@ class Location < ActiveRecord::Base
       :type_id => Type.find(:first),
       :street_address => "Street Address",
       :city => "Anytown",
-      :state => "US",
+      :state => "State",
+      :country => "USA",
       :zip_code => "00000",
       :description => "description",
       :contacts => [],
@@ -55,29 +56,33 @@ class Location < ActiveRecord::Base
   end
 
   def geocode_address
-    city_state_zip = ""
+    element = []
 
-    unless city.blank? || state.blank?
-      city_state_zip = city + ", " + state
+    unless street_address.blank?
+      element << street_address
     end
 
-    unless zip_code.blank?
-      city_state_zip += " " unless city_state_zip.blank?
-      city_state_zip += zip_code
+    unless city.blank?
+      element << city
     end
 
-    if city_state_zip.blank?
-      errors.add_to_base("Must provide at least either city and state or zip code")
-      return nil
+    unless state.blank? && zip_code.blank?
+      state_zip = state
+      if state_zip.blank?
+        state_zip = zip_code
+      elsif !zip_code.blank?
+        state_zip << " "
+        state_zip << zip_code
+      end
+
+      element << state_zip unless state_zip.blank?
     end
 
-    if street_address.blank?
-      geo_address = city_state_zip
-    else
-      geo_address = street_address + ", " + city_state_zip
+    unless country.blank?
+      element << country
     end
 
-    return geo_address
+    return element.join(", ")
   end
 
   def change_user(new_user, administrator)
@@ -101,6 +106,26 @@ class Location < ActiveRecord::Base
     else
       :city
     end
+  end
+
+  def city_state_zip
+    components = []
+    components << city unless city.blank?
+
+    state_zip = ''
+    unless state.blank?
+      state_zip << state
+      unless zip_code.blank?
+        state_zip << ' '
+        state_zip << zip_code
+      end
+    else
+      state_zip = zip_code
+    end
+
+    components << state_zip unless state_zip.blank?
+
+    components.join(', ')
   end
 
   private

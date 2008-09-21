@@ -12,29 +12,82 @@ describe Location do
     @location.should be_valid
   end
 
-  it "should combine components into a single address for geocoding" do
-    @location.street_address="1600 Pennsylvania Ave."
-    @location.city="Washington"
-    @location.state="DC"
-    @location.geocode_address.should == "1600 Pennsylvania Ave., Washington, DC"
+  describe :geocode_address do
+    it "should combine components into a single address for geocoding" do
+      @location.street_address="1600 Pennsylvania Ave."
+      @location.city="Washington"
+      @location.state="DC"
+      @location.geocode_address.should == "1600 Pennsylvania Ave., Washington, DC"
 
-    @location.errors.should be_empty
+      @location.errors.should be_empty
+    end
+
+    it "should geocode with city and state or zip only, if street address is not present" do
+      @location.city = "Washington"
+      @location.state = "DC"
+
+      @location.geocode_address.should == "Washington, DC"
+
+      @location.errors.should be_empty
+    end
+
+    it "should not include that extraneous comma" do
+      @location.state = "Iowa"
+      @location.country = "USA"
+
+      @location.geocode_address.should == "Iowa, USA"
+
+      @location.errors.should be_empty
+    end
   end
 
-  it "should report an error if at least city and state or zip code is not present" do
-    @location.street_address="1600 Pennsylvania Ave."
+  describe :city_state_zip do
+    it "should show 'city, state zip' if all three are present" do
+      @location.city = 'City'
+      @location.state = 'State'
+      @location.zip_code = '00000'
 
-    @location.geocode_address.should == nil
-    @location.errors.should_not be_empty
-  end
+      @location.city_state_zip.should == 'City, State 00000'
+    end
 
-  it "should geocode with city and state or zip only, if street address is not present" do
-    @location.city = "Washington"
-    @location.state = "DC"
+    it "should show 'city, state' if zip code is not present" do
+      @location.city = 'City'
+      @location.state = 'State'
 
-    @location.geocode_address.should == "Washington, DC"
+      @location.city_state_zip.should == 'City, State'
+    end
 
-    @location.errors.should be_empty
+    it "should show 'city, zip' if state is not present" do
+      @location.city = 'City'
+      @location.zip_code = '00000'
+
+      @location.city_state_zip.should == 'City, 00000'
+    end
+
+    it "should show 'state zip' if city is not present" do
+      @location.state = 'State'
+      @location.zip_code = '00000'
+
+      @location.city_state_zip.should == 'State 00000'
+    end
+
+    it "should show 'city' if only city is present" do
+      @location.city = 'City'
+
+      @location.city_state_zip.should == 'City'
+    end
+
+    it "should show 'state' if only state is present" do
+      @location.state = 'State'
+
+      @location.city_state_zip.should == 'State'
+    end
+
+    it "should show 'zip' if only zip is present" do
+      @location.zip_code = '00000'
+
+      @location.city_state_zip.should == '00000'
+    end
   end
 
   it "should set an error if geocode is not successful" do

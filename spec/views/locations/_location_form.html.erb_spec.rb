@@ -30,6 +30,7 @@ describe "/locations/_location_form.html.erb" do
       with_tag('input#location_city[name=?]', "location[city]")
       with_tag('input#location_state[name=?]', "location[state]")
       with_tag('input#location_zip_code[name=?]', "location[zip_code]")
+      with_tag('input#location_country[name=?]', "location[country]")
       with_tag('input#location_hours[name=?]', "location[hours]")
       with_tag('textarea#location_description[name=?]', "location[description]")
       with_tag('input#location_url[name=?]', "location[url]")

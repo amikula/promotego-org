@@ -75,8 +75,11 @@ describe LocationsController do
     before(:each) do
       @location = mock_model(Location, :precision => :city,
                              :name => "Location Name", :lat => 0, :lng => 0,
-                             :city => "Location City",
-                             :state => "Location State", :zip_code => "00000")
+                             :street_address => 'Location Address',
+                             :city => "City",
+                             :state => "State", :zip_code => "00000",
+                             :country => "USA",
+                             :city_state_zip => "City, State 00000")
       Location.stub!(:find).and_return(@location)
     end
   

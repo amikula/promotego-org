@@ -5,6 +5,7 @@ describe "/locations/show.html.erb" do
   
   before(:each) do
     @location = mock_model(Location, Location.valid_options)
+    @location.stub!(:city_state_zip).and_return('City, State 00000')
     @location.stub!(:type).and_return(mock_model(Type, :name => "Foo"))
     @owner = mock_model(User, :login => "owner", :has_role? => false)
     @normal = mock_model(User, :login => "normal", :has_role? => false)
@@ -22,9 +23,8 @@ describe "/locations/show.html.erb" do
     response.should have_text(/#{@location.name}/)
     response.should have_text(/#{@location.type.name}/)
     response.should have_text(/#{@location.street_address}/)
-    response.should have_text(/#{@location.city}/)
-    response.should have_text(/#{@location.state}/)
-    response.should have_text(/#{@location.zip_code}/)
+    response.should have_text(/#{@location.city_state_zip}/)
+    response.should have_text(/#{@location.country}/)
     response.should have_text(/#{@location.description}/)
   end
 

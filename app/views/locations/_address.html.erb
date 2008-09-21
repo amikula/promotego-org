@@ -1,0 +1,11 @@
+<% unless location.street_address.blank? %>
+  <%=h location.street_address %>
+<% else %>
+  No street address available
+<% end %><br>
+<% unless location.city_state_zip.blank? %>
+  <%=h location.city_state_zip %><br>
+<% end %>
+<% unless location.country.blank? %>
+  <%=h location.country %>
+<% end %>
