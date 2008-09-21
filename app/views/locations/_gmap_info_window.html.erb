@@ -1,10 +1,5 @@
 <b><%= location.name %></b><br>
-<% if location.precision == :address %>
-  <%= location.street_address %>
-<% else %>
-  No street address available
-<% end %><br>
-<%= "#{@location.city}, #{@location.state}&nbsp; #{@location.zip_code}" %>
+<%= render :partial => 'address', :locals => {:location => location} %>
 <% if location.precision == :address %>
   <br><a href='http://maps.google.com/maps?saddr=<%= session[:last_search_address] %>&daddr=<%= @location.geocode_address %>'>Directions</a>
 <% end %>
