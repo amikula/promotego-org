@@ -12,20 +12,6 @@ describe SearchController do
     assigns[:types]
   end
 
-  it "should retrieve expected locations on search" do
-    new_location(:name => "EarthLink Office",
-                 :street_address => "2947 Bradley St.", :city => "Pasadena",
-                 :state => "CA", :zip_code => "91107").geocode.save!
-    new_location(:name => "White House",
-                    :street_address => "1600 Pennsylvania Ave.",
-                    :city => "Washington", :state => "DC").geocode.save!
-    new_location(:name => "Mom and Dad's", :zip_code => "77072").geocode.save!
-
-    get :radius, :address => @address, :radius => "5"
-
-    assigns[:results].delete_if{|result| result.is_a?(Location::LocationHeader)}.size.should == 1
-  end
-
   it "should find the closest result if no search results are present" do
     Location.should_receive(:find).with(:all, :origin => @address,
                             :within => 5, :order => :distance).and_return([])
@@ -61,7 +47,8 @@ describe SearchController do
     end
 
     it 'should not raise error when type is invalid' do
-      lambda{get :radius, :type => "bogus_type", :radius => "5", :address => @address}.should_not raise_error
+      Location.stub!(:find).and_return([])
+      get :radius, :type => "bogus_type", :radius => "5", :address => @address
     end
 
     it "should not filter by type id when type_id == 0" do
