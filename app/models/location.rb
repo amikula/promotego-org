@@ -49,6 +49,11 @@ class Location < ActiveRecord::Base
     if geo.success
       self.lat, self.lng = geo.lat, geo.lng
       self.geocode_precision = geo.precision
+      self.street_address = geo.street_address if geo.street_address
+      self.city = geo.city if geo.city
+      self.state = geo.state if geo.state
+      self.zip_code = geo.zip if geo.zip
+      self.country = geo.country_code if geo.country_code
       return self
     else
       errors.add_to_base("Could not geocode address")
@@ -68,9 +73,9 @@ class Location < ActiveRecord::Base
     end
 
     unless state.blank? && zip_code.blank?
-      state_zip = state
+      state_zip = state.clone
       if state_zip.blank?
-        state_zip = zip_code
+        state_zip = zip_code.clone
       elsif !zip_code.blank?
         state_zip << " "
         state_zip << zip_code
