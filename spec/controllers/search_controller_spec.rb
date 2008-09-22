@@ -161,6 +161,36 @@ describe SearchController do
     end
   end
 
+  describe :location_heading do
+    before :each do
+      @location = Location.new(:city => "City", :state => "State",
+                               :zip_code => '00000', :country => "USA")
+    end
+
+    it "should display 'city, state' when city and state are present" do
+      controller.send(:location_heading, @location).should == 'City, State'
+    end
+
+    it "should display 'city, state' when city and state are present" do
+      controller.send(:location_heading, @location).should == 'City, State'
+    end
+
+    it "should display 'zip, state' when city is not present but zip is" do
+      @location.city = nil
+      controller.send(:location_heading, @location).should == '00000, State'
+    end
+
+    it "should display 'state, country' when city and zip are blank" do
+      @location.city = @location.zip_code = nil
+      controller.send(:location_heading, @location).should == 'State, USA'
+    end
+
+    it "should display 'country' when only country is present" do
+      @location.city = @location.zip_code = @location.state = nil
+      controller.send(:location_heading, @location).should == 'USA'
+    end
+  end
+
   def mock_location(options)
     options[:precision] ||= :city
 

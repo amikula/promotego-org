@@ -76,10 +76,10 @@ class SearchController < ApplicationController
       current_city_distance = nil
 
       results.each do |result|
-        city_state = "#{result.city}, #{result.state}"
+        heading = location_heading(result)
 
         if current_heading
-          unless current_heading.geocode_address == city_state
+          unless current_heading.geocode_address == heading
             # current heading doesn't match
             # compute average distance or city distance
             if current_city_distance
@@ -93,11 +93,11 @@ class SearchController < ApplicationController
             current_city_distance = nil
 
             # create new heading
-            current_heading = Location::LocationHeader.new(city_state, :city)
+            current_heading = Location::LocationHeader.new(heading, :city)
             retval << current_heading
           end
         else
-          current_heading = Location::LocationHeader.new(city_state, :city)
+          current_heading = Location::LocationHeader.new(heading, :city)
           retval << current_heading
         end
 
@@ -117,5 +117,23 @@ class SearchController < ApplicationController
         current_heading.distance = (current_distances.inject(0){|sum,current| sum + current}/current_distances.size).to_s
       end
     end
+  end
+
+  def location_heading(location)
+    components = []
+
+    if !location.city.blank?
+      components << location.city
+    elsif !location.zip_code.blank?
+      components << location.zip_code
+    end
+
+    components << location.state unless location.state.blank?
+
+    return components.join(', ') if components.length == 2
+
+    components << location.country unless location.country.blank?
+
+    return components.join(', ')
   end
 end
