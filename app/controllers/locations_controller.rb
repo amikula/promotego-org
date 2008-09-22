@@ -1,4 +1,15 @@
 class LocationsController < ApplicationController
+  ZOOM = {
+    "unknown" => 6,
+    "country" => 3,
+    "state" => 6,
+    "city" => 12,
+    "zip" => 13,
+    "zip+4" => 14,
+    "street" => 14,
+    "address" => 15
+  }
+
   before_filter :login_required, :only => [:new, :edit, :create, :update, :destroy]
 
   auto_complete_for :user, :login
@@ -25,11 +36,8 @@ class LocationsController < ApplicationController
 
         @map = GMap.new("map_div")
         @map.control_init(:large_map => true,:map_type => true)
-        if(@location.precision == :address)
-          @map.center_zoom_init([@location.lat,@location.lng],15)
-        else
-          @map.center_zoom_init([@location.lat,@location.lng],12)
-        end
+        @map.center_zoom_init([@location.lat,@location.lng],
+                              ZOOM[@location.geocode_precision || "unknown"])
 
         info_window = render_to_string :partial => "gmap_info_window",
           :locals => {:location => @location}

@@ -1,5 +1,5 @@
 class Location < ActiveRecord::Base
-  class LocationHeader < Struct.new(:geocode_address, :precision, :distance); end
+  class LocationHeader < Struct.new(:geocode_address, :geocode_precision, :distance); end
   
   acts_as_mappable
   belongs_to :type
@@ -48,6 +48,7 @@ class Location < ActiveRecord::Base
     geo = GeoKit::Geocoders::MultiGeocoder.geocode(geocode_address)
     if geo.success
       self.lat, self.lng = geo.lat, geo.lng
+      self.geocode_precision = geo.precision
       return self
     else
       errors.add_to_base("Could not geocode address")
@@ -97,14 +98,6 @@ class Location < ActiveRecord::Base
       end
     else
       raise SecurityError.new("Only administrators may change owning user of a location")
-    end
-  end
-
-  def precision
-    unless street_address.blank?
-      :address
-    else
-      :city
     end
   end
 

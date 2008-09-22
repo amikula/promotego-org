@@ -44,7 +44,7 @@ describe SearchController do
       Location.should_receive(:find).
         with(:all, :origin => @address, :within => 5,
              :conditions => ["type_id = ?", go_club.id], :order => :distance).
-        and_return([mock_location(:precision => :address, :geocode_address => "City, State")])
+        and_return([mock_location(:geocode_precision => "address", :geocode_address => "City, State")])
 
       get :radius, :type => "go_clubs", :radius => "5", :address => @address
     end
@@ -54,7 +54,7 @@ describe SearchController do
 
       Location.should_receive(:find).
         with(:all, :origin => @address, :within => 5,
-             :conditions => ["type_id = ?", go_club.id], :order => :distance).and_return([mock_location(:precision => :address, :geocode_address => "123 Fake Lane, City, State")])
+             :conditions => ["type_id = ?", go_club.id], :order => :distance).and_return([mock_location(:geocode_precision => "address", :geocode_address => "123 Fake Lane, City, State")])
 
       get :radius, :type_id => go_club.id, :radius => "5",
         :address => @address
@@ -68,7 +68,7 @@ describe SearchController do
       go_club = mock_model(Type, :name => "Go Club")
 
       Location.should_receive(:find).
-        with(:all, :origin => @address, :within => 5, :order => :distance).and_return([mock_location(:precision => :address)])
+        with(:all, :origin => @address, :within => 5, :order => :distance).and_return([mock_location(:geocode_precision => "address")])
 
       get :radius, :type_id => 0, :radius => "5", :address => @address
     end
@@ -96,8 +96,8 @@ describe SearchController do
     it "when results have no address" do
       view_results = [
         Location::LocationHeader.new("City, State", :city, "4.1"),
-        mock_location(:type => :go_club, :name => "Location 1", :precision => :city, :geocode_address => "City, State", :distance => "4.1"),
-        mock_location(:type => :go_club, :name => "Location 2", :precision => :city, :geocode_address => "City, State", :distance => "4.1")
+        mock_location(:type => :go_club, :name => "Location 1", :geocode_precision => "city", :geocode_address => "City, State", :distance => "4.1"),
+        mock_location(:type => :go_club, :name => "Location 2", :geocode_precision => "city", :geocode_address => "City, State", :distance => "4.1")
       ]
 
       db_results = view_results.clone.delete_if{|loc| loc.is_a? Location::LocationHeader}
@@ -112,8 +112,8 @@ describe SearchController do
     it "when results have addresses, use average distance" do
       view_results = [
         Location::LocationHeader.new("City, State", :city, "4.1"),
-        mock_location(:type => :go_club, :name => "Location 1", :precision => :address, :geocode_address => '234 Sesame St., City, State', :distance => "4.0"),
-        mock_location(:type => :go_club, :name => "Location 2", :precision => :address, :geocode_address => '123 Sesame St., City, State', :distance => "4.2")
+        mock_location(:type => :go_club, :name => "Location 1", :geocode_precision => "address", :geocode_address => '234 Sesame St., City, State', :distance => "4.0"),
+        mock_location(:type => :go_club, :name => "Location 2", :geocode_precision => "address", :geocode_address => '123 Sesame St., City, State', :distance => "4.2")
       ]
 
       db_results = view_results.clone.delete_if{|loc| loc.is_a? Location::LocationHeader}
@@ -128,8 +128,8 @@ describe SearchController do
     it "when some results have addresses and some don't" do
       view_results = [
         Location::LocationHeader.new("City, State", :city, "4.2"),
-        mock_location(:type => :go_club, :name => "Location 1", :precision => :address, :geocode_address => '234 Sesame St., City, State', :distance => "4.0"),
-        mock_location(:type => :go_club, :name => "Location 2", :precision => :city, :geocode_address => 'City, State', :distance => "4.2")
+        mock_location(:type => :go_club, :name => "Location 1", :geocode_precision => "address", :geocode_address => '234 Sesame St., City, State', :distance => "4.0"),
+        mock_location(:type => :go_club, :name => "Location 2", :geocode_precision => "city", :geocode_address => 'City, State', :distance => "4.2")
       ]
 
       db_results = view_results.clone.delete_if{|loc| loc.is_a? Location::LocationHeader}
@@ -144,11 +144,11 @@ describe SearchController do
     it "for each city" do
       view_results = [
         Location::LocationHeader.new("City, State", :city, "4.2"),
-        mock_location(:type => :go_club, :name => "Location 1", :precision => :address, :geocode_address => '234 Sesame St., City, State', :distance => "4.0"),
-        mock_location(:type => :go_club, :name => "Location 2", :precision => :city, :geocode_address => 'City, State', :distance => "4.2"),
+        mock_location(:type => :go_club, :name => "Location 1", :geocode_precision => "address", :geocode_address => '234 Sesame St., City, State', :distance => "4.0"),
+        mock_location(:type => :go_club, :name => "Location 2", :geocode_precision => "city", :geocode_address => 'City, State', :distance => "4.2"),
         Location::LocationHeader.new("City 2, State", :city, "5.2"),
-        mock_location(:type => :go_club, :name => "Location 1", :precision => :address, :geocode_address => '234 Sesame St., City 2, State', :distance => "5.0"),
-        mock_location(:type => :go_club, :name => "Location 2", :precision => :city, :geocode_address => 'City 2, State', :distance => "5.2")
+        mock_location(:type => :go_club, :name => "Location 1", :geocode_precision => "address", :geocode_address => '234 Sesame St., City 2, State', :distance => "5.0"),
+        mock_location(:type => :go_club, :name => "Location 2", :geocode_precision => "city", :geocode_address => 'City 2, State', :distance => "5.2")
       ]
 
       db_results = view_results.clone.delete_if{|loc| loc.is_a? Location::LocationHeader}
@@ -192,12 +192,12 @@ describe SearchController do
   end
 
   def mock_location(options)
-    options[:precision] ||= :city
+    options[:geocode_precision] ||= "city"
 
-    options[:geocode_address] ||= case options[:precision]
-                                  when :address
+    options[:geocode_address] ||= case options[:geocode_precision]
+                                  when "address"
                                     "123 Number St., City, State"
-                                  when :city
+                                  when "city"
                                     "City, State"
                                   end
 

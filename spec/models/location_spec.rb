@@ -176,24 +176,6 @@ describe Location do
     end
   end
 
-  describe :precision do
-    it "should have precision :address when address is present" do
-      options = Location.valid_options
-      options[:street_address] = "Street Address"
-      location = Location.new(options)
-
-      location.precision.should == :address
-    end
-
-    it "should have precision :city when address is not present" do
-      options = Location.valid_options
-      options[:street_address] = nil
-      location = Location.new(options)
-
-      location.precision.should == :city
-    end
-  end
-
   describe :before_save do
     it "should clean blank contacts from the contacts array" do
       location = Location.new(Location.valid_options)
