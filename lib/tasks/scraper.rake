@@ -36,12 +36,15 @@ namespace :scraper do
   task :geocode_clubs => :environment do
     clubs = Location.find(:all, :conditions => "lat is null or lng is null")
     puts "#{clubs.size} clubs to geocode"
+    failed = 0
 
     ProgressBar.with_progress("geocoding", clubs) do |loc|
       loc.geocode
+      failed += 1 if loc.lat == nil || loc.lng == nil
       loc.save!
     end
 
     puts "Finished!"
+    puts "#{failed} geocode failures"
   end
 end
