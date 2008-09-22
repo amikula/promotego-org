@@ -52,7 +52,7 @@ describe "/search/radius.html.erb" do
 
   describe 'with results' do
     before(:each) do
-      @results = [mock_model(Location, :name => "The Club", :geocode_address => "The Address", :distance => 5, :precision => :precision, :type => :type)]
+      @results = [mock_model(Location, :name => "The Club", :geocode_address => "The Address", :distance => 5, :geocode_precision => "precision", :type => :type)]
       assigns[:results] = @results
     end
 
@@ -69,18 +69,18 @@ describe "/search/radius.html.erb" do
         Location::LocationHeader.new("City, State", :city, "5.1"),
         mock_model(Location, :name => "Club 1",
                    :geocode_address => "Club Address 1", :distance => 5.1,
-                   :type => :some_type, :precision => :city),
+                   :type => :some_type, :geocode_precision => "city"),
         mock_model(Location, :name => "Club 2",
                    :geocode_address => "Club Address 2", :distance => 5.1,
-                   :type => :some_type, :precision => :city),
+                   :type => :some_type, :geocode_precision => "city"),
         Location::LocationHeader.new("City, State 2", :city, "5.8"),
         mock_model(Location, :name => "Club 3",
                    :geocode_address => "Club Address 3", :distance => 5.8,
-                   :type => :some_type, :precision => :city),
+                   :type => :some_type, :geocode_precision => "city"),
         Location::LocationHeader.new("City, State 3", :city, "5.9"),
         mock_model(Location, :name => "Club 4",
                    :geocode_address => "Club Address 4", :distance => 5.9,
-                   :type => :some_type, :precision => :city)
+                   :type => :some_type, :geocode_precision => "city")
       ]
       assigns[:results] = @results
     end

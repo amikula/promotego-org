@@ -73,7 +73,7 @@ describe LocationsController do
   describe "handling GET /locations/1" do
 
     before(:each) do
-      @location = mock_model(Location, :precision => :city,
+      @location = mock_model(Location, :geocode_precision => "city",
                              :name => "Location Name", :lat => 0, :lng => 0,
                              :street_address => 'Location Address',
                              :city => "City",

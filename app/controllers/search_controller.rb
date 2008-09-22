@@ -9,8 +9,8 @@ class SearchController < ApplicationController
         find_closest
       else
         db_results.sort! do |a,b|
-          if a.city == b.city && a.state == b.state && a.precision != b.precision
-            if a.precision == :address
+          if a.city == b.city && a.state == b.state && a.geocode_precision != b.geocode_precision
+            if a.geocode_precision == "address"
               -1
             else
               1
@@ -101,7 +101,7 @@ class SearchController < ApplicationController
           retval << current_heading
         end
 
-        if result.precision == :address
+        if result.geocode_precision == "address"
           current_distances << result.distance.to_f
         else
           current_city_distance ||= result.distance
