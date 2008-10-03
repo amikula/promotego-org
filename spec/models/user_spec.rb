@@ -51,6 +51,13 @@ describe User do
     end.should_not change(User, :count)
   end
 
+  it 'requires proper email format' do
+    lambda do
+      u = create_user(:email => 'blahblah')
+      u.errors.on(:email).should_not be_nil
+    end.should_not change(User, :count)
+  end
+
   it 'resets password' do
     users(:quentin).update_attributes(:password => 'new password', :password_confirmation => 'new password')
     User.authenticate('quentin', 'new password').should == users(:quentin)
