@@ -3,8 +3,8 @@
 development:
   adapter: mysql
   database: promotego_development
-  username: promotego
-  password: promotego
+  username: root
+  password: 
   host: localhost
   timeout: 5000
 
@@ -14,15 +14,15 @@ development:
 test:
   adapter: mysql
   database: promotego_test
-  username: promotego
-  password: promotego
+  username: root
+  password: 
   host: localhost
   timeout: 5000
 
 production:
   adapter: mysql
   database: promotego_production
-  username: promotego
-  password: promotego
+  username: root
+  password: 
   host: localhost
   timeout: 5000
