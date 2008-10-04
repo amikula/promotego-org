@@ -17,7 +17,7 @@ class LocationsController < ApplicationController
   # GET /locations/1
   # GET /locations/1.xml
   def show
-    @location = Location.find(params[:id])
+    @location = Location.find_by_slug(params[:id])
 
     respond_to do |format|
       format.html do
