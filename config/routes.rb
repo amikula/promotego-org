@@ -3,7 +3,6 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'signup', :controller => "users", :action => "new"
   map.connect 'logout', :controller => "sessions", :action => "destroy"
   
-  map.location_seo 'location/:id', :controller => 'locations', :action => 'show'
   map.resources :roles
 
   map.resources :locations
