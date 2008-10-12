@@ -15,11 +15,11 @@ describe SearchController do
   it "should retrieve expected locations on search" do
     new_location(:name => "EarthLink Office",
                  :street_address => "2947 Bradley St.", :city => "Pasadena",
-                 :state => "CA", :zip_code => "91107").geocode.save!
+                 :state => "CA", :zip_code => "91107", :slug => 'earthlink-office').geocode.save!
     new_location(:name => "White House",
                     :street_address => "1600 Pennsylvania Ave.",
-                    :city => "Washington", :state => "DC").geocode.save!
-    new_location(:name => "Mom and Dad's", :zip_code => "77072").geocode.save!
+                    :city => "Washington", :state => "DC", :slug => 'white-house').geocode.save!
+    new_location(:name => "Mom and Dad's", :zip_code => "77072", :slug => 'mom-and-dads').geocode.save!
 
     get :radius, :address => @address, :radius => "5"
 
