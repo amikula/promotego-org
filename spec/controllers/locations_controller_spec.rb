@@ -70,7 +70,7 @@ describe LocationsController do
     end
   end
 
-  describe "handling GET /locations/1" do
+  describe "handling GET /locations/location-name" do
 
     before(:each) do
       @location = mock_model(Location, :geocode_precision => "city",
@@ -79,12 +79,13 @@ describe LocationsController do
                              :city => "City",
                              :state => "State", :zip_code => "00000",
                              :country => "USA",
+                             :slug => 'location-name',
                              :city_state_zip => "City, State 00000")
-      Location.stub!(:find).and_return(@location)
+      Location.stub!(:find_by_slug).and_return(@location)
     end
   
     def do_get
-      get :show, :id => "1"
+      get :show, :id => "location-name"
     end
 
     it "should be successful" do
@@ -93,7 +94,7 @@ describe LocationsController do
     end
   
     it "should find the location requested" do
-      Location.should_receive(:find).with("1").and_return(@location)
+      Location.should_receive(:find_by_slug).with("location-name").and_return(@location)
       do_get
     end
   
@@ -108,16 +109,16 @@ describe LocationsController do
     end
   end
 
-  describe "handling GET /locations/1.xml" do
+  describe "handling GET /locations/location-name.xml" do
 
     before(:each) do
       @location = mock_model(Location, :to_xml => "XML")
-      Location.stub!(:find).and_return(@location)
+      Location.stub!(:find_by_slug).and_return(@location)
     end
   
     def do_get
       @request.env["HTTP_ACCEPT"] = "application/xml"
-      get :show, :id => "1"
+      get :show, :id => "location-name"
     end
 
     it "should be successful" do
@@ -126,7 +127,7 @@ describe LocationsController do
     end
   
     it "should find the location requested" do
-      Location.should_receive(:find).with("1").and_return(@location)
+      Location.should_receive(:find_by_slug).with("location-name").and_return(@location)
       do_get
     end
   

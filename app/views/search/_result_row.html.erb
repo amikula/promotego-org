@@ -5,8 +5,8 @@
   </tr>
 <% else %>
   <tr class='location'>
-    <td><%= link_to(result.name, location_path(result)) %></td>
-    <td><%= result.street_address if result.geocode_precision == "address" %></td>
-    <td><%= ((result.distance.to_f*10).round)/10.0 if result.geocode_precision == "address" %></td>
+    <td><%= link_to(result.name,  location_path(result.slug)) %></td>
+    <td><%= result.street_address if result.geocode_precision == :address %></td>
+    <td><%= ((result.distance.to_f*10).round)/10.0 if result.geocode_precision == :address %></td>
   </tr>
 <% end %>
