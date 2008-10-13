@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Location do
+  fixtures :locations
   before(:each) do
     @location = Location.new
   end
@@ -181,6 +182,12 @@ describe Location do
       location = Location.new(Location.valid_options)
       location.should_receive(:clean_empty_contacts)
       location.before_save
+    end
+    
+    it "should generate slug if it is blank" do
+      location = Location.new(Location.valid_options.merge(:name => "Game Empire", :slug => nil))
+      location.before_save
+      location.slug.should == 'game-empire'
     end
   end
 

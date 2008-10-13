@@ -26,6 +26,9 @@ class Location < ActiveRecord::Base
 
   def before_save
     clean_empty_contacts
+    if self.slug.blank?
+      self.slug = self.sluggify
+    end
   end
 
   def user=(new_user)
@@ -125,8 +128,22 @@ class Location < ActiveRecord::Base
 
     components.join(', ')
   end
+  
+  # Returns the  sluggified string 
+  def sluggify
+    name = self.name.downcase.gsub(/[\W]/,'-').gsub(/[--]+/,'-').dasherize
+    slug = Location.find_all_by_slug(name)
+    if slug.size > 1
+      return "#{name}-#{slug.size-1}"
+    else
+      return name
+    end
+  end
 
   private
+  
+  # Fires before saving a location and updates slug
+
   def clean_empty_contacts
     return if contacts.nil?
 
