@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Location do
-  fixtures :locations
   before(:each) do
     @location = Location.new
   end
