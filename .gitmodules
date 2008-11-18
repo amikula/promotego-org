@@ -7,6 +7,3 @@
 [submodule "vendor/plugins/rspec-rails"]
 	path = vendor/plugins/rspec-rails
 	url = git://github.com/dchelimsky/rspec-rails.git
-[submodule "vendor/plugins/active_scaffold"]
-	path = vendor/plugins/active_scaffold
-	url = git://github.com/activescaffold/active_scaffold.git
