@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe "/roles/index.html.erb" do
+describe "/roles/index" do
   include RolesHelper
   
   before(:each) do
@@ -13,7 +13,7 @@ describe "/roles/index.html.erb" do
   end
 
   it "should render list of roles" do
-    render "/roles/index.html.erb"
+    render "/roles/index"
     response.should have_tag("tr>td", "MyString", 2)
   end
 end

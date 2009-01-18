@@ -1,0 +1,6 @@
+%b= location.name
+%br/
+= render :partial => 'address', :locals => {:location => location}
+- if location.geocode_precision == "address"
+  %br/
+  = link_to "Directions", "http://maps.google.com/maps?saddr=#{session[:last_search_address]}&daddr=#{@location.geocode_address}"

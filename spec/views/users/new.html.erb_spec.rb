@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe "/users/new.html.erb" do
+describe "/users/new" do
   include UsersHelper
   
   before do
@@ -17,7 +17,7 @@ describe "/users/new.html.erb" do
   end
 
   it "should render new form" do
-    render "/users/new.html.erb"
+    render "/users/new"
 
     response.should have_tag("form[action=/users][method=post]") do
       with_tag('input#user_login[name=?]', "user[login]")

@@ -1,0 +1,13 @@
+%h1 Listing roles
+
+%table
+  %tr
+    %th Name
+- for role in @roles
+  %tr
+    %td&= role.name
+    %td= link_to 'Show', role
+    %td= link_to 'Edit', edit_role_path(role)
+    %td= link_to 'Destroy', role, :confirm => 'Are you sure?', :method => :delete
+%br/
+= link_to 'New role', new_role_path

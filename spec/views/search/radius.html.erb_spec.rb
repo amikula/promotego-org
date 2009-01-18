@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe "/search/radius.html.erb" do
+describe "/search/radius" do
   include SearchHelper
 
   before(:each) do
@@ -132,7 +132,7 @@ describe "/search/radius.html.erb" do
   end
 
   def do_render
-    render '/search/radius.html.erb'
+    render '/search/radius'
   end
 
   def check_type_selected(type)

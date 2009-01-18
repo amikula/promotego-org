@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe "/layouts/application.html.erb" do
+describe "/layouts/application" do
   def do_render
     params[:controller] = "no_controller"
     params[:action] = "no_action"
 
-    render "/layouts/application.html.erb"
+    render "/layouts/application"
   end
 
   it 'should have a link to Home' do

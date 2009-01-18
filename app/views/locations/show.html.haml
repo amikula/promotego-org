@@ -1,0 +1,50 @@
+- if @location.is_aga?
+  %img{:src => 'http://usgo.org/images/agalogo.gif', :style => 'float: left; margin-right: 5px;'}
+%h1= h @location.name
+
+#club_info{:style => 'float: left;'}
+  %p
+    %b Type:
+    &= @location.type.name
+  - if @location.url
+    %p
+      %b Home page
+      = link_to @location.url, @location.url
+  %p
+    %b Address:
+    %br/
+    = render :partial => "address", :locals => {:location => @location}
+  %p
+    %b Description:
+    %br/
+    &= @location.description.gsub(/\n/, '<br/>')
+  - if @location.contacts
+    %p
+      %b Contacts:
+      - @location.contacts.each do |contact|
+        %br/
+        - if contact[:name]
+          &= contact[:name]
+          %br/
+        - if contact[:email]
+          = mail_to(contact[:email], "Email this contact")
+          %br/
+        - unless contact[:phone].blank?
+          - contact[:phone].each do |phone|
+            &= phone[:number]
+            - unless phone[:type].blank?
+              == (#{phone[:type]})
+            %br/
+  - unless @location.hours.blank?
+    %p
+      %b Hours:
+      &= @location.hours
+  %br/
+  - if(current_user && (current_user == @location.user || current_user.has_role?(:administrator)))
+    = link_to 'Edit', edit_location_path(@location)
+    = link_to 'Destroy', @location, :confirm => 'Are you sure?', :method => :delete
+    |
+  = link_to 'Back', 'javascript:history.go(-1)'
+- if @map
+  #right_column{:style => 'float: right;'}
+    = @map.div(:width => 350, :height => 300)

@@ -1,0 +1,9 @@
+- if result.is_a?(Location::LocationHeader)
+  %tr.location_header
+    %td{:colspan => 2}&= result.geocode_address
+    %td= ((result.distance.to_f*10).round)/10.0
+- else
+  %tr.location
+    %td= link_to(result.name,  location_path(result.slug))
+    %td= result.street_address if result.geocode_precision == :address
+    %td= ((result.distance.to_f*10).round)/10.0 if result.geocode_precision == :address

@@ -1,0 +1,15 @@
+%h1 Editing type
+
+= error_messages_for :type
+
+- form_for(@type) do |f|
+  %p
+    %b Name
+    %br/
+    = f.text_field :name
+  %p
+    = f.submit "Update"
+
+= link_to 'Show', @type
+|
+= link_to 'Back', types_path

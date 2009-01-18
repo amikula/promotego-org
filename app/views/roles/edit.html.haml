@@ -1,0 +1,15 @@
+%h1 Editing role
+
+= error_messages_for :role
+
+- form_for(@role) do |f|
+  %p
+    %b Name
+    %br/
+    = f.text_field :name
+  %p
+    = f.submit "Update"
+
+= link_to 'Show', @role
+|
+= link_to 'Back', roles_path

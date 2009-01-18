@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe "/locations/new.html.erb" do
+describe "/locations/new" do
   include LocationsHelper
   
   before(:each) do
@@ -18,7 +18,7 @@ describe "/locations/new.html.erb" do
   end
 
   it "should render new form" do
-    render "/locations/new.html.erb"
+    render "/locations/new"
 
     response.should have_tag("form[action=?][method=post]", locations_path) do
       with_tag("input#location_name[name=?]", "location[name]")

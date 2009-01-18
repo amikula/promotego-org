@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe "/types/show.html.erb" do
+describe "/types/show" do
   include TypesHelper
   
   before(:each) do
@@ -11,7 +11,7 @@ describe "/types/show.html.erb" do
   end
 
   it "should render attributes in <p>" do
-    render "/types/show.html.erb"
+    render "/types/show"
     response.should have_text(/MyString/)
   end
 end
