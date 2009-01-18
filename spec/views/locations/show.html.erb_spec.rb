@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe "/locations/show.html.erb" do
+describe "/locations/show" do
   include LocationsHelper
   
   before(:each) do
@@ -19,7 +19,7 @@ describe "/locations/show.html.erb" do
   end
 
   it "should render attributes in <p>" do
-    render "/locations/show.html.erb"
+    render "/locations/show"
     response.should have_text(/#{@location.name}/)
     response.should have_text(/#{@location.type.name}/)
     response.should have_text(/#{@location.street_address}/)
@@ -33,21 +33,21 @@ describe "/locations/show.html.erb" do
       it "when no user is logged in and no user owns the record" do
         template.stub!(:current_user).and_return(nil)
         @location.stub!(:user).and_return(nil)
-        render "/locations/show.html.erb"
+        render "/locations/show"
         response.should_not have_tag('a', 'Edit')
         response.should_not have_tag('a', 'Destroy')
       end
 
       it "when no user is logged in" do
         template.stub!(:current_user).and_return(nil)
-        render "/locations/show.html.erb"
+        render "/locations/show"
         response.should_not have_tag('a', 'Edit')
         response.should_not have_tag('a', 'Destroy')
       end
 
       it "when normal user is logged in" do
         template.stub!(:current_user).and_return(@normal)
-        render "/locations/show.html.erb"
+        render "/locations/show"
         response.should_not have_tag('a', 'Edit')
         response.should_not have_tag('a', 'Destroy')
       end
@@ -56,14 +56,14 @@ describe "/locations/show.html.erb" do
     describe "display" do
       it "when location's owner is logged in" do
         template.stub!(:current_user).and_return(@owner)
-        render "/locations/show.html.erb"
+        render "/locations/show"
         response.should have_tag('a', 'Edit')
         response.should have_tag('a', 'Destroy')
       end
 
       it "when administrator is logged in" do
         template.stub!(:current_user).and_return(@administrator)
-        render "/locations/show.html.erb"
+        render "/locations/show"
         response.should have_tag('a', 'Edit')
         response.should have_tag('a', 'Destroy')
       end
@@ -73,7 +73,7 @@ describe "/locations/show.html.erb" do
   describe "with nil contacts" do
     it "shouldn't break with nil contacts" do
       @location.stub!(:contacts).and_return(nil)
-      lambda{render "/locations/show.html.erb"}.should_not raise_error
+      lambda{render "/locations/show"}.should_not raise_error
     end
   end
 end

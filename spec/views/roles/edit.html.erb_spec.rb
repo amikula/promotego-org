@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe "/roles/edit.html.erb" do
+describe "/roles/edit" do
   include RolesHelper
   
   before do
@@ -10,7 +10,7 @@ describe "/roles/edit.html.erb" do
   end
 
   it "should render edit form" do
-    render "/roles/edit.html.erb"
+    render "/roles/edit"
     
     response.should have_tag("form[action=#{role_path(@role)}][method=post]") do
       with_tag('input#role_name[name=?]', "role[name]")

@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe "/types/edit.html.erb" do
+describe "/types/edit" do
   include TypesHelper
   
   before do
@@ -10,7 +10,7 @@ describe "/types/edit.html.erb" do
   end
 
   it "should render edit form" do
-    render "/types/edit.html.erb"
+    render "/types/edit"
     
     response.should have_tag("form[action=#{type_path(@type)}][method=post]") do
       with_tag('input#type_name[name=?]', "type[name]")

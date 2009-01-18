@@ -1,0 +1,13 @@
+%h1 New role
+
+= error_messages_for :role
+
+- form_for(@role) do |f|
+  %p
+    %b Name
+    %br/
+    = f.text_field :name
+  %p
+    = f.submit "Create"
+
+= link_to 'Back', roles_path

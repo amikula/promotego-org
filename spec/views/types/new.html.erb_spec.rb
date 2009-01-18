@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe "/types/new.html.erb" do
+describe "/types/new" do
   include TypesHelper
   
   before(:each) do
@@ -11,7 +11,7 @@ describe "/types/new.html.erb" do
   end
 
   it "should render new form" do
-    render "/types/new.html.erb"
+    render "/types/new"
     
     response.should have_tag("form[action=?][method=post]", types_path) do
       with_tag("input#type_name[name=?]", "type[name]")

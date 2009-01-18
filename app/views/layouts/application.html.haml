@@ -1,0 +1,51 @@
+!!! XML
+!!! 1.1
+%html
+  %head
+    %title
+      = @title || params[:controller].capitalize + " " + params[:action].capitalize
+    = stylesheet_link_tag :all
+    = javascript_include_tag "prototype"
+    = javascript_include_tag "effects"
+    = javascript_include_tag "dragdrop"
+    = javascript_include_tag "controls"
+    = javascript_include_tag "lowpro"
+    = javascript_include_tag "email_decoder"
+    = javascript_include_tag "application"
+    :javascript
+      = @content_for_page_scripts
+
+    - if @map
+      = GMap.header
+      = @map.to_html
+    
+  %body
+    #wrapper
+      #header PromoteGo.org
+      #sitenav
+        %ul
+          %li
+            = link_to "Home", :controller => :home, :action => :index
+          %li
+            = link_to "Find a Club", :controller => :search, :action => :radius, :type => "go_club"
+          %li
+            = link_to "About", :controller => :home, :action => :show, :page => :about
+          %li
+            = link_to "Contact", :controller => :home, :action => :show, :page => :contact
+          - if current_user
+            %li
+              = link_to "Log out", :controller => :sessions, :action => :destroy
+            %li
+              == Welcome, #{current_user.login}
+          - else
+            %li
+              = link_to "Log in", :controller => :sessions, :action => :new
+            %li
+              = link_to "Register", :controller => :users, :action => :new
+      #navlinks
+      #body
+        = display_standard_flashes
+        = @content_for_layout
+      #footer
+        PromoteGo.org is open source software.
+        = link_to "Learn more!", "http://github.com/amikula/promotego-org/wikis/home"

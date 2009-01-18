@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe "/locations/edit.html.erb" do
+describe "/locations/edit" do
   include LocationsHelper
   
   before do
@@ -17,7 +17,7 @@ describe "/locations/edit.html.erb" do
   end
 
   it "should render edit form" do
-    render "/locations/edit.html.erb"
+    render "/locations/edit"
 
     response.should have_tag("form[action=#{location_path(@location)}][method=post]") do
       with_tag('input#location_name[name=?]', "location[name]")
@@ -40,7 +40,7 @@ describe "/locations/edit.html.erb" do
     it "should be included in edit form for super-users" do
       @user.should_receive(:has_role?).with(:administrator).and_return(true)
 
-      render "/locations/edit.html.erb"
+      render "/locations/edit"
 
       response.should have_tag("form[action=#{location_path(@location)}][method=post]") do
         with_tag('input#user_login[name=?]', 'user[login]')
@@ -50,7 +50,7 @@ describe "/locations/edit.html.erb" do
     it "should not be included in edit form for non-super-users" do
       @user.should_receive(:has_role?).with(:administrator).and_return(false)
 
-      render "/locations/edit.html.erb"
+      render "/locations/edit"
 
       response.should have_tag("form[action=#{location_path(@location)}][method=post]") do
         without_tag('input#user_login[name=?]', 'user[login]')

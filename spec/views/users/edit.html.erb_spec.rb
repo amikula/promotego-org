@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe "/users/edit.html.erb" do
+describe "/users/edit" do
   include UsersHelper
   
   before(:each) do
@@ -10,7 +10,7 @@ describe "/users/edit.html.erb" do
   end
 
   it "should render edit form" do
-    render "/users/edit.html.erb"
+    render "/users/edit"
 
     response.should have_tag("form[action=/users][method=post]") do
       with_tag('input#user_login[name=?]', "user[login]")
@@ -35,7 +35,7 @@ describe "/users/edit.html.erb" do
     end
 
     it "should have a drop-down multi-selection list of roles" do
-      render "/users/edit.html.erb"
+      render "/users/edit"
 
       should_have_form_with_roles(true)
     end

@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe "/locations/_location_form.html.erb" do
+describe "/locations/_location_form" do
   include LocationsHelper
   
   before do

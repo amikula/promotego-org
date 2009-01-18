@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe "/types/index.html.erb" do
+describe "/types/index" do
   include TypesHelper
   
   before(:each) do
@@ -13,7 +13,7 @@ describe "/types/index.html.erb" do
   end
 
   it "should render list of types" do
-    render "/types/index.html.erb"
+    render "/types/index"
     response.should have_tag("tr>td", "MyString", 2)
   end
 end

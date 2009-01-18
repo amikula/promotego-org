@@ -1,0 +1,61 @@
+- unless @results
+  - content_for("page_scripts") do
+    :plain
+      Event.observe(window, 'load',
+        function() { $('address').focus() }
+      );
+
+- if !@results.blank?
+  %h1 Search Results
+  %table.results
+    %tr
+      %th Name
+      %th Address
+      %th Miles
+    - @results.each do |result|
+      = render :partial => "result_row", :locals => {:result => result}
+  %br/
+  %br/
+- elsif @closest
+  %h1 No Match
+  %p
+    No locations matched your search.  However, here is the closest match in
+    our database:
+  %table.results
+    %tr
+      %th Name
+      %th Address
+      %th Miles
+    = render :partial => "result_row", :locals => {:result => @closest}
+  %br/
+  %br/
+
+- if @results.blank? && @closest.blank?
+  %h1 Search
+- else
+  %h2 Search again
+
+%p
+  Enter a full address, a city and state, or a zip code to find locations to
+  play Go in your area.  Your information won't be shared, and the more
+  information you provide, the more accurate the search will be.
+- form_tag({:action => "radius", :type => params[:type]}, :method => :get) do
+  %table
+    %tr
+      %td Address, City, State, or Zip:
+      %td= text_field_tag :address, @address, :size => 30
+    %tr
+      %td Radius:
+      %td
+        %select#radius{:name => "radius"}
+          - @radii.each do |radius|
+            %option{:selected => radius == @radius}= radius
+    - unless params[:type]
+      %tr
+        %td Type:
+        %td
+          %select#type_id{:name => "type_id"}
+            %option{:value => "0"} Any
+            - @types.each do |type|
+              %option{:value => type.id, :selected => type.id == @type_id}= type.name
+  = submit_tag 'Search'

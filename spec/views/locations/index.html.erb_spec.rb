@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe "/locations/index.html.erb" do
+describe "/locations/index" do
   include LocationsHelper
   
   before(:each) do
@@ -31,7 +31,7 @@ describe "/locations/index.html.erb" do
   end
 
   it "should render list of locations" do
-    render "/locations/index.html.erb"
+    render "/locations/index"
     response.should have_tag("tr>td", "Location1 Name")
     response.should have_tag("tr>td", "Location2 Name")
     response.should have_tag("tr>td", @type1.name)
@@ -45,7 +45,7 @@ describe "/locations/index.html.erb" do
   end
 
   it "should render other users' locations with class other_users" do
-    render "/locations/index.html.erb"
+    render "/locations/index"
 
     response.should have_tag("tr>td", "Location1 Name")
 
@@ -55,7 +55,7 @@ describe "/locations/index.html.erb" do
   end
 
   it "should link the name of the location to its display page" do
-    render "/locations/index.html.erb"
+    render "/locations/index"
 
     response.should have_tag("a[href=/locations/#{@location_98.id}]", @location_98.name)
     response.should have_tag("a[href=/locations/#{@location_99.id}]", @location_99.name)

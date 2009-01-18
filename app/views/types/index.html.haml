@@ -1,0 +1,15 @@
+%h1 Listing types
+
+%table
+  %tr
+    %th Name
+  - for type in @types
+    %tr
+      %td&= type.name
+      %td= link_to 'Show', type
+      %td= link_to 'Edit', edit_type_path(type)
+      %td= link_to 'Destroy', type, :confirm => 'Are you sure?', :method => :delete
+
+%br/
+
+= link_to 'New type', new_type_path
