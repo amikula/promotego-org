@@ -1,10 +1,10 @@
 - unless location.street_address.blank?
-  &= location.street_address
+  = location.street_address
 - else
   No street address available
-  %br/
+%br/
 - unless location.city_state_zip.blank?
-  &= location.city_state_zip
+  = location.city_state_zip
   %br/
 - unless location.country.blank?
-  &= location.country
+  = location.country

@@ -1,19 +1,24 @@
 - form_for :user, :url => users_path do |f|
   %p
     %label{:for => "login"} Login
+    %br/
     = f.text_field :login
   %p
     %label{:for => "email"} Email
+    %br/
     = f.text_field :email
   %p
     %label{:for => "password"} Password
+    %br/
     = f.password_field :password
   %p
     %label{:for => "password_confirmation"} Confirm Password
+    %br/
     = f.password_field :password_confirmation
   - if current_user && @roles
     %p
       %label{:for => "roles"} Roles
+      %br/
       %select{:name => "user[roles][]", :multiple => "multiple"}
         = options_from_collection_for_select(@roles, "id", "name", @user.roles.collect{|r| r.id})
   %p

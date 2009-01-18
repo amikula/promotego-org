@@ -17,7 +17,7 @@
   %p
     %b Description:
     %br/
-    &= @location.description.gsub(/\n/, '<br/>')
+    = @location.description.gsub(/\n/, '<br/>')
   - if @location.contacts
     %p
       %b Contacts:
