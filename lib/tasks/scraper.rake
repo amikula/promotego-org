@@ -1,6 +1,7 @@
 require 'progressbar'
 
 namespace :scraper do
+  desc "Scrape clubs from the AGA web site"
   task :scrape_clubs => :environment do
     print "Scraping clubs from usgo.org..."
     STDOUT.flush
@@ -33,6 +34,7 @@ namespace :scraper do
     puts "Got #{count} clubs from usgo.org"
   end
 
+  desc "Geocode clubs in the db without a lat or lng"
   task :geocode_clubs => :environment do
     clubs = Location.find(:all, :conditions => "lat is null or lng is null")
     puts "#{clubs.size} clubs to geocode"

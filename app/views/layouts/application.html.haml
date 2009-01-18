@@ -13,7 +13,7 @@
     = javascript_include_tag "email_decoder"
     = javascript_include_tag "application"
     :javascript
-      = @content_for_page_scripts
+      #{@content_for_page_scripts}
 
     - if @map
       = GMap.header
