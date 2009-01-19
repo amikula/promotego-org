@@ -41,7 +41,8 @@ class LocationsController < ApplicationController
 
         info_window = render_to_string :partial => "gmap_info_window",
           :locals => {:location => @location}
-        info_window.gsub!(/\n/, '').gsub!('"', "'")
+        info_window.gsub!(/\n/, '')
+        info_window.gsub!('"', "'")
 
         club = GMarker.new([@location.lat,@location.lng],
                            :info_window => info_window)
