@@ -18,4 +18,5 @@ config.action_view.cache_template_loading            = true
 # Disable delivery errors, bad email addresses will be ignored
 # config.action_mailer.raise_delivery_errors = false
 
-PUBLIC_HOSTNAME = 'promotego.org'
+config.action_mailer.default_url_options = {:host => "promotego.org",
+                                            :only_path => false }
