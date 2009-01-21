@@ -16,5 +16,5 @@ config.action_controller.perform_caching             = false
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
 
-PUBLIC_HOSTNAME = 'localhost'
-PUBLIC_PORT = '3000'
+config.action_mailer.default_url_options = {:host => "example.com", :port => 3000,
+                                            :only_path => false }

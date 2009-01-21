@@ -21,4 +21,5 @@ config.action_controller.allow_forgery_protection    = false
 # ActionMailer::Base.deliveries array.
 config.action_mailer.delivery_method = :test
 
-PUBLIC_HOSTNAME = "testhost"
+config.action_mailer.default_url_options = {:host => "testhost",
+                                            :only_path => false }
