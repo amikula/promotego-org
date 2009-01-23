@@ -12,7 +12,7 @@ class ContacttoController < ApplicationController
     @listing_url = params[:listing_url]
 
     if verify_recaptcha
-      Obfuscated.deliver_contact(to, @from, @subject, @message, @listing_url)
+      UserMailer.deliver_contact(to, @from, @subject, @message, @listing_url)
 
       flash[:notice] = "Your message has been sent"
 

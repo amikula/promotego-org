@@ -11,6 +11,13 @@ class UserMailer < ActionMailer::Base
     @body[:url]  = root_url
   end
   
+  def contact(to, sender, subject, message, url)
+    subject    subject
+    recipients to
+    from       "contact@promotego.org"
+    body       :message => message, :url => url, :sender => sender
+  end
+
   protected
     def setup_email(user, subject)
       recipients  "#{user.email}"
