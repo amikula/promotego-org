@@ -62,4 +62,38 @@ describe UserMailer do
       @email.subject.should =~ %r{activated}
     end
   end
+
+  describe "when sending a contact e-mail" do
+    before(:each) do
+      @email = UserMailer.create_contact('to_address', 'from_address',
+                                         'subject', 'message_body',
+                                         'http://some.url')
+    end
+
+    it "should have the correct sender" do
+      @email.from.should == ['contact@promotego.org']
+    end
+
+    it "should be sent to the correct recipient" do
+      @email.to.should == ['to_address']
+    end
+
+    it "should contain the correct url" do
+      @email.body.should =~ %r{http://some.url}
+    end
+
+    it "should contain the correct subject" do
+      @email.subject.should == 'subject'
+    end
+
+    it "should contain the message body" do
+      @email.body.should =~ %r{message_body}
+    end
+
+    it "should have the from address in the message body" do
+      puts @email.body
+
+      @email.body.should =~ %r{from_address}
+    end
+  end
 end
