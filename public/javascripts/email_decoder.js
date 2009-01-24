@@ -8,7 +8,7 @@ EmailDecoder = Behavior.create({
       anchor.setAttribute('href', 'mailto:' + this.decode(address));
     }
 
-    if (anchor.text.match(/^Email this contact$/)) {
+    if (anchor.text.match(/^(email this contact|click here)$/i)) {
       anchor.innerHTML = this.decode(address)
     }
   }, 
