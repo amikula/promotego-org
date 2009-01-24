@@ -14,7 +14,7 @@ class UserMailer < ActionMailer::Base
   def contact(to, sender, subject, message, url)
     subject    subject
     recipients to
-    from       "contact@promotego.org"
+    from       ADMIN_EMAIL
     body       :message => message, :url => url, :sender => sender
   end
 

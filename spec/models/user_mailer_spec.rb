@@ -38,7 +38,6 @@ describe UserMailer do
     it_should_behave_like "promotego.org email"
 
     it "should contain the activation_code" do
-      puts
       @email.body.should =~ /#{@user.activation_code}/
     end
 
@@ -71,7 +70,7 @@ describe UserMailer do
     end
 
     it "should have the correct sender" do
-      @email.from.should == ['contact@promotego.org']
+      @email.from.should == [ADMIN_EMAIL]
     end
 
     it "should be sent to the correct recipient" do
@@ -91,8 +90,6 @@ describe UserMailer do
     end
 
     it "should have the from address in the message body" do
-      puts @email.body
-
       @email.body.should =~ %r{from_address}
     end
   end
