@@ -12,8 +12,7 @@
       %th Name
       %th Address
       %th Miles
-    - @results.each do |result|
-      = render :partial => "result_row", :locals => {:result => result}
+    = render :partial => "result", :collection => @results
   %br/
   %br/
 - elsif @closest
@@ -26,7 +25,7 @@
       %th Name
       %th Address
       %th Miles
-    = render :partial => "result_row", :locals => {:result => @closest}
+    = render :partial => "result", :object => @closest
   %br/
   %br/
 
