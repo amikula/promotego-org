@@ -221,7 +221,7 @@ describe LocationsController do
   describe "handling POST /locations" do
 
     before(:each) do
-      @location = mock_model(Location, :to_param => "1")
+      @location = mock_model(Location, :to_param => "1", :slug => 'location-slug')
       @location.stub!(:user=)
       Location.stub!(:new).and_return(@location)
     end
@@ -239,9 +239,9 @@ describe LocationsController do
         do_post
       end
 
-      it "should redirect to the new location" do
+      it "should redirect to the new location's slug" do
         do_post
-        response.should redirect_to(location_url("1"))
+        response.should redirect_to(location_path('location-slug'))
       end
 
       it "should save the current user as the location's owner" do
@@ -278,7 +278,7 @@ describe LocationsController do
   describe "handling PUT /locations/1" do
 
     before(:each) do
-      @location = mock_model(Location, :to_param => "1")
+      @location = mock_model(Location, :to_param => "1", :slug => 'location-slug')
       @locations = [@location]
       @locations.stub!(:find).with("1").and_return(@location)
       @user.stub!(:locations).and_return(@locations)
@@ -310,7 +310,7 @@ describe LocationsController do
 
       it "should redirect to the location" do
         do_put
-        response.should redirect_to(location_url("1"))
+        response.should redirect_to(location_path('location-slug'))
       end
 
       it "should re-geocode the location" do
@@ -384,7 +384,7 @@ describe LocationsController do
 
   describe "with normal user access" do
     before(:each) do
-      @location = mock_model(Location, :user => @user)
+      @location = mock_model(Location, :user => @user, :slug => 'location-slug')
       @locations = [@location]
       @user.should_receive(:locations).and_return(@locations)
     end
@@ -417,6 +417,8 @@ describe LocationsController do
         @location.should_receive(:save).and_return(true)
 
         put :update, :id => @location.id
+
+        response.should redirect_to(location_path('location-slug'))
       end
 
       it "should not work for other users' locations" do
@@ -434,7 +436,7 @@ describe LocationsController do
   describe "with administrative user access" do
     before(:each) do
       @user.stub!(:has_role?).with(:administrator).and_return(true)
-      @location = mock_and_find(Location, :user => @user)
+      @location = mock_and_find(Location, :user => @user, :slug => 'location-slug')
     end
 
     it "should list all locations in locations list, regardless of ownership" do
@@ -458,6 +460,8 @@ describe LocationsController do
       @location.should_receive(:save).and_return(true)
 
       put :update, :id => @location.id
+
+      response.should redirect_to(location_path('location-slug'))
     end
   end
 
