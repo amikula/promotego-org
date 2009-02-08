@@ -11,20 +11,20 @@ describe ClubScraper do
   describe :is_aga? do
     before(:all) do
       @aga_example = Hpricot(<<-EOF).at('td')
-			<td>
-				
-					<img src="../images/agalogo.gif">
+      <td>
 
-				
-				&nbsp;
-			</td> 
+          <img src="../images/agalogo.gif">
+
+
+        &nbsp;
+      </td> 
       EOF
 
       @non_aga_example = Hpricot(<<-EOF).at('td')
-			<td>
-				
-				&nbsp;
-			</td> 
+      <td>
+
+        &nbsp;
+      </td> 
       EOF
 
       # Unknown image content
@@ -68,30 +68,30 @@ describe ClubScraper do
   describe :get_club_name_city_url do
     before(:all) do
       @club_without_url = Hpricot(<<-EOF).at('td')
-			<td>
-				
-					Yu Go Club
-								
-				<br>
-				Pasadena
-			</td> 
+      <td>
+
+          Yu Go Club
+
+        <br>
+        Pasadena
+      </td> 
       EOF
 
       @club_with_url = Hpricot(<<-EOF).at('td')
-			<td>
-				
-					<a href="http://www.santamonicago.org">Santa Monica Go Club</a>
-								
-				<br>
-				Santa Monica
-			</td> 
+      <td>
+
+          <a href="http://www.santamonicago.org">Santa Monica Go Club</a>
+
+        <br>
+        Santa Monica
+      </td> 
       EOF
 
       @missing_club_name = Hpricot(<<-EOF).at('td')
       <td>
-          
-              
-           
+
+
+
       <br>
           Paso Robles
       </td>
@@ -99,20 +99,20 @@ describe ClubScraper do
 
       @missing_city = Hpricot(<<-EOF).at('td')
       <td>
-          
+
               Club Without Borders
-           
+
       <br>
-          
+
       </td>
       EOF
 
       @missing_br = Hpricot(<<-EOF).at('td')
       <td>
-          
+
               Club Without BR
-           
-          
+
+
       </td>
       EOF
     end
@@ -487,15 +487,15 @@ describe ClubScraper do
       row = Hpricot(<<-EOF).at('tr')
       <tr class='chapList'>
         <td>
-          
+
             <img src="../images/agalogo.gif">
-          
+
           &nbsp;
         </td> 
         <td>
-          
+
             Birmingham Go Association
-                  
+
           <br>
           Birmingham
         </td> 

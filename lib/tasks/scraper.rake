@@ -34,6 +34,11 @@ namespace :scraper do
     puts "Got #{count} clubs from usgo.org"
   end
 
+  desc "Load clubs from MDB file"
+  task :load_mdb => :environment do
+    CsvLoader.load_mdb('db/chapclub.csv')
+  end
+
   desc "Geocode clubs in the db without a lat or lng"
   task :geocode_clubs => :environment do
     clubs = Location.find(:all, :conditions => "lat is null or lng is null")
