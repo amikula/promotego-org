@@ -96,25 +96,10 @@ class User < ActiveRecord::Base
       raise ArgumentError.new("Don't know how to handle class #{role_spec.class}")
     end
 
-    case role.name
-    when "owner"
-      if granting_user.has_role?(:owner)
-        add_role_internal(role, granting_user)
-      else
-        raise SecurityError.new("Only owners may assign owner role")
-      end
-    when "super_user"
-      if granting_user.has_role?(:owner)
-        add_role_internal(role, granting_user)
-      else
-        raise SecurityError.new("Only owners may assign super_user role")
-      end
-    when "administrator"
-      if granting_user.has_role?(:super_user)
-        add_role_internal(role, granting_user)
-      else
-        raise SecurityError.new("Only super_users may assign administrator role")
-      end
+    if granting_user.has_role?(role.parent) || granting_user.has_role?(:owner)
+      add_role_internal(role, granting_user)
+    else
+      raise SecurityError.new("User has insufficient permissions to assign role #{role.name}")
     end
   end
 
@@ -149,9 +134,24 @@ class User < ActiveRecord::Base
       end
     end
   end
-  
-  def has_role?(role)
-    roles.find_by_name(role.to_s)
+
+  def has_role?(role_spec)
+    case role_spec
+    when nil
+      return false
+    when Role
+      role = role_spec
+      return true if roles.include?(role)
+    else
+      return true if roles.find_by_name(role_spec.to_s)
+      role = Role.find_by_name(role_spec.to_s)
+    end
+
+    roles.each do |current_role|
+      return true if role.ancestors.include?(current_role)
+    end
+
+    false
   end
 
   def set_roles(role_ids, granting_user)
