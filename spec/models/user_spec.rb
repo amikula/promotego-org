@@ -11,7 +11,7 @@ describe User do
         violated "#{@user.errors.full_messages.to_sentence}" if @user.new_record?
       end
     end
-    
+
     it 'increments User#count' do
       @creating_user.should change(User, :count).by(1)
     end
@@ -137,12 +137,57 @@ describe User do
   describe "has_role?" do
     before(:each) do
       @user = User.new
+      @owner = mock_model(Role, :name => 'owner')
+      @other = mock_model(Role, :name => 'other')
+      @administrator = mock_model(Role, :name => 'administrator')
+      @administrator.stub!(:ancestors).and_return([@owner])
+      @owner.stub!(:ancestors).and_return([])
+
+      Role.stub!(:find_by_name).with('administrator').and_return(@administrator)
+      Role.stub!(:find_by_name).with('owner').and_return(@owner)
     end
 
     it "should query roles by name, using the given symbol" do
       @user.roles.should_receive(:find_by_name).with("administrator").
         and_return(:administrator_role)
-      @user.has_role?(:administrator).should_not be_false
+      @user.has_role?(:administrator).should be_true
+    end
+
+    it "should return true if the user has an ancestor of the specified role" do
+      roles = [@other, @owner]
+      roles.should_receive(:find_by_name).and_return(nil)
+      @user.should_receive(:roles).any_number_of_times.and_return(roles)
+
+      @user.has_role?(:administrator).should be_true
+    end
+
+    it "should return false if the user does not have an ancestor of the specified role" do
+      roles = [@other, @administrator]
+      roles.should_receive(:find_by_name).and_return(nil)
+      @user.should_receive(:roles).any_number_of_times.and_return(roles)
+
+      @user.has_role?(:owner).should be_false
+    end
+
+    it "should use the role provided if it is a Role object and the user has the role" do
+      roles = [@administrator]
+      @user.should_receive(:roles).and_return(roles)
+
+      @user.has_role?(@administrator).should be_true
+    end
+
+    it "should use the role provided if it is a Role object and the user has an ancestor" do
+      roles = [@owner]
+      @user.should_receive(:roles).any_number_of_times.and_return(roles)
+
+      @user.has_role?(@administrator).should be_true
+    end
+
+    it "should return false for nil values" do
+      roles = [@administrator]
+      @user.stub!(:roles).and_return(roles)
+
+      @user.has_role?(nil).should be_false
     end
   end
 
@@ -150,55 +195,58 @@ describe User do
     before(:each) do
       @user = User.new
       @granting_user = mock_model(User)
+      @granting_user.stub!(:has_role?).with(nil).and_return(false)
+      @owner = mock_model(Role, :name => 'owner', :parent => nil)
+      @super_user = mock_model(Role, :name => 'super_user', :parent => @owner)
+      @administrator = mock_model(Role, :name => 'administrator', :parent => @super_user)
 
-      @roles = {:owner => mock_model(Role, :name => "owner"),
-                  :administrator => mock_model(Role, :name => "administrator"),
-                  :super_user => mock_model(Role, :name => "super_user")}
+
+      @roles = {:owner => @owner, :administrator => @administrator, :super_user => @super_user}
     end
 
     describe "with role name" do
       it "should allow owners to create other owners" do
         @granting_user.should_receive(:has_role?).with(:owner).and_return(true)
-        user_should_add_role(:owner)
+        user_should_add_role(@owner)
 
         @user.add_role(:owner, @granting_user)
       end
 
       it "should raise an error when non-owners try to create owners" do
         @granting_user.should_receive(:has_role?).with(:owner).and_return(false)
-        Role.should_receive(:find_by_name).with("owner").and_return(mock_model(Role, :name => "owner"))
+        Role.should_receive(:find_by_name).with("owner").and_return(@owner)
 
         lambda {@user.add_role(:owner, @granting_user)}.
           should raise_error(SecurityError)
       end
 
       it "should allow owners to create super-users" do
-        @granting_user.should_receive(:has_role?).with(:owner).and_return(true)
-        user_should_add_role(:super_user)
+        @granting_user.should_receive(:has_role?).with(@owner).and_return(true)
+        user_should_add_role(@super_user)
 
         @user.add_role(:super_user, @granting_user)
       end
 
       it "should raise an error when non-owners try to create super-users" do
         @granting_user.should_receive(:has_role?).with(:owner).and_return(false)
-        Role.should_receive(:find_by_name).with("super_user").and_return(mock_model(Role, :name => "super_user"))
+        @granting_user.should_receive(:has_role?).with(@owner).and_return(false)
+        Role.should_receive(:find_by_name).with("super_user").and_return(@super_user)
 
         lambda {@user.add_role(:super_user, @granting_user)}.
           should raise_error(SecurityError)
       end
 
       it "should allow super-users to create administrators" do
-        @granting_user.should_receive(:has_role?).with(:super_user).
-          and_return(true)
-        user_should_add_role(:administrator)
+        @granting_user.should_receive(:has_role?).with(@super_user).and_return(true)
+        user_should_add_role(@administrator)
 
         @user.add_role(:administrator, @granting_user)
       end
 
       it "should raise an error when non-super-users try to create other administrators" do
-        @granting_user.should_receive(:has_role?).with(:super_user).
-          and_return(false)
-        Role.should_receive(:find_by_name).with("administrator").and_return(mock_model(Role, :name => "administrator"))
+        @granting_user.should_receive(:has_role?).with(@super_user).and_return(false)
+        @granting_user.should_receive(:has_role?).with(:owner).and_return(false)
+        Role.should_receive(:find_by_name).with("administrator").and_return(@administrator)
 
         lambda {@user.add_role(:administrator, @granting_user)}.
           should raise_error(SecurityError)
@@ -207,25 +255,24 @@ describe User do
 
     describe "with role id" do
       it "should take an argument of role id number and granting user" do
-        @granting_user.should_receive(:has_role?).with(:owner).and_return(true)
+        @granting_user.should_receive(:has_role?).with(:parent).and_return(true)
         role = mock_and_find_role_by_id("owner")
         @user.add_role(role.id, @granting_user)
       end
 
       def mock_and_find_role_by_id(role_name)
-        role = mock_model(Role, :name => role_name)
+        role = mock_model(Role, :name => role_name, :parent => :parent)
         Role.should_receive(:find).with(role.id).and_return(role)
         return role
       end
     end
 
-    def user_should_add_role(role_sym)
+    def user_should_add_role(role)
       user_role = mock_model(UserRole)
       UserRole.should_receive(:new).and_return(user_role)
       user_role.should_receive(:granting_user=).with(@granting_user)
 
-      role = mock_model(Role, :name => role_sym.to_s)
-      Role.should_receive(:find_by_name).with(role_sym.to_s).
+      Role.should_receive(:find_by_name).with(role.name).
         and_return(role)
       user_role.should_receive(:role=).with(role)
 
