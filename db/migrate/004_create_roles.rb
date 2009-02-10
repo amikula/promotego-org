@@ -6,9 +6,9 @@ class CreateRoles < ActiveRecord::Migration
       t.timestamps
     end
 
-    Role.new(:name => "owner").save!
-    Role.new(:name => "super_user").save!
-    Role.new(:name => "administrator").save!
+    Role.new(:name => 'owner').save!
+    Role.new(:name => 'super_user').save!
+    Role.new(:name => 'administrator').save!
   end
 
   def self.down
