@@ -1,0 +1,6 @@
+---
+# This file represents the hierarchy of roles in the application.
+# All nodes are owned by "owner" if not specified here.
+- super_user:
+  - administrator
+- aga_administrator
