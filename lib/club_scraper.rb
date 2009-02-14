@@ -23,7 +23,7 @@ class ClubScraper
   def self.get_club_name_city_url(element)
     need_name = true
     retval = {}
-    
+
     state = :find_name
     element.children.each do |child|
       case(state)
