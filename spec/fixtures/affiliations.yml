@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  location_id: 1
+  affiliate_id: 1
+  expires: 2009-02-14
+
+two:
+  location_id: 1
+  affiliate_id: 1
+  expires: 2009-02-14
