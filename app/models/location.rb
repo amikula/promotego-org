@@ -1,9 +1,11 @@
 class Location < ActiveRecord::Base
   class LocationHeader < Struct.new(:geocode_address, :geocode_precision, :distance); end
-  
+
   acts_as_mappable
   belongs_to :type
   belongs_to :user
+  has_many :affiliations
+  has_many :affiliates, :through => :affiliations
   serialize :contacts
   attr_protected :user
 
@@ -42,7 +44,7 @@ class Location < ActiveRecord::Base
 
     write_attribute(:user_id, new_user_id)
   end
-    
+
 
   # Geocode the address represented by this location, storing the result in
   # lat and lng and returning the geocode object if it was successful, or nil
@@ -128,8 +130,8 @@ class Location < ActiveRecord::Base
 
     components.join(', ')
   end
-  
-  # Returns the  sluggified string 
+
+  # Returns the  sluggified string
   def sluggify
     name = self.name.downcase.gsub(/[\W]/,'-').gsub(/[--]+/,'-').dasherize
     slug = Location.find_all_by_slug(name)
@@ -141,7 +143,7 @@ class Location < ActiveRecord::Base
   end
 
   private
-  
+
   # Fires before saving a location and updates slug
 
   def clean_empty_contacts

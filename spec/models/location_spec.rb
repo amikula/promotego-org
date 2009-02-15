@@ -12,6 +12,16 @@ describe Location do
     @location.should be_valid
   end
 
+  describe :associations do
+    it 'should have affiliations' do
+      subject.affiliations.should be_kind_of(Array)
+    end
+
+    it 'should have affiliates' do
+      subject.affiliates.should be_kind_of(Array)
+    end
+  end
+
   describe :geocode_address do
     it "should combine components into a single address for geocoding" do
       @location.street_address="1600 Pennsylvania Ave."
