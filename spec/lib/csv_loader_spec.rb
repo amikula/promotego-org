@@ -38,7 +38,22 @@ describe CsvLoader do
       club.contacts[0][:phone].should include({:number => '414 555 1212'})
       club.url.should == 'http://www.cookwood.com/personal/go'
       club.description.should == 'Description'
-      club.is_aga.should == true
+    end
+
+    it 'should create an AGA affiliation with the correct expires time' do
+      aga = mock_model(Affiliate, :name => 'AGA')
+      Affiliate.should_receive(:find_by_name).with('AGA').and_return(aga)
+
+      club = mock_model(Location)
+      affiliations = []
+      club.should_receive(:affiliations).and_return(affiliations)
+      Location.should_receive(:new).and_return(club)
+
+      Affiliation.should_receive(:new).
+        with(:location => club, :affiliate => aga, :expires => Date.parse('4/29/2009')).and_return(:affiliation)
+      affiliations.should_receive(:<<).with(:affiliation)
+
+      CsvLoader.club_from(@rows[0])
     end
 
     it "should support expire time and address parsing" do
@@ -53,7 +68,6 @@ describe CsvLoader do
       club.contacts[0][:phone].should include({:number => '626-555-1212'})
       club.url.should == nil
       club.description.should == " 20 N. Raymond Ave,<br> Suite 200<br>Wednesday 6:30-10:00 pm<br>Free beginner lessons every week"
-      club.is_aga.should == true
     end
 
     it "shouldn't break when expire field is empty" do
@@ -62,8 +76,6 @@ describe CsvLoader do
 
       club = nil
       lambda{club = CsvLoader.club_from(row)}.should_not raise_error
-
-      club.is_aga.should == false
     end
   end
 
@@ -71,6 +83,22 @@ describe CsvLoader do
     before :each do
       @type = mock_model(Type)
       Type.stub!(:find_by_name).and_return(@type)
+    end
+
+    it 'should create the AGA affiliate if it doesn\'t already exist' do
+      FasterCSV.stub!(:foreach)
+      Affiliate.stub!(:find_by_name).with('AGA').and_return(nil)
+      Affiliate.should_receive(:create!).with(:name => 'AGA', :full_name => 'American Go Association')
+
+      CsvLoader.load_mdb(:filename)
+    end
+
+    it 'should not create the AGA affiliate if it already exists' do
+      FasterCSV.stub!(:foreach)
+      Affiliate.stub!(:find_by_name).with('AGA').and_return(mock_model(Affiliate, :name => 'AGA'))
+      Affiliate.should_not_receive(:create!)
+
+      CsvLoader.load_mdb(:filename)
     end
 
     it "should pass the filename to FasterCSV to parse the file" do

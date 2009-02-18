@@ -1,5 +1,6 @@
-- if @location.is_aga?
-  %img{:src => 'http://usgo.org/images/agalogo.gif', :style => 'float: left; margin-right: 5px;'}
+- @location.affiliations.each do |affiliation|
+  - unless Time.now > affiliation.expires
+    %img{:src => affiliation.affiliate.logo_path, :style => 'float: left; margin-right: 5px;'}
 %h1= h @location.name
 
 #club_info{:style => 'float: left;'}

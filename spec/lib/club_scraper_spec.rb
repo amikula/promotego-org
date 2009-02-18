@@ -17,14 +17,14 @@ describe ClubScraper do
 
 
         &nbsp;
-      </td> 
+      </td>
       EOF
 
       @non_aga_example = Hpricot(<<-EOF).at('td')
       <td>
 
         &nbsp;
-      </td> 
+      </td>
       EOF
 
       # Unknown image content
@@ -74,7 +74,7 @@ describe ClubScraper do
 
         <br>
         Pasadena
-      </td> 
+      </td>
       EOF
 
       @club_with_url = Hpricot(<<-EOF).at('td')
@@ -84,7 +84,7 @@ describe ClubScraper do
 
         <br>
         Santa Monica
-      </td> 
+      </td>
       EOF
 
       @missing_club_name = Hpricot(<<-EOF).at('td')
@@ -124,7 +124,7 @@ describe ClubScraper do
 
     it "should also return URL if present" do
       ClubScraper.get_club_name_city_url(@club_with_url).should ==
-        { :name => "Santa Monica Go Club", :city => "Santa Monica", 
+        { :name => "Santa Monica Go Club", :city => "Santa Monica",
           :url => "http://www.santamonicago.org" }
     end
 
@@ -246,7 +246,7 @@ describe ClubScraper do
       <td>
         Contact Guy<br>
         213-555-1212
-      </td> 
+      </td>
       EOF
 
       ClubScraper.get_club_contacts(element).should ==
@@ -261,7 +261,7 @@ describe ClubScraper do
 
         Joe Contact<br>
         478-555-1212
-      </td> 
+      </td>
       EOF
 
       ClubScraper.get_club_contacts(element).should ==
@@ -275,7 +275,7 @@ describe ClubScraper do
       <td>
         <a href="mailto:email@domain.com">Foo Contact</a><br>
         Cell: 626-555-1212
-      </td> 
+      </td>
       EOF
 
       ClubScraper.get_club_contacts(element).should ==
@@ -288,7 +288,7 @@ describe ClubScraper do
       <td>
         Bar Contact<br>
         281-555-1212 home
-      </td> 
+      </td>
       EOF
 
       ClubScraper.get_club_contacts(element).should ==
@@ -302,7 +302,7 @@ describe ClubScraper do
         Baz Contact<br>
         281-555-1212 home<br>
         713-555-1212 cell
-      </td> 
+      </td>
       EOF
 
       ClubScraper.get_club_contacts(multiple_phone_numbers).should ==
@@ -317,7 +317,7 @@ describe ClubScraper do
       <td>
         Xyzzy Contact<br>
         +100 (0)00 000000
-      </td> 
+      </td>
       EOF
 
       ClubScraper.get_club_contacts(element).should ==
@@ -329,7 +329,7 @@ describe ClubScraper do
     it "should handle empty fields" do
       element = Hpricot(<<-EOF).at('td')
       <td>
-      </td> 
+      </td>
       EOF
 
       ClubScraper.get_club_contacts(element).should ==
@@ -340,7 +340,7 @@ describe ClubScraper do
       element = Hpricot(<<-EOF).at('td')
       <td>
         foo @ bar . com
-      </td> 
+      </td>
       EOF
 
       @logger.should_receive(:warn).at_least(:once)
@@ -355,7 +355,7 @@ describe ClubScraper do
         123 address st.<br>
         And I'm all f'd up<br>
         Canada
-      </td> 
+      </td>
       EOF
 
       @logger.should_receive(:warn).at_least(:once)
@@ -371,7 +371,7 @@ describe ClubScraper do
         I'm a field<br>
         with some data<br>
         I don't care what I have
-      </td> 
+      </td>
       EOF
 
       ClubScraper.get_club_info(element).should ==
@@ -384,7 +384,7 @@ describe ClubScraper do
         Dude Ranch Library<br>
         1313 Mockingbird Lane<br>
         Saturday 3:00pm - 5:00pm
-      </td> 
+      </td>
       EOF
 
       ClubScraper.get_club_info(element).should ==
@@ -396,25 +396,25 @@ describe ClubScraper do
       elements = Hpricot(<<-EOF)
       <td>
         1601 Pennsylvania Ave.
-      </td> 
+      </td>
       <td>
         1601 Pennsylvania Avenue
-      </td> 
+      </td>
       <td>
         10 S. Sierra Madre Bl.
-      </td> 
+      </td>
       <td>
         10 S. Sierra Madre Blvd.
-      </td> 
+      </td>
       <td>
         10 S. Sierra Madre Boulevard
-      </td> 
+      </td>
       <td>
         10 N. Oracle Road
-      </td> 
+      </td>
       <td>
         10 N. Oracle Rd.
-      </td> 
+      </td>
       EOF
 
       (elements/'td').each do |element|
@@ -429,16 +429,16 @@ describe ClubScraper do
       elements = Hpricot(<<-EOF)
       <td>
         1635 N Nash St..
-      </td> 
+      </td>
       <td>
         (807 E 10th St)
-      </td> 
+      </td>
       <td>
         11772 Parklawn Drive, Rockville, MD 20852
-      </td> 
+      </td>
       <td>
         64 East Broadway
-      </td> 
+      </td>
       EOF
 
       (elements/'td').each_with_index do |element, i|
@@ -451,7 +451,7 @@ describe ClubScraper do
       <td>
         1601 Pennsylvania Ave.<br>
         1313 Mockingbird Lane<br>
-      </td> 
+      </td>
       EOF
 
       ClubScraper.get_club_info(element)[:address].should == "1601 Pennsylvania Ave."
@@ -491,25 +491,25 @@ describe ClubScraper do
             <img src="../images/agalogo.gif">
 
           &nbsp;
-        </td> 
+        </td>
         <td>
 
             Birmingham Go Association
 
           <br>
           Birmingham
-        </td> 
+        </td>
         <td><a href="mailto:email@domain.com ">Joe Contact</a><br>
 
-  205-555-1212</td> 
+  205-555-1212</td>
         <td>Riverchase Galleria<br>
   in Hoover<br>
-  Sunday 3:00-6:00 pm</td> 
+  Sunday 3:00-6:00 pm</td>
       </tr>
       EOF
 
       ClubScraper.get_club_from_row(row).should match_hash(
-        { :is_aga? => true, :name => "Birmingham Go Association",
+        { :name => "Birmingham Go Association",
           :city => "Birmingham",
           :contacts => [{:name => "Joe Contact", :email => "email@domain.com",
                          :phone => [{:number => "205-555-1212"}]}],

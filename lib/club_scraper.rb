@@ -181,7 +181,6 @@ class ClubScraper
     returning({}) do |club|
       cells = row.search('td')
 
-      club[:is_aga?] = is_aga?(cells[0])
       add_hash(club, get_club_name_city_url(cells[1]))
       club[:contacts] = get_club_contacts(cells[2])
       add_hash(club, get_club_info(cells[3]))
