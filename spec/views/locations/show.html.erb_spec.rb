@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "/locations/show" do
   include LocationsHelper
-  
+
   before(:each) do
     @location = mock_model(Location, Location.valid_options)
     @location.stub!(:city_state_zip).and_return('City, State 00000')
@@ -10,7 +10,7 @@ describe "/locations/show" do
     @owner = mock_model(User, :login => "owner", :has_role? => false)
     @normal = mock_model(User, :login => "normal", :has_role? => false)
     @location.stub!(:user).and_return(@owner)
-    @location.stub!(:is_aga?).and_return(true)
+    @location.stub!(:affiliations).and_return([])
 
     @administrator = mock_model(User, :login => "administrator")
     @administrator.stub!(:has_role?).with(:administrator).and_return(true)

@@ -6,22 +6,30 @@ class CsvLoader
     url = row['Web Site'].blank? ? nil : 'http://' + row['Web Site']
     club_info = ClubScraper.get_club_info(Hpricot(row['Meeting_HTML']))
     expire = Date.parse(row['Expire']) unless row['Expire'].blank?
-    if !expire
-      expire = Date.new(0)
-    elsif expire.year < 50
-      expire += 2000.years
-    elsif expire.year < 100
-      expire += 1900.years
+    if expire
+      if expire.year < 50
+        expire = Date.civil(expire.year+2000, expire.month, expire.day)
+      elsif expire.year < 100
+        expire = Date.civil(expire.year+1900, expire.month, expire.day)
+      end
     end
-    is_aga = Time.now < expire
-    Location.new(:name => row['Name'], :city => row['Meeting_City'], :state => row['State'],
+
+    club = Location.new(:name => row['Name'], :city => row['Meeting_City'], :state => row['State'],
                  :url => url, :description => row['Meeting_HTML'].gsub("\r\n", ''),
-                 :is_aga => is_aga,
                  :contacts => ClubScraper.get_club_contacts(Hpricot(row['Contact_HTML'])),
                  :street_address => club_info[:address])
+
+    if expire
+      aga = Affiliate.find_by_name('AGA')
+      affiliation = Affiliation.new(:location => club, :affiliate => aga, :expires => expire)
+      club.affiliations << affiliation
+    end
+
+    club
   end
 
   def self.load_mdb(filename)
+    aga = Affiliate.find_by_name('AGA') || Affiliate.create!(:name => 'AGA', :full_name => 'American Go Association')
     type = Type.find_by_name("Go Club")
 
     FasterCSV.foreach(filename, :headers => true) do |row|
