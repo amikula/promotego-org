@@ -9,7 +9,7 @@ describe CsvLoader do
         'Web Site' => 'www.cookwood.com/personal/go', 'Meeting_HTML' => 'Description',
         'Contact_HTML' =>
             "<a href=\"mailto:testemail@host.com\">Club Contact</a><br>\r\n413 555 1212<br>\r\n 414 555 1212",
-        'Expires' => '04/29/09 00:00:00'
+        'Expire' => '04/29/09 00:00:00', 'DO_NOT_DISPLAY' => 0
       },
       {
         'Name' => 'Yu Go Club', 'Meeting_City' => 'Pasadena', 'State' => 'CA',
@@ -18,10 +18,9 @@ describe CsvLoader do
             " 20 N. Raymond Ave,<br>\r\n Suite 200<br>\r\nWednesday 6:30-10:00 pm<br>\r\nFree beginner lessons every week",
         'Contact_HTML' =>
             "<a href=\"mailto:testemail@testing.com\">Club Contact 2</a><br>\r\n626-555-1212",
-        'Expires' => '08/17/2009 00:00:00'
+        'Expire' => '08/17/2009 00:00:00', 'DO_NOT_DISPLAY' => 1
       }
     ]
-    @rows = FasterCSV.read('db/chapclub_sample.csv', :headers => true)
   end
 
   describe :club_from do
@@ -38,6 +37,7 @@ describe CsvLoader do
       club.contacts[0][:phone].should include({:number => '414 555 1212'})
       club.url.should == 'http://www.cookwood.com/personal/go'
       club.description.should == 'Description'
+      club.hidden?.should be_false
     end
 
     it 'should create an AGA affiliation with the correct expires time' do
@@ -68,6 +68,7 @@ describe CsvLoader do
       club.contacts[0][:phone].should include({:number => '626-555-1212'})
       club.url.should == nil
       club.description.should == " 20 N. Raymond Ave,<br> Suite 200<br>Wednesday 6:30-10:00 pm<br>Free beginner lessons every week"
+      club.hidden?.should be_true
     end
 
     it "shouldn't break when expire field is empty" do
