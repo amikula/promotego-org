@@ -17,7 +17,7 @@ class CsvLoader
     club = Location.new(:name => row['Name'], :city => row['Meeting_City'], :state => row['State'],
                  :url => url, :description => row['Meeting_HTML'].gsub("\r\n", ''),
                  :contacts => ClubScraper.get_club_contacts(Hpricot(row['Contact_HTML'])),
-                 :street_address => club_info[:address])
+                 :street_address => club_info[:address], :hidden => row['DO_NOT_DISPLAY'].to_i)
 
     if expire
       aga = Affiliate.find_by_name('AGA')
