@@ -13,6 +13,7 @@ class CreateLocations < ActiveRecord::Migration
       t.float :lng
       t.string :url
       t.string :description
+      t.boolean :is_aga
       t.text :contacts
 
       t.timestamps
