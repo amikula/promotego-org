@@ -192,7 +192,7 @@ describe Location do
       location.should_receive(:clean_empty_contacts)
       location.before_save
     end
-    
+
     it "should generate slug if it is blank" do
       location = Location.new(Location.valid_options.merge(:name => "Game Empire", :slug => nil))
       location.before_save
