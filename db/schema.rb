@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090219142455) do
+ActiveRecord::Schema.define(:version => 20090222155849) do
 
   create_table "affiliates", :force => true do |t|
     t.string   "name"
@@ -41,7 +41,6 @@ ActiveRecord::Schema.define(:version => 20090219142455) do
     t.decimal  "lng",               :precision => 15, :scale => 10
     t.string   "url"
     t.string   "description"
-    t.boolean  "is_aga"
     t.text     "contacts"
     t.datetime "created_at"
     t.datetime "updated_at"
