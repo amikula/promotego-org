@@ -3,6 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe SearchController do
   before(:each) do
     @address = "169 N. Berkeley Ave., Pasadena, CA"
+    @location = mock_location(:geocode_precision => "address", :geocode_address => "123 Fake Lane, City, State")
   end
 
   it "should assign radii and types on radius_search" do
@@ -13,8 +14,7 @@ describe SearchController do
   end
 
   it "should find the closest result if no search results are present" do
-    Location.should_receive(:find).with(:all, :origin => @address,
-                            :within => 5, :order => :distance).and_return([])
+    Location.should_receive(:find).and_return([])
 
     Location.should_receive(:find_closest).with(:origin => @address,
         :within => 100, :conditions => 'lat is not null and lng is not null')
@@ -22,50 +22,23 @@ describe SearchController do
     get :radius, :address => @address, :radius => "5"
   end
 
+  it "should call find with the results of the find_params method" do
+    controller.should_receive(:find_params).and_return(:find_params)
+    Location.should_receive(:find).with(:all, :find_params).and_return([@location])
+
+    get :radius, :address => @address, :radius => "5"
+  end
+
   describe "with type" do
-    it "should search only go clubs when go_clubs type is present" do
-      go_club = mock_model(Type, :name => "Go Club")
-      Type.should_receive(:find_by_name).with("Go Club").and_return(go_club)
-
-      Location.should_receive(:find).
-        with(:all, :origin => @address, :within => 5,
-             :conditions => ["type_id = ?", go_club.id], :order => :distance).
-        and_return([mock_location(:geocode_precision => "address", :geocode_address => "City, State")])
-
-      get :radius, :type => "go_clubs", :radius => "5", :address => @address
-    end
-
-    it 'should search only go clubs when go clubs is selected' do
-      go_club = mock_model(Type, :name => "Go Club")
-
-      Location.should_receive(:find).
-        with(:all, :origin => @address, :within => 5,
-             :conditions => ["type_id = ?", go_club.id], :order => :distance).and_return([mock_location(:geocode_precision => "address", :geocode_address => "123 Fake Lane, City, State")])
-
-      get :radius, :type_id => go_club.id, :radius => "5",
-        :address => @address
-    end
-
     it 'should not raise error when type is invalid' do
       Location.stub!(:find).and_return([])
-      get :radius, :type => "bogus_type", :radius => "5", :address => @address
-    end
-
-    it "should not filter by type id when type_id == 0" do
-      go_club = mock_model(Type, :name => "Go Club")
-
-      Location.should_receive(:find).
-        with(:all, :origin => @address, :within => 5, :order => :distance).and_return([mock_location(:geocode_precision => "address")])
-
-      get :radius, :type_id => 0, :radius => "5", :address => @address
+      lambda{get :radius, :type => "bogus_type", :radius => "5", :address => @address}.should_not raise_error
     end
 
     it "should find the closest result if no search results are present" do
       go_club = mock_model(Type, :name => "Go Club")
 
-      Location.should_receive(:find).
-        with(:all, :origin => @address, :within => 5,
-             :conditions => ["type_id = ?", go_club.id], :order => :distance).and_return([])
+      Location.should_receive(:find).and_return([])
 
       Location.should_receive(:find_closest).
         with(:origin => @address, :within => 100,
@@ -145,6 +118,27 @@ describe SearchController do
       get :radius, :radius => "5", :address => '00000'
 
       assigns[:results].should == view_results
+    end
+  end
+
+  describe :find_params do
+    it "should return a Hash" do
+      controller.send(:find_params).should be_kind_of(Hash)
+    end
+
+    it "should contain origin, within, and order params" do
+      controller.instance_eval do
+        @address = :address
+        @radius = :radius
+      end
+
+      controller.send(:find_params).should == {:origin => :address, :within => :radius, :order => :distance, :conditions => "hidden = false"}
+    end
+
+    it "should include the type_id if it is greater than 0" do
+      controller.instance_eval {@type_id = 42}
+
+      controller.send(:find_params)[:conditions].should == ['type_id = ? AND hidden = false', 42]
     end
   end
 

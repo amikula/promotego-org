@@ -9,6 +9,9 @@ class Location < ActiveRecord::Base
   serialize :contacts
   attr_protected :user
 
+  named_scope :visible, :conditions => {:hidden => false}
+  named_scope :hidden, :conditions => {:hidden => true}
+
   def self.valid_options
     {
       :name => "LocationName",

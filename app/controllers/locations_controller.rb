@@ -17,7 +17,7 @@ class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.xml
   def index
-    @locations = Location.find(:all)
+    @locations = Location.visible
 
     respond_to do |format|
       format.html # index.html.erb
