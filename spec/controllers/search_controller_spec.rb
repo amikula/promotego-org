@@ -17,7 +17,7 @@ describe SearchController do
     Location.should_receive(:find).and_return([])
 
     Location.should_receive(:find_closest).with(:origin => @address,
-        :within => 100, :conditions => 'lat is not null and lng is not null')
+        :within => 100, :conditions => 'lat is not null and lng is not null and hidden = false')
 
     get :radius, :address => @address, :radius => "5"
   end
@@ -42,7 +42,7 @@ describe SearchController do
 
       Location.should_receive(:find_closest).
         with(:origin => @address, :within => 100,
-             :conditions => ['lat is not null and lng is not null and type_id = ?', go_club.id]).
+             :conditions => ['lat is not null and lng is not null and hidden = false and type_id = ?', go_club.id]).
              and_return(:closest)
 
       get :radius, :type_id => go_club.id, :radius => "5",
