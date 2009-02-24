@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090222155849) do
+ActiveRecord::Schema.define(:version => 20090224135828) do
 
   create_table "affiliates", :force => true do |t|
     t.string   "name"
@@ -26,6 +26,14 @@ ActiveRecord::Schema.define(:version => 20090222155849) do
     t.date     "expires"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "contact_name"
+    t.string   "contact_address"
+    t.string   "contact_city"
+    t.string   "contact_state"
+    t.string   "contact_zip"
+    t.string   "contact_telephone"
+    t.string   "contact_email"
+    t.string   "foreign_key"
   end
 
   create_table "locations", :force => true do |t|
