@@ -21,7 +21,11 @@ class CsvLoader
 
     if expire
       aga = Affiliate.find_by_name('AGA')
-      affiliation = Affiliation.new(:location => club, :affiliate => aga, :expires => expire)
+      affiliation = Affiliation.new(:location => club, :affiliate => aga, :expires => expire,
+                                    :contact_name => row['Contact'], :contact_address => row['Address'],
+                                    :contact_city => row['City'], :contact_state => row['State'],
+                                    :contact_zip => row['ZIP'], :contact_telephone => row['Telephone'],
+                                    :contact_email => row['Email'], :foreign_key => row['chapter'])
       club.affiliations << affiliation
     end
 
