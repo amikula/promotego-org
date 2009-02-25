@@ -9,7 +9,9 @@ describe CsvLoader do
         'Web Site' => 'www.cookwood.com/personal/go', 'Meeting_HTML' => 'Description',
         'Contact_HTML' =>
             "<a href=\"mailto:testemail@host.com\">Club Contact</a><br>\r\n413 555 1212<br>\r\n 414 555 1212",
-        'Expire' => '04/29/09 00:00:00', 'DO_NOT_DISPLAY' => 0
+        'Expire' => '04/29/09 00:00:00', 'DO_NOT_DISPLAY' => 0, 'Contact' => 'Joe Contact',
+        'Address' => '123 Address Street', 'City' => 'Belchertown', 'ZIP' => 'XXXXX-XXXX',
+        'Telephone' => '413-555-1212', 'Email' => 'private@email.com', 'chapter' => 'WMGC'
       },
       {
         'Name' => 'Yu Go Club', 'Meeting_City' => 'Pasadena', 'State' => 'CA',
@@ -18,7 +20,9 @@ describe CsvLoader do
             " 20 N. Raymond Ave,<br>\r\n Suite 200<br>\r\nWednesday 6:30-10:00 pm<br>\r\nFree beginner lessons every week",
         'Contact_HTML' =>
             "<a href=\"mailto:testemail@testing.com\">Club Contact 2</a><br>\r\n626-555-1212",
-        'Expire' => '08/17/2009 00:00:00', 'DO_NOT_DISPLAY' => 1
+        'Expire' => '08/17/2009 00:00:00', 'DO_NOT_DISPLAY' => 1, 'Contact' => 'Jack Contact',
+        'Address' => '234 Address Street', 'City' => 'Pasadena', 'ZIP' => '91103',
+        'Telephone' => '626-555-1212', 'Email' => 'private@test.com', 'chapter' => 'YUGO'
       }
     ]
   end
@@ -40,23 +44,44 @@ describe CsvLoader do
       club.hidden?.should be_false
     end
 
-    it 'should create an AGA affiliation with the correct expires time' do
-      aga = mock_model(Affiliate, :name => 'AGA')
-      Affiliate.should_receive(:find_by_name).with('AGA').and_return(aga)
+    describe 'with AGA affiliation' do
+      before(:each) do
+        @aga = mock_model(Affiliate, :name => 'AGA')
+        Affiliate.should_receive(:find_by_name).with('AGA').and_return(@aga)
 
-      club = mock_model(Location)
-      affiliations = []
-      club.should_receive(:affiliations).and_return(affiliations)
-      Location.should_receive(:new).and_return(club)
+        @club = mock_model(Location)
+        @affiliations = []
+        @club.should_receive(:affiliations).and_return(@affiliations)
+        Location.should_receive(:new).and_return(@club)
+      end
 
-      Affiliation.should_receive(:new).
-        with(:location => club, :affiliate => aga, :expires => Date.parse('4/29/2009')).and_return(:affiliation)
-      affiliations.should_receive(:<<).with(:affiliation)
+      it 'should create an AGA affiliation with the correct expires time' do
+        Affiliation.should_receive(:new).
+          with(hash_including(:location => @club, :affiliate => @aga, :expires => Date.parse('4/29/2009'))).and_return(:affiliation)
+        @affiliations.should_receive(:<<).with(:affiliation)
 
-      CsvLoader.club_from(@rows[0])
+        CsvLoader.club_from(@rows[0])
+      end
+
+      it 'should create an affiliation with the correct contact address' do
+        Affiliation.should_receive(:new).
+          with(hash_including(:contact_name => 'Joe Contact', :contact_address => '123 Address Street',
+                              :contact_city => 'Belchertown', :contact_state => 'MA',
+                              :contact_zip => 'XXXXX-XXXX', :contact_telephone => '413-555-1212',
+                              :contact_email => 'private@email.com')).and_return(:affiliation)
+
+        CsvLoader.club_from(@rows[0])
+      end
+
+      it 'should save the chapter id as the foreign_key' do
+        Affiliation.should_receive(:new).
+          with(hash_including(:foreign_key => 'WMGC'))
+
+        CsvLoader.club_from(@rows[0])
+      end
     end
 
-    it "should support expire time and address parsing" do
+    it "should support address parsing" do
       club = CsvLoader.club_from(@rows[1])
 
       club.name.should == 'Yu Go Club'
