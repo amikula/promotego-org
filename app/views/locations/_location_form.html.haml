@@ -4,6 +4,9 @@
     %br/
     = f.text_field :name
   %p
+    %b Hidden
+    = f.check_box :hidden
+  %p
     %b Type
     %br/
     = collection_select :location, :type_id, @types, :id, :name
