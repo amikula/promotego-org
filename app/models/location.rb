@@ -25,6 +25,7 @@ class Location < ActiveRecord::Base
       :contacts => [],
       :hours => "",
       :url => 'http://domain.com',
+      :hidden => false
     }
   end
 

@@ -44,7 +44,7 @@ class ActionController::AbstractRequest::UrlEncodedPairParser
       current = key
     end
 
-    ref[current] = value
+    ref[current] = value unless ref[current]
     result
   end
 
