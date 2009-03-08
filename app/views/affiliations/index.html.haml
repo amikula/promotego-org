@@ -1,0 +1,13 @@
+%h1 Listing affiliations
+
+%table
+  %tr
+  - for affiliation in @affiliations
+    %tr
+      %td= link_to 'Show', affiliation
+      %td= link_to 'Edit', edit_affiliation_path(affiliation)
+      %td= link_to 'Destroy', affiliation, :confirm => 'Are you sure?', :method => :delete
+
+%br/
+
+= link_to 'New affiliation', new_affiliation_path

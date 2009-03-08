@@ -5,6 +5,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :roles
 
+  map.resources :affiliations
+
   map.resources :locations
 
   map.resources :types
