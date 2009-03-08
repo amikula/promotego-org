@@ -1,0 +1,5 @@
+%h1 New affiliation
+
+= render :partial => 'affiliation_form', :object => @affiliation, :locals => {:submit_button_label => 'Create'}
+
+= link_to 'Back', affiliations_path
