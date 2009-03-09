@@ -11,9 +11,13 @@ module LocationsHelper
     "<select name='location[contacts][#{contact_idx}][phone][#{phone_idx}][type]'>#{option_string}</select>"
   end
 
-  def administered_affiliations
+  def visible_affiliations
     if current_user
-      @location.affiliations.select{|a| current_user.has_role?("#{a.affiliate.name.downcase}_administrator")}
+      if current_user.has_role?(:administrator)
+        @location.affiliations
+      else
+        @location.affiliations.select{|a| current_user.has_role?("#{a.affiliate.name.downcase}_administrator")}
+      end
     else
       []
     end
