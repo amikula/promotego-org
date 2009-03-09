@@ -428,6 +428,78 @@ describe User do
     end
   end
 
+  describe :administers do
+    before :each do
+      @user = stub_model(User, :has_role? => false)
+    end
+
+    describe "locations" do
+      before :each do
+        @location = stub_model(Location)
+      end
+
+      it "should return true if user has administrator and object is a Location" do
+        @user.should_receive(:has_role?).with(:administrator).and_return(true)
+
+        @user.administers(@location).should be_true
+      end
+
+      it "should return false if user doesn't have administrator and object is a Location" do
+        @user.should_receive(:has_role?).with(:administrator).and_return(false)
+
+        @user.administers(@location).should be_false
+      end
+    end
+
+    describe "affiliations" do
+      before :each do
+        @affiliation = stub_model(Affiliation, :affiliate => stub_model(Affiliate, :name => 'AGA'))
+      end
+
+      it "should return true if user has administrator for affiliate and object is an affiliation" do
+        @user.should_receive(:has_role?).with("aga_administrator").and_return(true)
+
+        @user.administers(@affiliation).should be_true
+      end
+
+      it "should return false if user doesn't have administrator for affiliate and object is an affiliation" do
+        @user.should_receive(:has_role?).with("aga_administrator").and_return(false)
+
+        @user.administers(@affiliation).should be_false
+      end
+
+      it "should return false if user only has :administrator role and object is an affiliation" do
+        @user.stub!(:has_role?).with(:administrator).and_return(true)
+
+        @user.administers(@affiliation).should be_false
+      end
+    end
+
+    describe "affiliates" do
+      before :each do
+        @affiliate = stub_model(Affiliate, :name => 'AFF')
+      end
+
+      it "should return true if user has administrator for affiliate and object is an affiliate" do
+        @user.should_receive(:has_role?).with("aff_administrator").and_return(true)
+
+        @user.administers(@affiliate).should be_true
+      end
+
+      it "should return false if user doesn't have administrator for affiliate and object is an affiliate" do
+        @user.should_receive(:has_role?).with("aff_administrator").and_return(false)
+
+        @user.administers(@affiliate).should be_false
+      end
+
+      it "should return false if user only has :administrator role and object is an affiliate" do
+        @user.stub!(:has_role?).with(:administrator).and_return(true)
+
+        @user.administers(@affiliate).should be_false
+      end
+    end
+  end
+
 protected
   def create_user(options = {})
     record = User.new({ :login => 'quire', :email => 'quire@example.com', :password => 'quire', :password_confirmation => 'quire' }.merge(options))
