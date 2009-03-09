@@ -31,4 +31,36 @@ describe LocationsHelper do
       end
     end
   end
+
+  describe :administered_affiliations do
+    before :each do
+      @location = stub_model(Location)
+      @user = stub_model(User)
+      @user.stub!(:has_role?).and_return(false)
+      helper.stub!(:current_user).and_return(@user)
+    end
+
+    it 'returns something responding to :each' do
+      helper.administered_affiliations.should respond_to(:each)
+    end
+
+    it "returns affiliations on @location that the current user administrates" do
+      @user.should_receive(:has_role?).with("aff_administrator").at_least(1).and_return(true)
+
+      affiliations = []
+      affiliations << (aff = stub_model(Affiliation, :affiliate => stub_model(Affiliate, :name => 'AFF')))
+      affiliations << (other = stub_model(Affiliation, :affiliate => stub_model(Affiliate, :name => 'OTHER')))
+      @location.should_receive(:affiliations).and_return(affiliations)
+
+      assigns[:location] = @location
+
+      helper.administered_affiliations.should == [aff]
+    end
+
+    it "returns an empty array if current user is nil" do
+      helper.should_receive(:current_user).and_return(nil)
+
+      helper.administered_affiliations.should == []
+    end
+  end
 end
