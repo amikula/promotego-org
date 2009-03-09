@@ -88,17 +88,20 @@ describe AffiliationsController do
     end
 
     describe "with valid params" do
+      before :each do
+        @location = mock_model(Location, :slug => 'location_slug')
+      end
 
       it "should expose a newly created affiliation as @affiliation" do
-        Affiliation.should_receive(:new).with({'these' => 'params'}).and_return(mock_affiliation(:save => true))
+        Affiliation.should_receive(:new).with({'these' => 'params'}).and_return(mock_affiliation(:save => true, :location => @location))
         post :create, :affiliation => {:these => 'params'}
         assigns(:affiliation).should equal(mock_affiliation)
       end
 
-      it "should redirect to the created affiliation" do
-        Affiliation.stub!(:new).and_return(mock_affiliation(:save => true))
+      it "should redirect to the associated location" do
+        Affiliation.stub!(:new).and_return(mock_affiliation(:save => true, :location => @location))
         post :create, :affiliation => {}
-        response.should redirect_to(affiliation_url(mock_affiliation))
+        response.should redirect_to(:controller => :locations, :action => :show, :id => @location.slug)
       end
 
     end
@@ -127,6 +130,9 @@ describe AffiliationsController do
     end
 
     describe "with valid params" do
+      before :each do
+        @location = mock_model(Location, :slug => 'location_slug')
+      end
 
       it "should update the requested affiliation" do
         Affiliation.should_receive(:find).with("37").and_return(mock_affiliation)
@@ -135,15 +141,15 @@ describe AffiliationsController do
       end
 
       it "should expose the requested affiliation as @affiliation" do
-        Affiliation.stub!(:find).and_return(mock_affiliation(:update_attributes => true))
+        Affiliation.stub!(:find).and_return(mock_affiliation(:update_attributes => true, :location => @location))
         put :update, :id => "1"
         assigns(:affiliation).should equal(mock_affiliation)
       end
 
-      it "should redirect to the affiliation" do
-        Affiliation.stub!(:find).and_return(mock_affiliation(:update_attributes => true))
+      it "should redirect to the associated location" do
+        Affiliation.stub!(:find).and_return(mock_affiliation(:update_attributes => true, :location => @location))
         put :update, :id => "1"
-        response.should redirect_to(affiliation_url(mock_affiliation))
+        response.should redirect_to(:controller => :locations, :action => :show, :id => @location.slug)
       end
 
     end
@@ -175,18 +181,19 @@ describe AffiliationsController do
   describe "responding to DELETE destroy" do
     before(:each) do
       controller.should_receive(:require_affiliate_administrator)
+      @location = mock_model(Location, :slug => 'location_slug')
     end
 
     it "should destroy the requested affiliation" do
-      Affiliation.should_receive(:find).with("37").and_return(mock_affiliation)
+      Affiliation.should_receive(:find).with("37").and_return(mock_affiliation(:location => @location))
       mock_affiliation.should_receive(:destroy)
       delete :destroy, :id => "37"
     end
 
     it "should redirect to the affiliations list" do
-      Affiliation.stub!(:find).and_return(mock_affiliation(:destroy => true))
+      Affiliation.stub!(:find).and_return(mock_affiliation(:destroy => true, :location => @location))
       delete :destroy, :id => "1"
-      response.should redirect_to(affiliations_url)
+      response.should redirect_to(:controller => :locations, :action => :show, :id => @location.slug)
     end
 
   end

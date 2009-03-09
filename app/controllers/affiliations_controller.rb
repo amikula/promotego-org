@@ -48,7 +48,7 @@ class AffiliationsController < ApplicationController
     respond_to do |format|
       if @affiliation.save
         flash[:notice] = 'Affiliation was successfully created.'
-        format.html { redirect_to(@affiliation) }
+        format.html { redirect_to(:controller => :locations, :action => :show, :id => @affiliation.location.slug) }
         format.xml  { render :xml => @affiliation, :status => :created, :location => @affiliation }
       else
         format.html { render :action => "new" }
@@ -65,7 +65,7 @@ class AffiliationsController < ApplicationController
     respond_to do |format|
       if @affiliation.update_attributes(params[:affiliation])
         flash[:notice] = 'Affiliation was successfully updated.'
-        format.html { redirect_to(@affiliation) }
+        format.html { redirect_to(:controller => :locations, :action => :show, :id => @affiliation.location.slug) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -81,7 +81,7 @@ class AffiliationsController < ApplicationController
     @affiliation.destroy
 
     respond_to do |format|
-      format.html { redirect_to(affiliations_url) }
+      format.html { redirect_to(:controller => :locations, :action => :show, :id => @affiliation.location.slug) }
       format.xml  { head :ok }
     end
   end
