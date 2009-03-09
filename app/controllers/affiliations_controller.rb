@@ -1,4 +1,7 @@
 class AffiliationsController < ApplicationController
+  before_filter :require_administrator, :except => [:create, :update, :destroy]
+  before_filter :require_affiliate_administrator, :only => [:create, :update, :destroy]
+
   # GET /affiliations
   # GET /affiliations.xml
   def index
@@ -81,5 +84,20 @@ class AffiliationsController < ApplicationController
       format.html { redirect_to(affiliations_url) }
       format.xml  { head :ok }
     end
+  end
+
+  def require_administrator
+    unless current_user && current_user.has_role?(:administrator)
+      render :text => "Access denied", :status => 403
+    end
+  end
+
+  def require_affiliate_administrator
+    if current_user
+      @affiliation ||= Affiliation.find(params[:id])
+      return if current_user.has_role?("#{@affiliation.affiliate.name.downcase}_administrator")
+    end
+
+    render :text => "Access denied", :status => 403
   end
 end

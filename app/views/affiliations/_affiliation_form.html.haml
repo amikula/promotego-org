@@ -1,5 +1,26 @@
 - form_for(affiliation_form) do |f|
-  f.error_messages
+  = f.error_messages
+  %p
+    %div
+      %b Location:
+    %div
+      = @affiliation.location.name
+  - if @affiliation.affiliate
+    %p
+      %div
+        %b Affiliate:
+      %div
+        = @affiliation.affiliate.name
+  %p
+    %div
+      %b Expires:
+    %div
+      = f.text_field :expires
+  %p
+    %div
+      %b Foreign Key:
+    %div
+      = f.text_field :foreign_key
 
   %p
     = f.submit submit_button_label

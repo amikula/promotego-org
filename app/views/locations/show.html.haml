@@ -41,6 +41,9 @@
       %b Hours:
       &= @location.hours
   %br/
+  - administered_affiliations.each do |affiliation|
+    %p
+      = link_to "Edit #{affiliation.affiliate.name} affiliation", edit_affiliation_path(affiliation)
   - if(current_user && (current_user == @location.user || current_user.has_role?(:administrator)))
     = link_to 'Edit', edit_location_path(@location)
     |

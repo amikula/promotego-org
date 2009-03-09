@@ -10,10 +10,9 @@ describe "/affiliations/new.html.erb" do
   end
 
   it "should render new form" do
-    render "/affiliations/new.html.erb"
+    template.should_receive(:render).with(hash_including(:partial => "affiliation_form"))
 
-    response.should have_tag("form[action=?][method=post]", affiliations_path) do
-    end
+    render "/affiliations/new.html.erb"
   end
 end
 
