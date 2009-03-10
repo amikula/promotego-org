@@ -41,19 +41,21 @@
       %b Hours:
       &= @location.hours
   - unless visible_affiliations.empty?
-    %table
-      %tr
-        %th Affiliate
-        %th Expires
-        %th Affiliate ID
-        %th &nbsp;
-      - visible_affiliations.each do |affiliation|
+    %table.affiliations
+      %tbody
+        - visible_affiliations.each do |affiliation|
+          %tr
+            %td= affiliation.affiliate.name
+            %td= affiliation.expires
+            %td= affiliation.foreign_key
+            %td
+              = link_to "edit", edit_affiliation_path(affiliation) if current_user.administers(affiliation)
+      %thead
         %tr
-          %td= affiliation.affiliate.name
-          %td= affiliation.expires
-          %td= affiliation.foreign_key
-          %td
-            = link_to "edit", edit_affiliation_path(affiliation) if current_user.administers(affiliation)
+          %th Affiliate
+          %th Expires
+          %th Affiliate ID
+          %th &nbsp;
   %br/
   %div
     - if(current_user && (current_user == @location.user || current_user.has_role?(:administrator)))
