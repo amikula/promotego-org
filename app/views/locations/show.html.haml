@@ -3,7 +3,10 @@
     %img{:src => affiliation.affiliate.logo_path, :style => 'float: left; margin-right: 5px;'}
 %h1= h @location.name
 
-#club_info{:style => 'float: left;'}
+#club_info
+  - if @map
+    %div{:style => 'float: right;'}
+      = @map.div(:width => 350, :height => 300)
   %p
     %b Type:
     &= @location.type.name
@@ -64,6 +67,3 @@
       = link_to 'Destroy', @location, :confirm => 'Are you sure?', :method => :delete
       |
     = link_to 'Back', 'javascript:history.go(-1)'
-- if @map
-  #right_column{:style => 'float: right;'}
-    = @map.div(:width => 350, :height => 300)
