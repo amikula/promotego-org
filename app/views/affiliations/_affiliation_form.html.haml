@@ -5,12 +5,14 @@
       %b Location:
     %div
       = @affiliation.location.name
+      = f.hidden_field :location_id
   - if @affiliation.affiliate
     %p
       %div
         %b Affiliate:
       %div
         = @affiliation.affiliate.name
+        = f.hidden_field :affiliate_id
   %p
     %div
       %b Expires:

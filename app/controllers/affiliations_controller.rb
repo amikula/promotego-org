@@ -1,6 +1,6 @@
 class AffiliationsController < ApplicationController
-  before_filter :require_administrator, :except => [:create, :update, :destroy]
-  before_filter :require_affiliate_administrator, :only => [:create, :update, :destroy]
+  before_filter :require_administrator, :except => [:new, :create, :update, :destroy]
+  before_filter :require_affiliate_administrator, :only => [:new, :create, :update, :destroy]
 
   # GET /affiliations
   # GET /affiliations.xml
@@ -16,7 +16,7 @@ class AffiliationsController < ApplicationController
   # GET /affiliations/1
   # GET /affiliations/1.xml
   def show
-    @affiliation = Affiliation.find(params[:id])
+    @affiliation ||= Affiliation.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -27,7 +27,7 @@ class AffiliationsController < ApplicationController
   # GET /affiliations/new
   # GET /affiliations/new.xml
   def new
-    @affiliation = Affiliation.new
+    @affiliation = Affiliation.new(params[:affiliation])
 
     respond_to do |format|
       format.html # new.html.erb
@@ -37,7 +37,7 @@ class AffiliationsController < ApplicationController
 
   # GET /affiliations/1/edit
   def edit
-    @affiliation = Affiliation.find(params[:id])
+    @affiliation ||= Affiliation.find(params[:id])
   end
 
   # POST /affiliations
@@ -60,7 +60,7 @@ class AffiliationsController < ApplicationController
   # PUT /affiliations/1
   # PUT /affiliations/1.xml
   def update
-    @affiliation = Affiliation.find(params[:id])
+    @affiliation ||= Affiliation.find(params[:id])
 
     respond_to do |format|
       if @affiliation.update_attributes(params[:affiliation])
@@ -77,7 +77,7 @@ class AffiliationsController < ApplicationController
   # DELETE /affiliations/1
   # DELETE /affiliations/1.xml
   def destroy
-    @affiliation = Affiliation.find(params[:id])
+    @affiliation ||= Affiliation.find(params[:id])
     @affiliation.destroy
 
     respond_to do |format|
@@ -94,7 +94,11 @@ class AffiliationsController < ApplicationController
 
   def require_affiliate_administrator
     if current_user
-      @affiliation ||= Affiliation.find(params[:id])
+      @affiliation ||= if params[:id]
+                         Affiliation.find(params[:id])
+                       else
+                         Affiliation.new(params[:affiliation])
+                       end
       return if current_user.has_role?("#{@affiliation.affiliate.name.downcase}_administrator")
     end
 

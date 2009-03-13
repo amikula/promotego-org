@@ -58,12 +58,14 @@ describe AffiliationsController do
 
   describe "responding to GET new" do
     before(:each) do
-      controller.should_receive(:require_administrator)
+      controller.should_receive(:require_affiliate_administrator)
     end
 
     it "should expose a new affiliation as @affiliation" do
-      Affiliation.should_receive(:new).and_return(mock_affiliation)
-      get :new
+      affiliate = stub_model(Affiliate)
+      location = stub_model(Location)
+      Affiliation.should_receive(:new).with("affiliate_id" => "affiliate_id", "location_id" => "location_id").and_return(mock_affiliation)
+      get :new, :affiliation => {:affiliate_id => "affiliate_id", :location_id => "location_id"}
       assigns[:affiliation].should equal(mock_affiliation)
     end
 
@@ -224,23 +226,23 @@ describe AffiliationsController do
     end
   end
 
-  describe :require_administrator do
+  describe :require_affiliate_administrator do
+    before :each do
+      @affiliation = mock_and_find(Affiliation, :affiliate => stub_model(Affiliate, :name => "AFF"))
+      @user = stub_model(User)
+      controller.stub!(:current_user).any_number_of_times.and_return(@user)
+    end
+
     it "should pass through if the user is an administrator of the affiliate" do
-      affiliation = mock_and_find(Affiliation, :affiliate => stub_model(Affiliate, :name => "AFF"))
-      user = stub_model(User)
-      user.should_receive(:has_role?).with("aff_administrator").and_return(true)
-      controller.should_receive(:current_user).any_number_of_times.and_return(user)
-      controller.stub!(:params).and_return(:id => affiliation.id.to_s)
+      @user.should_receive(:has_role?).with("aff_administrator").and_return(true)
+      controller.stub!(:params).and_return(:id => @affiliation.id.to_s)
 
       lambda{controller.send(:require_affiliate_administrator)}.should_not raise_error
     end
 
     it "should render a 403 if the user is not an administrator of the affiliate" do
-      affiliation = mock_and_find(Affiliation, :affiliate => stub_model(Affiliate, :name => "AFF"))
-      user = stub_model(User)
-      user.should_receive(:has_role?).with("aff_administrator").and_return(false)
-      controller.should_receive(:current_user).any_number_of_times.and_return(user)
-      controller.stub!(:params).and_return(:id => affiliation.id.to_s)
+      @user.should_receive(:has_role?).with("aff_administrator").and_return(false)
+      controller.stub!(:params).and_return(:id => @affiliation.id.to_s)
       controller.should_receive(:render).with(hash_including(:status => 403))
 
       controller.send(:require_affiliate_administrator)
@@ -253,6 +255,12 @@ describe AffiliationsController do
       controller.send(:require_affiliate_administrator)
     end
 
-  end
+    it "should check the Affiliate on the new Affiliation if one is being created" do
+      controller.stub!(:params).and_return({:affiliation => {:affiliate_id => "affiliate_id"}})
+      Affiliation.should_receive(:new).with(hash_including(:affiliate_id => "affiliate_id")).and_return(@affiliation)
+      @user.should_receive(:has_role?).with("aff_administrator").and_return(true)
 
+      lambda{controller.send(:require_affiliate_administrator)}.should_not raise_error
+    end
+  end
 end

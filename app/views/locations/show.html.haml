@@ -52,7 +52,11 @@
             %td= affiliation.expires
             %td= affiliation.foreign_key
             %td
-              = link_to "edit", edit_affiliation_path(affiliation) if current_user.administers(affiliation)
+              - if affiliation.new_record?
+                = link_to "add", new_affiliation_path(:affiliation => {:affiliate_id => affiliation.affiliate.id, :location_id => affiliation.location.id})
+              - else
+                = link_to "edit", edit_affiliation_path(affiliation) if current_user.administers(affiliation)
+                = link_to 'destroy', affiliation_path(affiliation), :confirm => 'Are you sure?', :method => :delete
       %thead
         %tr
           %th Affiliate
