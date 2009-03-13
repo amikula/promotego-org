@@ -13,11 +13,18 @@ module LocationsHelper
 
   def visible_affiliations
     if current_user
-      if current_user.has_role?(:administrator)
-        @location.affiliations
-      else
-        @location.affiliations.select{|a| current_user.has_role?("#{a.affiliate.name.downcase}_administrator")}
+      affiliations = if current_user.has_role?(:administrator)
+                       @location.affiliations.dup
+                     else
+                       @location.affiliations.select{|a| current_user.administers(a)}
+                     end
+      Affiliate.find(:all).each do |affiliate|
+        if current_user.administers(affiliate) && !affiliations.detect{|a| a.affiliate.name == affiliate.name}
+          affiliations << Affiliation.new(:affiliate => affiliate, :location => @location)
+        end
       end
+
+      affiliations
     else
       []
     end

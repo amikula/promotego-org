@@ -5,7 +5,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :roles
 
-  map.resources :affiliations
+  map.resources :affiliations, :has_one => :location, :has_one => :affiliate
 
   map.resources :locations
 

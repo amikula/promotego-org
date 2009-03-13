@@ -35,9 +35,21 @@ describe LocationsHelper do
   describe :visible_affiliations do
     before :each do
       @location = stub_model(Location)
+      assigns[:location] = @location
+
       @user = stub_model(User)
       @user.stub!(:has_role?).and_return(false)
+      @user.stub!(:administers).and_return(false)
       helper.stub!(:current_user).and_return(@user)
+
+      @affiliates = []
+      @affiliations = []
+      %w{aff1 aff2 aff3}.each do |aff_name|
+        affiliate = stub_model(Affiliate, :name => aff_name)
+        @affiliates << affiliate
+        @affiliations << stub_model(Affiliation, :affiliate => affiliate)
+      end
+      Affiliate.stub!(:find).with(:all).and_return(@affiliates)
     end
 
     it 'returns something responding to :each' do
@@ -45,16 +57,12 @@ describe LocationsHelper do
     end
 
     it "returns affiliations on @location that the current user administrates" do
-      @user.should_receive(:has_role?).with("aff_administrator").at_least(1).and_return(true)
+      @user.should_receive(:administers).with(@affiliations[1]).at_least(1).and_return(true)
 
-      affiliations = []
-      affiliations << (aff = stub_model(Affiliation, :affiliate => stub_model(Affiliate, :name => 'AFF')))
-      affiliations << (other = stub_model(Affiliation, :affiliate => stub_model(Affiliate, :name => 'OTHER')))
-      @location.should_receive(:affiliations).and_return(affiliations)
+      @location.should_receive(:affiliations).and_return(@affiliations)
+      Affiliate.stub!(:find).with(:all).and_return([])
 
-      assigns[:location] = @location
-
-      helper.visible_affiliations.should == [aff]
+      helper.visible_affiliations.should == [@affiliations[1]]
     end
 
     it "returns an empty array if current user is nil" do
@@ -64,12 +72,55 @@ describe LocationsHelper do
     end
 
     it "shows all affiliations to administrators" do
+      affiliations = []
       @user.should_receive(:has_role?).with(:administrator).and_return(true)
-      @location.should_receive(:affiliations).and_return(:affiliations)
+      @location.should_receive(:affiliations).and_return(affiliations)
+      Affiliate.stub!(:find).with(:all).and_return([])
 
-      assigns[:location] = @location
+      helper.visible_affiliations.should == affiliations
+    end
 
-      helper.visible_affiliations.should == :affiliations
+    it "adds a blank affiliation for each affiliate that the user administers" do
+      @user.stub!(:administers).and_return(true)
+
+      helper.visible_affiliations.collect{|a| a.affiliate.name}.should == @affiliations.collect{|a| a.affiliate.name}
+    end
+
+    it "does not add a blank affiliation for affiliates already in the list of affiliations" do
+      @user.stub!(:has_role?).with(:administrator).and_return(true)
+      @location.should_receive(:affiliations).and_return(@affiliations)
+
+      helper.visible_affiliations.collect{|a| a.id}.should == @affiliations.collect{|a| a.id}
+    end
+
+    it "doesn't modify the location's original list of affiliations when the user administers each" do
+      @affiliations.delete_at(1)
+      orig_affiliations = @affiliations.dup
+      @user.stub!(:administers).and_return(true)
+
+      helper.visible_affiliations
+
+      @affiliations.should == orig_affiliations
+    end
+
+    it "doesn't modify the location's original list of affiliations when the user is administrator" do
+      @affiliations.delete_at(1)
+      @location.stub!(:affiliations).and_return(@affiliations)
+      orig_affiliations = @affiliations.dup
+      @user.stub!(:has_role?).with(:administrator).and_return(true)
+
+      helper.visible_affiliations
+
+      @affiliations.should == orig_affiliations
+    end
+
+    it "doesn't add blank affiliations for affiliates the user doesn't administer" do
+      @affiliates[0..-2].each do |affiliate|
+        @user.should_receive(:administers).with(affiliate).and_return(false)
+      end
+      @user.should_receive(:administers).with(@affiliates[-1]).and_return(true)
+
+      helper.visible_affiliations.map{|a| a.affiliate.name}.should == [@affiliates[-1].name]
     end
   end
 end

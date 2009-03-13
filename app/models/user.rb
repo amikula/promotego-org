@@ -175,7 +175,7 @@ class User < ActiveRecord::Base
     when Location
       has_role?(:administrator)
     when Affiliation
-      has_role?("#{object.affiliate.name.downcase}_administrator")
+      administers(object.affiliate)
     when Affiliate
       has_role?("#{object.name.downcase}_administrator")
     end
