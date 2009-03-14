@@ -32,7 +32,8 @@ describe LocationsController do
     end
 
     it "should find all visible locations" do
-      Location.should_receive(:visible).and_return([@location])
+      visible = mock('named_scope', :find => [@location])
+      Location.should_receive(:visible).and_return(visible)
       do_get
     end
 
@@ -441,7 +442,7 @@ describe LocationsController do
     end
 
     it "should list all locations in locations list, regardless of ownership" do
-      Location.should_receive(:find).with(:all).and_return(:all_locations)
+      Location.should_receive(:find).with(:all, anything).and_return(:all_locations)
 
       get :index
 
