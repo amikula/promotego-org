@@ -76,9 +76,9 @@ class LocationsController < ApplicationController
     @types = Type.find(:all)
     begin
       @location = if(current_user.has_role?(:administrator))
-                    @location = Location.find(params[:id])
+                    @location = Location.find_by_slug(params[:id])
                   else
-                    @location = current_user.locations.find(params[:id])
+                    @location = current_user.locations.find_by_slug(params[:id])
                   end
       @user = @location.user
     rescue ActiveRecord::RecordNotFound
@@ -121,9 +121,9 @@ class LocationsController < ApplicationController
 
     begin
       @location = if (current_user.has_role?(:administrator))
-                    Location.find(params[:id])
+                    Location.find_by_slug(params[:id])
                   else
-                    current_user.locations.find(params[:id])
+                    current_user.locations.find_by_slug(params[:id])
                   end
     rescue
       # Just continue -- no location found
@@ -163,7 +163,7 @@ class LocationsController < ApplicationController
   # DELETE /locations/1
   # DELETE /locations/1.xml
   def destroy
-    @location = current_user.locations.find(params[:id])
+    @location = current_user.locations.find_by_slug(params[:id])
     @location.destroy
 
     respond_to do |format|

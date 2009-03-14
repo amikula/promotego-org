@@ -29,6 +29,10 @@ class Location < ActiveRecord::Base
     }
   end
 
+  def to_param
+    slug
+  end
+
   def before_save
     clean_empty_contacts
     if self.slug.blank?
