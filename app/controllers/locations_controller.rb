@@ -17,7 +17,7 @@ class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.xml
   def index
-    @locations = Location.visible
+    @locations = Location.visible.find(:all, :order => "country, state, city, name")
 
     respond_to do |format|
       format.html # index.html.erb
