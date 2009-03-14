@@ -188,12 +188,12 @@ describe LocationsController do
       @locations = []
       @user.should_receive(:locations).and_return(@locations)
       owner = mock_model(User, :login => "login")
-      @location = mock_model(Location, :user => owner)
-      @locations.should_receive(:find).with(@location.id.to_s).and_return(@location)
+      @location = mock_model(Location, :user => owner, :slug => 'location-slug')
+      @locations.stub!(:find_by_slug).with(@location.slug).and_return(@location)
     end
 
     def do_get
-      get :edit, :id => @location.id
+      get :edit, :id => @location.slug
     end
 
     it "should be successful" do
@@ -280,7 +280,7 @@ describe LocationsController do
     before(:each) do
       @location = mock_model(Location, :to_param => "1", :slug => 'location-slug')
       @locations = [@location]
-      @locations.stub!(:find).with("1").and_return(@location)
+      @locations.stub!(:find_by_slug).with(@location.slug).and_return(@location)
       @user.stub!(:locations).and_return(@locations)
     end
 
@@ -290,11 +290,11 @@ describe LocationsController do
         @location.should_receive(:attributes=)
         @location.should_receive(:geocode)
         @location.should_receive(:save).and_return(true)
-        put :update, :id => "1"
+        put :update, :id => @location.slug
       end
 
       it "should find the location requested" do
-        @locations.should_receive(:find).with("1").and_return(@location)
+        @locations.should_receive(:find_by_slug).with(@location.slug).and_return(@location)
         do_put
       end
 
@@ -317,11 +317,11 @@ describe LocationsController do
         @location.should_receive(:attributes=).ordered.and_return(true)
         @location.should_receive(:geocode).ordered
         @location.should_receive(:save).ordered
-        put :update, :id => "1"
+        put :update, :id => @location.slug
       end
 
       it "should save the user value posted if current user is administrator" do
-        Location.should_receive(:find).with("1").and_return(@location)
+        Location.should_receive(:find_by_slug).with(@location.slug).and_return(@location)
         User.should_receive(:find_by_login).with(@other_user.login).
           and_return(@other_user)
 
@@ -332,7 +332,7 @@ describe LocationsController do
         @location.should_receive(:geocode)
         @location.should_receive(:save).and_return(true)
 
-        put :update, :id => "1", :user => {:login => @other_user.login}
+        put :update, :id => @location.slug, :user => {:login => @other_user.login}
       end
     end
 
@@ -342,7 +342,7 @@ describe LocationsController do
         @location.should_receive(:attributes=)
         @location.should_receive(:geocode)
         @location.should_receive(:save).and_return(false)
-        put :update, :id => "1"
+        put :update, :id => @location.slug
       end
 
       it "should re-render 'edit'" do
@@ -356,15 +356,15 @@ describe LocationsController do
   describe "handling DELETE /locations/1" do
 
     before(:each) do
-      @location = mock_model(Location, :destroy => true)
+      @location = mock_model(Location, :destroy => true, :slug => 'location-slug')
       @locations = [@location]
 
       @user.should_receive(:locations).and_return(@locations)
-      @locations.should_receive(:find).with("1").and_return(@location)
+      @locations.should_receive(:find_by_slug).with(@location.slug).and_return(@location)
     end
 
     def do_delete
-      delete :destroy, :id => "1"
+      delete :destroy, :id => @location.slug
     end
 
     it "should find the location requested" do
@@ -391,18 +391,18 @@ describe LocationsController do
 
     describe "accessing edit form" do
       it "should allow access to user's own locations" do
-        @locations.should_receive(:find).with(@location.id.to_s).and_return(@location)
-        get :edit, :id => @location.id
+        @locations.should_receive(:find_by_slug).with(@location.slug).and_return(@location)
+        get :edit, :id => @location.slug
 
         response.should be_success
         assigns[:location].should == @location
       end
 
       it "should not allow access to other users' locations" do
-        location = mock_and_find(Location, :user => @other_user)
-        @locations.should_receive(:find).with(location.id.to_s).and_raise(ActiveRecord::RecordNotFound.new("RSpec test exception"))
+        location = mock_model(Location, :user => @other_user, :slug => 'location-slug')
+        @locations.should_receive(:find_by_slug).with(location.slug).and_raise(ActiveRecord::RecordNotFound.new("RSpec test exception"))
 
-        get :edit, :id => location.id
+        get :edit, :id => location.slug
 
         response.should redirect_to(locations_url)
         flash[:error].should == 'Location does not exist'
@@ -411,21 +411,21 @@ describe LocationsController do
 
     describe "updating location" do
       it "should work for user's own locations" do
-        @locations.should_receive(:find).with(@location.id.to_s).and_return(@location)
+        @locations.should_receive(:find_by_slug).with(@location.slug).and_return(@location)
         @location.should_receive(:attributes=)
         @location.should_receive(:geocode)
         @location.should_receive(:save).and_return(true)
 
-        put :update, :id => @location.id
+        put :update, :id => @location.slug
 
         response.should redirect_to(location_path('location-slug'))
       end
 
       it "should not work for other users' locations" do
-        location = mock_model(Location, :user => @other_user)
-        @locations.should_receive(:find).with(location.id.to_s).and_raise(ActiveRecord::RecordNotFound.new("RSpec test exception"))
+        location = mock_model(Location, :user => @other_user, :slug => 'location-slug')
+        @locations.should_receive(:find_by_slug).with(location.slug).and_raise(ActiveRecord::RecordNotFound.new("RSpec test exception"))
 
-        put :update, :id => location.id
+        put :update, :id => location.slug
 
         response.should redirect_to(locations_url)
         flash[:error].should == 'Location does not exist'
@@ -436,7 +436,8 @@ describe LocationsController do
   describe "with administrative user access" do
     before(:each) do
       @user.stub!(:has_role?).with(:administrator).and_return(true)
-      @location = mock_and_find(Location, :user => @user, :slug => 'location-slug')
+      @location = mock(Location, :user => @user, :slug => 'location-slug')
+      Location.stub!(:find_by_slug).with(@location.slug).and_return(@location)
     end
 
     it "should list all locations in locations list, regardless of ownership" do
@@ -448,7 +449,7 @@ describe LocationsController do
     end
 
     it "should allow access to edit form for all locations" do
-      get :edit, :id => @location.id
+      get :edit, :id => @location.slug
 
       response.should be_success
       assigns[:location].should == @location
@@ -459,7 +460,7 @@ describe LocationsController do
       @location.should_receive(:geocode)
       @location.should_receive(:save).and_return(true)
 
-      put :update, :id => @location.id
+      put :update, :id => @location.slug
 
       response.should redirect_to(location_path('location-slug'))
     end
