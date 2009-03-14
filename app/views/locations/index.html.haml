@@ -1,20 +1,19 @@
 %h1 Listing locations
 
-%table
-  %tr
+%table.results
+  %tbody
+    - for location in @locations
+      %tr{:class => current_user == location.user ? nil : "other_users"}
+        %td= link_to h(location.name), location
+        %td= h location.type.name
+        %td= h location.street_address
+        %td= h location.city
+        %td= h location.state
+  %thead
     %th Name
     %th Type
     %th Address
     %th City
     %th State
-- for location in @locations
-  %tr{:class => current_user == location.user ? nil : "other_users"}
-    %td= link_to h(location.name), location
-    %td= h location.type.name
-    %td= h location.street_address
-    %td= h location.city
-    %td= h location.state
-
-%br/
 
 = link_to 'New location', new_location_path
