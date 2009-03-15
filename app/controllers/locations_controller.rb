@@ -17,7 +17,16 @@ class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.xml
   def index
-    @locations = Location.visible.find(:all, :order => "country, state, city, name")
+    options = {:order => 'country, state, city, name'}
+    if params[:country]
+      if params[:state]
+        options[:conditions] = ['country = ? AND state = ?', params[:country], params[:state]]
+      else
+        options[:conditions] = ['country = ?', params[:country]]
+      end
+    end
+
+    @locations = Location.visible.find(:all, options)
 
     respond_to do |format|
       format.html # index.html.erb

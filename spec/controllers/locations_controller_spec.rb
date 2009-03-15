@@ -17,8 +17,8 @@ describe LocationsController do
       Location.stub!(:find).and_return([@location])
     end
 
-    def do_get
-      get :index
+    def do_get(options={})
+      get :index, options
     end
 
     it "should be successful" do
@@ -40,6 +40,22 @@ describe LocationsController do
     it "should assign the found locations for the view" do
       do_get
       assigns[:locations].should == [@location]
+    end
+
+    it "filters by country when a country is provided" do
+      visible = mock('named_scope')
+      visible.should_receive(:find).with(:all, hash_including(:conditions => ['country = ?', 'GB']))
+      Location.should_receive(:visible).and_return(visible)
+
+      do_get :country => 'GB'
+    end
+
+    it "filters by country and state when a country and state are provided" do
+      visible = mock('named_scope')
+      visible.should_receive(:find).with(:all, hash_including(:conditions => ['country = ? AND state = ?', 'US', 'TX']))
+      Location.should_receive(:visible).and_return(visible)
+
+      do_get :country => 'US', :state => 'TX'
     end
   end
 
