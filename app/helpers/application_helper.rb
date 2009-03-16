@@ -26,4 +26,19 @@ module ApplicationHelper
     end.to_s << '</ul>'
     error_list
   end
+
+  Abbreviable = Struct.new(:full_name, :abbrev)
+
+  def active_countries
+    Location.visible.find(:all, :select => 'DISTINCT country').collect do |l|
+      Abbreviable.new(COUNTRY_FROM_ABBREV[l.country] || l.country, l.country)
+    end.sort_by{|c| c.full_name}
+  end
+
+  def active_states_for(cntry)
+    Location.visible.find(:all, :select => 'DISTINCT state', :conditions => ['country = ?', cntry]).collect do |l|
+      full_state_name = (STATE_FROM_ABBREV[cntry] && STATE_FROM_ABBREV[cntry][l.state]) || l.state
+      Abbreviable.new(full_state_name, l.state)
+    end.sort_by{|s| s.full_name}
+  end
 end

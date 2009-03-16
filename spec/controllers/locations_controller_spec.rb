@@ -47,7 +47,7 @@ describe LocationsController do
       visible.should_receive(:find).with(:all, hash_including(:conditions => ['country = ?', 'GB']))
       Location.should_receive(:visible).and_return(visible)
 
-      do_get :country => 'GB'
+      do_get :country => 'United-Kingdom'
     end
 
     it "filters by country and state when a country and state are provided" do
@@ -55,7 +55,7 @@ describe LocationsController do
       visible.should_receive(:find).with(:all, hash_including(:conditions => ['country = ? AND state = ?', 'US', 'TX']))
       Location.should_receive(:visible).and_return(visible)
 
-      do_get :country => 'US', :state => 'TX'
+      do_get :country => 'United-States', :state => 'Texas'
     end
   end
 

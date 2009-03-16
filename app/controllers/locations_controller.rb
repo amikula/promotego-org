@@ -19,10 +19,17 @@ class LocationsController < ApplicationController
   def index
     options = {:order => 'country, state, city, name'}
     if params[:country]
+      country = COUNTRY_TO_ABBREV[params[:country].gsub('-', ' ')] || params[:country]
+
       if params[:state]
-        options[:conditions] = ['country = ? AND state = ?', params[:country], params[:state]]
+        if STATE_TO_ABBREV[country]
+          state = STATE_TO_ABBREV[country][params[:state].gsub('-', ' ')]
+        end
+        state ||= params[:state]
+
+        options[:conditions] = ['country = ? AND state = ?', country, state]
       else
-        options[:conditions] = ['country = ?', params[:country]]
+        options[:conditions] = ['country = ?', country]
       end
     end
 
