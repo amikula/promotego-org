@@ -41,4 +41,12 @@ module ApplicationHelper
       Abbreviable.new(full_state_name, l.state)
     end.sort_by{|s| s.full_name}
   end
+
+  def by_columns(collection, min_column=8, max_columns=5)
+    elems_per_slice = [min_column, (collection.length/max_columns.to_f).ceil].max
+
+    collection.each_slice(elems_per_slice) do |slice|
+      yield slice
+    end
+  end
 end

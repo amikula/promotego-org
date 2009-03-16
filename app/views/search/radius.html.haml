@@ -62,8 +62,10 @@
 %br/
 %h2 Listing by state
 - active_countries(true).each do |country|
-  .country
+  .country{:style => "clear: left;"}
     = link_to country.full_name, :controller => :locations, :action => :index, :country => country.full_name.gsub(' ', '-')
-  - active_states_for(country.abbrev).each do |state|
-    .state
-      = link_to state.full_name, :controller => :locations, :action => :index, :country => country.full_name.gsub(' ', '-'), :state => state.full_name.gsub(' ', '-')
+  - by_columns(active_states_for(country.abbrev)) do |column|
+    .column{:style => 'float: left; width: 120px; padding-bottom: 1em;'}
+      - column.each do |state|
+        .state
+          = link_to state.full_name, :controller => :locations, :action => :index, :country => country.full_name.gsub(' ', '-'), :state => state.full_name.gsub(' ', '-')
