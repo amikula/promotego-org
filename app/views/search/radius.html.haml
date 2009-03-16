@@ -58,11 +58,12 @@
             - @types.each do |type|
               %option{:value => type.id, :selected => type.id == @type_id}= type.name
   = submit_tag 'Search'
-
+%br/
+%br/
 %h2 Listing by state
-- active_countries.each do |country|
+- active_countries(true).each do |country|
   .country
     = link_to country.full_name, :controller => :locations, :action => :index, :country => country.full_name.gsub(' ', '-')
-    - active_states_for(country.abbrev).each do |state|
-      .state
-        = link_to state.full_name, :controller => :locations, :action => :index, :country => country.full_name.gsub(' ', '-'), :state => state.full_name.gsub(' ', '-')
+  - active_states_for(country.abbrev).each do |state|
+    .state
+      = link_to state.full_name, :controller => :locations, :action => :index, :country => country.full_name.gsub(' ', '-'), :state => state.full_name.gsub(' ', '-')
