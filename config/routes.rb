@@ -23,6 +23,8 @@ ActionController::Routing::Routes.draw do |map|
   map.activate 'activate/:activation_code', :controller => 'users',
     :action => 'activate'
 
+  map.connect 'go_clubs/:country/:state', :controller => 'locations', :action => 'index', :type => 'go_club', :country => nil, :state => nil
+
   map.connect 'search/:action', :controller => 'search'
   map.connect 'search/:type/:action', :controller => 'search'
 
