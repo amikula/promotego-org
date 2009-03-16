@@ -68,4 +68,59 @@ describe ApplicationHelper do
       helper.active_states_for('US').collect{|c| c.full_name}.should == ['Alaska', 'California', 'Louisiana']
     end
   end
+
+  describe :by_columns do
+    it "yields" do
+      yielded = false
+
+      helper.by_columns([nil]){yielded = true}
+
+      yielded.should be_true
+    end
+
+    it "yields a single column when the count is less than min_column" do
+      helper_should_columnize(1, [nil]*6, 8)
+    end
+
+    it "yields a single column when the count is equal to min_column" do
+      helper_should_columnize(1, [nil]*8, 8)
+    end
+
+    it "yields a second column when the count passes min_column" do
+      helper_should_columnize(2, [nil]*9, 8)
+    end
+
+    it "yields a second column when the count reaches min_column*2" do
+      helper_should_columnize(2, [nil]*16, 8)
+    end
+
+    it "yields a third column when the count reaches min_column*2 + 1" do
+      helper_should_columnize(3, [nil]*(16 + 1), 8)
+    end
+
+    it "yields five columns when the count is min_column*5" do
+      helper_should_columnize(5, [nil]*(5*8), 8)
+    end
+
+    it "still yields five columns when the count is min_column*5 + 1" do
+      helper_should_columnize(5, [nil]*(5*8 + 1), 8)
+    end
+
+    it "yields six columns when the count is min_column*5 + 1 and max_columns is 6" do
+      helper_should_columnize(6, [nil]*(5*4 + 1), 4, 6)
+    end
+
+    def helper_should_columnize(num_columns, elements, min_column, max_columns=5)
+      count = 0
+      element_count = 0
+
+      helper.by_columns(elements, min_column, max_columns) do |yielded_elements|
+        count += 1
+        element_count += yielded_elements.length
+      end
+
+      count.should == num_columns
+      element_count.should == elements.length
+    end
+  end
 end
