@@ -22,10 +22,11 @@ class LocationsController < ApplicationController
       country = COUNTRY_TO_ABBREV[params[:country].gsub('-', ' ')] || params[:country]
 
       if params[:state]
+        decoded_state = params[:state].gsub('-', ' ')
         if STATE_TO_ABBREV[country]
-          state = STATE_TO_ABBREV[country][params[:state].gsub('-', ' ')]
+          state = STATE_TO_ABBREV[country][decoded_state]
         end
-        state ||= params[:state]
+        state ||= decoded_state
 
         options[:conditions] = ['country = ? AND state = ?', country, state]
       else
