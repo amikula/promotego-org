@@ -1,17 +1,15 @@
-%h1 Listing locations
+%h1== Clubs #{@locality}
 
 %table.results
   %tbody
     - for location in @locations
       %tr{:class => current_user == location.user ? nil : "other_users"}
         %td= link_to h(location.name), location
-        %td= h location.city
-        %td= h location.state
-        %td= h location.country
+        - @fields.each do |field|
+          %td= h location.send(field)
   %thead
     %th Name
-    %th City
-    %th State
-    %th Country
+    - @fields.each do |field|
+      %th= field.to_s.titleize
 
 = link_to 'New location', new_location_path

@@ -26,6 +26,7 @@ describe "/locations/index" do
     @controller.stub!(:current_user).and_return(@user)
 
     assigns[:locations] = [@location_98, @location_99]
+    assigns[:fields] = [:city, :state, :country]
   end
 
   it "should render list of locations" do
