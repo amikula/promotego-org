@@ -57,6 +57,24 @@ describe LocationsController do
 
       do_get :country => 'United-States', :state => 'Texas'
     end
+
+    it "assigns fields for global view" do
+      do_get
+
+      assigns[:fields].should == [:city, :state, :country]
+    end
+
+    it "assigns fields for country view" do
+      do_get :country => 'United-States'
+
+      assigns[:fields].should == [:city, :state]
+    end
+
+    it "assigns fields for state view" do
+      do_get :country => 'United-States', :state => 'Texas'
+
+      assigns[:fields].should == [:street_address, :city]
+    end
   end
 
   describe "handling GET /locations.xml" do

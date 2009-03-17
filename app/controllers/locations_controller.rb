@@ -19,19 +19,26 @@ class LocationsController < ApplicationController
   def index
     options = {:order => 'country, state, city, name'}
     if params[:country]
-      country = COUNTRY_TO_ABBREV[params[:country].gsub('-', ' ')] || params[:country]
+      country_name = params[:country].gsub('-', ' ')
+      country = COUNTRY_TO_ABBREV[country_name] || params[:country]
 
       if params[:state]
-        decoded_state = params[:state].gsub('-', ' ')
+        state_name = params[:state].gsub('-', ' ')
         if STATE_TO_ABBREV[country]
-          state = STATE_TO_ABBREV[country][decoded_state]
+          state = STATE_TO_ABBREV[country][state_name]
         end
-        state ||= decoded_state
+        state ||= state_name
 
         options[:conditions] = ['country = ? AND state = ?', country, state]
+        @locality = "in #{state_name}"
+        @fields = [:street_address, :city]
       else
         options[:conditions] = ['country = ?', country]
+        @locality = "in #{country_name}"
+        @fields = [:city, :state]
       end
+    else
+      @fields = [:city, :state, :country]
     end
 
     @locations = Location.visible.find(:all, options)
