@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090224135828) do
+ActiveRecord::Schema.define(:version => 20090317124510) do
 
   create_table "affiliates", :force => true do |t|
     t.string   "name"
@@ -57,6 +57,8 @@ ActiveRecord::Schema.define(:version => 20090224135828) do
     t.string   "geocode_precision"
     t.boolean  "hidden"
   end
+
+  add_index "locations", ["slug"], :name => "index_locations_on_slug", :unique => true
 
   create_table "roles", :force => true do |t|
     t.string   "name"
