@@ -1,14 +1,5 @@
 class LocationsController < ApplicationController
-  ZOOM = {
-    "unknown" => 6,
-    "country" => 3,
-    "state" => 6,
-    "city" => 12,
-    "zip" => 13,
-    "zip+4" => 14,
-    "street" => 14,
-    "address" => 15
-  }
+  include LocationsHelper
 
   before_filter :login_required, :only => [:new, :edit, :create, :update, :destroy]
 
@@ -43,6 +34,16 @@ class LocationsController < ApplicationController
 
     @locations = Location.visible.find(:all, options)
 
+    bounds = get_bounds_for(@locations) unless @locations.blank?
+    if bounds
+      @map = create_map(nil, nil, nil)
+      @map.center_zoom_on_bounds_init(bounds)
+
+      @locations.each do |location|
+        pushpin_for_club(location, :link_club => true) if location.lat && location.lng
+      end
+    end
+
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @locations }
@@ -58,21 +59,9 @@ class LocationsController < ApplicationController
       format.html do
         @title = @location.name
 
-        @map = GMap.new("map_div")
-        @map.control_init(:large_map => true,:map_type => true)
-        @map.center_zoom_init([@location.lat,@location.lng],
-                              ZOOM[@location.geocode_precision || "unknown"])
+        @map = create_map(@location.lat, @location.lng, @location.geocode_precision)
 
-        info_window = render_to_string :partial => "gmap_info_window",
-          :locals => {:location => @location}
-        info_window.gsub!(/\n/, '')
-        info_window.gsub!('"', "'")
-
-        club = GMarker.new([@location.lat,@location.lng],
-                           :info_window => info_window)
-        @map.record_global_init(club.declare("club"))
-        @map.overlay_init(club)
-        @map.record_init("club.openInfoWindowHtml(\"#{club.info_window}\");\n")
+        pushpin_for_club(@location, :show_info_window => true)
       end
       format.xml  { render :xml => @location }
     end
@@ -200,5 +189,21 @@ class LocationsController < ApplicationController
   def render_contact_partials
     @contact_form = render_to_string(:partial => 'contact_form', :locals => {:contact_idx => 'CONTACT_IDX', :contact => {:phone => [{}]}}).gsub(/\n/, '\n').gsub(/'/, '"')
     @phone_form = render_to_string(:partial => 'phone_number_form', :locals => {:phone => {}, :contact_idx => 'CONTACT_IDX', :phone_idx => 'PHONE_IDX'}).gsub(/\n/, '\n').gsub(/'/, '"')
+  end
+
+  def get_bounds_for(locations)
+    lats = locations.collect{|l| l.lat}.compact
+    lngs = locations.collect{|l| l.lng}.compact
+
+    unless lats.blank? || lngs.blank?
+      lat_max = lats.max
+      lat_min = lats.min
+      lng_max = lngs.max
+      lng_min = lngs.min
+
+      pad = [(lat_max-lat_min)/7.0, (lng_max-lng_min)/10.0, 1].max
+
+      [[lat_min-pad, lng_min-pad], [lat_max+pad, lng_max+pad]]
+    end
   end
 end
