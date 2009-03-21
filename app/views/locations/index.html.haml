@@ -1,5 +1,9 @@
 %h1== Clubs #{@locality}
 
+- if @map
+  %div{:style => 'float: right;'}
+    = @map.div(:width => 350, :height => 300)
+
 %table.results
   %tbody
     - for location in @locations

@@ -13,7 +13,7 @@ describe LocationsController do
   describe "handling GET /locations" do
 
     before(:each) do
-      @location = mock_model(Location)
+      @location = mock_model(Location, :lat => 0, :lng => 0)
       Location.stub!(:find).and_return([@location])
     end
 
@@ -24,11 +24,6 @@ describe LocationsController do
     it "should be successful" do
       do_get
       response.should be_success
-    end
-
-    it "should render index template" do
-      do_get
-      response.should render_template('index')
     end
 
     it "should find all visible locations" do
@@ -44,7 +39,7 @@ describe LocationsController do
 
     it "filters by country when a country is provided" do
       visible = mock('named_scope')
-      visible.should_receive(:find).with(:all, hash_including(:conditions => ['country = ?', 'GB']))
+      visible.should_receive(:find).with(:all, hash_including(:conditions => ['country = ?', 'GB'])).and_return([])
       Location.should_receive(:visible).and_return(visible)
 
       do_get :country => 'United-Kingdom'
@@ -52,7 +47,7 @@ describe LocationsController do
 
     it "filters by country and state when a country and state are provided" do
       visible = mock('named_scope')
-      visible.should_receive(:find).with(:all, hash_including(:conditions => ['country = ? AND state = ?', 'US', 'TX']))
+      visible.should_receive(:find).with(:all, hash_including(:conditions => ['country = ? AND state = ?', 'US', 'TX'])).and_return([])
       Location.should_receive(:visible).and_return(visible)
 
       do_get :country => 'United-States', :state => 'Texas'
@@ -80,8 +75,8 @@ describe LocationsController do
   describe "handling GET /locations.xml" do
 
     before(:each) do
-      @location = mock_model(Location, :to_xml => "XML")
-      Location.stub!(:find).and_return(@location)
+      @locations = [mock_model(Location, :to_xml => "XML", :lat => 0, :lng => 0)]
+      Location.stub!(:find).and_return(@locations)
     end
 
     def do_get
@@ -99,7 +94,7 @@ describe LocationsController do
     end
 
     it "should render the found locations as xml" do
-      @location.should_receive(:to_xml).and_return("XML")
+      @locations.should_receive(:to_xml).and_return("XML")
       do_get
       response.body.should == "XML"
     end
@@ -476,11 +471,12 @@ describe LocationsController do
     end
 
     it "should list all locations in locations list, regardless of ownership" do
-      Location.should_receive(:find).with(:all, anything).and_return(:all_locations)
+      all_locations = []
+      Location.should_receive(:find).with(:all, anything).and_return(all_locations)
 
       get :index
 
-      assigns(:locations).should == :all_locations
+      assigns(:locations).should == all_locations
     end
 
     it "should allow access to edit form for all locations" do
