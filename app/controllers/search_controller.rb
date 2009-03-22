@@ -1,4 +1,6 @@
 class SearchController < ApplicationController
+  include GeoMethods
+
   def radius
     set_display_variables
 
@@ -23,7 +25,18 @@ class SearchController < ApplicationController
         @results = process_location_headings(db_results)
       end
 
-      if @results.blank? && @closest.blank?
+      if !@results.blank?
+        bounds = get_bounds_for(@results.select{|r| r.is_a? Location})
+        unless bounds.blank?
+          @map = create_map(bounds)
+          @results.each do |location|
+            pushpin_for_club(location) if location.is_a? Location
+          end
+        end
+      elsif !@closest.blank?
+        @map = create_map(@closest)
+        pushpin_for_club(@closest)
+      else
         flash.now[:error] = "No locations matched your search within 100 miles"
       end
     end

@@ -29,40 +29,4 @@ module LocationsHelper
       []
     end
   end
-
-  ZOOM = {
-    "unknown" => 6,
-    "country" => 3,
-    "state" => 6,
-    "city" => 12,
-    "zip" => 13,
-    "zip+4" => 14,
-    "street" => 14,
-    "address" => 15
-  }
-
-  def create_map(lat, lng, zoom)
-    map = GMap.new("map_div")
-    map.control_init(:large_map => true,:map_type => true)
-
-    unless zoom.class == Integer
-      zoom = ZOOM[zoom || 'unknown']
-    end
-
-    map.center_zoom_init([lat,lng], zoom)
-
-    map
-  end
-
-  def pushpin_for_club(location, options={}, map=@map)
-    info_window = render_to_string :partial => "gmap_info_window",
-      :locals => {:location => location, :options => options}
-    info_window.gsub!(/\n/, '')
-    info_window.gsub!('"', "'")
-
-    club = GMarker.new([location.lat,location.lng], :info_window => info_window)
-    map.record_global_init(club.declare("club#{location.id}"))
-    map.overlay_init(club)
-    map.record_init("club#{location.id}.openInfoWindowHtml(\"#{club.info_window}\");\n") if options[:show_info_window]
-  end
 end
