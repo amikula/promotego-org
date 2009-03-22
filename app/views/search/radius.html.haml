@@ -1,3 +1,7 @@
+- if @map
+  %div{:style => 'float: right;'}
+    = @map.div(:width => 350, :height => 300)
+
 - unless @results
   - content_for("page_scripts") do
     :plain
