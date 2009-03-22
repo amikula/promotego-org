@@ -26,7 +26,8 @@ class SearchController < ApplicationController
       end
 
       if !@results.blank?
-        bounds = get_bounds_for(@results.select{|r| r.is_a? Location})
+        base_geo = geocode(@address)
+        bounds = get_bounds_for(@results.select{|r| r.is_a? Location} << base_geo)
         unless bounds.blank?
           @map = create_map(bounds)
           @results.each do |location|
@@ -34,7 +35,9 @@ class SearchController < ApplicationController
           end
         end
       elsif !@closest.blank?
-        @map = create_map(@closest)
+        base_geo = geocode(@address)
+        bounds = get_bounds_for([base_geo, @closest])
+        @map = create_map(bounds)
         pushpin_for_club(@closest)
       else
         flash.now[:error] = "No locations matched your search within 100 miles"
