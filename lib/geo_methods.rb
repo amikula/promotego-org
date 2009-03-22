@@ -56,4 +56,8 @@ module GeoMethods
       [[lat_min-pad, lng_min-pad], [lat_max+pad, lng_max+pad]]
     end
   end
+
+  def geocode(geocode_address)
+    GeoKit::Geocoders::MultiGeocoder.geocode(geocode_address)
+  end
 end
