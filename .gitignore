@@ -1,4 +1,4 @@
-*.swp
+*.sw?
 *.bak
 tags
 coverage
