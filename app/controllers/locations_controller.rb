@@ -34,14 +34,11 @@ class LocationsController < ApplicationController
 
     @locations = Location.visible.find(:all, options)
 
-    bounds = get_bounds_for(@locations, 1) unless @locations.blank?
-    if bounds
-      @map = create_map(@locations)
+    @map = create_map(@locations, 1) unless @locations.blank?
 
-      @locations.each do |location|
-        pushpin_for_club(location, :link_club => true) if location.lat && location.lng
-      end
-    end
+    @locations.each do |location|
+      pushpin_for_club(location, :link_club => true) if location.lat && location.lng
+    end if @map
 
     respond_to do |format|
       format.html # index.html.erb
@@ -60,7 +57,7 @@ class LocationsController < ApplicationController
 
         @map = create_map(@location)
 
-        pushpin_for_club(@location, :show_info_window => true)
+        pushpin_for_club(@location, :show_info_window => true) if @map
       end
       format.xml  { render :xml => @location }
     end

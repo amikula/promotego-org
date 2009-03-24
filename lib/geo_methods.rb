@@ -10,20 +10,28 @@ module GeoMethods
     "address" => 15
   }
 
-  def create_map(mappable)
+  def create_map(mappable, min_bounds=0)
+    case mappable
+    when Location
+      return nil if mappable.lng.blank? && mappable.lat.blank?
+    when Array
+      return nil if mappable.detect{|l| !l.lng.nil? && !l.lat.nil?}.blank?
+    end
+
     map = GMap.new("map_div")
     map.control_init(:large_map => true,:map_type => true)
 
     case mappable
     when Location
       zoom = mappable.geocode_precision
-      unless zoom.class == Integer
+      unless zoom.is_a? Integer
         zoom = ZOOM[zoom || 'unknown']
       end
 
       map.center_zoom_init([mappable.lat,mappable.lng], zoom)
     when Array
-      map.center_zoom_on_bounds_init(mappable)
+      bounds = get_bounds_for(mappable, min_bounds)
+      map.center_zoom_on_bounds_init(bounds)
     end
 
     map
