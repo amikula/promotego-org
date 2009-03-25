@@ -16,6 +16,8 @@ gems:
   version: 0.2.0
 - name: fastercsv
   version: 1.4.0
+- name: haml
+  version: 2.0.9
 - name: highline
   version: 1.5.0
 - name: hpricot
