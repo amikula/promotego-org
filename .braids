@@ -1,0 +1,8 @@
+--- 
+vendor/plugins/acts_as_tree: 
+  squashed: true
+  url: git://github.com/rails/acts_as_tree.git
+  branch: master
+  type: git
+  revision: 20988cac158bcf7f7535a3c5dd193165797d719a
+  remote: braid/vendor/plugins/acts-as-tree
