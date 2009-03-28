@@ -135,12 +135,18 @@ class Location < ActiveRecord::Base
 
   # Returns the  sluggified string
   def sluggify
-    name = self.name.downcase.gsub(/[\W]/,'-').gsub(/[--]+/,'-').dasherize
-    slug = Location.find_all_by_slug(name)
-    if slug.size > 1
-      return "#{name}-#{slug.size-1}"
+    slug = self.name.downcase.gsub(/\W|_/, '-').gsub(/--+/, '-').sub(/^-+/, '').sub(/-+$/, '')
+    slugs = Location.find(:all, :conditions => "slug LIKE '#{slug}%'", :select => 'slug').map(&:slug)
+
+    if slugs && slugs.include?(slug)
+      i = 2
+      while(slugs.include?(candidate = "#{slug}-#{i}"))
+        i += 1
+      end
+
+      candidate
     else
-      return name
+      slug
     end
   end
 
