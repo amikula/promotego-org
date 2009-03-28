@@ -195,8 +195,9 @@ describe Location do
 
     it "should generate slug if it is blank" do
       location = Location.new(Location.valid_options.merge(:name => "Game Empire", :slug => nil))
+      location.should_receive(:sluggify).and_return(:slug)
       location.before_save
-      location.slug.should == 'game-empire'
+      location.slug.should == :slug
     end
   end
 
@@ -250,6 +251,64 @@ describe Location do
       @location.contacts = [{}]
       @location.send(:clean_empty_contacts)
       @location.contacts.should == nil
+    end
+  end
+
+  describe :sluggify do
+    before(:each) do
+      @location = Location.new
+      Location.stub!(:find).with(:all, anything).and_return([])
+    end
+
+    def get_slug(name)
+      Location.new(:name => name).sluggify
+    end
+
+    it "replaces spaces in the club name with dashes" do
+      get_slug('foo bar').should == 'foo-bar'
+    end
+
+    it "downcases the result" do
+      get_slug('Foo Bar').should == 'foo-bar'
+    end
+
+    it "converts non-letters into dashes" do
+      get_slug('a.b.c').should == 'a-b-c'
+    end
+
+    it 'converts multiple dashes to single dash' do
+      get_slug('a..b..c---d').should == 'a-b-c-d'
+    end
+
+    it 'strips leading dashes' do
+      get_slug('--a-b').should == 'a-b'
+    end
+
+    it 'strips trailing dashes' do
+      get_slug('abc-def...').should == 'abc-def'
+    end
+
+    it 'converts underscores to dashes' do
+      get_slug('foo_bar').should == 'foo-bar'
+    end
+
+    it 'adds -2 to the end if a slug already exists with the value' do
+      Location.should_receive(:find).and_return([mock_model(Location, :slug => 'foo-bar')])
+
+      get_slug('foo bar').should == 'foo-bar-2'
+    end
+
+    it 'does not add -2 to the end if a slug with a similar unequal value exists' do
+      Location.should_receive(:find).and_return([mock_model(Location, :slug => 'foo-bar-baz')])
+
+      get_slug('foo bar').should == 'foo-bar'
+    end
+
+    it 'adds -3 if the slug exists and -2 also exists' do
+      Location.should_receive(:find).and_return([mock_model(Location, :slug => 'foo-bar'),
+                                                 mock_model(Location, :slug => 'foo-bar-2')])
+
+      get_slug('foo bar').should == 'foo-bar-3'
     end
   end
 end
