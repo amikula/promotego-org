@@ -16,14 +16,18 @@ namespace :scraper do
       location.name = club[:name]
       location.street_address = club[:address]
       location.city = club[:city]
-      location.state = club[:state]
+      #Set the country - default country is United States if none is set.
+      location.country = club[:country] || 'US'
+      #Set the state by two-letter code, or whatever the scraper gives us if we can't find it.
+      location.state = STATE_TO_ABBREV[location.country][club[:state]] || club[:state]
       if club[:phone]
         location.phone_number = club[:phone][0][:number]
       end
       location.contacts = club[:contacts]
       location.url = club[:url]
       location.description = club[:info]
-      location.is_aga = club[:is_aga?]
+      location.hidden = false
+      #location.is_aga = club[:is_aga?]
 
       location.save!
 
