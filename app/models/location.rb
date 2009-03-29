@@ -19,7 +19,7 @@ class Location < ActiveRecord::Base
       :street_address => "Street Address",
       :city => "Anytown",
       :state => "State",
-      :country => "USA",
+      :country => "US",
       :zip_code => "00000",
       :description => "description",
       :contacts => [],
