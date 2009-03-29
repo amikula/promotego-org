@@ -513,7 +513,8 @@ describe ClubScraper do
           :city => "Birmingham",
           :contacts => [{:name => "Joe Contact", :email => "email@domain.com",
                          :phone => [{:number => "205-555-1212"}]}],
-          :info => "Riverchase Galleria\nin Hoover\nSunday 3:00-6:00 pm" })
+          :info => "Riverchase Galleria\nin Hoover\nSunday 3:00-6:00 pm",
+          :is_aga? => true})
     end
   end
 
