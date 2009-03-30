@@ -27,9 +27,34 @@ namespace :scraper do
       location.url = club[:url]
       location.description = club[:info]
       location.hidden = false
-      #location.is_aga = club[:is_aga?]
-
       location.save!
+      #If it is an AGA club, we create the affiliation, which requires some data massaging.
+      if club[:is_aga?]
+        aga = Affiliate.find_by_name('AGA')
+        begin
+          name = location.contacts[0][:name]
+        rescue NoMethodError
+          name = nil
+        end
+        
+        begin
+          email = location.contacts[0][:email]
+        rescue NoMethodError
+          email = nil
+        end
+
+        begin
+          phone = location.contacts[0][:phone][0][:number]
+        rescue NoMethodError
+          phone = nil
+        end
+        affiliation = Affiliation.new(:location => location, :affiliate => aga, :expires => Time.now + 1.year,
+                                 :contact_name => name, :contact_address => location.street_address,
+                                 :contact_city => location.city, :contact_state => location.state,
+                                 :contact_zip => location.zip_code, :contact_telephone => phone,
+                                 :contact_email => email, :foreign_key => location.id)
+        affiliation.save!
+      end
 
       count += 1
     end
