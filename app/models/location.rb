@@ -4,7 +4,7 @@ class Location < ActiveRecord::Base
   acts_as_mappable
   belongs_to :type
   belongs_to :user
-  has_many :affiliations
+  has_many :affiliations, :dependent => :destroy
   has_many :affiliates, :through => :affiliations
   serialize :contacts
   attr_protected :user
