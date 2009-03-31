@@ -1,3 +1,2 @@
-# Not ready for the world to discover this through search engines yet
 User-Agent: *
-Disallow: /go_clubs/
+Disallow:
