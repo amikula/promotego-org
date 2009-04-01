@@ -49,3 +49,12 @@
       #footer
         PromoteGo.org is open source software.
         = link_to "Learn more!", "http://github.com/amikula/promotego-org/wikis/home"
+    -# Not sure why Google Analytics gave me two <script> tags
+    :javascript
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    :javascript
+      try {
+      var pageTracker = _gat._getTracker("UA-8179738-1");
+      pageTracker._trackPageview();
+      } catch(err) {}
