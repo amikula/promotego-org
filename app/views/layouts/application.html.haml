@@ -3,7 +3,8 @@
 %html
   %head
     %title
-      = @title || params[:controller].capitalize + " " + params[:action].capitalize
+      = @title || "Promote Go &mdash; #{params[:action].capitalize} #{params[:controller].capitalize}"
+
     = stylesheet_link_tag :all
     = javascript_include_tag "prototype"
     = javascript_include_tag "effects"
@@ -18,7 +19,7 @@
     - if @map
       = GMap.header
       = @map.to_html
-    
+
   %body
     #wrapper
       #header PromoteGo.org

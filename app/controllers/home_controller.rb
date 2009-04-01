@@ -1,11 +1,11 @@
 class HomeController < ApplicationController
   def index
     # display index.html
-    @title = "Welcome to PromoteGo.org!"
+    @title = "Promote Go in Your Community!"
   end
 
   def show
-    @title = params[:page].capitalize
+    @title = "Promote Go &mdash; #{params[:page].titleize}"
     render :action => params[:page]
   end
 end

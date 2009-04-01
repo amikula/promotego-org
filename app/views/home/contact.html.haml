@@ -1,4 +1,20 @@
 %h1 Contact Information
 %p
-  Email:
-  = mail_to 'contact@promotego.org', 'click here'
+  I'll be more than happy to answer your questions about the game
+  of
+  == #{link_to 'Go', home_path('what-is-go'), :title => 'What is Go?'},
+  about this site and its mission, and about how you can help out
+  with PromoteGo.org.  Simply contact me via one of the following
+  methods:
+%table
+  %tr
+    %td Email:
+    %td= mail_to 'contact@promotego.org', 'click here'
+  %tr
+    %td Twitter:
+    %td= link_to 'alfmikula', 'http://twitter.com/alfmikula'
+  %tr
+    %td Irc:
+    %td
+      %b #promotego
+      on Freenode

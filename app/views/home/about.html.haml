@@ -1,36 +1,37 @@
 %h1 What is PromoteGo.org?
 %p
   PromoteGo.org is a new site under development, dedicated to promoting the
-  = link_to "game of Go", "http://usgo.org/resources/whatisgo.html"
+  game of
+  = link_to "Go", home_path(:page => 'what-is-go'), :title => 'What is Go?'
   in the United States and abroad.  Currently it's the work of one person,
   but I need a lot of help in realizing the vision of PromoteGo.org!  If
   you're interested in helping in any way, email me
   == (#{mail_to "contact@promotego.org", 'click here'}), or you can join our
   = link_to "Google Group", "http://groups.google.com/group/promotego-discuss"
   for discussing the application.
-%h2 Get games out into the public eye
+%h2 Get Go games out into the public eye
 %p
-  First and foremost, it will be a place for Go players to arrange
-  games to play in person in local public places, such as Parks,
-  Libraries, Coffee Houses, and Pubs.  By getting more games in public,
-  we can raise awareness.
+  First and foremost, it will be a place for people to arrange to
+  play a game of Go in person in local public places, such as Parks,
+  Libraries, Coffee Houses, and Pubs.  By getting more games in
+  public, we can raise awareness.
 %p
   On the day that people stop asking us if the game we're playing is
   Othello, we can declare success in this goal.
- 
+
 %h2 Create a viral method of promoting Go
 %p
-  Second, it can function as a viral method of promoting Go: We can
-  provide fliers to promote the site, and have a point system for
-  referrals so we can recognize the most active members, and maybe
-  give away T-shirts and stuff as incentives.  When people see the
-  in-person games, sign up because of a flier, and schedule a teaching
-  session through the site, the site will grow.
+  Second, it can function as a viral method of promoting the game
+  of Go: We can provide fliers to promote the site, and have a point
+  system for referrals so we can recognize the most active members,
+  and maybe give away T-shirts and stuff as incentives.  When people
+  see the in-person games, sign up because of a flier, and schedule
+  a teaching session through the site, the site will grow.
 %p
   In order to meet this goal, we will need to offer teaching sessions
   and teaching games through the site, rather than just one-on-one
   games.
- 
+
 %h2 Provide a better club list
 %p
   Third, it can provide a club list to the community.  The current
@@ -42,7 +43,7 @@
   == #{link_to "already have this in place", :controller => :search, :action => :radius, :type => "go_club"}!
   I'll be trying to convince the AGA to link to the promotego.org
   list and use it as the authoritave U.S. list.  Wish me luck!
- 
+
 %h2 Assist in creating new clubs
 %p
   Fourth, it can provide a catalyst for creating new clubs.  New club
