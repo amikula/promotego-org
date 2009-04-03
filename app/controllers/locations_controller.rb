@@ -183,7 +183,9 @@ class LocationsController < ApplicationController
 
   private
   def render_contact_partials
-    @contact_form = render_to_string(:partial => 'contact_form', :locals => {:contact_idx => 'CONTACT_IDX', :contact => {:phone => [{}]}}).gsub(/\n/, '\n').gsub(/'/, '"')
+    @contact_form = render_to_string(:partial => 'contact_form',
+                                     :locals => {:javascript => true, :contact_idx => 'CONTACT_IDX',
+                                                 :contact => {:phone => [{}]}}).gsub(/\n/, '\n').gsub(/'/, '"')
     @phone_form = render_to_string(:partial => 'phone_number_form', :locals => {:phone => {}, :contact_idx => 'CONTACT_IDX', :phone_idx => 'PHONE_IDX'}).gsub(/\n/, '\n').gsub(/'/, '"')
   end
 end
