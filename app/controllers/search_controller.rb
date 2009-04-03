@@ -35,7 +35,7 @@ class SearchController < ApplicationController
         @radius = params[:radius].to_d
         base_geo = geocode(@address)
         @map = create_map([base_geo, @closest])
-        @results = process_location_headings([@closest])
+        process_location_headings([@closest])
         pushpin_for_club(@closest) if @map
       else
         flash.now[:error] = "No locations matched your search within 100 miles"
