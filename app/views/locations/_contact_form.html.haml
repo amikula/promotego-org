@@ -1,3 +1,6 @@
+- javascript = false unless defined?(javascript)
+- noscript = false unless defined?(noscript)
+
 Name:
 = text_field_tag "location[contacts][#{contact_idx}][name]", contact[:name]
 %br/
@@ -5,9 +8,21 @@ Email:
 = text_field_tag "location[contacts][#{contact_idx}][email]", contact[:email]
 %br/
 Phone:
-= link_to "add phone", "javascript:add_phone(#{contact_idx})"
+- add_phone_link = link_to "add phone", "javascript:add_phone(#{contact_idx})"
+- if javascript
+  = add_phone_link
+- else
+  :javascript
+    document.write('#{escape_javascript(add_phone_link)}');
 %div{:id => "phones_#{contact_idx}"}
   - phones = contact[:phone].blank? ? [{}] : contact[:phone]
   - phones.each_with_index do |phone, j|
     = render :partial => "phone_number_form", :locals => {:phone => phone, :contact_idx => contact_idx, :phone_idx => j }
+  - if noscript
+    - (phones.length...phones.length+3).each do |j|
+      = render :partial => "phone_number_form", :locals => {:phone => '', :contact_idx => contact_idx, :phone_idx => j}
+  - else
+    %noscript
+      - (phones.length...phones.length+3).each do |j|
+        = render :partial => "phone_number_form", :locals => {:phone => '', :contact_idx => contact_idx, :phone_idx => j}
 %br/
