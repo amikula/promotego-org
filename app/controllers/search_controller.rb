@@ -32,7 +32,6 @@ class SearchController < ApplicationController
           pushpin_for_club(location) if location.is_a? Location
         end if @map
       elsif !@closest.blank?
-        #@radius = params[:radius].to_d
         base_geo = geocode(@address)
         @map = create_map([base_geo, @closest])
         pushpin_for_club(@closest) if @map
