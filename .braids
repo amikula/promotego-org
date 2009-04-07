@@ -6,3 +6,10 @@ vendor/plugins/acts_as_tree:
   type: git
   revision: 20988cac158bcf7f7535a3c5dd193165797d719a
   remote: braid/vendor/plugins/acts-as-tree
+vendor/plugins/easy_search: 
+  squashed: true
+  url: git://github.com/rpheath/easy_search.git
+  branch: master
+  type: git
+  revision: d70faff6cb0845d39d3e50cbf17374d62dfedf89
+  remote: braid/vendor/plugins/easy-search
