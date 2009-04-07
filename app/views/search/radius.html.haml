@@ -19,7 +19,7 @@
     = render :partial => "result", :collection => @results
   %br/
   %br/
-- elsif @closest
+- elsif !@closest.blank?
   %h1 No Match
   %p
     No locations matched your search.  However, here is the closest match in
@@ -29,7 +29,7 @@
       %th Name
       %th Address
       %th Miles
-    = render :partial => "result", :object => @closest
+    = render :partial => "result", :collection => @closest
   %br/
   %br/
 
