@@ -1,0 +1,124 @@
+h1. EasySearch
+
+Easy search provides a convenient DSL for quickly searching your @ActiveRecord@ models.
+
+h2. What It's NOT
+
+Firstly, let's just get this out of the way. EasySearch is _not_ intended for search-intensive or high-performance applications. There are plenty of other (awesome) full-text plugins for that (e.g. acts_as_ferret, sphinx/ultrasphinx, etc). It's just an easy, quick-n-dirty search for your @ActiveRecord@ models. So if you're looking for a search solution to hunt through your 10 million record database, please, leave now while you still can.
+
+h2. So, Why Build it?
+
+Honestly? Because building a DSL interface to a simple thing is fun. It's actually a lot of fun. Also, I think it's a reasonable place to start for creating something bigger. Overall, this plugin is more-or-less the result of me toying around with the dynamism of Ruby :-)
+
+h2. Installation
+
+You can install this as a Rails plugin. Navigate to your project root and type:
+
+<pre><code>git clone git://github.com/rpheath/easy_search.git vendor/plugins/easy_search</code></pre>
+
+Use it at your own risk. You've been warned.
+
+h2. General Use Case
+
+Again, please don't attempt to use this if you'll be searching giant databases, as I'd imagine you would need something performance aware, which this is _not_. But. It should work fine for hundreds, thousands, maybe even tens-of-thousands of records. You know, like blogs, small forums, etc.
+
+h3. Configuration
+
+In config/initializers/easy_search_setup.rb (or config/environment.rb if you aren't running Rails 2.0+), you'd do something like this:
+
+<pre><code>
+RPH::EasySearch::Setup.config do
+  setup_tables do
+    users    :first_name, :last_name, :email, :login
+    projects :title, :description
+    comments :name, :body
+    groups   :name, :description
+  end
+end
+</code></pre>
+
+The @setup_tables@ method allows you to specify which columns should be searched for each one of your tables. It's required if you want to use @EasySearch@ with one of your models. Otherwise, @EasySearch@ wouldn't have a clue what to do with your keywords.
+
+And of course, should you try to search a model that has not been configured, @EasySearch@ will let you know :-)
+
+h2. Examples
+
+We'll go straight into it. First thing, you install the plugin. Then you add a generic class and give it the @EasySearch@ functionality. Like so:
+
+<pre><code>
+# app/models/search.rb
+class Search
+  include RPH::EasySearch
+end
+</pre></code>
+
+Now we have a @Search@ class that can easily handle search your @ActiveRecord@ models! Notice how this class _does not_ descend from @ActiveRecord@.
+
+h3. Usage
+
+In words, let's say we want to "search the users table with 'ryan heath'". To represent that in code, it's basically the same thing:
+
+<pre><code>
+$> Search.users.with('ryan heath')
+$> => [<#User ...>]
+
+$> Search.projects.with('webdesign')
+$> => [<#Project ...>, <#Project ...>, ...]
+</code></pre>
+
+Note: the above will not compare 'ryan heath' with each of the configured columns, but it will compare 'ryan' and 'heath' separately against each of those columns for better results. Another thing worthy of mention about keyword splitting: it's slightly more sophisticated, in that it will strip out the dull keywords that would return innaccurate results, which also helps performance. For instance:
+
+You can also search by an exact phrase. Let's say you wanted to support a search for '"ryan heath"', where you didn't want EasySearch to search "ryan" and "heath" separately. Well, all you have to do is tell your users to wrap their search terms in quotes (just like Google) and EasySearch will know to search that phrase, in that order, without splitting up the words.
+
+<pre><code>Search.users.with('ryan and a term')</code></pre>
+
+That would only search 'ryan' and 'term' against your columns. @EasySearch@ tries to be somewhat smart about what it searches. And in fact, you can see what @EasySearch@ considers "dull keywords" by doing:
+
+<pre><code>
+# default dull keywords (this is just an example)
+$> RPH::EasySearch::Setup.dull_keywords
+$> => ['a', 'and', 'the']
+</code></pre>
+
+The list is _far from complete_. So if you have words that you'd like to add to the "dull keywords" list (meaning words that would not be searched), you can do so quite easily. Going back to the @Setup.config@ block:
+
+<pre><code>
+RPH::EasySearch::Setup.config do
+  strip_keywords do
+    ['what', 'then', 'if', 'is', 'it']
+  end
+end
+
+# dull_keywords is now a sum of the defaults plus your custom keywords
+$> RPH::EasySearch::Setup.dull_keywords
+$> => ['a', 'and', 'the', 'what', 'then', 'if', 'is', 'it']
+</code></pre>
+
+Those keywords are appended to the existing list (all duplicates are removed). And if you'd rather your custom list replace the existing defaults entirely, just pass 'true' to the @strip_keywords@ method, like so:
+
+<pre><code>
+RPH::EasySearch::Setup.config do
+  strip_keywords(true) do
+    ['what', 'then', 'if', 'is', 'it']
+  end
+end
+
+# dull_keywords is now only your custom keywords
+$> RPH::EasySearch::Setup.dull_keywords
+$> => ['what', 'then', 'if', 'is', 'it']
+</code></pre>
+
+And finally, if you have additional conditions that you need to apply to all search results, just use a :conditions option on the @with@ method, like so:
+
+<pre><code>
+$> Search.users.with('ryan heath', :conditions => 'active => 1')
+$> # active users matching 'ryan' and/or 'heath'
+</code></pre>
+
+Pretty easy, huh?
+
+Again, this plugin is not meant for searching high-volume Databases. It doesn't handle indexing or any of the other things a full-text solution might handle. But it was a fun plugin to write, and it's a fun API/DSL to use, and that's why I wrote it.
+
+h2. License
+
+Copyright (c) 2008 Ryan Heath, released under the MIT license
