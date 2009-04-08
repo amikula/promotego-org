@@ -3,7 +3,6 @@
 
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
-
   # Provide restful_authentication to all controllers
   include AuthenticatedSystem
 

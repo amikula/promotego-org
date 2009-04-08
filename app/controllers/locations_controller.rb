@@ -9,9 +9,11 @@ class LocationsController < ApplicationController
   # GET /locations.xml
   def index
     options = {:order => 'country, state, city, name'}
+
     if params[:country]
       country_name = params[:country].gsub('-', ' ')
       country = COUNTRY_TO_ABBREV[country_name] || params[:country]
+      @title = "Go Clubs in #{country}"
 
       if params[:state]
         state_name = params[:state].gsub('-', ' ')
@@ -23,6 +25,8 @@ class LocationsController < ApplicationController
         options[:conditions] = ['country = ? AND state = ?', country, state]
         @locality = "in #{state_name}"
         @fields = [:street_address, :city]
+
+        @title = "Go Clubs in #{state_name}, #{country_name}"
       else
         options[:conditions] = ['country = ?', country]
         @locality = "in #{country_name}"
