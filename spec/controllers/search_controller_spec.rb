@@ -50,7 +50,7 @@ describe SearchController do
         get :radius, :type_id => go_club.id, :radius => "5",
           :address => @address
 
-        assigns[:closest].should == closest
+        assigns[:closest][1].should == closest
       end
     end
 
