@@ -13,7 +13,6 @@ class LocationsController < ApplicationController
     if params[:country]
       country_name = params[:country].gsub('-', ' ')
       country = COUNTRY_TO_ABBREV[country_name] || params[:country]
-      @title = "Go Clubs in #{country}"
 
       if params[:state]
         state_name = params[:state].gsub('-', ' ')
@@ -31,6 +30,7 @@ class LocationsController < ApplicationController
         options[:conditions] = ['country = ?', country]
         @locality = "in #{country_name}"
         @fields = [:city, :state]
+        @title = "Go Clubs in #{country_name}"
       end
     else
       @fields = [:city, :state, :country]
