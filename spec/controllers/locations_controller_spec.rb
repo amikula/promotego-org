@@ -100,71 +100,91 @@ describe LocationsController do
     end
   end
 
-  describe "handling GET /locations/location-name" do
+  describe :show do
+    describe "handling GET /locations/location-name" do
 
-    before(:each) do
-      @location = mock_model(Location, :geocode_precision => "city",
-                             :name => "Location Name", :lat => 0, :lng => 0,
-                             :street_address => 'Location Address',
-                             :city => "City",
-                             :state => "State", :zip_code => "00000",
-                             :country => "USA",
-                             :slug => 'location-name',
-                             :city_state_zip => "City, State 00000")
-      Location.stub!(:find_by_slug).and_return(@location)
+      before(:each) do
+        @location = mock_model(Location, :geocode_precision => "city",
+                               :name => "Location Name", :lat => 0, :lng => 0,
+                               :street_address => 'Location Address',
+                               :city => "City",
+                               :state => "State", :zip_code => "00000",
+                               :country => "USA",
+                               :slug => 'location-name',
+                               :city_state_zip => "City, State 00000")
+        Location.stub!(:find_by_slug).and_return(@location)
+      end
+
+      def do_get(options={})
+        get :show, {:id => "location-name"}.merge(options)
+      end
+
+      it "is successful" do
+        do_get
+        response.should be_success
+      end
+
+      it "finds the location requested" do
+        Location.should_receive(:find_by_slug).with("location-name").and_return(@location)
+        do_get
+      end
+
+      it "assigns the found location for the view" do
+        do_get
+        assigns[:location].should equal(@location)
+      end
+
+      it "sets the page title to the location name" do
+        do_get
+        assigns[:title].should == @location.name
+      end
+
+      it "throws ActiveRecord::RecordNotFound when the slug isn't found" do
+        Location.should_receive(:find_by_slug).and_return(nil)
+
+        lambda{do_get}.should raise_error(ActiveRecord::RecordNotFound)
+      end
+
+      it "redirects to the proper record when slug isn't found and SlugRedirect exists" do
+        Location.should_receive(:find_by_slug).and_return(nil)
+        redirect_location = mock_model(Location, :slug => 'correct_slug')
+        slug_redirect = mock_model(SlugRedirect, :slug => 'old_slug', :location => redirect_location)
+        SlugRedirect.should_receive(:find_by_slug).with('old_slug').and_return(slug_redirect)
+
+        do_get :id => 'old_slug'
+
+        response.response_code.should == 301
+        response.should redirect_to(location_path('correct_slug'))
+      end
     end
 
-    def do_get
-      get :show, :id => "location-name"
-    end
+    describe "handling GET /locations/location-name.xml" do
 
-    it "should be successful" do
-      do_get
-      response.should be_success
-    end
+      before(:each) do
+        @location = mock_model(Location, :to_xml => "XML")
+        Location.stub!(:find_by_slug).and_return(@location)
+      end
 
-    it "should find the location requested" do
-      Location.should_receive(:find_by_slug).with("location-name").and_return(@location)
-      do_get
-    end
+      def do_get
+        @request.env["HTTP_ACCEPT"] = "application/xml"
+        get :show, :id => "location-name"
+      end
 
-    it "should assign the found location for the view" do
-      do_get
-      assigns[:location].should equal(@location)
-    end
+      it "should be successful" do
+        do_get
+        response.should be_success
+      end
 
-    it "should set the page title to the location name" do
-      do_get
-      assigns[:title].should == @location.name
-    end
-  end
+      it "should find the location requested" do
+        Location.should_receive(:find_by_slug).with("location-name").and_return(@location)
+        do_get
+      end
 
-  describe "handling GET /locations/location-name.xml" do
-
-    before(:each) do
-      @location = mock_model(Location, :to_xml => "XML")
-      Location.stub!(:find_by_slug).and_return(@location)
-    end
-
-    def do_get
-      @request.env["HTTP_ACCEPT"] = "application/xml"
-      get :show, :id => "location-name"
-    end
-
-    it "should be successful" do
-      do_get
-      response.should be_success
-    end
-
-    it "should find the location requested" do
-      Location.should_receive(:find_by_slug).with("location-name").and_return(@location)
-      do_get
-    end
-
-    it "should render the found location as xml" do
-      @location.should_receive(:to_xml).and_return("XML")
-      do_get
-      response.body.should == "XML"
+      it "should render the found location as xml" do
+        @location.should_receive(:to_xml).and_return("XML")
+        do_get
+        response.body.should == "XML"
+      end
     end
   end
 
