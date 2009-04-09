@@ -5,6 +5,7 @@ class Location < ActiveRecord::Base
   belongs_to :type
   belongs_to :user
   has_many :affiliations, :dependent => :destroy
+  has_many :slug_redirects, :dependent => :destroy
   has_many :affiliates, :through => :affiliations
   serialize :contacts
   attr_protected :user

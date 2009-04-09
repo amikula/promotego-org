@@ -53,7 +53,18 @@ class LocationsController < ApplicationController
   # GET /locations/1
   # GET /locations/1.xml
   def show
-    @location = Location.find_by_slug(params[:id])
+    slug = params[:id]
+    @location = Location.find_by_slug(slug)
+
+    unless @location
+      slug_redirect = SlugRedirect.find_by_slug(slug)
+
+      if slug_redirect
+        redirect_to location_path(slug_redirect.location.slug), :status => :moved_permanently and return
+      end
+
+      raise ActiveRecord::RecordNotFound.new("No such club: #{params[:id]}")
+    end
 
     respond_to do |format|
       format.html do
