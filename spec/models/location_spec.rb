@@ -187,17 +187,60 @@ describe Location do
   end
 
   describe :before_save do
-    it "should clean blank contacts from the contacts array" do
-      location = Location.new(Location.valid_options)
-      location.should_receive(:clean_empty_contacts)
-      location.before_save
+    before(:each) do
+      @location = Location.new(:name => 'Game Empire', :slug => 'game-empire')
+      @location.stub!(:name_changed?).and_return(false)
+      @location.stub!(:slug_changed?).and_return(false)
     end
 
-    it "should generate slug if it is blank" do
-      location = Location.new(Location.valid_options.merge(:name => "Game Empire", :slug => nil))
-      location.should_receive(:sluggify).and_return(:slug)
-      location.before_save
-      location.slug.should == :slug
+    it "cleans blank contacts from the contacts array" do
+      @location.should_receive(:clean_empty_contacts)
+
+      @location.before_save
+    end
+
+    it "generates slug if it is blank" do
+      @location.slug = nil
+      @location.should_receive(:first_available_slug).with('game-empire').and_return(:slug)
+
+      @location.before_save
+
+      @location.slug.should == :slug
+    end
+
+    it 'generates slug if name has changed' do
+      @location.name = 'Game Fiefdom'
+      @location.stub!(:name_changed?).and_return(true)
+      @location.stub!(:slug_changed?).and_return(true)
+      @location.should_receive(:changes).at_least(1).times.and_return('name' => ['Game Empire', 'Game Fiefdom'], 'slug' => [nil, 'slug'])
+      @location.should_receive(:first_available_slug).with('game-fiefdom').and_return(:slug)
+
+      @location.before_save
+
+      @location.slug.should == :slug
+    end
+
+    it 'does not generate the slug if the name changed in a way that would not change its slug' do
+      @location.stub!(:name_changed?).and_return(true)
+      @location.should_receive(:changes).and_return('name' => ['Game Empire', 'Game*Empire'])
+      @location.should_not_receive(:first_available_slug)
+
+      @location.before_save
+
+      @location.slug.should == 'game-empire'
+    end
+
+    it 'creates a SlugRedirect if the slug changed anywhere in the system' do
+      @location.should_receive(:slug_changed?).and_return(true)
+      @location.should_receive(:changes).and_return('slug' => ['42', 'game-empire'])
+      @location.should_not_receive(:first_available_slug)
+      slugredirect = mock(SlugRedirect)
+      SlugRedirect.should_receive(:new).with(:slug => '42').and_return(slugredirect)
+      @location.slug_redirects.should_receive(:<<).with(slugredirect)
+
+      @location.before_save
+
+      @location.slug.should == 'game-empire'
     end
   end
 
@@ -254,61 +297,48 @@ describe Location do
     end
   end
 
-  describe :sluggify do
+  describe :first_available_slug do
     before(:each) do
-      @location = Location.new
+      @location = Location.new(:id => 42)
       Location.stub!(:find).with(:all, anything).and_return([])
+      SlugRedirect.stub!(:find).with(:all, anything).and_return([])
     end
 
     def get_slug(name)
-      Location.new(:name => name).sluggify
-    end
-
-    it "replaces spaces in the club name with dashes" do
-      get_slug('foo bar').should == 'foo-bar'
-    end
-
-    it "downcases the result" do
-      get_slug('Foo Bar').should == 'foo-bar'
-    end
-
-    it "converts non-letters into dashes" do
-      get_slug('a.b.c').should == 'a-b-c'
-    end
-
-    it 'converts multiple dashes to single dash' do
-      get_slug('a..b..c---d').should == 'a-b-c-d'
-    end
-
-    it 'strips leading dashes' do
-      get_slug('--a-b').should == 'a-b'
-    end
-
-    it 'strips trailing dashes' do
-      get_slug('abc-def...').should == 'abc-def'
-    end
-
-    it 'converts underscores to dashes' do
-      get_slug('foo_bar').should == 'foo-bar'
+      @location.first_available_slug(name)
     end
 
     it 'adds -2 to the end if a slug already exists with the value' do
-      Location.should_receive(:find).and_return([mock_model(Location, :slug => 'foo-bar')])
+      Location.stub!(:find).and_return([mock_model(Location, :slug => 'foo-bar')])
 
-      get_slug('foo bar').should == 'foo-bar-2'
+      get_slug('foo-bar').should == 'foo-bar-2'
     end
 
     it 'does not add -2 to the end if a slug with a similar unequal value exists' do
-      Location.should_receive(:find).and_return([mock_model(Location, :slug => 'foo-bar-baz')])
+      Location.stub!(:find).and_return([mock_model(Location, :slug => 'foo-bar-baz')])
 
-      get_slug('foo bar').should == 'foo-bar'
+      get_slug('foo-bar').should == 'foo-bar'
     end
 
     it 'adds -3 if the slug exists and -2 also exists' do
-      Location.should_receive(:find).and_return([mock_model(Location, :slug => 'foo-bar'),
+      Location.stub!(:find).and_return([mock_model(Location, :slug => 'foo-bar'),
                                                  mock_model(Location, :slug => 'foo-bar-2')])
 
-      get_slug('foo bar').should == 'foo-bar-3'
+      get_slug('foo-bar').should == 'foo-bar-3'
+    end
+
+    it 'adds -2 if the slug exists as a SlugRedirect' do
+      SlugRedirect.stub!(:find).and_return([mock_model(SlugRedirect, :slug => 'foo-bar', :location_id => 7)])
+
+      get_slug('foo-bar').should == 'foo-bar-2'
+    end
+
+    it 'recycles the slug if a SlugRedirect is found that points to this location' do
+      @location.name = "Foo Bar"
+      @location.id = 42
+      SlugRedirect.stub!(:find).and_return([mock_model(SlugRedirect, :slug => 'foo-bar', :location_id => @location.id)])
+
+      @location.first_available_slug('foo-bar').should == 'foo-bar'
     end
   end
 end

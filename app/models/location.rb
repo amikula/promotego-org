@@ -36,9 +36,21 @@ class Location < ActiveRecord::Base
 
   def before_save
     clean_empty_contacts
-    if self.slug.blank?
-      self.slug = self.sluggify
+    if self.slug.blank? || self.slug_should_change?
+      self.slug = first_available_slug(self.name.sluggify)
     end
+
+    if self.slug_changed?
+      old_slug = changes['slug'][0]
+      if old_slug
+        slug_redirect = SlugRedirect.new(:slug => old_slug)
+        slug_redirects << slug_redirect
+      end
+    end
+  end
+
+  def slug_should_change?
+    self.name_changed? && self.changes['name'].map(&:sluggify).uniq.length > 1
   end
 
   def user=(new_user)
@@ -134,14 +146,14 @@ class Location < ActiveRecord::Base
     components.join(', ')
   end
 
-  # Returns the  sluggified string
-  def sluggify
-    slug = self.name.downcase.gsub(/\W|_/, '-').gsub(/--+/, '-').sub(/^-+/, '').sub(/-+$/, '')
+  # Returns the first available slug that doesn't conflict with a known slug
+  def first_available_slug(slug)
     slugs = Location.find(:all, :conditions => "slug LIKE '#{slug}%'", :select => 'slug').map(&:slug)
+    redirects = SlugRedirect.find(:all, :conditions => "slug LIKE '#{slug}%'")
 
-    if slugs && slugs.include?(slug)
+    if slugs.include?(slug) || detect_redirect_conflict(slug, redirects)
       i = 2
-      while(slugs.include?(candidate = "#{slug}-#{i}"))
+      while(slugs.include?(candidate = "#{slug}-#{i}") || detect_redirect_conflict(candidate, redirects))
         i += 1
       end
 
@@ -153,8 +165,17 @@ class Location < ActiveRecord::Base
 
   private
 
-  # Fires before saving a location and updates slug
+  def detect_redirect_conflict(slug, redirects)
+    redirect = redirects.detect{|r| r.slug == slug}
 
+    if redirect.blank? || redirect.location_id == self.id
+      nil
+    else
+      redirect
+    end
+  end
+
+  # Fires before saving a location and updates slug
   def clean_empty_contacts
     return if contacts.nil?
 
