@@ -74,6 +74,8 @@ ActiveRecord::Schema.define(:version => 20090409051106) do
     t.datetime "updated_at"
   end
 
+  add_index "slug_redirects", ["slug"], :name => "index_slug_redirects_on_slug", :unique => true
+
   create_table "types", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"

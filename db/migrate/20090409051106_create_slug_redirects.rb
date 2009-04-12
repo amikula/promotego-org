@@ -6,6 +6,8 @@ class CreateSlugRedirects < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :slug_redirects, :slug, :unique => true
   end
 
   def self.down
