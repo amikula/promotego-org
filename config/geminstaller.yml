@@ -12,6 +12,8 @@ gems:
   version: 2.2.2
 - name: activesupport
   version: 2.2.2
+- name: amatch
+  version: 0.2.3
 - name: cucumber
   version: 0.2.0
 - name: fastercsv
