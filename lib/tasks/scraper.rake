@@ -27,7 +27,6 @@ namespace :scraper do
       location.url = club[:url]
       location.description = club[:info]
       location.hidden = false
-      location.save!
       #If it is an AGA club, we create the affiliation, which requires some data massaging.
       if club[:is_aga?]
         aga = Affiliate.find_by_name('AGA')
@@ -36,7 +35,7 @@ namespace :scraper do
         rescue NoMethodError
           name = nil
         end
-        
+
         begin
           email = location.contacts[0][:email]
         rescue NoMethodError
@@ -53,8 +52,9 @@ namespace :scraper do
                                  :contact_city => location.city, :contact_state => location.state,
                                  :contact_zip => location.zip_code, :contact_telephone => phone,
                                  :contact_email => email, :foreign_key => location.id)
-        affiliation.save!
+        location.affiliations << affiliation
       end
+      CsvLoader.save_or_update_club(location)
 
       count += 1
     end

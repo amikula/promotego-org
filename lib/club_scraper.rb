@@ -140,7 +140,7 @@ class ClubScraper
   end
 
   def self.get_club_info(element)
-    info = element.to_plain_text.gsub(/\s*\n+\s*/, "\n")
+    info = element.to_plain_text.gsub(/\s*\n+\s*/, "<br>")
     address = nil
     element.children.each do |child|
       if (child.text?)
