@@ -375,7 +375,7 @@ describe ClubScraper do
       EOF
 
       ClubScraper.get_club_info(element).should ==
-        {:info => "I'm a field\nwith some data\nI don't care what I have"}
+        {:info => "I'm a field<br>with some data<br>I don't care what I have"}
     end
 
     it "should recognize addresses" do
@@ -388,7 +388,7 @@ describe ClubScraper do
       EOF
 
       ClubScraper.get_club_info(element).should ==
-        { :info => "Dude Ranch Library\n1313 Mockingbird Lane\nSaturday 3:00pm - 5:00pm",
+        { :info => "Dude Ranch Library<br>1313 Mockingbird Lane<br>Saturday 3:00pm - 5:00pm",
           :address => "1313 Mockingbird Lane"}
     end
 
@@ -513,7 +513,7 @@ describe ClubScraper do
           :city => "Birmingham",
           :contacts => [{:name => "Joe Contact", :email => "email@domain.com",
                          :phone => [{:number => "205-555-1212"}]}],
-          :info => "Riverchase Galleria\nin Hoover\nSunday 3:00-6:00 pm",
+          :info => "Riverchase Galleria<br>in Hoover<br>Sunday 3:00-6:00 pm",
           :is_aga? => true})
     end
   end
