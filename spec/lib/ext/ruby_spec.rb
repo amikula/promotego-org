@@ -29,5 +29,9 @@ describe String do
     it 'converts underscores to dashes' do
       'foo_bar'.sluggify.should == 'foo-bar'
     end
+
+    it 'converts non-ascii characters to dashes' do
+      '19√Go Club'.sluggify.should == '19-go-club'
+    end
   end
 end

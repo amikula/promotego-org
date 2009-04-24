@@ -73,12 +73,12 @@ class CsvLoader
     end
 
     if affiliation
-      affiliation.location.update_attributes!(filter_attributes(club.attributes))
+      update_club!(affiliation.location, club)
     elsif(urlmatch = match_url(club.url))
       unless club.name.sluggify == urlmatch.slug
         puts "matched club #{club.name.sluggify} with db club #{urlmatch.slug} by url"
       end
-      urlmatch.update_attributes!(filter_attributes(club.attributes))
+      update_club!(urlmatch, club)
     else
       db_clubs = Location.find(:all, :conditions => ['slug LIKE ?', "#{club.name.sluggify}%"])
       saved = false
@@ -87,7 +87,7 @@ class CsvLoader
 
         if (score = match_clubs(club, db_club)) <= 0.4
           puts "matched clubs with score #{score}: #{db_club.slug}" unless score == 0
-          db_club.update_attributes!(filter_attributes(club.attributes))
+          update_club!(db_club, club)
           saved = true
           break
         else
@@ -100,6 +100,26 @@ class CsvLoader
         puts "Saved new club #{club.slug}"
       end
     end
+  end
+
+  def self.update_club!(db_club, new_club)
+    raise "Assertion failure: new_club should have no more than 1 affiliation" unless new_club.affiliations.length <= 1
+    if new_club.affiliations.length > 0
+      affiliation = db_club.affiliations.detect{|aff| aff.affiliate_id == new_club.affiliations[0].affiliate_id}
+    end
+
+    if affiliation
+      new_attributes = new_club.affiliations[0].attributes.reject{|k,v| v.nil?}
+      if affiliation.expires < new_club.affiliations[0].expires
+        puts "updating expiration for #{db_club.slug}"
+      else
+        new_attributes.delete('expires')
+      end
+
+      affiliation.update_attributes!(new_attributes)
+    end
+
+    db_club.update_attributes!(filter_attributes(new_club.attributes))
   end
 
   URL_EXCEPTIONS = %w{

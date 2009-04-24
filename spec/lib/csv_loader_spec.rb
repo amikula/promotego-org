@@ -157,8 +157,7 @@ describe CsvLoader do
                           :affiliations => [@club1_affiliation], :url => 'first-club-url')
       @club2 = stub_model(Location, :name => 'First Club', :slug => 'first-club', :street_address => "124 first st.")
       @club3 = stub_model(Location, :name => 'Some Other Club', :slug => 'first-club', :street_address => "1313 thirteenth st.")
-      @club4 = stub_model(Location, :name => 'Some Other Club', :slug => 'first-club', :street_address => "1313 thirteenth st.")
-      @club5 = stub_model(Location, :name => 'First Club', :slug => 'first-club-2', :street_address => "123 first st.")
+      @club4 = stub_model(Location, :name => 'First Club', :slug => 'first-club-2', :street_address => "123 first st.")
 
       CsvLoader.stub!(:puts)
 
@@ -171,8 +170,7 @@ describe CsvLoader do
       @club1_affiliation.stub!(:location).and_return(@dbclub1)
       Affiliation.should_receive(:find).with(:first, :conditions => ['affiliate_id = ? and foreign_key = ?', 42, 'XYZ'],
                                              :include => :location).and_return(@club1_affiliation)
-      CsvLoader.should_receive(:filter_attributes).with(@club1.attributes).and_return(:attributes)
-      @dbclub1.should_receive(:update_attributes!).with(:attributes)
+      CsvLoader.should_receive(:update_club!).with(@dbclub1, @club1)
 
       CsvLoader.save_or_update_club(@club1)
     end
@@ -186,8 +184,7 @@ describe CsvLoader do
 
     it 'updates the club if a slug matches and the match is close enough' do
       Location.should_receive(:find).with(:all, anything).and_return([@club2])
-      CsvLoader.should_receive(:filter_attributes).with(@club1.attributes).and_return(:attributes)
-      @club2.should_receive(:update_attributes!).with(:attributes)
+      CsvLoader.should_receive(:update_club!).with(@club2, @club1)
 
       CsvLoader.save_or_update_club(@club1)
     end
@@ -201,29 +198,113 @@ describe CsvLoader do
 
     it 'updates the correct matching club if multiple partial matches for a slug exist' do
       Location.should_receive(:find).with(:all, :conditions => ['slug LIKE ?', 'first-club%']).
-        and_return([@club4, @club5])
-      CsvLoader.should_receive(:filter_attributes).with(@club1.attributes).and_return(:attributes)
-      @club5.should_receive(:update_attributes!).with(:attributes)
+        and_return([@club3, @club4])
+      CsvLoader.should_receive(:update_club!).with(@club4, @club1)
 
       CsvLoader.save_or_update_club(@club1)
     end
 
     it 'matches clubs when the urls match' do
       Location.should_receive(:find).with(:first, :conditions => ['url = ?', 'first-club-url']).
-        and_return(@club4)
-      CsvLoader.should_receive(:filter_attributes).with(@club1.attributes).and_return(:attributes)
-      @club4.should_receive(:update_attributes!).with(:attributes)
+        and_return(@club3)
+      CsvLoader.should_receive(:update_club!).with(@club3, @club1)
 
       CsvLoader.save_or_update_club(@club1)
     end
 
     it 'does not match clubs when the urls match and the url is in the exception list' do
       exception = 'http://www.erols.com/jgoon/links-go.htm'
-      @club4.stub!(:url).and_return(exception)
+      @club3.stub!(:url).and_return(exception)
       @club1.stub!(:url).and_return(exception)
       @club1.should_receive(:save!)
 
       CsvLoader.save_or_update_club(@club1)
+    end
+  end
+
+  describe :update_club! do
+    before(:each) do
+      @db_affiliation = mock_model(Affiliation, :affiliate_id => 1, :expires => 3.months.from_now)
+      @db_affiliation.stub!(:update_attributes!)
+      @db_club = mock_model(Location, :affiliations => [@db_affiliation], :slug => 'db-club-slug')
+      @db_club.stub!(:update_attributes!)
+      @new_aff_attributes = {}
+      @new_affiliation = mock_model(Affiliation, :attributes => @new_aff_attributes, :affiliate_id => 1,
+                                    :expires => 4.months.from_now)
+      @new_club = mock_model(Location, :attributes => :new_club_attributes, :affiliations => [@new_affiliation])
+      CsvLoader.stub!(:puts)
+      CsvLoader.stub!(:filter_attributes)
+    end
+
+    it 'updates the club with filtered attributes from the new club' do
+      CsvLoader.should_receive(:filter_attributes).with(:new_club_attributes).and_return(:filtered_attributes)
+      @db_club.should_receive(:update_attributes!).with(:filtered_attributes)
+
+      CsvLoader.update_club!(@db_club, @new_club)
+    end
+
+    it 'updates the affiliation info' do
+      @db_affiliation.should_receive(:update_attributes!).with(@new_aff_attributes)
+
+      CsvLoader.update_club!(@db_club, @new_club)
+    end
+
+    it 'updates the correct affiliation when there is more than one' do
+      other_affiliation = mock_model(Affiliation, :affiliate_id => 2)
+      other_affiliation.should_not_receive(:update_attributes!)
+      @db_affiliation.should_receive(:update_attributes!).with(@new_aff_attributes)
+      @db_club.stub!(:affiliations).and_return([other_affiliation, @db_affiliation])
+
+      CsvLoader.update_club!(@db_club, @new_club)
+    end
+
+    it 'does not update attributes on the affiliation which are nil on the new affiliation' do
+      @new_affiliation.stub!(:attributes).and_return(:foo => :bar, :baz => nil, :xyzzy => nil)
+      @db_affiliation.should_receive(:update_attributes!).with(:foo => :bar)
+
+      CsvLoader.update_club!(@db_club, @new_club)
+    end
+
+    it 'does not get an error when there are no affiliations on both old and new club' do
+      @db_club.stub!(:affiliations).and_return([])
+      @new_club.stub!(:affiliations).and_return([])
+
+      lambda{CsvLoader.update_club!(@db_club, @new_club)}.should_not raise_error
+    end
+
+    it 'does not get an error when there are no affiliations on new club' do
+      @new_club.stub!(:affiliations).and_return([])
+
+      lambda{CsvLoader.update_club!(@db_club, @new_club)}.should_not raise_error
+    end
+
+    it 'does not get an error when there are no affiliations on old club' do
+      @db_club.stub!(:affiliations).and_return([])
+
+      lambda{CsvLoader.update_club!(@db_club, @new_club)}.should_not raise_error
+    end
+
+    it 'updates the expiration date if newer than the old expiration date' do
+      @db_affiliation.stub!(:expires).and_return(3.months.from_now)
+      new_expire = 1.year.from_now
+      @new_affiliation.stub!(:expires).and_return(new_expire)
+      @new_aff_attributes['expires'] = new_expire
+      @new_aff_attributes['other'] = 'other value'
+
+      @db_affiliation.should_receive(:update_attributes!).with('expires' => new_expire, 'other' => 'other value')
+
+      CsvLoader.update_club!(@db_club, @new_club)
+    end
+
+    it 'does not update the expiration date if older than the previous expiration date' do
+      @db_affiliation.stub!(:expires).and_return(3.months.from_now)
+      @new_affiliation.stub!(:expires).and_return(1.month.from_now)
+      @new_aff_attributes['expires'] = 1.month.from_now
+      @new_aff_attributes['other'] = 'other value'
+
+      @db_affiliation.should_receive(:update_attributes!).with('other' => 'other value')
+
+      CsvLoader.update_club!(@db_club, @new_club)
     end
   end
 

@@ -47,11 +47,10 @@ namespace :scraper do
         rescue NoMethodError
           phone = nil
         end
-        affiliation = Affiliation.new(:location => location, :affiliate => aga, :expires => Time.now + 1.year,
-                                 :contact_name => name, :contact_address => location.street_address,
-                                 :contact_city => location.city, :contact_state => location.state,
-                                 :contact_zip => location.zip_code, :contact_telephone => phone,
-                                 :contact_email => email, :foreign_key => location.id)
+
+        # We don't really know anything about the affiliation except that it exists and it
+        # hasn't expired.
+        affiliation = Affiliation.new(:affiliate => aga, :expires => 1.month.from_now.to_date)
         location.affiliations << affiliation
       end
       CsvLoader.save_or_update_club(location)
