@@ -31,7 +31,11 @@ module ApplicationHelper
 
   def active_countries(us_first=false)
     Location.visible.find(:all, :select => 'DISTINCT country').collect do |l|
-      Abbreviable.new(COUNTRY_FROM_ABBREV[l.country] || l.country, l.country)
+      if l.country.blank?
+        Abbreviable.new('None', 'None')
+      else
+        Abbreviable.new(COUNTRY_FROM_ABBREV[l.country] || l.country, l.country)
+      end
     end.sort_by{|c| (us_first && c.abbrev == 'US') ? 'AAAAAAAA' : c.full_name}
   end
 

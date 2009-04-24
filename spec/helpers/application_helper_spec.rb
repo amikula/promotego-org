@@ -31,6 +31,12 @@ describe ApplicationHelper do
       helper.active_countries.collect{|c| c.full_name}.should == ['Puerto Rico', 'United Kingdom', 'United States']
     end
 
+    it 'does not error out with nil countries' do
+      @visible.should_receive(:find).and_return([mock(Location, :country => nil), mock(Location, :country => 'GB'), mock(Location, :country => 'PR')])
+
+      lambda{helper.active_countries}.should_not raise_error
+    end
+
     it 'sorts US to the front if requested' do
       @visible.should_receive(:find).and_return([mock(Location, :country => 'US'), mock(Location, :country => 'GB'), mock(Location, :country => 'PR')])
 
