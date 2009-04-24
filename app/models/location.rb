@@ -43,6 +43,7 @@ class Location < ActiveRecord::Base
     if self.slug_changed?
       old_slug = changes['slug'][0]
       if old_slug
+        SlugRedirect.destroy_all(['slug = ?', self.slug])
         slug_redirect = SlugRedirect.new(:slug => old_slug)
         slug_redirects << slug_redirect
       end
@@ -146,6 +147,7 @@ class Location < ActiveRecord::Base
     components.join(', ')
   end
 
+  private
   # Returns the first available slug that doesn't conflict with a known slug
   def first_available_slug(slug)
     slugs = Location.find(:all, :conditions => "slug LIKE '#{slug}%'", :select => 'slug').map(&:slug)
@@ -162,8 +164,6 @@ class Location < ActiveRecord::Base
       slug
     end
   end
-
-  private
 
   def detect_redirect_conflict(slug, redirects)
     redirect = redirects.detect{|r| r.slug == slug}

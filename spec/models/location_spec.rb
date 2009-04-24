@@ -242,6 +242,21 @@ describe Location do
 
       @location.slug.should == 'game-empire'
     end
+
+    it 'deletes existing SlugRedirects that would conflict with the current one' do
+      @location.stub!(:slug_changed?).and_return(true)
+      @location.stub!(:changes).and_return('slug' => ['42', 'game-empire'])
+      @location.stub!(:first_available_slug)
+      slugredirect = mock(SlugRedirect)
+      SlugRedirect.stub!(:new).with(:slug => '42').and_return(slugredirect)
+      @location.slug_redirects.stub!(:<<).with(slugredirect)
+
+      SlugRedirect.should_receive(:destroy_all).with(['slug = ?', 'game-empire'])
+
+      @location.before_save
+
+      @location.slug.should == 'game-empire'
+    end
   end
 
   describe :clean_empty_contacts do
@@ -305,7 +320,7 @@ describe Location do
     end
 
     def get_slug(name)
-      @location.first_available_slug(name)
+      @location.send(:first_available_slug, name)
     end
 
     it 'adds -2 to the end if a slug already exists with the value' do
@@ -338,7 +353,7 @@ describe Location do
       @location.id = 42
       SlugRedirect.stub!(:find).and_return([mock_model(SlugRedirect, :slug => 'foo-bar', :location_id => @location.id)])
 
-      @location.first_available_slug('foo-bar').should == 'foo-bar'
+      @location.send(:first_available_slug, 'foo-bar').should == 'foo-bar'
     end
   end
 end

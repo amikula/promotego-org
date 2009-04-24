@@ -1,5 +1,5 @@
 String.class_eval do
   def sluggify
-    downcase.gsub(/\W|_/, '-').gsub(/--+/, '-').sub(/^-+/, '').sub(/-+$/, '')
+    downcase.gsub(/[^A-Za-z0-9]/, '-').gsub(/--+/, '-').sub(/^-+/, '').sub(/-+$/, '')
   end
 end
