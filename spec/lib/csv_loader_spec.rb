@@ -177,7 +177,7 @@ describe CsvLoader do
 
     it "saves the club if no slug matches this club's slug" do
       Affiliation.stub!(:find).with(:first, anything).and_return(nil)
-      @club1.should_receive(:save!)
+      @club1.should_receive(:save).and_return(true)
 
       CsvLoader.save_or_update_club(@club1)
     end
@@ -191,7 +191,7 @@ describe CsvLoader do
 
     it 'saves the club if a slug matches and the match is not close enough' do
       Location.should_receive(:find).with(:all, anything).and_return([@club3])
-      @club1.should_receive(:save!)
+      @club1.should_receive(:save).and_return(true)
 
       CsvLoader.save_or_update_club(@club1)
     end
@@ -216,7 +216,7 @@ describe CsvLoader do
       exception = 'http://www.erols.com/jgoon/links-go.htm'
       @club3.stub!(:url).and_return(exception)
       @club1.stub!(:url).and_return(exception)
-      @club1.should_receive(:save!)
+      @club1.should_receive(:save).and_return(true)
 
       CsvLoader.save_or_update_club(@club1)
     end
@@ -225,9 +225,11 @@ describe CsvLoader do
   describe :update_club! do
     before(:each) do
       @db_affiliation = mock_model(Affiliation, :affiliate_id => 1, :expires => 3.months.from_now)
-      @db_affiliation.stub!(:update_attributes!)
+      @db_affiliation.stub!(:attributes=)
+      @db_affiliation.stub!(:save).and_return(true)
       @db_club = mock_model(Location, :affiliations => [@db_affiliation], :slug => 'db-club-slug')
-      @db_club.stub!(:update_attributes!)
+      @db_club.stub!(:attributes=)
+      @db_club.stub!(:save).and_return(true)
       @new_aff_attributes = {}
       @new_affiliation = mock_model(Affiliation, :attributes => @new_aff_attributes, :affiliate_id => 1,
                                     :expires => 4.months.from_now)
@@ -238,21 +240,24 @@ describe CsvLoader do
 
     it 'updates the club with filtered attributes from the new club' do
       CsvLoader.should_receive(:filter_attributes).with(:new_club_attributes).and_return(:filtered_attributes)
-      @db_club.should_receive(:update_attributes!).with(:filtered_attributes)
+      @db_club.should_receive(:attributes=).with(:filtered_attributes)
+      @db_club.should_receive(:save).and_return(true)
 
       CsvLoader.update_club!(@db_club, @new_club)
     end
 
     it 'updates the affiliation info' do
-      @db_affiliation.should_receive(:update_attributes!).with(@new_aff_attributes)
+      @db_affiliation.should_receive(:attributes=).with(@new_aff_attributes)
+      @db_affiliation.should_receive(:save).and_return(true)
 
       CsvLoader.update_club!(@db_club, @new_club)
     end
 
     it 'updates the correct affiliation when there is more than one' do
       other_affiliation = mock_model(Affiliation, :affiliate_id => 2)
-      other_affiliation.should_not_receive(:update_attributes!)
-      @db_affiliation.should_receive(:update_attributes!).with(@new_aff_attributes)
+      other_affiliation.should_not_receive(:attributes=)
+      @db_affiliation.should_receive(:attributes=).with(@new_aff_attributes)
+      @db_affiliation.should_receive(:save).and_return(true)
       @db_club.stub!(:affiliations).and_return([other_affiliation, @db_affiliation])
 
       CsvLoader.update_club!(@db_club, @new_club)
@@ -260,7 +265,8 @@ describe CsvLoader do
 
     it 'does not update attributes on the affiliation which are nil on the new affiliation' do
       @new_affiliation.stub!(:attributes).and_return(:foo => :bar, :baz => nil, :xyzzy => nil)
-      @db_affiliation.should_receive(:update_attributes!).with(:foo => :bar)
+      @db_affiliation.should_receive(:attributes=).with(:foo => :bar)
+      @db_affiliation.should_receive(:save).and_return(true)
 
       CsvLoader.update_club!(@db_club, @new_club)
     end
@@ -291,7 +297,8 @@ describe CsvLoader do
       @new_aff_attributes['expires'] = new_expire
       @new_aff_attributes['other'] = 'other value'
 
-      @db_affiliation.should_receive(:update_attributes!).with('expires' => new_expire, 'other' => 'other value')
+      @db_affiliation.should_receive(:attributes=).with('expires' => new_expire, 'other' => 'other value')
+      @db_affiliation.should_receive(:save).and_return(true)
 
       CsvLoader.update_club!(@db_club, @new_club)
     end
@@ -302,7 +309,8 @@ describe CsvLoader do
       @new_aff_attributes['expires'] = 1.month.from_now
       @new_aff_attributes['other'] = 'other value'
 
-      @db_affiliation.should_receive(:update_attributes!).with('other' => 'other value')
+      @db_affiliation.should_receive(:attributes=).with('other' => 'other value')
+      @db_affiliation.should_receive(:save).and_return(true)
 
       CsvLoader.update_club!(@db_club, @new_club)
     end
