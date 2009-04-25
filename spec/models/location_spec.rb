@@ -6,9 +6,7 @@ describe Location do
   end
 
   it "should be valid" do
-    @location.street_address="1600 Pennsylvania Ave."
-    @location.city="Washington"
-    @location.state="DC"
+    @location.attributes = Location.valid_options
     @location.should be_valid
   end
 

@@ -7,11 +7,15 @@ class Location < ActiveRecord::Base
   has_many :affiliations, :dependent => :destroy
   has_many :slug_redirects, :dependent => :destroy
   has_many :affiliates, :through => :affiliations
+
   serialize :contacts
+
   attr_protected :user
 
   named_scope :visible, :conditions => {:hidden => false}
   named_scope :hidden, :conditions => {:hidden => true}
+
+  validates_presence_of :name, :city, :state, :country, :description
 
   def self.valid_options
     {

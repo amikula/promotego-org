@@ -17,7 +17,8 @@ class CsvLoader
     club = Location.new(:name => row['Name'], :city => row['Meeting_City'], :state => row['State'],
                  :url => url, :description => row['Meeting_HTML'].gsub("\r\n", ''),
                  :contacts => ClubScraper.get_club_contacts(Hpricot(row['Contact_HTML'])),
-                 :street_address => club_info[:address], :hidden => row['DO_NOT_DISPLAY'].to_i)
+                 :street_address => club_info[:address], :hidden => row['DO_NOT_DISPLAY'].to_i,
+                 :country => 'US')
 
     if expire
       aga = Affiliate.find_by_name('AGA')
@@ -96,7 +97,7 @@ class CsvLoader
       end
 
       unless saved
-        club.save!
+        club.save(false) || raise("Problem saving club #{club.name}")
         puts "Saved new club #{club.slug}"
       end
     end
@@ -116,10 +117,12 @@ class CsvLoader
         new_attributes.delete('expires')
       end
 
-      affiliation.update_attributes!(new_attributes)
+      affiliation.attributes = new_attributes
+      affiliation.save(false) || raise("Error updating affiliation #{affiliation.id}")
     end
 
-    db_club.update_attributes!(filter_attributes(new_club.attributes))
+    db_club.attributes = filter_attributes(new_club.attributes)
+    db_club.save(false) || raise("Error updating attributes for club #{club.name}")
   end
 
   URL_EXCEPTIONS = %w{
