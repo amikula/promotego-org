@@ -123,4 +123,16 @@ describe LocationsHelper do
       helper.visible_affiliations.map{|a| a.affiliate.name}.should == [@affiliates[-1].name]
     end
   end
+
+  describe :state_select_hash do
+    it 'has a key for US and Canada' do
+      helper.state_select_hash.should have_key('US')
+      helper.state_select_hash.should have_key('CA')
+    end
+
+    it 'has a TX and CA state selector in the US key' do
+      helper.state_select_hash['US'].should have_tag('option[value=?]', 'TX', 'Texas')
+      helper.state_select_hash['US'].should have_tag('option[value=?]', 'CA', 'California')
+    end
+  end
 end
