@@ -76,7 +76,7 @@ namespace :scraper do
     ProgressBar.with_progress('geocoding', clubs) do |loc|
       loc.geocode
       failed += 1 if loc.lat == nil || loc.lng == nil
-      loc.save!
+      loc.save(false) || raise("Error saving club #{loc.name}")
     end
 
     puts 'Finished!'

@@ -30,17 +30,20 @@
     %br/
     = f.text_field :city
   %p
+    %b Country
+    %br/
+    = select :location, :country, [['Please select a country', '--']].concat(COUNTRY_TO_ABBREV.to_a.sort)
+  %p
     %b State/Province
     %br/
-    = f.text_field :state
+    - if state_abbrevs=STATE_TO_ABBREV[@location.country]
+      = select :location, :state, [['Please select a state', '--']].concat(state_abbrevs.to_a.sort)
+    - else
+      = f.text_field :state
   %p
     %b Zip/Postal code
     %br/
     = f.text_field :zip_code
-  %p
-    %b Country
-    %br/
-    = f.text_field :country
   %p
     %b Description
     %br/
