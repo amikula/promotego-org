@@ -171,6 +171,8 @@ class LocationsController < ApplicationController
         format.html { redirect_to(location_path(@location.slug)) }
         format.xml  { head :ok }
       else
+        @types = Type.find(:all)
+
         format.html do
           if @location
             render :action => "edit"

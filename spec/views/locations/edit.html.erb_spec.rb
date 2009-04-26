@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "/locations/edit" do
   include LocationsHelper
-  
+
   before do
     @user = mock_model(User)
     @user.stub!(:has_role?).and_return(false)
@@ -28,7 +28,7 @@ describe "/locations/edit" do
       end
       with_tag('input#location_street_address[name=?]', "location[street_address]")
       with_tag('input#location_city[name=?]', "location[city]")
-      with_tag('input#location_state[name=?]', "location[state]")
+      with_tag('select#location_state[name=?]', "location[state]")
       with_tag('input#location_zip_code[name=?]', "location[zip_code]")
       with_tag('input#location_hours[name=?]', "location[hours]")
       with_tag('textarea#location_description[name=?]', "location[description]")

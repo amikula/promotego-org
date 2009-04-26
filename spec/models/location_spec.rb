@@ -354,4 +354,56 @@ describe Location do
       @location.send(:first_available_slug, 'foo-bar').should == 'foo-bar'
     end
   end
+
+  describe :validate do
+    before(:each) do
+      @location.attributes = Location.valid_options
+    end
+
+    it 'fails validation with "must be selected" if country is "--"' do
+      @location.country = '--'
+      @location.errors.should_receive(:add).with(:country, 'must be selected')
+
+      @location.send(:validate)
+    end
+
+    it 'fails validation with "must be selected" if state is "--"' do
+      @location.state = '--'
+      @location.errors.should_receive(:add).with(:state, 'must be selected')
+
+      @location.send(:validate)
+    end
+
+    it 'fails validation if we have a list of states for the given country and the state does not match' do
+      @location.country = 'US'
+      @location.state = 'XX'
+      @location.errors.should_receive(:add).with(:state, "'XX' is not a valid state")
+
+      @location.send(:validate)
+    end
+
+    it 'passes validation if we have a list of states for the given country and the state matches an abbreviation' do
+      @location.country = 'US'
+      @location.state = 'CA'
+      @location.should_not_receive(:errors)
+
+      @location.send(:validate)
+    end
+
+    it 'passes validation if we have a list of states for the given country and the state matches a state name' do
+      @location.country = 'US'
+      @location.state = 'Virginia'
+      @location.should_not_receive(:errors)
+
+      @location.send(:validate)
+    end
+
+    it 'passes validation if we do not have a list of states for the given country' do
+      @location.country = 'XX'
+      @location.state = 'YY'
+      @location.should_not_receive(:errors)
+
+      @location.send(:validate)
+    end
+  end
 end

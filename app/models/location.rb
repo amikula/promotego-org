@@ -23,7 +23,7 @@ class Location < ActiveRecord::Base
       :type_id => Type.find(:first),
       :street_address => "Street Address",
       :city => "Anytown",
-      :state => "State",
+      :state => "TX",
       :country => "US",
       :zip_code => "00000",
       :description => "description",
@@ -211,5 +211,18 @@ class Location < ActiveRecord::Base
 
   def clean_blanks(hash)
     hash.delete_if{|key,value| value.blank?}
+  end
+
+  protected
+  def validate
+    if country == '--'
+      errors.add(:country, 'must be selected')
+    elsif state == '--'
+      errors.add(:state, 'must be selected')
+    elsif abbrevs=STATE_FROM_ABBREV[country]
+      unless abbrevs[state] || STATE_TO_ABBREV[country][state]
+        errors.add(:state, "'#{state}' is not a valid state")
+      end
+    end
   end
 end

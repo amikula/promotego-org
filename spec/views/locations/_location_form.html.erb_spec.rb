@@ -28,9 +28,9 @@ describe "/locations/_location_form" do
       end
       with_tag('input#location_street_address[name=?]', "location[street_address]")
       with_tag('input#location_city[name=?]', "location[city]")
-      with_tag('input#location_state[name=?]', "location[state]")
+      with_tag('select#location_state[name=?]', "location[state]")
       with_tag('input#location_zip_code[name=?]', "location[zip_code]")
-      with_tag('input#location_country[name=?]', "location[country]")
+      with_tag('select#location_country[name=?]', "location[country]")
       with_tag('input#location_hours[name=?]', "location[hours]")
       with_tag('textarea#location_description[name=?]', "location[description]")
       with_tag('input#location_url[name=?]', "location[url]")
