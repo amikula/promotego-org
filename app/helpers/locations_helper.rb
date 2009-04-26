@@ -29,4 +29,12 @@ module LocationsHelper
       []
     end
   end
+
+  def state_select_hash
+    returning Hash.new do |retval|
+      STATE_TO_ABBREV.each_pair do |country,states|
+        retval[country] = select :location, :state, states.to_a.sort!.unshift(['Please select a state/province', '--'])
+      end
+    end
+  end
 end
