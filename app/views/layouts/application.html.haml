@@ -35,7 +35,7 @@
             = link_to "About", :controller => :home, :action => :show, :page => :about
           %li
             = link_to "Contact", :controller => :home, :action => :show, :page => :contact
-          - if current_user
+          - if current_user && current_user.active?
             %li
               = link_to "Log out", :controller => :sessions, :action => :destroy
             %li
