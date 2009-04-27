@@ -30,6 +30,8 @@
           %li
             = link_to "Find a Club", :controller => :search, :action => :radius, :type => "go_club"
           %li
+            = link_to "Add a Club", :controller => :locations, :action => :new
+          %li
             = link_to "About", :controller => :home, :action => :show, :page => :about
           %li
             = link_to "Contact", :controller => :home, :action => :show, :page => :contact
