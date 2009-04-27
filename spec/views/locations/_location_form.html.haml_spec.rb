@@ -21,11 +21,6 @@ describe "/locations/_location_form" do
 
     response.should have_tag("form[action=#{location_path(@location)}][method=post]") do
       with_tag('input#location_name[name=?]', "location[name]")
-      with_tag('select#location_type_id[name=?]', "location[type_id]") do
-        @types.each do |type|
-          with_tag('option[value=?]', type.id, type.name)
-        end
-      end
       with_tag('input#location_street_address[name=?]', "location[street_address]")
       with_tag('input#location_city[name=?]', "location[city]")
       with_tag('select#location_state[name=?]', "location[state]")

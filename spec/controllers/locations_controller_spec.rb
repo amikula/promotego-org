@@ -271,7 +271,7 @@ describe LocationsController do
   describe "handling POST /locations" do
 
     before(:each) do
-      @location = mock_model(Location, :to_param => "1", :slug => 'location-slug')
+      @location = mock_model(Location, :to_param => "1", :slug => 'location-slug', :type_id => 1)
       @location.stub!(:user=)
       Location.stub!(:new).and_return(@location)
     end
