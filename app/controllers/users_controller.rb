@@ -42,8 +42,8 @@ class UsersController < ApplicationController
       UserMailer.deliver_signup_notification(@user)
 
       self.current_user = @user
-      redirect_back_or_default('/')
       flash[:notice] = "Thanks for signing up!"
+      redirect_to :controller => :home, :action => :show, :page => :validate
     else
       render :action => 'new'
     end

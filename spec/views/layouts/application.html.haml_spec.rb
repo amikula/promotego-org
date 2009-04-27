@@ -53,7 +53,7 @@ describe "/layouts/application" do
   end
 
   it "should not display a login or register link if a user is logged in" do
-    template.stub!(:current_user).and_return(mock_model(User, :login => "test_user_login"))
+    template.stub!(:current_user).and_return(mock_model(User, :login => "test_user_login", :active? => true))
 
     do_render
 
@@ -62,7 +62,7 @@ describe "/layouts/application" do
   end
 
   it "should display the user name if a user is logged in" do
-    template.stub!(:current_user).and_return(mock_model(User, :login => "test_user_login"))
+    template.stub!(:current_user).and_return(mock_model(User, :login => "test_user_login", :active? => true))
 
     do_render
 
@@ -70,7 +70,7 @@ describe "/layouts/application" do
   end
 
   it "should display a logout link if a user is logged in" do
-    template.stub!(:current_user).and_return(mock_model(User, :login => "test_user_login"))
+    template.stub!(:current_user).and_return(mock_model(User, :login => "test_user_login", :active? => true))
 
     do_render
 
