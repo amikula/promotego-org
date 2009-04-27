@@ -119,6 +119,8 @@ class LocationsController < ApplicationController
   # POST /locations.xml
   def create
     @location = Location.new(params[:location])
+    @location.type_id ||= Type.find_by_name('Go Club').id
+
     @location.geocode
     if(current_user.has_role?(:administrator) && params[:location][:user_id])
       @location.user_id = params[:location][:user_id]

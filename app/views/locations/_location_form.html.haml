@@ -6,10 +6,6 @@
   %p
     %b Hidden
     = f.check_box :hidden
-  %p
-    %b Type
-    %br/
-    = collection_select :location, :type_id, @types, :id, :name
 
   - if current_user.has_role?(:administrator)
     %p
