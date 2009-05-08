@@ -15,7 +15,7 @@ class Location < ActiveRecord::Base
   named_scope :visible, :conditions => {:hidden => false}
   named_scope :hidden, :conditions => {:hidden => true}
 
-  validates_presence_of :name, :city, :state, :country, :description
+  validates_presence_of :name, :city, :country, :description
 
   def self.valid_options
     {
@@ -213,7 +213,7 @@ class Location < ActiveRecord::Base
     hash.delete_if{|key,value| value.blank?}
   end
 
-  protected
+protected
   def validate
     if country == '--'
       errors.add(:country, 'must be selected')
