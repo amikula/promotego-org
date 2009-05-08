@@ -1,6 +1,8 @@
 class SearchController < ApplicationController
   include GeoMethods
 
+  SEARCH_RADII = [5,10,25,50,100,250]
+
   def radius
     set_display_variables
 
@@ -37,7 +39,7 @@ class SearchController < ApplicationController
         pushpin_for_club(@closest) if @map
         @closest = process_location_headings([@closest])
       else
-        flash.now[:error] = "No locations matched your search within 100 miles"
+        flash.now[:error] = "No locations matched your search within #{SEARCH_RADII[-1]} miles"
       end
     end
   end
@@ -57,7 +59,7 @@ class SearchController < ApplicationController
       @type_id = params[:type_id].to_d if params[:type_id]
     end
 
-    @radii = [5,10,25,50,100]
+    @radii = SEARCH_RADII
     @types = Type.find(:all)
   end
 
@@ -73,7 +75,7 @@ class SearchController < ApplicationController
   end
 
   def find_closest
-    closest_params = {:origin => @address, :within => 100}
+    closest_params = {:origin => @address, :within => SEARCH_RADII[-1]}
     if (@type_id && @type_id > 0)
       closest_params[:conditions] = ['lat is not null and lng is not null and hidden = false and type_id = ?', @type_id]
     else
