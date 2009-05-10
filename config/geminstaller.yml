@@ -25,7 +25,7 @@ gems:
 - name: hpricot
   version: 0.6.164
 - name: mysql
-  version: ~> 2.7
+  version: ~> 2.7.0
 - name: rails
   version: 2.2.2
 - name: rake
@@ -36,3 +36,8 @@ gems:
   version: 1.1.12
 - name: hoe
   version: 1.11.0
+- name: chronic
+  version: ~> 0.2.3
+- name: javan-whenever
+  version: ~> 0.2.2
+  install_options: --source http://gems.github.com
