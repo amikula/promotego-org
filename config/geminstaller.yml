@@ -1,6 +1,6 @@
 ---
 defaults:
-  install_options: --include-dependencies
+  install_options: --source http://gems.rubyforge.org --source http://gems.github.com
 gems:
 - name: actionmailer
   version: 2.2.2
@@ -40,4 +40,5 @@ gems:
   version: ~> 0.2.3
 - name: javan-whenever
   version: ~> 0.2.2
-  install_options: --source http://gems.github.com
+- name: vlad
+  version: ~> 1.3.2
