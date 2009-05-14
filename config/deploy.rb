@@ -14,4 +14,17 @@ namespace :vlad do
   remote_task :start_web, :roles => :app do
     run "sudo #{app_command} restart"
   end
+
+  ### Extending 'vlad:update' with 'gems:geminstaller'
+  desc "Install gems via geminstaller."
+  remote_task :update, :roles => :app do
+    Rake::Task['gems:geminstaller'].invoke
+  end
+end
+
+namespace :gems do
+  desc "Run geminstaller."
+  remote_task :geminstaller, :roles => :app do
+    run "geminstaller --sudo -c #{current_path}/config/geminstaller.yml"
+  end
 end
