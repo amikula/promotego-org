@@ -25,6 +25,7 @@ end
 namespace :gems do
   desc "Run geminstaller."
   remote_task :geminstaller, :roles => :app do
+    run "cp #{current_path}/config/database_init.yml #{current_path}/config/database.yml"
     run "cd #{current_path}; sudo geminstaller"
   end
 end
