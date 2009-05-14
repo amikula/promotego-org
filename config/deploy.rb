@@ -25,6 +25,6 @@ end
 namespace :gems do
   desc "Run geminstaller."
   remote_task :geminstaller, :roles => :app do
-    run "sudo geminstaller"
+    run "cd #{current_path}; sudo geminstaller"
   end
 end
