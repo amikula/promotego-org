@@ -1,44 +1,64 @@
-%style
-  :sass
-    !outer_width = 180
-    !outer_padding = 5
+%html
+  %head
+    %title foo
+  %body
+    %style
+      :sass
+        !outer_width = 180
+        !outer_padding = 5
+        #promotego-search
+          :background-color #222
+          :color #ffffff
+          :padding= !outer_padding + px
+          :width= !outer_width + px
+          :font-family serif
+          :font-size 15px
+          p
+            :margin 0px
+            :width= !outer_width + px
+            :position relative
+          input#address
+            :width= !outer_width - 6 + px
+            :font-family serif
+            :font-size 14px
+          a
+            :color white
+            :text-decoration none
+            &:hover
+              :text-decoration underline
+          form
+            :margin 0px
+            :position relative
+          .top-row
+            :margin 2px 0px 2px 0px
+          .bottom-row
+            :margin 3px 0px 2px 0px
+          .clear_on_click
+            :color #999
+
+    - default_text = 'Enter full address or zip code'
+    :javascript
+      defaultText = "#{escape_javascript(default_text)}"
+      function clickclear(thisfield) {
+        if (thisfield.value == defaultText) {
+          thisfield.value = "";
+          thisfield.setAttribute("class", "")
+        }
+      }
+      function clickrecall(thisfield) {
+        if (thisfield.value == "") {
+          thisfield.value = defaultText;
+          thisfield.setAttribute("class", "clear_on_click")
+        }
+      }
+
     #promotego-search
-      :background-color #000000
-      :color #ffffff
-      :padding= !outer_padding + px
-      :width= !outer_width + px
-      :font-family serif
-      :font-size 15px
-      :float left
-      p
-        :margin 0px
-        :width= !outer_width + px
-        :position relative
-      input#address
-        :width= !outer_width - 6 + px
-        :font-family serif
-        :font-size 14px
-      a
-        :color white
-        :text-decoration none
-        &:hover
-          :text-decoration underline
-      form
-        :margin 0px
-        :position relative
-      .top-row
-        :margin 2px 0px 2px 0px
-      .bottom-row
-        :margin 3px 0px 2px 0px
-
-#promotego-search
-  %p.top-row Find a Go club near you
-  - form_tag({:controller => :search, :type => :go_clubs, :action => :radius}, {:method => :get}) do
-    %p
-      %label{:for => :address, :style => 'display: none;'} Enter address:
-      = text_field_tag :address, '', :size => 30
-    %p.bottom-row
-      = link_to 'PromoteGo.org', :controller => :home, :action => :show, :page => :about
-      = hidden_field_tag :radius, '25'
-      = submit_tag 'Go!', :style => 'position: absolute; right: 0px;', :class => 'submit'
-
+      %p.top-row Find a Go club near you
+      - form_tag({:controller => :search, :type => :go_clubs, :action => :radius}, {:method => :get}) do
+        %p
+          %label{:for => :address, :style => 'display: none;'} Enter address:
+          = text_field_tag :address, default_text, :size => 30, :class => 'clear_on_click', :onfocus => 'clickclear(this)', :onblur => 'clickrecall(this)'
+        %p.bottom-row
+          = link_to 'PromoteGo.org', :controller => :home, :action => :show, :page => :about
+          = hidden_field_tag :radius, '25'
+          = submit_tag 'Go!', :style => 'position: absolute; right: 0px;', :class => 'submit'

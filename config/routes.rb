@@ -29,6 +29,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'search/:type/:action', :controller => 'search'
 
   map.widgets '/widgets/:action', :controller => 'widgets'
+  map.widgets '/widgets/:action.:format', :controller => 'widgets'
 
   # Install the default routes as the lowest priority.
   map.connect ':controller/:action/:id'
