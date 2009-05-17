@@ -1,1 +1,13 @@
-= render :partial => 'search_widget'
+%h1 PromoteGo.org search widget
+
+%p
+  Now you can include a search widget on your blog or web site to help your customers find a club where they can play Go!
+  The widget will render a search box page into your site that looks like this:
+%p
+  = render :partial => 'search_widget'
+%p
+  When your users enter their address or zip code information, they'll get a list of all known Go clubs in their area.
+%p To include the search box on your site, simply copy and paste the following code into your site layout:
+%p{:style => "margin-left: 3em;"}
+  %code
+    &== <script type="text/javascript" src="http://promotego.org/widgets/search.js" /><noscript><a href="http://promotego.org/search/go_clubs/radius">Find a Go Club near you!</a></noscript>
