@@ -1,0 +1,67 @@
+%html
+  %head
+    %title foo
+  %body
+    %style
+      :sass
+        #promotego-search
+          :background-color #222
+          :color #fff
+          :padding 5px
+          :width 180px
+          :font-family serif
+          :font-size 15px
+          :position relative
+          p
+            :position relative
+            :margin 0px
+          input#address
+            :position relative
+            :left -3px
+            :width= 100%
+            :font-family serif
+            :font-size 14px
+          a
+            :color white
+            :text-decoration none
+            &:hover
+              :text-decoration underline
+          form
+            :margin 0px
+          .top-row
+            :margin 2px 0px 2px 0px
+          .bottom-row
+            :position relative
+            :margin 3px 0px 2px 0px
+          .clear_on_click
+            :color #999
+          #submit_button
+            :position absolute
+            :right 0px
+
+    - default_text = 'Enter full address or zip code'
+    :javascript
+      defaultText = "#{escape_javascript(default_text)}"
+      function clickclear(thisfield) {
+        if (thisfield.value == defaultText) {
+          thisfield.value = "";
+          thisfield.setAttribute("class", "")
+        }
+      }
+      function clickrecall(thisfield) {
+        if (thisfield.value == "") {
+          thisfield.value = defaultText;
+          thisfield.setAttribute("class", "clear_on_click")
+        }
+      }
+
+    #promotego-search
+      %p.top-row Find a Go club near you
+      - form_tag({:controller => :search, :type => :go_clubs, :action => :radius, :only_path => false}, {:method => :get, :onsubmit => "clickclear(this.address)"}) do
+        %p
+          %label{:for => :address, :style => 'display: none;'} Enter address:
+          = text_field_tag :address, default_text, :size => 30, :class => 'clear_on_click', :onfocus => 'clickclear(this)', :onblur => 'clickrecall(this)'
+        %p.bottom-row
+          = link_to 'PromoteGo.org', :controller => :home, :action => :show, :page => :about
+          = hidden_field_tag :radius, '25'
+          = submit_tag 'Go!', :id => 'submit_button'
