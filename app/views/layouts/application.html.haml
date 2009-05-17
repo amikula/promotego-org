@@ -24,7 +24,12 @@
 
   %body
     #wrapper
-      #header PromoteGo.org
+      #header{:style => "position: relative;"}
+        %div
+          PromoteGo.org
+        - unless params[:controller] == 'search'
+          %div{:style => "position: absolute; top: 0px; right: 0px;"}
+            %script{:type => 'text/javascript', :src => '/widgets/search.js'}
       #sitenav
         %ul
           %li
