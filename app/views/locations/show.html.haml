@@ -18,6 +18,8 @@
     %b Address:
     %br/
     = render :partial => "common/address", :locals => {:location => @location}
+    %br/
+    = link_to "Directions", "http://maps.google.com/maps?saddr=#{session[:last_search_address]}&daddr=#{@location.geocode_address}"
   %p
     %b Description:
     %br/
