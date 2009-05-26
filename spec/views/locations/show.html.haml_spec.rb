@@ -7,6 +7,7 @@ describe "/locations/show" do
     @location = mock_model(Location, Location.valid_options)
     @location.stub!(:city_state_zip).and_return('City, State 00000')
     @location.stub!(:type).and_return(mock_model(Type, :name => "Foo"))
+    @location.stub!(:geocode_address).and_return('geocode_address')
     @owner = mock_model(User, :login => "owner", :has_role? => false)
     @normal = mock_model(User, :login => "normal", :has_role? => false)
     @location.stub!(:user).and_return(@owner)
