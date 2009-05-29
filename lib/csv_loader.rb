@@ -44,7 +44,7 @@ class CsvLoader
     end
   end
 
-  OMIT_ATTRIBUTES = %w{country state id slug created_at updated_at type_id lng lat user_id geocode_precision hidden contacts hours}
+  OMIT_ATTRIBUTES = %w{country state id slug created_at updated_at type_id lng lat user_id geocode_precision hidden hours}
   def self.match_clubs(club1, club2)
     total_length = 0
     total_distance = 0
@@ -58,7 +58,7 @@ class CsvLoader
       next if c1_val.blank? || c2_val.blank?
 
       total_length += c1_val.length
-      total_distance += Amatch::Levenshtein.new(c1_val).match(c2_val)
+      total_distance += Amatch::Levenshtein.new(c1_val.to_s).match(c2_val.to_s)
     end
 
     match_score = total_distance.to_f / total_length.to_f
