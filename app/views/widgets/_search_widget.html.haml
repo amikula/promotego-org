@@ -62,6 +62,6 @@
           %label{:for => :address, :style => 'display: none;'} Enter address:
           = text_field_tag :address, default_text, :size => 30, :class => 'clear_on_click', :onfocus => 'clickclear(this)', :onblur => 'clickrecall(this)'
         %p.bottom-row
-          = link_to 'PromoteGo.org', :controller => :home, :action => :show, :page => :about, :only_path => false
+          = link_to 'PromoteGo.org', :controller => :widgets, :action => :index, :only_path => false
           = hidden_field_tag :radius, '25'
           = submit_tag 'Go!', :id => 'submit_button'
