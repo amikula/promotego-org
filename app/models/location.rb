@@ -30,7 +30,8 @@ class Location < ActiveRecord::Base
       :contacts => [],
       :hours => "",
       :url => 'http://domain.com',
-      :hidden => false
+      :hidden => false,
+      :geocode_precision => "address"
     }
   end
 
