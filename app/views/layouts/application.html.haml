@@ -41,6 +41,8 @@
           %li
             = link_to "About", :controller => :home, :action => :show, :page => :about
           %li
+            = link_to "Widgets", :controller => :widgets, :action => :index
+          %li
             = link_to "Contact", :controller => :home, :action => :show, :page => :contact
           - if current_user && current_user.active?
             %li
