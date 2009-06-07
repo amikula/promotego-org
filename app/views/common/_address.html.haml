@@ -1,10 +1,18 @@
-- unless location.street_address.blank?
-  = location.street_address
-- else
-  No street address available
-%br/
-- unless location.city_state_zip.blank?
-  = location.city_state_zip
-  %br/
-- unless location.country.blank?
-  = location.country
+.adr
+  - unless location.street_address.blank?
+    .street-address
+      = location.street_address
+  - else
+    %div No street address available
+  - unless location.city_state_zip.blank?
+    %div
+      - if location.city
+        %span.locality= location.city
+        %span.region= location.state
+      - elsif location.state
+        %span.region= location.state
+      - if location.zip_code
+        %span.postal-code= location.zip_code
+  - unless location.country.blank?
+    .country-name
+      = location.country
