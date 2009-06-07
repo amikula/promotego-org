@@ -1,76 +1,74 @@
-- @location.affiliations.each do |affiliation|
-  - unless Time.now > affiliation.expires
-    %img{:src => affiliation.affiliate.logo_path, :style => 'float: left; margin-right: 5px;'}
-%h1= h @location.name
+- if @map
+  %div{:style => 'float: right;'}
+    = @map.div(:width => 350, :height => 300)
+%span.vcard
+  - @location.affiliations.each do |affiliation|
+    - unless Time.now > affiliation.expires
+      %img{:src => affiliation.affiliate.logo_path, :style => 'float: left; margin-right: 5px;'}
+  %h1.fn.org= h @location.name
 
-#club_info
-  - if @map
-    %div{:style => 'float: right;'}
-      = @map.div(:width => 350, :height => 300)
-  %p
-    %b Type:
-    &= @location.type.name
-  - if @location.url
+  #club_info
+    - if @location.url
+      %p
+        %b Home page:
+        .url
+          = link_to @location.url, @location.url
     %p
-      %b Home page
-      = link_to @location.url, @location.url
-  %p
-    %b Address:
-    %br/
-    = render :partial => "common/address", :locals => {:location => @location}
-    - if @location.geocode_precision == "address"
-      %br/
-      = link_to "Directions", "http://maps.google.com/maps?saddr=#{session[:last_search_address]}&daddr=#{@location.geocode_address}"
-  %p
-    %b Description:
-    %br/
-    = @location.description.gsub(/\n/, '<br/>')
-  - if @location.contacts
+      %b Address:
+      = render :partial => "common/address", :locals => {:location => @location}
+      - if @location.geocode_precision == "address"
+        = link_to "Directions", "http://maps.google.com/maps?saddr=#{session[:last_search_address]}&daddr=#{@location.geocode_address}"
     %p
-      %b Contacts:
-      - @location.contacts.each do |contact|
-        %br/
-        - if contact[:name]
-          &= contact[:name]
-          %br/
-        - if contact[:email]
-          = mail_to(contact[:email], "Email this contact")
-          %br/
-        - unless contact[:phone].blank?
-          - contact[:phone].each do |phone|
-            &= phone[:number]
-            - unless phone[:type].blank?
-              == (#{phone[:type]})
-            %br/
-  - unless @location.hours.blank?
-    %p
-      %b Hours:
-      &= @location.hours
-  - unless visible_affiliations.empty?
-    %table.affiliations
-      %tbody
-        - visible_affiliations.each do |affiliation|
+      %b Description:
+      .note= @location.description.gsub(/\n/, '<br/>')
+    - if @location.contacts
+      %p
+        %b Contacts:
+        - @location.contacts.each do |contact|
+          .agent.vcard
+            - if contact[:name]
+              .fn&= contact[:name]
+            - if contact[:email]
+              %div= mail_to(contact[:email], "Email this contact")
+            - unless contact[:phone].blank?
+              - contact[:phone].each do |phone|
+                .tel
+                  &= phone[:number]
+                  - unless phone[:type].blank?
+                    = content_tag('span', phone[:type], :class => :type)
+    - unless @location.hours.blank?
+      %p
+        %b Hours:
+        &= @location.hours
+    - unless visible_affiliations.empty?
+      %table.affiliations
+        %tbody
+          - visible_affiliations.each do |affiliation|
+            %tr
+              %td= affiliation.affiliate.name
+              %td= affiliation.expires
+              %td= affiliation.foreign_key
+              %td
+                - if affiliation.new_record?
+                  = link_to "add", new_affiliation_path(:affiliation => {:affiliate_id => affiliation.affiliate.id, :location_id => affiliation.location.id})
+                - else
+                  = link_to "edit", edit_affiliation_path(affiliation) if current_user.administers(affiliation)
+                  = link_to 'destroy', affiliation_path(affiliation), :confirm => 'Are you sure?', :method => :delete
+        %thead
           %tr
-            %td= affiliation.affiliate.name
-            %td= affiliation.expires
-            %td= affiliation.foreign_key
-            %td
-              - if affiliation.new_record?
-                = link_to "add", new_affiliation_path(:affiliation => {:affiliate_id => affiliation.affiliate.id, :location_id => affiliation.location.id})
-              - else
-                = link_to "edit", edit_affiliation_path(affiliation) if current_user.administers(affiliation)
-                = link_to 'destroy', affiliation_path(affiliation), :confirm => 'Are you sure?', :method => :delete
-      %thead
-        %tr
-          %th Affiliate
-          %th Expires
-          %th Affiliate ID
-          %th &nbsp;
-  %br/
-  %div
-    - if(current_user && (current_user == @location.user || current_user.has_role?(:administrator)))
-      = link_to 'Edit', edit_location_path(@location)
-      |
-      = link_to 'Destroy', @location, :confirm => 'Are you sure?', :method => :delete
-      |
-    = link_to 'Back', 'javascript:history.go(-1)'
+            %th Affiliate
+            %th Expires
+            %th Affiliate ID
+            %th &nbsp;
+    - if @location.lat && @location.lng
+      .geo{:style => 'display: none;'}
+        .latitude= @location.lat
+        .longitude= @location.lng
+    %br/
+    %div
+      - if(current_user && (current_user == @location.user || current_user.has_role?(:administrator)))
+        = link_to 'Edit', edit_location_path(@location)
+        |
+        = link_to 'Destroy', @location, :confirm => 'Are you sure?', :method => :delete
+        |
+      = link_to 'Back', 'javascript:history.go(-1)'
