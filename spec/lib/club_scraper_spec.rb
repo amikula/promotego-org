@@ -1,5 +1,4 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require 'hpricot'
 
 describe ClubScraper do
   before(:each) do
