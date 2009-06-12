@@ -1,0 +1,1713 @@
+<!-- REMEMBER TO ADJUST DATE OF LAST CHANGE, -->
+<!-- BOTH IN THE ENTRY, AND AT THE TOP. -->
+<!DOCTYPE bga-club-list [
+
+<!ELEMENT bga-club-list (last-update, club*)>
+<!ATTLIST bga-club-list xmlns CDATA #FIXED "http://www.britgo.org/clublist.dtd">
+<!-- Document element, surrounds the entire list. -->
+
+<!ELEMENT club (name, region, alternate-name*, meeting+, contact*, web-site?, email?, comment?, see-also*, last-update)>
+<!ATTLIST club
+	id ID #REQUIRED
+	lon CDATA #IMPLIED
+	lat CDATA #IMPLIED
+>
+<!-- The list is a list a club elements. Each club must be given a unique
+ID. Normally, this is the first 5 letters of the club name, assuming that is
+unique. The latitude and longitude should only be given here if a precise 
+meeting location is not known. This adds a small marker to the map, but it
+will not be in exactly the right place. To get the latitude an longitude, type
+the town name into Google maps: http://maps.google.co.uk/. -->
+
+<!ELEMENT name (#PCDATA)>
+<!-- The club name is the main name the club is referred to by. This 
+determines where the club comes in the alphabetical list. For clubs in 
+London, this should always have the word "London" at the start, so 
+all the London clubs appear together. -->
+
+<!ELEMENT region (#PCDATA)>
+<!-- The region specifies the which regional rep is responsible for the club. -->
+
+<!ELEMENT alternate-name (#PCDATA)>
+<!-- Some clubs have alternate names, in which case a "see [main name]" link
+appears at the appropriate point in the alphabetical list. -->
+
+<!ELEMENT web-site (#PCDATA)>
+<!-- Gives the URL of the club's web site. -->
+
+<!ELEMENT email (#PCDATA)>
+<!ATTLIST email spamproof (yes) #IMPLIED>
+<!-- Used both for peoples' and clubs' email addresses. The spamproof attribute
+midly obscures the email address, to make it harder for spammer to harvest, but
+harder for real people trying to send an email. -->
+
+<!ELEMENT see-also EMPTY>
+<!ATTLIST see-also id IDREF #REQUIRED>
+<!-- Where a club wants to point to a nearby club, use one of these elements,
+referring to the id of the other club. -->
+
+<!ELEMENT last-update (#PCDATA)>
+<!-- Records when the details of this club was last updated. There is also
+one of these elements on the whole list. -->
+
+<!ELEMENT meeting (time, venue?, location?, directions?, comment?)>
+<!-- A club can have any number of meetings. -->
+
+<!ELEMENT time (#PCDATA|day)*>
+<!ELEMENT day (#PCDATA)>
+<!ELEMENT venue (#PCDATA|web-site)*>
+<!ELEMENT location (#PCDATA|pcode)*>
+<!ATTLIST location
+	lon CDATA #REQUIRED
+	lat CDATA #REQUIRED
+>
+
+<!ELEMENT pcode (#PCDATA)>
+<!ELEMENT directions (#PCDATA)>
+<!ELEMENT comment (#PCDATA)>
+
+<!ELEMENT contact (person, address?, tel*, email?)>
+
+<!ELEMENT person (#PCDATA)>
+<!ELEMENT address (#PCDATA)>
+<!ELEMENT tel (#PCDATA)>
+<!ATTLIST tel type (home|work|mobile|fax) #IMPLIED>
+]>
+<bga-club-list xmlns="http://www.britgo.org/clublist.dtd">
+
+<last-update><!-- datestamp:begin -->2009-06-03<!-- datestamp:end --></last-update>
+
+<club id="aber">
+  <name>Aberdeen</name>
+  <region>Scotland</region>
+  <web-site>http://games.groups.yahoo.com/group/aberdeen-go/</web-site>
+  <meeting>
+    <time><day>Friday</day> 18:15 to about 22:30</time>
+	<venue>Kilau coffee shop</venue>
+    <location lon="-2.104740" lat="57.167432">Little Belmont Street, Aberdeen</location>
+    <comment>Now changed day!</comment>
+  </meeting>
+  <contact>
+    <person>Aidan Karley and Russell Ward</person>
+    <email>aberdeen-go-owner@yahoogroups.com</email>
+  </contact>
+  <comment>The Yahoo website provides a mailing list for the club</comment>
+  <last-update>2009-04-06</last-update>
+</club>
+
+<club id="arund">
+  <name>Arundel</name>
+  <region>London and South East</region>
+  <meeting>
+    <time><day>Sunday</day>, last in month</time>
+    <location lon="-0.553737" lat="50.853534">1 Town Quay, River Rd, Arundel, West Sussex <pcode>BN18 9DF</pcode></location>
+    <comment>Please ring first to confirm it's on</comment>
+  </meeting>
+  <contact>
+    <person>Sue Paterson</person>
+    <tel>07549 898376</tel>
+    <email>suepat812@btinternet.com</email>
+  </contact>
+  <last-update>2008-10-12</last-update>
+</club>
+
+<club id="barmo" lon="-4.054642" lat="52.722622">
+  <name>Barmouth</name>
+  <region>Wales</region>
+  <alternate-name>West Wales</alternate-name>
+  <meeting>  
+    <time>by arrangement</time>
+  </meeting>
+  <contact>
+    <person>Baron Allday</person>
+    <tel>01341 280365</tel>
+  </contact>
+  <contact>
+    <person>Philip Ward-Ackland</person>
+    <email>wardackland@yahoo.co.uk</email>
+  </contact>
+  <last-update>2006-09-02</last-update>
+</club>
+
+<club id="bath">
+  <name>Bath</name>
+  <region>South West</region>
+  <meeting>
+    <time><day>Tuesday</day> 19:30</time>
+    <venue>The Dolphin Inn</venue>
+    <location lon="-2.392434" lat="51.382991">103 Locksbrook Road, Bath,
+		<pcode>BA1 3EN</pcode></location>
+    <comment>Old venue has closed, temporary new home</comment>
+  </meeting>
+  <contact>
+    <person>Paul Christie</person>
+    <address>8 Gordon Rd, Widcombe, Bath, BA2 4NH</address>
+    <tel>01225 428995</tel>
+    <email>paul@widcombe.me.uk</email>
+  </contact>
+  <contact>
+    <person>Ian Sharpe</person>
+    <email spamproof="yes">ian@iansharpe.com</email>
+  </contact>
+  <web-site>http://www.bathgo.org/</web-site>
+  <last-update>2009-06-03</last-update>
+</club>
+
+<club id="belfast">
+  <name>Belfast Area</name>
+  <region>Ireland</region>
+  <meeting>
+    <time><day>Monday</day> 19:00</time>
+    <venue>Function Room, Belfast Boat Club <web-site>http://www.tabletopnorth.org/</web-site></venue>
+    <location lon="-5.928926" lat="54.571664">Table Top North society, <pcode> BT9 5FJ</pcode></location>
+  </meeting>
+  <contact>
+    <person>Ian Davis</person>
+    <tel type="mobile">07952 184010</tel>
+    <email spamproof="yes">ian.davis29@btinternet.com</email>
+  </contact>
+  <web-site>http://uk.geocities.com/ian.davis29@btinternet.com/igo.html</web-site>
+  <last-update>2007-12-02</last-update>
+</club>
+
+<club id="bille" lon="0.421600" lat="51.628993">
+  <name>Billericay</name>
+  <region>London and South East</region>
+  <alternate-name>Essex</alternate-name>
+  <meeting>
+    <time><day>Monday</day> 19:30</time>
+  </meeting>
+  <contact>
+    <person>Guy Footring</person>
+    <tel>01277 623305</tel>
+    <email>Guy@Footring.demon.co.uk</email>
+  </contact>
+  <web-site>http://www.footring.demon.co.uk/BillericayGo/</web-site>
+  <last-update>2007-08-13</last-update>
+</club>
+
+<club id="birmi">
+  <name>Birmingham</name>
+  <region>West Midlands</region>
+  <meeting>
+  	<time>No longer meets</time>
+  </meeting>
+  <last-update>2005-10-06</last-update>
+</club>
+
+<club id="bolto">
+  <name>Bolton</name>
+  <region>North West</region>
+  <meeting>
+    <time><day>Tuesday</day> 19:30</time>
+    <venue>upstairs in The Gypsy's Tent pub</venue>
+    <location lon="-2.434952" lat="53.578678">178 Deansgate, Bolton, <pcode>BL1 4AB</pcode></location>
+    <directions>On the corner of Deansgate and Moor Lane</directions>
+  </meeting>
+  <contact>
+    <person>Tony McFadden</person>
+    <email>Chancegardener@aol.com</email>
+  </contact>
+  <comment>The club plays a selection of mind games in addition to Go</comment>
+  <last-update>2004-11-01</last-update>
+</club>
+
+<club id="bourn">
+  <name>Bournemouth</name>
+  <region>Southern</region>
+  <meeting>
+    <time><day>Tuesday</day> 20:00</time>
+	<venue>24 Cowper Road</venue>
+    <location lon="-1.877772" lat="50.752810">Moordown, Bournemouth,
+		<pcode>BH9 2UJ</pcode></location>
+  </meeting>
+  <contact>
+    <person>Marcus Bennett</person>
+    <address>24 Cowper Road, Moordown, Bournemouth, BH9 2UJ</address>
+    <tel>01202 512655</tel>
+  </contact>
+  <last-update/>
+</club>
+
+<club id="brack">
+  <name>Bracknell</name>
+  <region>Southern</region>
+  <meeting>
+    <time><day>Tuesday</day> 20:00</time>
+    <venue>The Green Man</venue>
+    <location lon="-0.758829" lat="51.406595">Crowthorne Road, Bracknell, <pcode>RG12 7DL</pcode></location>
+    <comment>Now regularly at the new venue</comment>
+  </meeting>
+  <contact>
+    <person>Clive Hendrie</person>
+    <address>4 Arncliffe, Bracknell, RG12 7SA</address>
+    <tel>01344 422502</tel>
+    <email>Clive.Hendrie@freenet.co.uk</email>
+  </contact>
+  <web-site>http://www.britgo.org/clubs/bracknell.html</web-site>
+  <last-update>2007-12-02</last-update>
+</club>
+
+<club id="bradf">
+  <name>Bradford</name>
+  <region>North East</region>
+  <meeting>
+    <time><day>Wednesday</day> 19:30</time>
+    <venue>The Noble Comb</venue>
+    <location lon="-1.775901" lat="53.836405">Quayside, Salts Mill Road, Shipley, <pcode>BD18 3ST</pcode></location>
+  </meeting>
+  <contact>
+    <person>Ewen Pearson</person>
+    <tel>01274 598980</tel>
+    <email>ewen_pearson@hotmail.com</email>
+  </contact>
+  <web-site>http://www.britgo.org/clubs/bradford.html</web-site>
+  <last-update>2006-01-31</last-update>
+</club>
+
+<club id="brigh">
+  <name>Brighton</name>
+  <region>London and South East</region>
+  <meeting>
+    <time><day>Tuesday</day> 20:00</time>
+    <venue>The Battle of Trafalgar</venue>
+    <location lon="-0.142779" lat="50.828934">34 Guildford Rd, Brighton,<pcode> BN1 3LW</pcode></location>
+	<directions>Very near Brighton Station</directions>
+        <comment>They do
+very nice food till 21:00.  We meet most weeks, but please check
+before making a special journey</comment>
+  </meeting>
+  <contact>
+    <person>Jil Segerman</person>
+    <tel>07920 865065 or 01273 470346</tel>
+    <email>jil.segerman@gmail.com</email>
+  </contact>
+  <contact>
+    <person>Sue</person>
+    <tel>07549 898376</tel>
+  </contact>
+  <contact>
+    <person>Jim</person>
+    <tel>07811 583802</tel>
+  </contact>
+  <contact>
+    <person>Marcus</person>
+    <tel>01243 514128</tel>
+  </contact>
+  <last-update>2008-10-12</last-update>
+</club>
+
+<club id="brist">
+  <name>Bristol</name>
+  <region>South West</region>
+  <meeting>
+    <time><day>Wednesday</day> 19:30</time>
+    <venue>Contact Paul or Bob<!--King George VI--></venue>
+    <location lon="-2.56431" lat="51.507347"><!--Filton Av, (Corner of Station Road) Filton--></location>
+    <comment>The club is lacking active members. A decision about its future will be taken in the new year</comment>
+  </meeting>
+  <contact>
+    <person>Paul Atwell</person>
+    <address>8 Central Avenue, Hanham, Bristol BS15 3PQ</address>
+    <tel type="home">0117 949 0924</tel>
+    <tel type="fax">0117 908 9622</tel>
+    <tel type="mobile">0781 195364</tel>
+    <email>Paul5Bristolgo@aol.com</email>
+  </contact>
+  <contact>
+    <person>Bob Hitchens</person>
+    <email>bob@hitchens10.freeserve.co.uk</email>
+  </contact>
+  <web-site>http://bristolgo.co.uk/</web-site>
+  <last-update>2008-12-08</last-update>
+</club>
+
+<club id="cambr">
+  <name>Cambridge University and City</name>
+  <region>East Anglia</region>
+  <meeting>
+    <time><day>Monday</day> during University terms, from 20:00</time>
+    <venue>The Buttery</venue>
+    <location lon="0.115206" lat="52.205240">Clare College, Cambridge,
+		<pcode>CB2 1TL</pcode></location>
+  </meeting>
+  <meeting>
+    <time><day>Wednesday</day> 19:30-21:00</time>
+    <venue>St Augustine's Church Hall</venue>
+    <location lon="0.107739" lat="52.219794">Richmond Road (just off Huntingdon Road), Cambridge,
+          <pcode>CB4 3PS</pcode></location>
+  </meeting>
+  <meeting>
+    <time><day>Thursday</day> 19:00-21:00</time>
+    <venue>either in the TV room or adjacent room</venue>
+    <location lon="0.116504" lat="52.201051">3rd floor, the University Centre,
+		Mill Lane, Cambridge, <pcode>CB2 1RU</pcode></location>
+  </meeting>
+  <meeting>
+    <time><day>Friday</day> 19:00-21:00</time>
+	<venue>CB1</venue>
+    <location lon="0.133681" lat="52.201202">32 Mill Road, Cambridge,
+		<pcode>CB1 2AD</pcode></location>
+  </meeting>
+  <meeting>
+    <time><day>Saturday</day> 17:00 onwards</time>
+    <comment>Informal meetings at CB1, 32 Mill Road (normally)</comment>
+  </meeting>
+  <meeting>
+    <time><day>Sunday</day> 16:00 onwards</time>
+    <comment>Informal meetings at CB1, 32 Mill Road (normally)</comment>
+  </meeting>
+  <contact>
+    <person>Jonathan Medlock</person>
+    <address>5 Bourne Road, Cambridge, CB4 1UF</address>
+    <tel>01223 395550</tel>
+    <email>j.medlock@ntlworld.com</email>
+  </contact>
+  <web-site>http://www.cam.ac.uk/societies/cugos/</web-site>
+  <last-update>2008-02-24</last-update>
+</club>
+
+<club id="cambrjun" lon="0.130806" lat="52.212235">
+  <name>Cambridge Chess and Go Club</name>
+  <region>East Anglia</region>
+  <meeting>
+    <time><day>Wednesday</day> 18:15-19:45</time>
+  </meeting>
+  <contact>
+    <person>Paul Smith</person>
+    <address>5 Bourne Road, Cambridge, CB4 1UF</address>
+    <tel>01223 563932</tel>
+    <email>andreapaul@ntlworld.com</email>
+  </contact>
+  <web-site>http://www.chessgo.org.uk/</web-site>
+  <last-update>2005-10-25</last-update>
+</club>
+
+<!--
+<club id="canterbury">
+	<name>Canterbury</name>
+      <region>London and South East</region>
+	<meeting>
+		<time><day>Sunday</day> 13.00-17.00</time>
+		<venue>Palace Street Café</venue>
+		<location lon="1.081638" lat="51.28124">22 Palace Street, Canterbury,
+			<pcode>CT1 2DZ</pcode></location>
+	</meeting>
+	<contact>
+		<person>Kevin</person>
+		<tel>0870 224 1630</tel>
+	</contact>
+	<comment>
+	  Now suspected to be dormant as there have been reports that
+	  Kevin can't be contacted, and Cafe not listed. Further information
+          welcomed!
+        </comment>
+	<last-update>2008-02-24</last-update>
+</club>
+-->
+
+<club id="sewal">
+  <name>Cardiff</name>
+  <region>Wales</region>
+  <alternate-name>South-East Wales</alternate-name>
+  <meeting>
+    <time><day>Tuesday</day> 19:00-23:00</time>
+    <venue>Ocean Palace Chinese Restaurant</venue>
+    <location lon="-3.187344" lat="51.476719">48 Tudor Street, Riverside, Cardiff. <pcode>CF11 6AJ</pcode> </location>
+  </meeting>
+  <contact>
+    <person>Neil Moffatt</person>
+    <tel>029 2041 2539</tel>
+    <email>neil.moffatt@ntlworld.com</email>
+  </contact>
+  <web-site>http://www.cardiffpubs.co.uk/Go/</web-site>
+  <last-update>2007-02-18</last-update>
+</club>
+
+<club id="carlt">
+  <name>Charlton Chess Club</name>
+  <region>London and South East</region>
+  <meeting>
+    <time><day>Tuesday</day> 19:30</time>
+    <venue>Charlton House</venue>
+    <location lon="0.037208" lat="51.480341">Charlton Road, London, <pcode>SE7 8RE</pcode></location>
+    <comment>As well as chess, the club encourages other board games of skill</comment>
+  </meeting>
+  <contact>
+    <person>Tony Stebbings</person>
+    <email>charltonchess@yahoo.co.uk</email>
+  </contact>
+  <web-site>http://www.communigate.co.uk/london/charltonchess/</web-site>
+  <last-update>2007-12-02</last-update>
+</club>
+
+<club id="chelt" lon="-2.072983" lat="51.895775">
+  <name>Cheltenham</name>
+  <region>West Midlands</region>
+  <meeting>
+    <time><day>Thursday</day> 19:30</time>
+    <venue>various places</venue>
+  </meeting>
+  <contact>
+    <person>David Killen</person>
+    <address>33 Broad Oak Way, Up Hatherley, Cheltenham, Gloucestershire GL51 5LG</address>
+    <tel>01242 576524</tel>
+  </contact>
+<!--  <web-site>http://www.geocities.com/davidkillen/goclub/</web-site> Seems dead-->
+  <last-update/>
+</club>
+
+<club id="chest">
+  <name>Chester</name>
+  <region>Wales</region>
+  <meeting>
+    <time><day>Wednesday</day> 20:00</time>
+    <venue>Ye Olde Custom House Inn</venue>
+    <location lon="-2.893277" lat="53.189823">65-67 Watergate Street, Chester, <pcode>CH1 2LB</pcode></location>
+  </meeting>
+  <contact>
+    <person>Tony Pitchford</person>
+    <address>Meadow Brook, Tarporley Road, Whitley, Warrington WA4 4DS</address>
+    <tel>01925 730583</tel>
+    <email>Tony@chester.goclub.info</email>
+  </contact>
+  <web-site>http://www.chester.goclub.info/</web-site>
+  <last-update>2005-07-19</last-update>
+</club>
+
+<!-- club id="chest2" lon="-2.892880" lat="53.191302">
+  <name>Chester</name>
+  <region>East Anglia</region>
+  <meeting>
+    <time>by arrangement</time>
+    <venue>Tamsin Jones's home</venue>
+  </meeting>
+  <contact>
+    <person>Tamsin Jones</person>
+    <tel>01244 344829</tel>
+    <email>xenafan@btinternet.com</email>
+  </contact>
+  <last-update>2005-07-19</last-update>
+</club -->
+
+<club id="cork">
+  <name>Cork</name>
+  <region>Ireland</region>
+  <meeting>
+    <time><day>Wednesday</day> 19:00-22:00</time>
+    <venue>UCC (University College Cork)</venue>
+    <location lon="-8.492775" lat="51.893345">Cork</location>
+  </meeting>
+  <web-site>http://www.corkgo.org/</web-site>
+  <last-update>2008-10-18</last-update>
+</club>
+
+<club id="dubli">
+  <name>Dublin</name>
+  <region>Ireland</region>
+  <meeting>
+    <time><day>Monday</day> and <day>Wednesday</day> except Bank holidays. About 20:30-21:00 onwards</time>
+    <venue>Larry Murphy's</venue>
+    <location lon="-6.24886" lat="53.336883">Corner of Baggot Street and Fitzwilliam Street</location>
+  </meeting>
+  <contact>
+    <person>Club contact</person>
+    <email spamproof="yes">dublin@irish-go.org</email>
+  </contact>
+  <web-site>http://www.irish-go.org/clubs-tournaments/Dublin/</web-site>
+  <last-update>2008-10-12</last-update>
+</club>
+
+<club id="dunde">
+  <name>Dundee</name>
+  <region>Scotland</region>
+  <meeting>
+    <time><day>Monday</day> from 20:00</time>
+    <venue>Mennie's, aka the Speedwell Bar</venue>
+    <location lon="-2.993335" lat="56.456242">165-167 Perth Road, <pcode>DD2 1AS</pcode></location>
+  </meeting>
+  <contact>
+    <person>Peter Clinch</person>
+    <tel>01382 665322</tel>
+    <email spamproof="yes">p.j.clinch@dundee.ac.uk</email>
+  </contact>
+  <web-site>http://www.personal.dundee.ac.uk/~pjclinch/dundeegoclub/</web-site>
+  <last-update>2008-06-06</last-update>
+</club>
+
+<club id="durha">
+  <name>Durham University</name>
+  <region>North East</region>
+  <meeting>
+    <time><day>Monday</day> 20:30</time>
+    <venue>The Bar, Ustinov College</venue>
+    <location lon="-1.584209" lat="54.759111">Howlands Farm, Durham,
+		<pcode>DH1 3TQ</pcode></location>
+  </meeting>
+  <meeting>
+    <time><day>Thursday</day> 19:30</time>
+    <venue>The Elm Tree pub</venue>
+	<location lon="-1.582139" lat="54.775445">Crossgate</location>
+  </meeting>
+  <contact>
+    <person>Jenny Radcliffe</person>
+    <email>jenny@durge.org</email>
+  </contact>
+  <web-site>http://www.dur.ac.uk/go.club/</web-site>
+  <email>go.club@dur.ac.uk</email>
+  <last-update>2009-04-06</last-update>
+</club>
+
+<club id="edinb">
+  <name>Edinburgh</name>
+  <region>Scotland</region>
+  <meeting>
+  	<time><day>Monday</day> 19:00</time>
+	<venue>Meadows Bar</venue>
+	<location lon="-3.184576" lat="55.942735">42-44 Buccleuch Street,
+		<pcode>EH8 9LP</pcode></location>
+  </meeting>            
+  <!-- meeting>
+  	<time><day>Tuesday</day> 20:00</time>
+	<venue>The Three Tuns Pub</venue>
+	<location lon="-3.196410" lat="55.952714">7 Hanover St, Edinburgh,
+		<pcode>EH2 2DL</pcode></location>
+  </meeting -->
+  <meeting>
+  	<time><day>Wednesday</day> 19:30</time>
+	<venue>Alan Crowe's flat (1F1)</venue>
+	<location lon="-3.219949" lat="55.946154">34 Haymarket Terrace<!--, <pcode>EH12 5JZ</pcode>--></location>
+        <comment>Now regular meetings are confirmed</comment>
+  </meeting>
+  <!-- meeting>
+    <time><day>Thursday</day> 19:00</time>
+    <venue>Varying - check website</venue>
+    <location lon="-3.179791" lat="55.959033"><pcode>EH8 9LP</pcode></location>
+  </meeting -->
+  <contact>
+    <person>Phil Blamire</person>
+    <tel>0131 663 0678</tel>
+  </contact>
+  <contact>
+    <person>Alan Crowe</person>
+    <email>alan@cawtech.demon.co.uk</email>
+  </contact>
+  <web-site>http://www.edinburghgoclub.co.uk/</web-site>
+  <last-update>2008-07-16</last-update>
+</club>
+
+<club id="epsom">
+  <name>Epsom</name>
+  <region>London and South East</region>
+  <meeting>
+    <time><day>Wednesday</day> 19:00-22:30</time>
+	<venue>Paul and Yvonne's new house</venue>
+    <location lon="-0.244553" lat="51.336202">Epsom, Surrey, <pcode>KT17 3BN</pcode></location>
+    <comment>By arrangement with Paul</comment>
+  </meeting>
+  <contact>
+    <person>Paul Margetts</person>
+    <tel>020 8393 2627</tel>
+    <email>Paul.Margetts@cognex.com</email>
+  </contact>
+  <web-site>http://www.yuhong.co.uk/egc.html</web-site>
+  <last-update>2009-01-30</last-update>
+</club>
+
+<club id="exete" lon="-3.529015" lat="50.721243">
+  <name>Exeter</name>
+  <region>South West</region>
+  <meeting>
+    <time><day>Wednesday</day> 19:00</time>
+    <venue>upstairs at Georges Meeting House</venue>
+    <location lon="-3.53013" lat="50.720577">South Street, Exeter, <pcode>EX1 1ED</pcode></location>
+    <comment>Every first and third Wednesday(new day!) of the month, phone or email to confirm</comment>
+  </meeting>
+  <contact>
+    <person>David Storkey</person>
+    <tel>01392 461182</tel>
+    <email>DaveStorkey@netscape.net</email>
+  </contact>
+  <last-update>2009-06-03</last-update>
+</club>
+
+<club id="farnborough" lon="0.076561" lat="51.360473">
+  <name>Farnborough Village</name>
+  <region>London and South East</region>
+  <meeting>
+    <time>No longer meets</time>
+  </meeting>
+  <!-- contact>
+    <person>Brian Dackombe</person>
+    <tel>01689 857944</tel>
+    <email>briandackombe@hotmail.com</email>
+  </contact -->
+  <last-update>2008-12-30</last-update>
+</club>
+
+<club id="fife" lon="-3.186035" lat="56.205176">
+  <name>Fife</name>
+  <region>Scotland</region>
+  <alternate-name>West Fife</alternate-name>
+  <meeting>
+    <time>Alternate <day>Mondays</day>, when possible</time>
+  </meeting>
+  <contact>
+  	<person>Colin Robertson</person>
+	<email spamproof="yes">carobertson141@hotmail.com</email>
+  </contact>
+  <last-update>2005-10-13</last-update>
+</club>
+
+<club id="galway">
+  <name>Galway</name>
+  <meeting>
+     <time><day>Tuesday</day></time>
+     <location lon="-9.07514" lat="53.28963">Westwood House Hotel bar</location>
+  </meeting>
+  <contact>
+     <person>Richard Brennan</person>
+     <email spamproof="yes">richardkbrennan@eircom.net</email>
+  </contact>
+  <last-update>2008-10-12</last-update>
+</club>
+
+<club id="glasg">
+  <name>Glasgow</name>
+  <region>Scotland</region>
+  <meeting>
+    <time><day>Thursday</day> 20:00 except during holidays</time>
+    <venue>The Research Club</venue>
+    <location lon="-4.288" lat="55.874">Hetherington House, 13 University Gardens, University of Glasgow, <pcode>G12 8QQ</pcode></location>
+  </meeting>
+  <contact>
+    <person>John O'Donnell</person>
+    <address>Computing Science Dept, Glasgow University, Glasgow, G12 8QQ</address>
+    <tel type="home">0141 339 0458</tel>
+    <tel type="work">0141 330 5458</tel>
+    <email>jtod@dcs.gla.ac.uk</email>
+  </contact>
+  <web-site>http://www.dcs.gla.ac.uk/~jtod/go/#Club</web-site>
+  <last-update>2008-03-13</last-update>
+</club>
+
+<club id="glenr">
+  <name>Glenrothes</name>
+  <region>Scotland</region>
+  <meeting>
+    <time><day>Wednesday</day> around 19:00</time>
+    <venue>63 Braemar Gardens</venue>
+    <location lon="-3.178997" lat="56.187389">Glenrothes, Fife, <pcode>KY6 2RF</pcode></location>
+  </meeting>
+  <contact>
+    <person>Alan Stewart</person>
+    <tel>01592 772247</tel>
+    <email spamproof="yes">alan_r_stewart@hotmail.com</email>
+  </contact>
+  <web-site>http://www.glenrothesgoclub.co.uk/</web-site>
+  <last-update>2008-07-18</last-update>
+</club>
+
+<club id="hewle" lon="-2.551489" lat="51.499981">
+  <name>Hewlett-Packard Bristol</name>
+  <region>South West</region>
+  <meeting>
+    <time>Wednesday and <day>Friday</day> 12:00</time>
+    <venue>Hewlett Packard</venue>
+    <comment>Please contact in advance to ensure there are players available</comment>
+  </meeting>
+  <contact>
+    <person>Andy Seaborne</person>
+    <address>17 Shipley Road, Bristol BS9 3HR</address>
+    <tel type="home">0117 950 7390</tel>
+    <tel type="work">0117 312 8181</tel>
+    <email>andy_seaborne@hp.com</email>
+  </contact>
+  <last-update/>
+</club>
+
+<club id="lanca">
+  <name>Lancaster</name>
+  <region>North West</region>
+  <alternate-name>Gregson</alternate-name>
+  <meeting>
+    <time><day>Wednesday</day> 19:30</time>
+    <venue>Gregson Community Centre</venue>
+    <location lon="-2.791729" lat="54.048410">33 Moorgate, Lancaster, <pcode>LA1 3PY</pcode></location>
+  </meeting>
+  <contact>
+    <person>Adrian Abrahams</person>
+    <address>1 Ainsdale Close, Lancaster LA1 2SF</address>
+    <tel>01524 34656</tel>
+    <email>adrian_abrahams@btopenworld.com</email>
+  </contact>
+  <last-update>2004-02-13</last-update>
+</club>
+
+<club id="hasti" lat="50.856026" lon="0.563564">
+  <name>Hastings</name>
+  <region>London and South East</region>
+  <alternate-name>Eastbourne</alternate-name>
+  <meeting>
+    <time>by arrangement</time>
+  </meeting>
+  <contact>
+    <person>Patrick Donovan</person>
+    <tel>01323 640552</tel>
+    <email>bootlepop67@yahoo.co.uk</email>
+  </contact>
+  <last-update>2004-02-14</last-update>
+</club>
+
+<!--<club id="hudde">
+  <name>Huddersfield</name>
+  <region>North East</region>
+  <meeting>
+    <time><day>Tuesday</day> 19:00</time>
+    <venue>Huddersfield Sports Centre</venue>
+  </meeting>
+  <contact>
+    <person>Alan Starkey</person>
+    <tel>01484 852420</tel>
+  </contact>
+  <last-update>2004-07-27</last-update>
+</club>-->
+
+<club id="hull">
+  <name>Hull</name>
+  <region>North East</region>
+  <meeting>
+    <time>Irregular <day>Wednesdays</day></time>
+    <location lon="-0.349095" lat="53.762761">12 Fitzroy St, Beverley Rd, Hull, <pcode>HU5 1LL</pcode></location>
+    <comment>Phone for details</comment>
+  </meeting>
+  <contact>
+    <person>Mark Collinson</person>
+    <address>12 Fitzroy St, Beverley Rd, Hull HU5 1LL</address>
+    <tel>01482 341179</tel>
+    <email>councillor.collinson@hullcc.gov.uk</email>
+  </contact>
+  <last-update/>
+</club>
+
+<club id="ioman" lon="-4.456158" lat="54.178612">
+  <name>Isle of Man</name>
+  <region>North West</region>
+  <meeting>
+    <time><day>Sunday</day> 20:00</time>
+  </meeting>
+  <contact>
+    <person>Leo and David Phillips</person>
+    <address>4 Ivydene Ave, Onchan IM3 3HD</address>
+    <tel>01624 612294</tel>
+    <tel type="mobile">07624 473688</tel>
+    <email>leophillips@manx.net</email>
+  </contact>
+  <contact>
+    <email>celia@manx.net</email>
+  </contact>
+  <comment>Ring for details of venue</comment>
+  <last-update>2008-10-12</last-update>
+</club>
+
+<club id="leami">
+  <name>Leamington</name>
+  <region>Southern</region>
+  <meeting>
+    <time><day>Thursday</day> 19:30</time>
+	<venue>22 Keytes Lane</venue>
+    <location lon="-1.604669" lat="52.246380">Barford, Warwickshire, <pcode>CV35 8EP</pcode></location>
+  </meeting>
+  <contact>
+    <person>Matthew Macfadyen</person>
+    <tel>01926 624445</tel>
+    <email>matthew@jklmn.demon.co.uk</email>
+  </contact>
+  <web-site>http://homepage.ntlworld.com/toby.manning/leamingtongoclub/</web-site>
+  <last-update>2003-03-14</last-update>
+</club>
+
+<club id="leeds">
+  <name>Leeds University Go club</name>
+  <region>North East</region>
+  <meeting>
+    <time><day>Tuesday</day> 17:30-20:00</time>
+    <venue>Leeds University Union</venue>
+    <location lat="53.7992" lon="-1.5483">Leeds</location>
+    <comment>Non-students, beginners and strong players are always welcome</comment>
+  </meeting>
+  <contact>
+    <person>Graham Leigh</person>
+    <email>grahaml@maths.leeds.ac.uk</email>
+  </contact>
+  <last-update>2008-10-12</last-update>
+</club>
+
+<club id="leice">
+  <name>Leicester</name>
+  <region>East Midlands</region>
+  <meeting>
+    <time><day>Thursday</day> 19:45</time>
+    <venue>Stephen Bashforth's house</venue>
+    <location lon="-1.229224" lat="52.628817">Mayfield, Station Road, Kirby Muxloe, Leicester</location>
+  </meeting>
+  <contact>
+    <person>Richard Thompson</person>
+    <email>richard@leicestergoclub.org.uk</email>
+  </contact>
+  <contact>
+    <person>Toby Manning</person>
+    <tel>01530 245298</tel>
+  </contact>
+  <web-site>http://www.leicestergoclub.org.uk/</web-site>
+  <last-update>2008-05-06</last-update>
+  <comment>Note now meeting on Thursdays, not Mondays</comment>
+</club>
+
+<club id="liver">
+  <name>Liverpool</name>
+  <region>North West</region>
+  <comment>Now ceased to meet and previous contacts have left area</comment>
+  <last-update>2007-10-08</last-update>
+</club>
+
+<club id="lonc">
+  <name>London, Central</name>
+  <region>London and South East</region>
+  <meeting>
+    <time><day>Saturday</day> 14:00-21:00</time>
+    <venue>Nippon Club Salon, 2nd floor, Samuel House</venue>
+    <location lon="-0.132823" lat="51.508809">6 St Albans Street, (off Jermyn Street) London, <pcode>SW1Y 4SQ</pcode></location>
+    <directions>Behind Mitsukoshi Department Store on Lower Regent Street. (Parallel and between it and Haymarket.) Three minutes from Piccadilly Circus Underground</directions>
+    <comment>At the entrance, ring the bell for Nippon Club to get in. Board fee still GBP3.00 per player</comment>
+  </meeting>
+  <contact>
+    <person>Jonathan Turner</person>
+    <tel type="mobile">07968 538881</tel>
+    <email>je_turner@hotmail.com</email>
+  </contact>
+  <web-site>http://www.alexprach.co.uk/go</web-site>
+  <comment>
+Since 5th January 2008, CLGC and Nippon Club Igo Kai have held joint meeting on Saturdays. It is an ideal club for those players who wish to drop in after shopping in Central London. It is open to Go players of all strengths including complete beginners. Now meeting from 2-9pm, possibly later. You can have a nice diner afterwards in one of the hundreds of restaurants in SOHO if you wish.
+  </comment>
+  <last-update>2008-04-16</last-update>
+</club>
+
+<club id="lonnp">
+  <name>London, Nippon Club Igo Kai</name>
+  <region>London and South East</region>
+<!--
+  <meeting>
+    <time><day>Friday</day> 17:30-21:00</time>
+    <venue>Nippon Club Salon, 2nd floor, Samuel House</venue>
+    <location lon="-0.132823" lat="51.508809">6 St Albans Street, [off Jermyn Street] London, <pcode>SW1Y 4SQ</pcode></location>
+    <directions>Behind Mitsukoshi Department Store on Lower Regent Street. (Parallel and between it and Haymarket) Three minutes from Piccadilly Circus Underground</directions>
+    <comment>At the entrance, ring the bell for Nippon Club to get in. Board fee still GBP3.00 per player</comment>
+  </meeting>
+-->
+  <contact>
+    <person>Kiyohiko Tanaka (KGS: matta)</person>
+    <tel type="mobile">07956 594040</tel>
+    <email spamproof="yes">gokichi@tanaka.co.uk</email>
+  </contact>
+<!--
+  <comment>
+Our club resumed its weekly meetings in September last year and is one of the very few Friday clubs in London as well as in UK.  It is an ideal club for those players who work in the City and Central London to drop in on the way home.
+  It is open to Go players of all strengths including complete beginners.  The club ends its meeting at 9 pm and you can have a nice diner afterwards in one of the hundreds of restaurants in SOHO if you wish.
+  </comment>
+-->
+  <comment>
+    Currently CLGC is holding a joint meeting in the Nippon club with NCIK on Saturdays, and the Friday meetings are on hold. However it is hoped that Friday meetings will resume again in the near future.
+  </comment>
+  <last-update>2008-01-19</last-update>
+</club>
+
+<club id="lone">
+  <name>London, East</name>
+  <region>London and South East</region>
+  <alternate-name>Wanstead</alternate-name>
+  <meeting>
+    <time><day>Thursday</day> 19:15</time>
+    <venue>Wanstead House</venue>
+    <location lon="0.028775" lat="51.574823">21 The Green, Wanstead, <pcode>E11 2NT</pcode></location>
+  </meeting>
+  <contact>
+    <person>Alistair Wall</person>
+    <tel>020 8556 4232</tel>
+    <email>alistair@ajwall.demon.co.uk</email>
+  </contact>
+  <web-site>http://www.ajwall.demon.co.uk/Wanstead.htm</web-site>
+  <last-update>2003-01-31</last-update>
+</club>
+
+<club id="imper" lon="-0.178206" lat="51.500361">
+  <name>London, Imperial College</name>
+  <region>London and South East</region>
+  <alternate-name>Imperial College</alternate-name>
+  <!-- <meeting>
+    <time><day>Thursday</day> 12:00-14:00</time>
+	<venue>Room 328, Blackett Building</venue>
+	<location lon="-0.178914" lat="51.499547">Imperial College,
+		Prince Consort Road, <pcode>SW7 2BW</pcode></location>
+  </meeting>
+  <meeting>
+    <time>Not running</time>
+    <comment>for exam term and over summer</comment>
+  </meeting>
+  -->
+  <contact>
+    <person>Yu-Xi Chau</person>
+    <email spamproof="yes">yu.chau@imperial.ac.uk</email>
+  </contact>
+  <comment>
+  The club is currently dormant, but may
+  well start up soon once negotiations with the union are done.
+  </comment>
+  <last-update>2007-02-18</last-update>
+</club>
+
+<!-- club id="newmalden">
+	<name>London, New Malden</name>
+      <region>London and South East</region>
+	<alternate-name>New Malden Baduk Hall</alternate-name>
+	<meeting>
+		<time><day>Every day</day> from 11:00am to 11:00pm</time>
+		<venue>At the rear of Park Jun's Beauty Shop</venue>
+		<location lon="-0.256773" lat="51.40444">9 Coombe Road, New Malden,
+			<pcode>KT3 4PX</pcode></location>
+		<comment>Right by New Malden train station. Enter through the shop
+			(follow the green signs) or through the gate from the service road
+			at the rear</comment>
+	</meeting>
+	<contact>
+		<person>J. K. Shim</person>
+		<tel type="mobile">07881 908 730</tel>
+	</contact>
+	<contact>
+		<person>Mr. Kim</person>
+		<tel type="mobile">07795 184 272</tel>
+	</contact>
+	<comment>Entry fee of £5 per day includes free tea and coffee</comment>
+	<last-update>2006-01-31</last-update>
+</club -->
+
+<club id="lonn">
+  <name>London, North</name>
+  <region>London and South East</region>
+  <!-- <meeting>
+    <time><day>Tuesday</day> 19:30</time>
+    <venue>Gregory Room, Parish Church</venue>
+    <location lon="-0.180802" lat="51.554981">Church Row, Hampstead,
+		<pcode>NW3 6UU</pcode></location>
+  </meeting>
+  -->
+  <meeting>
+    <time><day>Wednesday</day> 19:00</time>
+    <venue>Lymington Road Residents' Association Hall, (<web-site>http://lrra.org.uk</web-site>)</venue>
+    <location lon="-0.184836" lat="51.550371">Dresden Close, <pcode>NW6 1XP</pcode></location>
+    <comment>While Hampstead Parish Church is closed, till September</comment>
+  </meeting>
+  <contact>
+    <person>Kevin Campbell</person>
+    <tel type="home">01442 262251</tel>
+	<tel type="mobile">07801 270342</tel>
+  </contact>
+  <web-site>http://www.britgo.org/clubs/lonn.html</web-site>
+  <email>nlgoclub@gmail.com</email>
+  <last-update>2009-05-04</last-update>
+</club>
+
+<club id="lonnw">
+  <name>London, North West</name>
+  <region>London and South East</region>
+  <!-- meeting>
+    <time><day>Thursday</day> 19:00-22:00</time>
+    <venue>Greenford Community Centre</venue>
+    <location lon="-0.348784" lat="51.535732">170 Oldfield Lane South,
+		Greenford, <pcode>UB6 9JS</pcode></location>
+    <directions>South of A40</directions>
+  </meeting -->
+  <contact>
+    <person>Keith Rapley</person>
+    <email>rapleykeith@hotmail.com</email>
+  </contact>
+  <web-site>http://www.britgo.org/clubs/lonnw/</web-site>
+  <comment>No longer meeting!</comment>
+  <last-update>2008-07-18</last-update>
+</club>
+
+<!-- club id="lse" lon="-0.116751" lat="51.513931">
+  <name>London School of Economics</name>
+  <region>London and South East</region>
+  <meeting>
+    <time><day>Wednesday</day> (during term) lunchtime or early afternoon,
+		check their web site to be sure</time>
+    <venue>Z032, LSE</venue>
+  </meeting>
+  <contact>
+    <person>Azan Aziz Marwah</person>
+    <tel>07931 332 025</tel>
+    <email>a.a.marwah@lse.ac.uk</email>
+  </contact>
+  <web-site>http://societies.lse.ac.uk/lsego/</web-site>
+  <email>su.soc.go@lse.ac.uk</email>
+  <last-update>2004-12-16</last-update>
+</club -->
+
+<club id="lono">
+  <name>London, South Woodford</name>
+  <region>London and South East</region>
+  <alternate-name>Woodford</alternate-name>
+  <meeting>
+    <time>No longer meets</time>
+  </meeting>
+<!--  <contact>
+    <person>Francis Roads</person>
+    <tel>020 8505 4381</tel>
+    <email>francis@jfroads.demon.co.uk</email>
+  </contact>-->
+  <last-update>2005-04-27</last-update>
+</club>
+
+<club id="twick">
+  <name>London, Twickenham</name>
+  <region>London and South East</region>
+  <web-site>http://www.britgo.org/clubs/twick.html</web-site>
+  <alternate-name>Twickenham</alternate-name>
+  <meeting>
+    <time><day>Wednesday</day> 20:00</time>
+    <venue>Pope's Grotto hotel</venue>
+    <location lon="-0.332873" lat="51.440112">Cross Deep, Twickenham, Middlesex,
+		<pcode>TW1 4RB</pcode></location>
+  </meeting>
+  <contact>
+    <person>Colin Maclennan</person>
+    <tel>020 8941 1607</tel>
+    <email>colin.maclennan@btopenworld.com</email>
+  </contact>
+  <last-update>2008-12-08</last-update>
+</club>
+
+<club id="maide" lon="-0.721922" lat="51.523004">
+  <name>Maidenhead</name>
+  <region>Southern</region>
+  <web-site>http://www.maidenheadgoclub.com/</web-site>
+  <meeting>
+    <time><day>Friday</day> 20:00</time>
+    <venue>various places</venue>
+  </meeting>
+  <contact>
+    <person>Iain Attwell</person>
+    <address>Norhurst, Westmorland Rd, Maidenhead. SL6 4HB</address>
+    <tel>01628 676792</tel>
+  </contact>
+  <last-update>2008-02-24</last-update>
+</club>
+
+<club id="manch">
+  <name>Manchester</name>
+  <region>North West</region>
+  <meeting>
+    <time><day>Thursday</day> 19:45</time>
+    <venue>The Town Hall Tavern</venue>
+    <location lon="-2.244365" lat="53.480391">20, Tib Lane, Manchester,
+		<pcode>M2 4JA</pcode></location>
+  </meeting>
+  <contact>
+    <person>Chris Kirkham</person>
+    <address>201 Kentmere Rd, Timperley, Altrincham WA15 7NT</address>
+    <tel>0161 903 9023</tel>
+  </contact>
+  <web-site>http://www.cs.man.ac.uk/~chris/mango.html</web-site>
+  <last-update>2007-08-13</last-update>
+</club>
+
+<club id="manuni">
+  <name>Manchester University Go Society</name>
+  <region>North West</region>
+  <web-site>http://www.umsu.manchester.ac.uk/go/</web-site>
+  <meeting>
+    <time><day>Monday</day> 17:00</time>
+    <venue>Atrium Bridge</venue>
+    <location lon="-2.230675" lat="53.467358">Alan Turing Building, Upper Brook Street (46 on campus map)</location>
+  </meeting>
+  <contact>
+    <person>Contact:</person>
+    <email spamproof="yes">go_soc@hotmail.com</email>
+  </contact>
+  <last-update>2008-02-24</last-update>
+</club>
+
+<club id="midco">
+  <name>Mid-Cornwall</name>
+  <region>South West</region>
+  <meeting>
+    <time><day>Monday</day> 20:00</time>
+    <venue>5 Trekye Cove</venue>
+    <location lon="-5.238150" lat="50.286851">Sandy Road, Porthtowan, Truro,
+		<pcode>TR4 8UL</pcode></location>
+  </meeting>
+  <contact>
+    <person>Paul Massey</person>
+    <tel>01209 891093</tel>
+    <tel type="mobile">07966 474686</tel>
+    <email>go@smartsw.co.uk</email>
+  </contact>
+  <last-update>2004-07-10</last-update>
+</club>
+
+<club id="middl" lon="-1.237335" lat="54.571067">
+  <name>Middlesbrough</name>
+  <region>North East</region>
+  <alternate-name>Teesside</alternate-name>
+  <contact>
+    <person>Matthew Holton</person>
+    <email spamproof="yes">M.D.Holton@tees.ac.uk</email>
+  </contact>
+  <last-update>2009-05-04</last-update>
+</club>
+
+<club id="milto">
+  <name>Milton Keynes</name>
+  <region>Southern</region>
+  <alternate-name>Open University</alternate-name>
+  <meeting>
+    <time><day>Monday</day> 12:30</time>
+	<venue>The Cellar Bar, The Open University</venue>
+    <location lon="-0.706902" lat="52.024713">Walton Hall,
+		Milton Keynes, <pcode>MK7 6AA</pcode></location>
+  </meeting>
+  <meeting>
+    <time><day>Monday</day> 18:30</time>
+	<venue>The Wetherspoons pub</venue>
+    <location lon="-0.767756" lat="52.037544">201 Midsummer Boulevard,
+		Central Milton Keynes, <pcode>MK9 1EA</pcode></location>
+  </meeting>
+  <contact>
+    <person>Clari Hunt</person>
+    <email>C.H.Hunt@open.ac.uk</email>
+  </contact>
+  <contact>
+    <person>Fred Holroyd</person>
+    <tel>01908 315342</tel>
+    <email>f.c.holroyd@open.ac.uk</email>
+  </contact>
+  <web-site>http://www.britgo.org/clubs/mk/</web-site>
+  <last-update>2007-08-13</last-update>
+</club>
+
+<!-- club id="monmo" lon="-2.711134" lat="51.812913">
+  <name>Monmouth</name>
+  <region>Wales</region>
+  <meeting>
+    <time>by arrangement</time>
+  </meeting>
+  <contact>
+    <person>Gerry Mills</person>
+    <tel>01600 712934</tel>
+    <email spamproof="yes">bga-books@britgo.org</email>
+  </contact>
+  <last-update>2005-04-07</last-update>
+</club -->
+
+<club id="newca">
+  <name>Newcastle</name>
+  <region>North East</region>
+  <meeting>
+    <time><day>Wednesday</day> 19:30</time>
+    <venue>Tom Coulthard's house</venue>
+    <location lon="-1.648668" lat="54.981653">17 Curtis Road, Fenham, Newcastle Upon Tyne</location>
+  </meeting>
+  <contact>
+    <person>Tom Coulthard</person>
+    <tel>0191 226 0014</tel>
+    <email>tomcoulthard@hotmail.com</email>
+  </contact>
+  <last-update>2007-02-18</last-update>
+</club>
+
+<club id="norwi" lon="1.302835" lat="52.624102">
+  <name>Norwich and Norfolk</name>
+  <region>East Anglia</region>
+  <contact>
+    <person>Tony Lyall</person>
+    <tel>01603 613698</tel>
+    <email>TLYALL@ccn.ac.uk</email>
+  </contact>
+  <comment>Please contact the secretary for further information</comment>
+  <last-update>2006-02-15</last-update>
+</club>
+
+<club id="notti">
+  <name>Nottingham</name>
+  <region>East Midlands</region>
+  <web-site>http://games.groups.yahoo.com/group/nottsgoclub/</web-site>
+  <meeting>
+    <time><day>Wednesday</day> 19:30</time>
+    <venue>Crown Inn</venue>
+    <location lon="-1.215878" lat="52.925133">Church Street, Beeston,
+		Nottingham, <pcode>NG9 1FY</pcode></location>
+	<comment>Please check with the club secretary before attending</comment>
+  </meeting>
+  <contact>
+    <person>Brent Cutts</person>
+    <tel>0115 959 2404</tel>
+    <email>brent.cutts@boots.co.uk</email>
+  </contact>
+  <last-update>2008-12-08</last-update>
+</club>
+
+<club id="nottiuni">
+  <name>Nottingham - University of Nottingham Go Club</name>
+  <region>East Midlands</region>
+  <meeting>
+    <time><day>Tuesday</day> termtime 19:30-22:00</time>
+    <venue>Usually in the Portland Building</venue>
+  </meeting>
+  <contact>
+    <person>Laurence Ogden</person>
+    <tel>07847 534862</tel>
+    <email>leyalo@nottingham.ac.uk</email>
+  </contact>
+  <last-update>2008-10-12</last-update>
+</club>
+
+<club id="oxforuniv">
+  <name>Oxford University</name>
+  <region>Southern</region>
+  <meeting>
+    <time><day>Wednesday</day> 19:30-23:00 in termtime only</time>
+    <venue>The Old Refectory, Wadham College, Oxford</venue>
+    <location lon="-1.25433" lat="51.755841">17 Worcester Pl, Oxford, <pcode>OX1 1AB</pcode></location>
+    <comment>No longer meeting regularly. Check the website for latest contact info</comment>
+  </meeting>
+  <last-update>2009-05-04</last-update>
+</club>
+
+<club id="oxfor">
+  <name>Oxford City</name>
+  <region>Southern</region>
+  <meeting>
+    <time><day>Tuesday</day> and <day>Thursday</day> 19:00-22:30</time>
+    <venue>Freud's Cafe</venue>
+    <location lon="-1.264832" lat="51.759393">119 Walton Street, Oxford,
+		<pcode>OX2 6AH</pcode></location>
+  </meeting>
+  <contact>
+    <person>Harry Fearnley</person>
+    <address>38 Henley Street, Oxford.  OX4 1ES</address>
+    <tel type="home">01865 248775</tel>
+    <tel type="work">01865 273928</tel>
+    <email spamproof="yes">oxfordgoclub@goban.demon.co.uk</email>
+  </contact>
+  <web-site>http://www.britgo.org/clubs/oxford_c.html</web-site>
+  <last-update>2008-06-22</last-update>
+</club>
+
+<club id="penza">
+  <name>West Cornwall</name>
+  <region>South West</region>
+  <alternate-name>Penzance</alternate-name>
+  <meeting>
+    <time><day>Thursday</day> 20:00</time>
+	<venue>John Culmer's house</venue>
+    <location lon="-5.218323" lat="50.103618">Rose-in-Vale, Gweek, Helston, <pcode>TR12 7AD</pcode></location>
+  </meeting>
+  <contact>
+    <person>John Culmer</person>
+    <tel>01326 573167</tel>
+    <email>johnculmer@btinternet.com</email>
+  </contact>
+  <web-site>http://www.johnculmer.btinternet.co.uk/go/wcgc.html</web-site>
+  <last-update>2008-05-06</last-update>
+</club>
+
+<club id="purbr" lon="-1.043959" lat="50.865290">
+  <name>Purbrook (near Portsmouth)</name>
+  <region>Southern</region>
+  <meeting>
+    <time>Most <day>Thursday</day> evenings</time>
+    <venue>normally Peter's house, but if he is away Mike and Suzi's</venue>
+    <comment>Phone to confirm</comment>
+  </meeting>
+  <contact>
+    <person>Peter Wendes</person>
+    <tel>02392 267648</tel>
+    <email>pwendes@hotmail.com</email>
+  </contact>
+  <web-site>http://www.britgo.org/clubs/purbrook/</web-site>
+  <last-update>2005-01-26</last-update>
+</club>
+
+<club id="putney">
+  <name>London, South</name>
+  <region>London and South East</region>
+  <alternate-name>Putney</alternate-name>
+  <meeting>
+    <time><day>Monday</day> by arrangement, 19:30</time>
+    <venue>The Balham bowls club</venue>
+    <location lon="-0.152854" lat="51.445609">7-9 Ramsden Road,
+Balham, <pcode>SW12 8QX</pcode></location>
+    <comment>1 minute walk from Balham station</comment>
+  </meeting>
+  <contact>
+    <person>Brian Brunswick</person>
+    <email>brian@ithil.org</email>
+  </contact>
+  <last-update>2009-01-30</last-update>
+</club>
+
+<club id="readi">
+  <name>Reading</name>
+  <region>Southern</region>
+  <meeting>
+    <time><day>Monday</day> 18:30 (except bank holidays)</time>
+    <venue>Eclectic Games</venue>
+    <location lon="-0.972744" lat="51.458202">at the base of Thames Tower, 37-45 Station Road, Reading,  
+		<pcode>RG1 1LX</pcode></location>
+    <comment>(opposite Reading station)</comment>
+  </meeting>
+  <contact>
+    <person>Jim Clare</person>
+    <address>32-28 Granville Rd, Reading, RG30 3QE</address>
+    <tel>0118 950 7319</tel>
+    <email>jim@jaclare.demon.co.uk</email>
+  </contact>
+  <see-also id="woodl"/>
+  <last-update>2008-07-18</last-update>
+</club>
+
+<club id="sheff">
+  <name>Sheffield</name>
+  <region>East Midlands</region>
+  <meeting>
+    <time><day>Sunday</day> 19:30</time>
+    <venue>Devonshire Arms</venue>
+    <location lon="-1.482328" lat="53.373235">118 Ecclesall Road, Sheffield,
+		<pcode>S11 8JB</pcode></location>
+  </meeting>
+  <contact>
+    <person>Phil Barker</person>
+    <tel type="home">0114 255 1440</tel>
+    <email>phil-and-jean@tiscali.co.uk</email>
+  </contact>
+  <last-update>2005-11-25</last-update>
+</club>
+
+<club id="skye">
+  <name>Skye</name>
+  <region>Scotland</region>
+  <meeting>
+    <time><day>Thursday</day></time>
+    <venue>Bar of the Caledonia Hotel</venue>
+    <location lon="-6.193736" lat="57.413194">Wentworth Street, Portree, Isle of Skye</location>
+    <comment>Time and place quite variable so please contact before travelling</comment>
+  </meeting>
+  <contact>
+    <person>Carel Goodheir</person>
+    <tel>01478 612909</tel>
+    <email spamproof="yes">ruth.goodheir3@virgin.net</email>
+  </contact>
+  <contact>
+    <person>John MacDonald</person>
+    <tel>01478 611207</tel>
+  </contact>
+  <last-update>2008-10-18</last-update>
+</club>
+
+<club id="south" lon="-1.395264" lat="50.901734">
+  <name>Southampton</name>
+  <region>Southern</region>
+  <comment>No longer meets</comment>
+  <last-update>2007-08-19</last-update>
+</club>
+
+<club id="stalb">
+  <name>St Albans</name>
+  <region>London and South East</region>
+  <meeting>
+    <time><day>Wednesday</day> 20:00 (players normally present from 19:30)</time>
+    <venue>The White Lion</venue>
+    <location lon="-0.337679" lat="51.748309">91 Sopwell Lane, St Albans, 
+		<pcode>AL1 1RN</pcode></location>
+    <comment>Non-regular visitors should ring to confirm a meeting</comment>
+  </meeting>
+  <contact>
+    <person>Mike Cockburn</person>
+    <address>5 Albert Street, St Albans, Herts. AL1 1RT</address>
+    <tel>01727 834035</tel>
+    <email>cockburnm@yahoo.co.uk</email>
+  </contact>
+  <contact>
+    <person>Alan Thornton</person>
+    <tel>01442 261945</tel>
+  </contact>
+  <contact>
+    <person>Alain Williams</person>
+    <tel type="mobile">0787 668 0256</tel>
+    <tel type="home">01923 676157</tel>
+    <email spamproof="yes">addw@phcomp.co.uk</email>
+  </contact>
+  <web-site>http://stalbans-go.org.uk/</web-site>
+  <last-update>2009-05-10</last-update>
+</club>
+
+<club id="standrews">
+  <name>St Andrews</name>
+  <region>Scotland</region>
+  <!-- meeting>
+    <time><day>Tuesday</day> 19:00-21:00</time>
+    <venue>The Salad Bowl</venue>
+    <location lon="-2.81059" lat="56.337333">The Students Union</location>
+    <comment>University students and staff only. Running from November - December 2007</comment>
+  </meeting -->
+  <meeting>
+    <time><day>Wednesday</day> 20:30</time>
+    <venue>Aikman's Cellar Bar</venue>
+	<location lon="-2.799071" lat="56.340113">32 Bell Street, St Andrews, 
+		<pcode>KY16 9UX</pcode></location>
+  </meeting>
+  <meeting>
+  	<time>Any lunchtime</time>
+  	<comment>By arrangement</comment>
+  </meeting>
+  <contact>
+    <person>Colin Simpson</person>
+    <email spamproof="yes">gosoc@st-andrews.ac.uk</email>
+  </contact>
+  <web-site>http://www.st-andrews.ac.uk/~goclub</web-site>
+  <last-update>2008-07-16</last-update>
+</club>
+
+<club id="sussex-uni">
+  <name>Sussex University</name>
+  <region>Southern</region>
+  <meeting>
+    <time><day>Wednesday</day> 16:00</time>
+    <venue>Pevensey Bridge Cafe</venue>
+    <location lon="-0.080402" lat="50.862379">Falmer Sussex Uni. campus</location>
+    <comment>We meet every Wednesday from 16:00 onwards until we've played enough games during term time. No cost. Just play</comment>
+  </meeting>
+  <contact>
+    <person>William Farr</person>
+    <email spamproof="yes">wfarr@hotmail.com</email>
+  </contact>
+  <last-update>2009-01-30</last-update>
+</club>
+
+<!-- club id="swansea">
+  <name>Swansea</name>
+  <region>Wales</region>
+  <meeting>
+    <time><day>Sunday</day> 15:30</time>
+    <venue>JC's Pub</venue>
+	<location lon="-3.978767" lat="51.610155">Fulton House, Swansea University
+		Campus, Singleton Park, Swansea, <pcode>SA2 8PP</pcode></location>
+    <comment>Reported as moribund 2008-08, please confirm/deny!</comment>
+  </meeting>
+  <contact>
+    <person>Sam Woodward</person>
+	<tel>01792 470071</tel>
+    <email>theman@disinfo.net</email>
+  </contact>
+  <web-site>http://www.geocities.com/goswanseaweb/</web-site>
+  <email>GoSwansea@gmx.net</email>
+  <last-update>2008-10-12</last-update>
+</club -->
+
+<club id="swind">
+  <name>Swindon</name>
+  <region>Southern</region>
+  <meeting>
+    <time><day>Wednesday</day> 19:30</time>
+    <venue>Prince of Wales</venue>
+    <location lon="-1.893983" lat="51.551352">Coped Hall Roundabout,
+		Wootton Bassett, <pcode>SN4 8EP</pcode></location>
+  </meeting>
+  <meeting>
+    <time><day>Sunday</day> night</time>
+    <venue>The Beehive</venue>
+    <location lon="-1.780987" lat="51.556582">Prospect Hill</location>
+  </meeting>
+  <contact>
+    <person>David King</person>
+    <address>21 Windsor Rd, Swindon</address>
+    <tel>01793 521625</tel>
+    <email spamproof="yes">secretary@swindongoclub.org.uk</email>
+  </contact>
+  <web-site>http://www.swindongoclub.org.uk/</web-site>
+  <last-update>2008-07-16</last-update>
+</club>
+
+<club id="taunt">
+  <name>Taunton</name>
+  <region>South West</region>
+  <meeting>
+    <time>Seems to have ceased to exist</time>
+  </meeting>
+<!--  <contact>
+    <person>David Wickham</person>
+    <address>Trowell Farm, Chipstable, Taunton TA4 2PU</address>
+    <tel>01984 623519</tel>
+  </contact>-->
+  <last-update>2005-01-26</last-update>
+</club>
+
+<club id="walsall">
+  <name>Walsall Go Club</name>
+  <region>West Midlands</region>
+  <meeting>
+    <time>by arrangement</time>
+    <venue>can cover Birmingham to Wolverhampton and points above &amp; below</venue>
+  </meeting>
+  <contact>
+    <person>Paul Trebbett</person>
+    <tel>01922 429349</tel>
+    <email>paultrebbett@blueyonder.co.uk</email>
+  </contact>
+  <last-update>2006-05-30</last-update>
+</club>
+
+<club id="warwickuni" lon="-1.559973" lat="52.381363">
+  <name>Warwick University</name>
+  <region>West Midlands</region>
+  <meeting>
+    <time><day>Wednesday</day> during University term 17:00-19:00</time>
+    <venue>Varied</venue>
+    <comment>Please check web page for Location of meeting each week</comment>
+  </meeting>
+  <meeting>
+    <time><day>Saturday</day> during University term from 17:00-19:00</time>
+    <venue>Varied</venue>
+    <comment>Please check web page for Location of meeting each week</comment>
+  </meeting>
+  <contact>
+    <person>David Buckley</person>
+    <email>go@bucko.me.uk</email>
+  </contact>
+  <web-site>http://www.warwickgo.co.uk/</web-site>
+  <last-update>2009-05-04</last-update>
+</club>
+
+<club id="guild" lon="-0.574551" lat="51.246498">
+  <name>West Surrey</name>
+  <region>Southern</region>
+  <alternate-name>Guildford</alternate-name>
+  <meeting>
+    <time><day>Monday</day> 19:30-22:00 except bank holidays</time>
+  </meeting>
+  <contact>
+    <person>Pauline Bailey</person>
+    <address>27, Dagley Farm, Shalford, Guildford GU4 8DE</address>
+    <tel>01483 561027</tel>
+    <email spamproof="yes">pab27@stocton.org</email>
+  </contact>
+  <web-site>http://www.stocton.org/go.htm</web-site>
+  <last-update>2007-03-02</last-update>
+</club>
+
+<club id="winch">
+  <name>Winchester</name>
+  <region>Southern</region>
+  <alternate-name>Hursley</alternate-name>
+  <meeting>
+    <time><day>Wednesday</day> 19:00</time>
+    <venue>The Black Boy Public House</venue>
+    <location lon="-1.307255" lat="51.057763">1 Wharf Hill, Bar End, Winchester,
+		<pcode>SO23 9NQ</pcode></location>
+    <directions>Just off the M3, Southside of Wharf Hill</directions>
+  </meeting>
+  <contact>
+    <person>Alan Cameron</person>
+    <address>7 Benedict Close, Romsey, Hampshire SO51 8PN</address>
+    <tel type="home">01794 524430</tel>
+    <tel type="work">07768 422082</tel>
+    <email>alan.cameron@iname.com</email>
+  </contact>
+  <web-site>http://www.britgo.org/clubs/winch.html</web-site>
+  <last-update>2007-08-13</last-update>
+</club>
+
+<!--
+<club id="woodl" lon="-0.914869" lat="51.451440">
+  <name>Woodley</name>
+  <region>Southern</region>
+  <meeting>
+  	<time>Some Saturdays and Sundays 18:00</time>
+  </meeting>
+  <contact>
+  	<person>Tony Atkins</person>
+	<tel>0118 926 8143</tel>
+	<email spamproof="yes">kisekigo@yahoo.co.uk</email>
+  </contact>
+  <web-site>http://www.kisekigo.com/woodley.html</web-site>
+  <comment>Club aimed at beginners near Reading</comment>
+  <see-also id="readi"/>
+  <last-update>2005-10-06</last-update>
+</club>
+-->
+
+<club id="worce" lon="-2.221985" lat="52.192509">
+  <name>Worcester and Malvern</name>
+  <region>West Midlands</region>
+  <meeting>
+    <time><day>Wednesday</day> 19:30</time>
+  </meeting>
+  <contact>
+    <person>Edward Blockley</person>
+    <address>27 Laugherne Rd, Worcester WR2 5LP</address>
+    <tel>01905 420908</tel>
+  </contact>
+  <last-update/>
+</club>
+
+<club id="say">
+  <name>Yeovil</name>
+  <region>South West</region>
+  <meeting>
+    <time><day>Thursday</day> 19:45</time>
+    <venue>Mason's Arms</venue>
+    <location lon="-2.809088" lat="50.949113">41 Lower Odcombe, Odcombe, Yeovil
+       <pcode>BA22 8TX</pcode></location>
+  </meeting>
+  <contact>
+    <person>Julian Davies</person>
+    <tel>01935 423046</tel>
+    <email spamproof="yes">GoStone@gmail.com</email>
+  </contact>
+  <last-update>2006-09-02</last-update>
+</club>
+
+<club id="york">
+  <name>York</name>
+  <region>North East</region>
+  <meeting>
+    <time><day>Wednesday</day> 20:15</time>
+    <venue>El Piano cafe</venue>
+    <location lon="-1.087883" lat="53.954084" needsfix="yes">Grape Lane, York.
+    </location>
+  </meeting>
+  <contact>
+    <person>Joss Wright</person>
+	<email spamproof="yes">joss@pseudonymity.net</email> 
+  </contact>
+  <last-update>2006-12-17</last-update>
+</club>
+
+<club id="york-uni">
+  <name>York University</name>
+  <region>North East</region>
+  <meeting>
+    <time><day>Tuesday</day> 20:15</time>
+    <venue>Room G/010, Goodricke College</venue>
+    <location lon="-1.054870" lat="53.946085">University of York,
+		Heslington, York, <pcode>YO10 5DD</pcode></location>
+  </meeting>
+  <contact>
+    <person>Joss Wright</person>
+	<email spamproof="yes">joss@pseudonymity.net</email> 
+  </contact>
+  <last-update>2005-12-17</last-update>
+</club>
+
+</bga-club-list>
