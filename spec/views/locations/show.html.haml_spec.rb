@@ -4,7 +4,7 @@ describe "/locations/show" do
   include LocationsHelper
 
   before(:each) do
-    @location = mock_model(Location, Location.valid_options)
+    @location = mock_model(Location, Location.valid_options.merge(:lat => nil, :lng => nil))
     @location.stub!(:city_state_zip).and_return('City, State 00000')
     @location.stub!(:type).and_return(mock_model(Type, :name => "Foo"))
     @location.stub!(:geocode_address).and_return('geocode_address')
@@ -22,9 +22,10 @@ describe "/locations/show" do
   it "should render attributes in <p>" do
     render "/locations/show"
     response.should have_text(/#{@location.name}/)
-    response.should have_text(/#{@location.type.name}/)
     response.should have_text(/#{@location.street_address}/)
-    response.should have_text(/#{@location.city_state_zip}/)
+    response.should have_text(/#{@location.city}/)
+    response.should have_text(/#{@location.state}/)
+    response.should have_text(/#{@location.zip_code}/)
     response.should have_text(/#{@location.country}/)
     response.should have_text(/#{@location.description}/)
   end
