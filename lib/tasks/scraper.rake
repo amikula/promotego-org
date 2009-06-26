@@ -82,4 +82,10 @@ namespace :scraper do
     puts 'Finished!'
     puts "#{failed} geocode failures"
   end
+
+  desc 'Import BGA club list'
+  task :import_bga => :environment do
+    file = open('http://www.britgo.org/clublist/clublist.xml')
+    Importers::BgaImporter.load_data(file)
+  end
 end

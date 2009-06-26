@@ -40,7 +40,7 @@ module ApplicationHelper
   end
 
   def active_states_for(cntry)
-    Location.visible.find(:all, :select => 'DISTINCT state', :conditions => ['country = ?', cntry]).collect do |l|
+    Location.visible.find(:all, :select => 'DISTINCT state', :conditions => ['country = ? AND state IS NOT NULL', cntry]).collect do |l|
       full_state_name = (STATE_FROM_ABBREV[cntry] && STATE_FROM_ABBREV[cntry][l.state]) || l.state
       Abbreviable.new(full_state_name, l.state)
     end.sort_by{|s| s.full_name}
