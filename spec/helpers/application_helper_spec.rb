@@ -51,7 +51,7 @@ describe ApplicationHelper do
     end
 
     it 'queries all states for the country from the database' do
-      @visible.should_receive(:find).with(:all, :select => 'DISTINCT state', :conditions => ['country = ?', 'XX']).and_return([])
+      @visible.should_receive(:find).with(:all, :select => 'DISTINCT state', :conditions => ['country = ? AND state IS NOT NULL', 'XX']).and_return([])
 
       helper.active_states_for('XX')
     end

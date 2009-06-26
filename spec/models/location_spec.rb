@@ -47,6 +47,14 @@ describe Location do
 
       @location.errors.should be_empty
     end
+
+    it 'returns the zip code if state is nil' do
+      @location.state = nil
+      @location.country = 'GB'
+      @location.zip_code = 'zip_code'
+
+      @location.geocode_address.should == 'zip_code, GB'
+    end
   end
 
   describe :city_state_zip do

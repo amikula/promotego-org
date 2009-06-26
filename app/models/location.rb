@@ -99,7 +99,7 @@ class Location < ActiveRecord::Base
     end
 
     unless state.blank? && zip_code.blank?
-      state_zip = state.clone
+      state_zip = state.nil? ? '' : state.clone
       if state_zip.blank?
         state_zip = zip_code.clone
       elsif !zip_code.blank?
