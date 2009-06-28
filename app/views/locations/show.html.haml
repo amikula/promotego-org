@@ -16,7 +16,7 @@
     %p
       %b Address:
       = render :partial => "common/address", :locals => {:location => @location}
-      - if @location.geocode_precision == "address"
+      - if @location.driving_directions?
         = link_to "Directions", "http://maps.google.com/maps?saddr=#{session[:last_search_address]}&daddr=#{@location.geocode_address}"
     - if @location.description
       %p

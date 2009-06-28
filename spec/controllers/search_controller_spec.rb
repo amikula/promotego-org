@@ -137,12 +137,6 @@ describe SearchController do
 
       controller.send(:find_params).should == {:origin => :address, :within => :radius, :order => :distance, :conditions => "hidden = false"}
     end
-
-    it "should include the type_id if it is greater than 0" do
-      controller.instance_eval {@type_id = 42}
-
-      controller.send(:find_params)[:conditions].should == ['type_id = ? AND hidden = false', 42]
-    end
   end
 
   describe :location_heading do

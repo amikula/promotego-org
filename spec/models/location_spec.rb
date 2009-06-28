@@ -414,4 +414,28 @@ describe Location do
       @location.send(:validate)
     end
   end
+
+  describe :driving_directions? do
+    it 'returns true when geocode_precision is address and street_address is not nil' do
+      @location.stub!(:geocode_precision).and_return('address')
+      @location.stub!(:street_address).and_return('some_address')
+
+      @location.driving_directions?.should be_true
+    end
+
+    it 'returns false when geocode_precision is not address and street_address is not nil' do
+      @location.stub!(:geocode_precision).and_return('city')
+      @location.stub!(:street_address).and_return('some_address')
+
+      @location.driving_directions?.should be_false
+    end
+
+
+    it 'returns false when geocode_precision is address and street_address is nil' do
+      @location.stub!(:geocode_precision).and_return('address')
+      @location.stub!(:street_address).and_return('')
+
+      @location.driving_directions?.should be_false
+    end
+  end
 end
