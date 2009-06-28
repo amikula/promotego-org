@@ -66,11 +66,7 @@ class SearchController < ApplicationController
   def find_params
     returning Hash.new do |find_params|
       find_params.merge!({:origin => @address, :within => @radius, :order => :distance})
-      if @type_id && @type_id > 0
-        find_params[:conditions] = ['type_id = ? AND hidden = false', @type_id]
-      else
-        find_params[:conditions] = 'hidden = false'
-      end
+      find_params[:conditions] = 'hidden = false'
     end
   end
 

@@ -12,6 +12,7 @@ describe "/locations/show" do
     @normal = mock_model(User, :login => "normal", :has_role? => false)
     @location.stub!(:user).and_return(@owner)
     @location.stub!(:affiliations).and_return([])
+    @location.stub!(:driving_directions?).and_return(false)
 
     @administrator = mock_model(User, :login => "administrator")
     @administrator.stub!(:has_role?).with(:administrator).and_return(true)
@@ -19,7 +20,7 @@ describe "/locations/show" do
     assigns[:location] = @location
   end
 
-  it "should render attributes in <p>" do
+  it "renders attributes in <p>" do
     render "/locations/show"
     response.should have_text(/#{@location.name}/)
     response.should have_text(/#{@location.street_address}/)
@@ -73,7 +74,7 @@ describe "/locations/show" do
   end
 
   describe "with nil contacts" do
-    it "shouldn't break with nil contacts" do
+    it "doesn't break with nil contacts" do
       @location.stub!(:contacts).and_return(nil)
       lambda{render "/locations/show"}.should_not raise_error
     end

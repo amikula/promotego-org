@@ -153,7 +153,11 @@ class Location < ActiveRecord::Base
     components.join(', ')
   end
 
-  private
+  def driving_directions?
+    geocode_precision == 'address' && !street_address.blank?
+  end
+
+private
   # Returns the first available slug that doesn't conflict with a known slug
   def first_available_slug(slug)
     slugs = Location.find(:all, :conditions => "slug LIKE '#{slug}%'", :select => 'slug').map(&:slug)
