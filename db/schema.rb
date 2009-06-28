@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090418152926) do
+ActiveRecord::Schema.define(:version => 20090627194138) do
 
   create_table "affiliates", :force => true do |t|
     t.string   "name"
@@ -58,6 +58,8 @@ ActiveRecord::Schema.define(:version => 20090418152926) do
     t.string   "country"
     t.string   "geocode_precision"
     t.boolean  "hidden"
+    t.integer  "source_id"
+    t.string   "foreign_key"
   end
 
   add_index "locations", ["slug"], :name => "index_locations_on_slug", :unique => true
@@ -77,6 +79,13 @@ ActiveRecord::Schema.define(:version => 20090418152926) do
   end
 
   add_index "slug_redirects", ["slug"], :name => "index_slug_redirects_on_slug", :unique => true
+
+  create_table "sources", :force => true do |t|
+    t.string   "name"
+    t.string   "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "types", :force => true do |t|
     t.string   "name"

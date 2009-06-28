@@ -4,6 +4,7 @@ class Location < ActiveRecord::Base
   acts_as_mappable
   belongs_to :type
   belongs_to :user
+  belongs_to :source
   has_many :affiliations, :dependent => :destroy
   has_many :slug_redirects, :dependent => :destroy
   has_many :affiliates, :through => :affiliations
