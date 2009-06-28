@@ -3,17 +3,22 @@ module Importers
     extend self
 
     def load_data(data)
+      bga_source = Source.find_by_name('BGA') || Source.create(:name => 'BGA', :url => 'http://www.britgo.org/clublist/clublist.xml')
+
       doc = Nokogiri::XML.parse(data)
       doc.root.add_namespace('bga', 'http://www.britgo.org/clublist.dtd')
 
       doc.xpath('//bga:club').each do |club|
         location = load_club(club)
+        location.source = bga_source
         location.save(false)
       end
     end
 
     def load_club(node)
       location = Location.new
+
+      location.foreign_key = node['id']
 
       {:name => 'name',
        :url => 'web-site',

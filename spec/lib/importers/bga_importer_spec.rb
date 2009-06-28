@@ -13,17 +13,42 @@ describe Importers::BgaImporter do
 
   describe :load_data do
     before :each do
+      @source = mock_model(Source)
+      Source.stub!(:find_by_name).with('BGA').and_return(@source)
       @file = File.open(File.join(Rails.root, 'spec', 'files', 'bga_clublist.xml'))
     end
 
+    it 'creates a bga source if one does not exist' do
+      Source.should_receive(:find_by_name).with('BGA').and_return(nil)
+      Source.should_receive(:create).with(:name => 'BGA', :url => 'http://www.britgo.org/clublist/clublist.xml')
+
+      subject.load_data('<root/>')
+    end
+
+    it 'does not create a bga source if one already exists' do
+      Source.should_receive(:find_by_name).with('BGA').and_return(mock_model(Source))
+      Source.should_not_receive(:create)
+
+      subject.load_data('<root/>')
+    end
+
     it "loads 80 clubs from the example file" do
-      subject.should_receive(:load_club).exactly(80).times.and_return(mock(Location, :save => true))
+      mock_location = mock(Location, :save => true, :source= => nil)
+      subject.should_receive(:load_club).exactly(80).times.and_return(mock_location)
+
+      subject.load_data(@file)
+    end
+
+    it "sets source on the loaded locations" do
+      mock_location = mock(Location, :save => true)
+      mock_location.should_receive(:source=).with(@source).exactly(80).times
+      subject.stub!(:load_club).and_return(mock_location)
 
       subject.load_data(@file)
     end
 
     it 'saves each club' do
-      mock_location = mock(Location)
+      mock_location = mock(Location, :source= => nil)
       mock_location.should_receive(:save).with(false).exactly(80).times
 
       subject.stub!(:load_club).and_return(mock_location)
@@ -82,6 +107,10 @@ describe Importers::BgaImporter do
 
       it 'has an address level geocoding' do
         @location.geocode_precision.should == 'address'
+      end
+
+      it 'sets the foreign_key to "aber"' do
+        @location.foreign_key.should == 'aber'
       end
     end
 
