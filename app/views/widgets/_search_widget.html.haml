@@ -57,7 +57,7 @@
 
     #promotego-search
       %p.top-row Find a Go club near you
-      - form_tag({:controller => :search, :type => :go_clubs, :action => :radius, :only_path => false}, {:method => :get, :onsubmit => "clickclear(this.address)"}) do
+      - form_tag({:controller => :search, :type => :go_clubs, :action => :radius, :only_path => false}, {:method => :get, :onsubmit => 'clickclear(this.address)', :target => '_blank'}) do
         %p
           %label{:for => :address, :style => 'display: none;'} Enter address:
           = text_field_tag :address, default_text, :size => 30, :class => 'clear_on_click', :onfocus => 'clickclear(this)', :onblur => 'clickrecall(this)'
