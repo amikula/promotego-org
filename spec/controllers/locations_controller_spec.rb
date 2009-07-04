@@ -220,12 +220,6 @@ describe LocationsController do
       assigns[:location].should equal(@location)
     end
 
-    it "should assign types" do
-      Type.should_receive(:find).with(:all).and_return :types
-      do_get
-      assigns[:types].should == :types
-    end
-
     it "should contain an empty contact object" do
       @location.should_receive(:contacts=).with([{:phone => [{}]}])
       do_get
@@ -260,18 +254,12 @@ describe LocationsController do
       do_get
       assigns[:location].should equal(@location)
     end
-
-    it "should assign types" do
-      Type.should_receive(:find).with(:all).and_return :types
-      do_get
-      assigns[:types].should == :types
-    end
   end
 
   describe "handling POST /locations" do
 
     before(:each) do
-      @location = mock_model(Location, :to_param => "1", :slug => 'location-slug', :type_id => 1)
+      @location = mock_model(Location, :to_param => "1", :slug => 'location-slug')
       @location.stub!(:user=)
       Location.stub!(:new).and_return(@location)
     end

@@ -6,13 +6,11 @@ namespace :scraper do
     print 'Scraping clubs from usgo.org...'
     STDOUT.flush
 
-    type_id = Type.find_by_name('Go Club').id
     count = 0
 
     ClubScraper.get_clubs_from_url('http://usgo.org/cgi-bin/chapters.cgi?state=ALL') do |club|
       location = Location.new
 
-      location.type_id = type_id
       location.name = club[:name]
       location.street_address = club[:address]
       location.city = club[:city]

@@ -106,11 +106,6 @@ describe CsvLoader do
   end
 
   describe :load_mdb do
-    before :each do
-      @type = mock_model(Type)
-      Type.stub!(:find_by_name).and_return(@type)
-    end
-
     it 'creates the AGA affiliate if it doesn\'t already exist' do
       FasterCSV.stub!(:foreach)
       Affiliate.stub!(:find_by_name).with('AGA').and_return(nil)
@@ -129,20 +124,6 @@ describe CsvLoader do
 
     it "passes the filename to FasterCSV to parse the file" do
       FasterCSV.should_receive(:foreach).with(:filename, :headers => true)
-
-      CsvLoader.load_mdb(:filename)
-    end
-
-    it "assigns a type of 'club' to each result and save the record" do
-      Type.should_receive(:find_by_name).once.with("Go Club").and_return(@type)
-      FasterCSV.should_receive(:foreach).and_yield(:row1).and_yield(:row2)
-
-      [:row1, :row2].each do |row|
-        club = mock(Location, :name => "club #{row}")
-        club.should_receive(:type_id=).with(@type.id)
-        CsvLoader.should_receive(:save_or_update_club).with(club)
-        CsvLoader.should_receive(:club_from).with(row).and_return(club)
-      end
 
       CsvLoader.load_mdb(:filename)
     end

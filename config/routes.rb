@@ -9,8 +9,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :locations
 
-  map.resources :types
-
   map.resources :users
 
   map.resource :sessions
@@ -23,10 +21,10 @@ ActionController::Routing::Routes.draw do |map|
   map.activate 'activate/:activation_code', :controller => 'users',
     :action => 'activate'
 
-  map.connect 'go_clubs/:country/:state', :controller => 'locations', :action => 'index', :type => 'go_club', :country => nil, :state => nil
+  map.connect 'go_clubs/:country/:state', :controller => 'locations', :action => 'index', :country => nil, :state => nil
 
-  map.connect 'search/:action', :controller => 'search'
-  map.connect 'search/:type/:action', :controller => 'search'
+  map.connect 'search/:action', :controller => 'search', :type => 'url-without-type'
+  map.connect 'search/:type/:action', :controller => 'search', :type => 'go-clubs'
 
   map.widgets '/widgets/:action', :controller => 'widgets'
   map.widgets '/widgets/:action.:format', :controller => 'widgets'

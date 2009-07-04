@@ -1,7 +1,13 @@
 class SearchController < ApplicationController
+  before_filter :go_clubs_redirect
+
   include GeoMethods
 
   SEARCH_RADII = [5,10,25,50,100,250]
+
+  def go_clubs_redirect
+    redirect_to :type => 'go-clubs', :action => params[:action], :status => :moved_permanently unless !request.get? || params[:type] == 'go-clubs'
+  end
 
   def radius
     set_display_variables
@@ -50,17 +56,7 @@ class SearchController < ApplicationController
     session[:last_search_address] = @address
     @radius = params[:radius].to_d if params[:radius]
 
-    if params[:type]
-      @type = Type.find_by_name(params[:type].gsub(/_/, ' ').singularize.titleize)
-      if @type
-        @type_id = @type.id
-      end
-    elsif params[:type_id]
-      @type_id = params[:type_id].to_d if params[:type_id]
-    end
-
     @radii = SEARCH_RADII
-    @types = Type.find(:all)
   end
 
   def find_params
@@ -72,11 +68,7 @@ class SearchController < ApplicationController
 
   def find_closest
     closest_params = {:origin => @address, :within => SEARCH_RADII[-1]}
-    if (@type_id && @type_id > 0)
-      closest_params[:conditions] = ['lat is not null and lng is not null and hidden = false and type_id = ?', @type_id]
-    else
-      closest_params[:conditions] = 'lat is not null and lng is not null and hidden = false'
-    end
+    closest_params[:conditions] = 'lat is not null and lng is not null and hidden = false'
 
     @closest = Location.find_closest(closest_params)
   end

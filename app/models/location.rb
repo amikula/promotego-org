@@ -2,7 +2,6 @@ class Location < ActiveRecord::Base
   class LocationHeader < Struct.new(:geocode_address, :geocode_precision, :distance); end
 
   acts_as_mappable
-  belongs_to :type
   belongs_to :user
   belongs_to :source
   has_many :affiliations, :dependent => :destroy
@@ -21,7 +20,6 @@ class Location < ActiveRecord::Base
   def self.valid_options
     {
       :name => "LocationName",
-      :type_id => Type.find(:first),
       :street_address => "Street Address",
       :city => "Anytown",
       :state => "TX",
