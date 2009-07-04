@@ -4,57 +4,20 @@ describe "/search/radius" do
   include SearchHelper
 
   before(:each) do
-    @types = [mock_model(Type, :name => "Foo"),
-              mock_model(Type, :name => "Bar"),
-              mock_model(Type, :name => "Baz")]
     assigns[:radii] = [1,2,3]
-    assigns[:types] = @types
   end
 
-  it 'should display type selector when type parameter is not present' do
+  it 'should have an action of /search/go-clubs/radius' do
     do_render
 
-    response.should have_tag("select[name=type_id]")
-  end
-
-  it 'should not display type selector when type parameter is present' do
-    params[:type] = :anything
-
-    do_render
-
-    response.should_not have_tag("select[name=type_id]")
-  end
-
-  it 'should have an action of /search/radius when type parameter is not present' do
-    do_render
-
-    response.should have_tag("form[action=/search/radius]")
-  end
-
-  it 'should have an action of /search/type/radius when type parameter is present' do
-    params[:type] = "type"
-    do_render
-
-    response.should have_tag("form[action=/search/type/radius]")
-  end
-
-  it 'should select first type when @type_id matches first type' do
-    check_type_selected(@types[0])
-  end
-
-  it 'should select second type when @type_id matches second type' do
-    check_type_selected(@types[1])
-  end
-
-  it 'should select third type when @type_id matches third type' do
-    check_type_selected(@types[2])
+    response.should have_tag("form[action=/search/go-clubs/radius]")
   end
 
   describe 'with results' do
     before(:each) do
       @results = [mock_model(Location, :name => "The Club", :geocode_address => "Geocode Address",
                              :street_address => "Street Address", :distance => 5, :geocode_precision => :precision,
-                             :type => :type, :slug => 'the-club')]
+                             :slug => 'the-club')]
       assigns[:results] = @results
     end
 
@@ -70,15 +33,15 @@ describe "/search/radius" do
       @results = [
         Location::LocationHeader.new("City, State", :city, "5.1"),
         mock_model(Location, :name => "Club 1", :street_address => "Street Address 1", :distance => 5.1,
-                   :type => :some_type, :geocode_precision => :city, :slug => 'club-1'),
+                   :geocode_precision => :city, :slug => 'club-1'),
         mock_model(Location, :name => "Club 2", :street_address => "Street Address 2", :distance => 5.1,
-                   :type => :some_type, :geocode_precision => :city, :slug => 'club-2'),
+                   :geocode_precision => :city, :slug => 'club-2'),
         Location::LocationHeader.new("City, State 2", :city, "5.8"),
         mock_model(Location, :name => "Club 3", :street_address => "Street Address 3", :distance => 5.8,
-                   :type => :some_type, :geocode_precision => :city, :slug => 'club-3'),
+                   :geocode_precision => :city, :slug => 'club-3'),
         Location::LocationHeader.new("City, State 3", :city, "5.9"),
         mock_model(Location, :name => "Club 4", :street_address => "Street Address 4", :distance => 5.9,
-                   :type => :some_type, :geocode_precision => :city, :slug => 'club-4')
+                   :geocode_precision => :city, :slug => 'club-4')
       ]
       assigns[:results] = @results
     end
@@ -131,17 +94,6 @@ describe "/search/radius" do
 
   def do_render
     render '/search/radius'
-  end
-
-  def check_type_selected(type)
-    assigns[:type_id] = type.id
-    do_render
-
-    response.should have_tag("option[value=#{type.id}][selected=selected]")
-
-    @types.reject{|x| x == type}.each do |check_type|
-      response.should_not have_tag("option[value=#{check_type.id}][selected=selected]")
-    end
   end
 end
 

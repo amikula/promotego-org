@@ -85,7 +85,6 @@ class LocationsController < ApplicationController
 
     @location = Location.new
     @location.contacts = [{:phone => [{}]}]
-    @types = Type.find(:all)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -97,7 +96,6 @@ class LocationsController < ApplicationController
   def edit
     render_contact_partials
 
-    @types = Type.find(:all)
     begin
       @location = if(current_user.has_role?(:administrator))
                     @location = Location.find_by_slug(params[:id])
@@ -119,7 +117,6 @@ class LocationsController < ApplicationController
   # POST /locations.xml
   def create
     @location = Location.new(params[:location])
-    @location.type_id ||= Type.find_by_name('Go Club').id
 
     @location.geocode
     if(current_user.has_role?(:administrator) && params[:location][:user_id])
@@ -173,8 +170,6 @@ class LocationsController < ApplicationController
         format.html { redirect_to(location_path(@location.slug)) }
         format.xml  { head :ok }
       else
-        @types = Type.find(:all)
-
         format.html do
           if @location
             render :action => "edit"

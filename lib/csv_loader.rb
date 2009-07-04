@@ -35,16 +35,14 @@ class CsvLoader
 
   def self.load_mdb(filename)
     aga = Affiliate.find_by_name('AGA') || Affiliate.create!(:name => 'AGA', :full_name => 'American Go Association')
-    type = Type.find_by_name("Go Club")
 
     FasterCSV.foreach(filename, :headers => true) do |row|
       club = club_from(row)
-      club.type_id = type.id
       save_or_update_club(club)
     end
   end
 
-  OMIT_ATTRIBUTES = %w{country state id slug created_at updated_at type_id lng lat user_id geocode_precision hidden hours}
+  OMIT_ATTRIBUTES = %w{country state id slug created_at updated_at lng lat user_id geocode_precision hidden hours}
   def self.match_clubs(club1, club2)
     total_length = 0
     total_distance = 0

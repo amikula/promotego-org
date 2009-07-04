@@ -10,10 +10,6 @@ describe "/locations/edit" do
 
     @location = mock_model(Location, Location.valid_options)
     assigns[:location] = @location
-    @types = [mock_model(Type, :name => "Type1"),
-              mock_model(Type, :name => "Type2"),
-              mock_model(Type, :name => "Type3")]
-    assigns[:types] = @types
   end
 
   it "should render edit form" do

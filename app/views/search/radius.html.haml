@@ -42,7 +42,7 @@
   Enter a full address, a city and state, or a zip code to find locations to
   play Go in your area.  Your information won't be shared, and the more
   information you provide, the more accurate the search will be.
-- form_tag({:action => "radius", :type => params[:type]}, :method => :get) do
+- form_tag({:action => "radius"}, :method => :get) do
   %table
     %tr
       %td Address, City, State, or Zip:
@@ -53,14 +53,6 @@
         %select#radius{:name => "radius"}
           - @radii.each do |radius|
             %option{:selected => radius == @radius}= radius
-    - unless params[:type]
-      %tr
-        %td Type:
-        %td
-          %select#type_id{:name => "type_id"}
-            %option{:value => "0"} Any
-            - @types.each do |type|
-              %option{:value => type.id, :selected => type.id == @type_id}= type.name
   = submit_tag 'Search'
 %br/
 %br/
