@@ -8,6 +8,11 @@ class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.xml
   def index
+    unless params[:type] == 'go-clubs'
+      redirect_to :action => :index, :country => params[:country], :state => params[:state], :type => 'go-clubs'
+      return
+    end
+
     options = {:order => 'country, state, city, name'}
 
     if params[:country]
