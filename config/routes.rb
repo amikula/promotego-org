@@ -21,7 +21,7 @@ ActionController::Routing::Routes.draw do |map|
   map.activate 'activate/:activation_code', :controller => 'users',
     :action => 'activate'
 
-  map.connect 'go_clubs/:country/:state', :controller => 'locations', :action => 'index', :country => nil, :state => nil
+  map.connect ':type/:country/:state', :controller => 'locations', :action => 'index', :country => nil, :state => nil, :type => /go-clubs|go_clubs/
 
   map.connect 'search/:action', :controller => 'search', :type => 'url-without-type'
   map.connect 'search/:type/:action', :controller => 'search', :type => 'go-clubs'

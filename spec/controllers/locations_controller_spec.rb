@@ -18,7 +18,7 @@ describe LocationsController do
     end
 
     def do_get(options={})
-      get :index, options
+      get :index, options.reverse_merge(:type => 'go-clubs')
     end
 
     it "should be successful" do
@@ -81,7 +81,7 @@ describe LocationsController do
 
     def do_get
       @request.env["HTTP_ACCEPT"] = "application/xml"
-      get :index
+      get :index, :type => 'go-clubs'
     end
 
     it "should be successful" do
@@ -482,7 +482,7 @@ describe LocationsController do
       all_locations = []
       Location.should_receive(:find).with(:all, anything).and_return(all_locations)
 
-      get :index
+      get :index, :type => 'go-clubs'
 
       assigns(:locations).should == all_locations
     end
