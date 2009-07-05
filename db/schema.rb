@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090703202935) do
+ActiveRecord::Schema.define(:version => 20090705160313) do
 
   create_table "affiliates", :force => true do |t|
     t.string   "name"
@@ -37,6 +37,21 @@ ActiveRecord::Schema.define(:version => 20090703202935) do
   end
 
   add_index "affiliations", ["affiliate_id", "foreign_key"], :name => "index_affiliations_on_affiliate_id_and_foreign_key"
+
+  create_table "clubs", :force => true do |t|
+    t.string   "contacts"
+    t.string   "description"
+    t.string   "foreign_key"
+    t.boolean  "hidden"
+    t.string   "hours"
+    t.string   "name"
+    t.string   "slug"
+    t.string   "source_id"
+    t.string   "url"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "locations", :force => true do |t|
     t.string   "name"
