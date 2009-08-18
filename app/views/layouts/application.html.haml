@@ -4,6 +4,8 @@
   %head
     %title
       = @title || "Promote Go &mdash; #{params[:action].capitalize} #{params[:controller].capitalize}"
+    %meta{:name => 'description', :content => 'Worldwide club listings and search for the club nearest you.'}/
+    %meta{:name => 'keywords', :content => 'Club Listings, clubs, Go, Wei-Chi, Weiqi, Baduk, Igo, games, board games'}/
 
     = stylesheet_link_tag :all
     = javascript_include_tag "prototype"
