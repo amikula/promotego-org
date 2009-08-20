@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe SearchController do
   describe "route generation" do
     it "should map { :controller => 'search', :action => 'radius' } to /search/go-clubs/radius" do
-      route_for(:controller => "search", :action => "radius").should == "/search/go-clubs/radius"
+      route_for(:controller => "search", :action => "radius", :type => 'go-clubs').should == {:path => "/search/go-clubs/radius"}
     end
   end
 

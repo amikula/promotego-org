@@ -11,23 +11,24 @@ describe LocationsController do
     end
 
     it "should map { :controller => 'locations', :action => 'show', :id => 1 } to /locations/1" do
-      route_for(:controller => "locations", :action => "show", :id => 1).should == "/locations/1"
+      route_for(:controller => 'locations', :action => 'show', :id => '1').should == {:path => '/locations/1', :method => 'get'}
     end
 
     it "should map { :controller => 'locations', :action => 'edit', :id => 1 } to /locations/1/edit" do
-      route_for(:controller => "locations", :action => "edit", :id => 1).should == "/locations/1/edit"
+      route_for(:controller => "locations", :action => "edit", :id => '1').should == {:path => "/locations/1/edit", :method => 'get'}
     end
 
     it "should map { :controller => 'locations', :action => 'update', :id => 1} to /locations/1" do
-      route_for(:controller => "locations", :action => "update", :id => 1).should == "/locations/1"
+      route_for(:controller => 'locations', :action => 'update', :id => '1').should == {:path => '/locations/1', :method => 'put'}
     end
 
     it "should map { :controller => 'locations', :action => 'destroy', :id => 1} to /locations/1" do
-      route_for(:controller => "locations", :action => "destroy", :id => 1).should == "/locations/1"
+      route_for(:controller => 'locations', :action => 'destroy', :id => '1').should == {:path => '/locations/1', :method => 'delete'}
     end
 
     it "maps to /go-clubs/Country/State when country and state are provided and action is index" do
-      route_for(:controller => :locations, :action => :index, :country => 'Country', :state => 'State', :type => 'go-clubs').should == "/go-clubs/Country/State"
+      route_for(:controller => 'locations', :action => 'index', :country => 'Country', :state => 'State', :type => 'go-clubs').
+        should == '/go-clubs/Country/State'
     end
   end
 
