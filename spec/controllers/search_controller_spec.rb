@@ -29,75 +29,6 @@ describe SearchController do
 
         get :radius, :address => @address, :radius => "5"
       end
-
-      describe "should add location headings" do
-        it "when results have no address" do
-          view_results = [
-            Location::LocationHeader.new("City, State", :city, "4.1"),
-            mock_location(:name => "Location 1", :geocode_precision => "city", :geocode_address => "City, State", :distance => "4.1", :lat => 0, :lng => 0),
-            mock_location(:name => "Location 2", :geocode_precision => "city", :geocode_address => "City, State", :distance => "4.1", :lat => 0, :lng => 0)
-          ]
-
-          db_results = view_results.clone.delete_if{|loc| loc.is_a? Location::LocationHeader}
-
-          Location.should_receive(:find).and_return(db_results)
-
-          get :radius, :radius => "5", :address => '00000'
-
-          assigns[:results].should == view_results
-        end
-
-        it "when results have addresses, use average distance" do
-          view_results = [
-            Location::LocationHeader.new("City, State", :city, "4.1"),
-            mock_location(:name => "Location 1", :geocode_precision => "address", :geocode_address => '234 Sesame St., City, State', :distance => "4.0", :lat => 0, :lng => 0),
-            mock_location(:name => "Location 2", :geocode_precision => "address", :geocode_address => '123 Sesame St., City, State', :distance => "4.2", :lat => 0, :lng => 0)
-          ]
-
-          db_results = view_results.clone.delete_if{|loc| loc.is_a? Location::LocationHeader}
-
-          Location.should_receive(:find).and_return(db_results)
-
-          get :radius, :radius => "5", :address => '00000'
-
-          assigns[:results].should == view_results
-        end
-
-        it "when some results have addresses and some don't" do
-          view_results = [
-            Location::LocationHeader.new("City, State", :city, "4.2"),
-            mock_location(:name => "Location 1", :geocode_precision => "address", :geocode_address => '234 Sesame St., City, State', :distance => "4.0", :lat => 0, :lng => 0),
-            mock_location(:name => "Location 2", :geocode_precision => "city", :geocode_address => 'City, State', :distance => "4.2", :lat => 0, :lng => 0)
-          ]
-
-          db_results = view_results.clone.delete_if{|loc| loc.is_a? Location::LocationHeader}
-
-          Location.should_receive(:find).and_return(db_results)
-
-          get :radius, :radius => "5", :address => '00000'
-
-          assigns[:results].should == view_results
-        end
-
-        it "for each city" do
-          view_results = [
-            Location::LocationHeader.new("City, State", :city, "4.2"),
-            mock_location(:name => "Location 1", :geocode_precision => "address", :geocode_address => '234 Sesame St., City, State', :distance => "4.0", :lat => 0, :lng => 0),
-            mock_location(:name => "Location 2", :geocode_precision => "city", :geocode_address => 'City, State', :distance => "4.2", :lat => 0, :lng => 0),
-            Location::LocationHeader.new("City 2, State", :city, "5.2"),
-            mock_location(:name => "Location 1", :geocode_precision => "address", :geocode_address => '234 Sesame St., City 2, State', :distance => "5.0", :lat => 0, :lng => 0),
-            mock_location(:name => "Location 2", :geocode_precision => "city", :geocode_address => 'City 2, State', :distance => "5.2", :lat => 0, :lng => 0)
-          ]
-
-          db_results = view_results.clone.delete_if{|loc| loc.is_a? Location::LocationHeader}
-
-          Location.should_receive(:find).and_return(db_results)
-
-          get :radius, :radius => "5", :address => '00000'
-
-          assigns[:results].should == view_results
-        end
-      end
     end
 
     describe :find_params do
@@ -112,36 +43,6 @@ describe SearchController do
         end
 
         controller.send(:find_params).should == {:origin => :address, :within => :radius, :order => :distance, :conditions => "hidden = false"}
-      end
-    end
-
-    describe :location_heading do
-      before :each do
-        @location = Location.new(:city => "City", :state => "State",
-                                 :zip_code => '00000', :country => "USA")
-      end
-
-      it "should display 'city, state' when city and state are present" do
-        controller.send(:location_heading, @location).should == 'City, State'
-      end
-
-      it "should display 'city, state' when city and state are present" do
-        controller.send(:location_heading, @location).should == 'City, State'
-      end
-
-      it "should display 'zip, state' when city is not present but zip is" do
-        @location.city = nil
-        controller.send(:location_heading, @location).should == '00000, State'
-      end
-
-      it "should display 'state, country' when city and zip are blank" do
-        @location.city = @location.zip_code = nil
-        controller.send(:location_heading, @location).should == 'State, USA'
-      end
-
-      it "should display 'country' when only country is present" do
-        @location.city = @location.zip_code = @location.state = nil
-        controller.send(:location_heading, @location).should == 'USA'
       end
     end
   end

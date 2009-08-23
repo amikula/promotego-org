@@ -129,4 +129,69 @@ describe ApplicationHelper do
       element_count.should == elements.length
     end
   end
+
+  describe :sort_locations_by_distance do
+    before(:each) do
+      @city1 = [mock(Location, :city => 'City1', :state => 'State', :distance => 1, :geocode_precision => :address),
+                mock(Location, :city => 'City1', :state => 'State', :distance => 2, :geocode_precision => :city)]
+      @city2 = [mock(Location, :city => 'City2', :state => 'State', :distance => 3, :geocode_precision => :address),
+                mock(Location, :city => 'City2', :state => 'State', :distance => 4, :geocode_precision => :address)]
+      @city3 = [mock(Location, :city => 'City3', :state => 'State', :distance => 1, :geocode_precision => :address),
+                mock(Location, :city => 'City3', :state => 'State', :distance => 5, :geocode_precision => :address)]
+      @locations = [@city1, @city2, @city3].flatten
+    end
+
+    it 'yields a city, state, distance array and a list of locations for each city, state' do
+      count = 0
+
+      helper.sort_locations_by_distance(@locations) do |info, group|
+        info[0].should =~ %r{City[123]}
+        info[1].should == 'State'
+        [@city1, @city2, @city3].should include(group)
+
+        count += 1
+      end
+
+      count.should == 3
+    end
+
+    it 'sorts by distance' do
+      count = 0
+
+      helper.sort_locations_by_distance(@locations.sort_by{rand}) do |info, group|
+        info[0].should =~ %r{City[123]}
+        info[1].should == 'State'
+        [@city1, @city2, @city3].should include(group)
+
+        count += 1
+      end
+
+      count.should == 3
+    end
+
+    it 'provides the distance of any locations with city precision as the distance' do
+      helper.sort_locations_by_distance(@city1) do |info, group|
+        info[0].should == 'City1'
+        info[1].should == 'State'
+        info[2].should == 2
+      end
+    end
+
+    it 'provides the average distance of all locations if none have city precision' do
+      helper.sort_locations_by_distance(@city2) do |info, group|
+        info[0].should == 'City2'
+        info[1].should == 'State'
+        info[2].should == 3.5
+      end
+    end
+
+    it 'sorts the groups by distance of the key' do
+      infos = []
+      helper.sort_locations_by_distance(@locations) do |info, group|
+        infos << info
+      end
+
+      infos.should == infos.sort_by{|i| i[2]}
+    end
+  end
 end

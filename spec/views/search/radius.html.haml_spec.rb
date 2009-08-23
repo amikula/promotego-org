@@ -17,7 +17,7 @@ describe "/search/radius" do
     before(:each) do
       @results = [mock_model(Location, :name => "The Club", :geocode_address => "Geocode Address",
                              :street_address => "Street Address", :distance => 5, :geocode_precision => :precision,
-                             :slug => 'the-club')]
+                             :slug => 'the-club', :city => 'City', :state => 'State')]
       assigns[:results] = @results
     end
 
@@ -31,17 +31,14 @@ describe "/search/radius" do
   describe 'with location headings' do
     before(:each) do
       @results = [
-        Location::LocationHeader.new("City, State", :city, "5.1"),
         mock_model(Location, :name => "Club 1", :street_address => "Street Address 1", :distance => 5.1,
-                   :geocode_precision => :city, :slug => 'club-1'),
-        mock_model(Location, :name => "Club 2", :street_address => "Street Address 2", :distance => 5.1,
-                   :geocode_precision => :city, :slug => 'club-2'),
-        Location::LocationHeader.new("City, State 2", :city, "5.8"),
+                   :geocode_precision => :address, :slug => 'club-1', :city => 'City1', :state => 'State'),
+        mock_model(Location, :name => "Club 2", :street_address => "Street Address 2", :distance => 5.2,
+                   :geocode_precision => :city, :slug => 'club-2', :city => 'City1', :state => 'State'),
         mock_model(Location, :name => "Club 3", :street_address => "Street Address 3", :distance => 5.8,
-                   :geocode_precision => :city, :slug => 'club-3'),
-        Location::LocationHeader.new("City, State 3", :city, "5.9"),
+                   :geocode_precision => :address, :slug => 'club-3', :city => 'City1', :state => 'State'),
         mock_model(Location, :name => "Club 4", :street_address => "Street Address 4", :distance => 5.9,
-                   :geocode_precision => :city, :slug => 'club-4')
+                   :geocode_precision => :address, :slug => 'club-4', :city => 'City2', :state => 'State')
       ]
       assigns[:results] = @results
     end
@@ -50,44 +47,26 @@ describe "/search/radius" do
       do_render
 
       response.should have_tag("tr[class=?]", "location_header") do
-        with_tag("td", "City, State")
-        with_tag("td", "5.1")
+        with_tag("td", "City1, State")
+        with_tag("td", "5.2")
       end
     end
 
-    it 'should not list address for clubs under location headings' do
-      do_render
-
-      response.should have_tag("tr[class=?]", "location") do
-        with_tag("td", "Club 1")
-        without_tag("td", "Club Address 1")
-        without_tag("td", "5.1")
-      end
-    end
-
-    it 'should handle location heading when already displaying one heading' do
-      do_render
-
-      response.should have_tag("tr[class=?]", "location_header") do
-        with_tag("td", "City, State 2")
-        with_tag("td", "5.8")
+    describe 'with auto-expanded results' do
+      before(:each) do
+        assigns[:closest] = true
       end
 
-      response.should have_tag("tr[class=?]", "location") do
-        with_tag("td", "Club 3")
-        without_tag("td", "Club Address 3")
-        without_tag("td", "5.8")
-      end
+      it 'displays special text when results have been expanded outside the original search area' do
+        results = [:result]
+        assigns[:results] = results
 
-      response.should have_tag("tr[class=?]", "location_header") do
-        with_tag("td", "City, State 3")
-        with_tag("td", "5.9")
-      end
+        template.stub!(:sort_locations_by_distance)
 
-      response.should have_tag("tr[class=?]", "location") do
-        with_tag("td", "Club 4")
-        without_tag("td", "Club Address 4")
-        without_tag("td", "5.9")
+        do_render
+
+        response.should have_tag('h1', %r{No Match})
+        response.should have_tag('p', %r{here is the closest match})
       end
     end
   end

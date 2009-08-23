@@ -1,6 +1,4 @@
 class Location < ActiveRecord::Base
-  class LocationHeader < Struct.new(:geocode_address, :geocode_precision, :distance); end
-
   acts_as_mappable
   belongs_to :user
   belongs_to :source
