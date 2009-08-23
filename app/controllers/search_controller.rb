@@ -11,6 +11,7 @@ class SearchController < ApplicationController
 
   def radius
     set_display_variables
+    @closest = false
 
     if(@address)
       @results = Location.find(:all, find_params)
@@ -19,14 +20,20 @@ class SearchController < ApplicationController
         find_closest
       end
 
-      if !@results.blank?
-        base_geo = geocode(@address)
-        @map = create_map(@results.select{|r| r.is_a? Location} << base_geo)
-        @results.each do |location|
-          pushpin_for_club(location) if location.is_a? Location
+      respond_to do |format|
+        format.html do
+          if !@results.blank?
+            base_geo = geocode(@address)
+            @map = create_map(@results.select{|r| r.is_a? Location} << base_geo)
+            @results.each do |location|
+              pushpin_for_club(location) if location.is_a? Location
+            end
+          else
+            flash.now[:error] = "No locations matched your search within #{SEARCH_RADII[-1]} miles"
+          end
         end
-      else
-        flash.now[:error] = "No locations matched your search within #{SEARCH_RADII[-1]} miles"
+
+        format.js{render :json => {:autoexpand => @closest, :results => @results}.to_json(:except => :foreign_key)}
       end
     end
   end
