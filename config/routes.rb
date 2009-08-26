@@ -24,7 +24,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':type/:country/:state', :controller => 'locations', :action => 'index', :country => nil, :state => nil, :type => /go-clubs|go_clubs/
 
   map.connect 'search/:action', :controller => 'search', :type => 'url-without-type'
-  map.connect 'search/:type/:action.:format', :controller => 'search', :type => 'go-clubs'
+  map.connect 'search/:type/:action.:format', :controller => 'search'
   map.connect 'search/:type/:action', :controller => 'search', :type => 'go-clubs'
 
   map.widgets '/widgets/:action', :controller => 'widgets'
