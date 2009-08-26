@@ -94,8 +94,8 @@ describe Importers::BgaImporter do
       end
 
       it 'has the right latitude and longitude' do
-        @location.lng.should == -2.104740
-        @location.lat.should == 57.167432
+        @location.lng.should be_close(-2.104740, 0.001)
+        @location.lat.should be_close(57.167432, 0.001)
       end
 
       it 'has the right contact' do
@@ -124,8 +124,8 @@ describe Importers::BgaImporter do
       end
 
       it 'gets lat and lng from the club attributes' do
-        @location.lng.should == -4.054642
-        @location.lat.should == 52.722622
+        @location.lng.should be_close(-4.054642, 0.001)
+        @location.lat.should be_close(52.722622, 0.001)
       end
     end
 
