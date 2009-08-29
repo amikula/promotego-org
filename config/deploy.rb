@@ -21,7 +21,7 @@ namespace :vlad do
   remote_task :update, :roles => :app do
     run "cp #{current_path}/config/database_init.yml #{current_path}/config/database.yml"
     Rake::Task['gems:geminstaller'].invoke
-    Rake::Task['gems:whenever'].invoke
+    Rake::Task['whenever:update'].invoke
   end
 end
 
@@ -29,10 +29,5 @@ namespace :gems do
   desc "Run geminstaller."
   remote_task :geminstaller, :roles => :app do
     run "cd #{current_path}; sudo geminstaller"
-  end
-
-  desc "Run javan-whenever."
-  remote_task :whenever, :roles => :app do
-    run "cd #{current_path}; whenever --update-crontab -i promotego"
   end
 end
