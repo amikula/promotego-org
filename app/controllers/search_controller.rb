@@ -10,6 +10,8 @@ class SearchController < ApplicationController
   end
 
   def radius
+    @title = "Find a Go Club"
+
     set_display_variables
     @closest = false
 
