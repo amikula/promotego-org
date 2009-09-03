@@ -10,25 +10,24 @@
       );
 
 - unless @results.blank?
-  - if @closest
-    %h1 No Match
-    %p
-      No locations matched your search.  However, here is the closest match in our database:
-  - else
-    %h1 Search Results
-  %table.results
-    %tr
-      %th Name
-      %th Address
-      %th Miles
-    - sort_locations_by_distance(@results) do |info, group|
-      %tr.location_header
-        %td== #{info[0]}, #{info[1]}
-        %td
-        %td= info[2].round(1)
-      = render :partial => "result", :collection => group
-  %br/
-  %br/
+  #results
+    - if @closest
+      %h1 No Match
+      %p
+        No locations matched your search.  However, here is the closest match in our database:
+    - else
+      %h1 Search Results
+    %table.results
+      %tr
+        %th Name
+        %th Address
+        %th Miles
+      - sort_locations_by_distance(@results) do |info, group|
+        %tr.location-header
+          %td== #{info[0]}, #{info[1]}
+          %td
+          %td= info[2].round(1)
+        = render :partial => "result", :collection => group
 
 - if @results.blank? && @closest.blank?
   %h1 Search

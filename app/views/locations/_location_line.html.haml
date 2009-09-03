@@ -1,0 +1,8 @@
+- location = location_line
+%tr{:class => current_user == location.user ? nil : "other_users"}
+  %td= link_to h(location.name), location
+  %td
+    - if location.street_address.blank?
+      Address Unknown
+    - else
+      =h location.street_address
