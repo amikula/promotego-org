@@ -46,7 +46,7 @@ describe "/search/radius" do
     it 'should contain location headings' do
       do_render
 
-      response.should have_tag("tr[class=?]", "location_header") do
+      response.should have_tag("tr[class=?]", "location-header") do
         with_tag("td", "City1, State")
         with_tag("td", "5.2")
       end

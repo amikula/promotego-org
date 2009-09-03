@@ -17,28 +17,24 @@ class LocationsController < ApplicationController
 
     if params[:country]
       country_name = params[:country].gsub('-', ' ')
-      country = COUNTRY_TO_ABBREV[country_name] || params[:country]
+      @country = COUNTRY_TO_ABBREV[country_name] || params[:country]
 
       if params[:state]
         state_name = params[:state].gsub('-', ' ')
-        if STATE_TO_ABBREV[country]
-          state = STATE_TO_ABBREV[country][state_name]
+        if STATE_TO_ABBREV[@country]
+          state = STATE_TO_ABBREV[@country][state_name]
         end
         state ||= state_name
 
-        options[:conditions] = ['country = ? AND state = ?', country, state]
+        options[:conditions] = ['country = ? AND state = ?', @country, state]
         @locality = "in #{state_name}"
-        @fields = [:street_address, :city]
 
         @title = "Go Clubs in #{state_name}, #{country_name}"
       else
-        options[:conditions] = ['country = ?', country]
+        options[:conditions] = ['country = ?', @country]
         @locality = "in #{country_name}"
-        @fields = [:city, :state]
         @title = "Go Clubs in #{country_name}"
       end
-    else
-      @fields = [:city, :state, :country]
     end
 
     @locations = Location.visible.find(:all, options)
