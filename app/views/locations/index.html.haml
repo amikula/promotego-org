@@ -17,9 +17,10 @@
     - else
       - locations_by_state = @locations.group_by{|l| (STATE_FROM_ABBREV[@country] && STATE_FROM_ABBREV[@country][l.state]) || l.state}
       - locations_by_state.keys.sort.each do |state|
-        %tr.location-header
-          %td{:colspan => 2}
-            %h2= state
+        - unless state.blank?
+          %tr.location-header
+            %td{:colspan => 2}
+              %h2= state
         - locations_by_city = locations_by_state[state].group_by{|l| l.city || 'ZZZZZ'}
         - locations_by_city.keys.sort.each do |city|
           %tr.location-header
