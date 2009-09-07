@@ -47,10 +47,9 @@ describe "/layouts/application" do
   end
 
   it "should display a register link if no user is logged in" do
-    pending
     do_render
 
-    response.should have_tag("a[href=/signup]", "Register")
+    response.should have_tag("a[href=?]", '/account/new', "Register")
   end
 
   it "should not display a login or register link if a user is logged in" do

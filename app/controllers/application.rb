@@ -17,6 +17,10 @@ private
     @current_user = current_user_session && current_user_session.user
   end
 
+  def current_user=(_current_user)
+    @current_user = _current_user
+  end
+
   def logged_in?
     !!current_user
   end

@@ -18,3 +18,5 @@ config.action_mailer.raise_delivery_errors = false
 
 config.action_mailer.default_url_options = {:host => "example.com", :port => 3000,
                                             :only_path => false }
+
+config.log_level = :debug

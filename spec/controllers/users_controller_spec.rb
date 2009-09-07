@@ -50,7 +50,6 @@ describe UsersController do
 
 
   it 'activates user' do
-    pending
     User.authenticate('aaron', 'test').should be_nil
     get :activate, :activation_code => users(:aaron).activation_code
     response.should redirect_to('/')
@@ -59,13 +58,11 @@ describe UsersController do
   end
 
   it 'does not activate user without key' do
-    pending
     get :activate
     flash[:notice].should be_nil
   end
 
   it 'does not activate user with blank key' do
-    pending
     get :activate, :activation_code => ''
     flash[:notice].should be_nil
   end
@@ -89,7 +86,6 @@ describe UsersController do
       end
 
       it "redirects non-super-users to 'new' action" do
-        pending
         @user.should_receive(:has_role?).with(:super_user).and_return(false)
 
         do_get
@@ -98,7 +94,6 @@ describe UsersController do
       end
 
       it "renders edit form for super-users" do
-        pending
         @user.should_receive(:has_role?).with(:super_user).and_return(true)
 
         do_get
@@ -107,7 +102,6 @@ describe UsersController do
       end
 
       it "redirects non-owners to 'new' action" do
-        pending
         @user.should_receive(:has_role?).with(:owner).and_return(false)
 
         do_get
@@ -125,7 +119,6 @@ describe UsersController do
       end
 
       it "assigns @roles for owners" do
-        pending
         @user.should_receive(:has_role?).with(:owner).any_number_of_times.
           and_return(true)
 
@@ -139,7 +132,6 @@ describe UsersController do
       end
 
       it "filters owner role if user is not owner but super-user" do
-        pending
         @user.should_receive(:has_role?).with(:super_user).and_return(true)
 
         roles = [mock_model(Role, :name => "owner"),
@@ -158,11 +150,10 @@ describe UsersController do
       post :update
     end
 
-    it "redirects non-logged-in users to 'new' action" do
-      pending
+    it "redirects non-logged-in users to login page" do
       do_post
 
-      response.should redirect_to(:action => :new)
+      response.should redirect_to(:controller => :user_sessions, :action => :new)
     end
 
     describe "with logged in user" do
@@ -174,14 +165,12 @@ describe UsersController do
       end
 
       it "redirects non-owners and non-super-users to 'new' action" do
-        pending
         do_post
 
         response.should redirect_to(:action => :new)
       end
 
       it "allows owners to update user metdata" do
-        pending
         user_params = {"login" => "newlogin"}
         User.should_receive(:update).with(@edit_user.id.to_s, user_params)
         @user.should_receive(:has_role?).with(:owner).and_return(true)
@@ -190,7 +179,6 @@ describe UsersController do
       end
 
       it "allows super-users to update user metdata" do
-        pending
         user_params = {"login" => "newlogin"}
         User.should_receive(:update).with(@edit_user.id.to_s, user_params)
         @user.should_receive(:has_role?).with(:super_user).and_return(true)
@@ -199,7 +187,6 @@ describe UsersController do
       end
 
       it "allows owners to set roles" do
-        pending
         @user.should_receive(:has_role?).with(:owner).and_return(true)
         user_params = {"login" => "user_login", "roles" => ["1", "2"]}
         expected_params = user_params.clone
@@ -213,7 +200,6 @@ describe UsersController do
       end
 
       it "allows super-users to set roles" do
-        pending
         @user.should_receive(:has_role?).with(:super_user).and_return(true)
         user_params = {"login" => "user_login", "roles" => ["1", "2"]}
         expected_params = user_params.clone
