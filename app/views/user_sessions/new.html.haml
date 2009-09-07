@@ -1,0 +1,18 @@
+- content_for("page_scripts") do
+  :plain
+    Event.observe(window, 'load',
+      function() { $('login').focus() }
+    );
+
+- form_tag user_session_path(:action => :create) do
+  %p
+    %label{:for => "login"} Login
+    = text_field_tag 'user_session[login]'
+  %p
+    %label{:for => "password"} Password
+    = password_field_tag 'user_session[password]'
+  %p
+    %label{:for => "remember_me"} Remember me:
+    = check_box_tag 'user_session[remember_me]'
+  %p
+    = submit_tag 'Log in'

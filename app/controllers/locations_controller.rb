@@ -1,7 +1,7 @@
 class LocationsController < ApplicationController
   include GeoMethods
 
-  before_filter :login_required, :only => [:new, :edit, :create, :update, :destroy]
+  before_filter :require_user, :only => [:new, :edit, :create, :update, :destroy]
 
   auto_complete_for :user, :login
 

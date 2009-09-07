@@ -1,17 +1,12 @@
 ActionController::Routing::Routes.draw do |map|
-  map.connect 'login', :controller => "sessions", :action => "new"
-  map.connect 'signup', :controller => "users", :action => "new"
-  map.connect 'logout', :controller => "sessions", :action => "destroy"
-
   map.resources :roles
 
   map.resources :affiliations, :has_one => :location, :has_one => :affiliate
 
   map.resources :locations
 
+  map.resource :account, :controller => "users"
   map.resources :users
-
-  map.resource :sessions
 
   # Map basic pages to home_controller
   map.root :controller => 'home'
@@ -29,6 +24,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.widgets '/widgets/:action', :controller => 'widgets'
   map.widgets '/widgets/:action.:format', :controller => 'widgets'
+
+  map.resource :user_session, :member => {:destroy => :get}
+  #map.logout '/user_sessions/logout', :controller => :user_session, :action => :destroy
 
   # Install the default routes as the lowest priority.
   map.connect ':controller/:action/:id'

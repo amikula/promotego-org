@@ -46,3 +46,5 @@ gems:
   version: ~> 0.2.2
 - name: vlad
   version: ~> 1.3.2
+- name: authlogic
+  version: 2.1.1
