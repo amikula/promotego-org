@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/affiliations/new.html.erb" do
+describe "/affiliations/new" do
   include AffiliationsHelper
 
   before(:each) do
@@ -12,8 +12,6 @@ describe "/affiliations/new.html.erb" do
   it "should render new form" do
     template.should_receive(:render).with(hash_including(:partial => "affiliation_form"))
 
-    render "/affiliations/new.html.erb"
+    render "/affiliations/new"
   end
 end
-
-

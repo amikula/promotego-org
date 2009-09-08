@@ -56,20 +56,24 @@ module ApplicationHelper
 
   def sort_locations_by_distance(locations)
     by_cities = locations.group_by{|l| [l.city, l.state]}
+    with_distance = []
+
     by_cities.keys.each do |key|
       group = by_cities[key]
       distance_location = group.detect{|l| l.distance if l.geocode_precision == :city}
 
       if distance_location
-        key << distance_location.distance
+        distance = distance_location.distance
       else
         sum = group.inject(0){|sum, cur| sum+cur.distance.to_f}
-        key << sum/group.size.to_f
+        distance = sum/group.size.to_f
       end
+
+      with_distance << [key + [distance], group]
     end
 
-    by_cities.keys.sort_by{|k| k[2]}.each do |key|
-      yield key, by_cities[key].sort_by{|l| l.distance}
+    with_distance.sort_by{|k| k[0][2]}.each do |ary|
+      yield ary[0], ary[1].sort_by{|l| l.distance}
     end
   end
 end

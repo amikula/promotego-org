@@ -73,7 +73,7 @@ class Location < ActiveRecord::Base
   # lat and lng and returning the geocode object if it was successful, or nil
   # otherwise.
   def geocode
-    geo = GeoKit::Geocoders::MultiGeocoder.geocode(geocode_address)
+    geo = Geokit::Geocoders::MultiGeocoder.geocode(geocode_address)
     if geo.success
       self.lat, self.lng = geo.lat, geo.lng
       self.geocode_precision = geo.precision

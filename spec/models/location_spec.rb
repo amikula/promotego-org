@@ -109,7 +109,7 @@ describe Location do
   it "should set an error if geocode is not successful" do
     result = mock("geocode_result")
     result.stub!(:success).and_return(false)
-    GeoKit::Geocoders::MultiGeocoder.stub!(:geocode).and_return(result)
+    Geokit::Geocoders::MultiGeocoder.stub!(:geocode).and_return(result)
 
     @location.geocode.should == nil
     @location.errors.should_not be_empty

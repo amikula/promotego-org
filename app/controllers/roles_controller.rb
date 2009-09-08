@@ -5,7 +5,7 @@ class RolesController < ApplicationController
     @roles = Role.find(:all)
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html # index.html.haml
       format.xml  { render :xml => @roles }
     end
   end
@@ -16,7 +16,7 @@ class RolesController < ApplicationController
     @role = Role.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html # show.html.haml
       format.xml  { render :xml => @role }
     end
   end
@@ -27,7 +27,7 @@ class RolesController < ApplicationController
     @role = Role.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html # new.html.haml
       format.xml  { render :xml => @role }
     end
   end

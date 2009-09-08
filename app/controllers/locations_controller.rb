@@ -46,7 +46,7 @@ class LocationsController < ApplicationController
     end if @map
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html # index.html.haml
       format.xml  { render :xml => @locations }
     end
   end
@@ -88,7 +88,7 @@ class LocationsController < ApplicationController
     @location.contacts = [{:phone => [{}]}]
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html # new.html.haml
       format.xml  { render :xml => @location }
     end
   end
@@ -162,6 +162,17 @@ class LocationsController < ApplicationController
 
     respond_to do |format|
       if @location
+        if (params[:location] && contacts = params[:location].delete(:contacts))
+          contacts_array = hash_to_array(contacts)
+
+          contacts_array.each do |contact|
+            if (phones = contact.delete(:phone))
+              contact[:phone] = hash_to_array(phones)
+            end
+          end
+
+          @location.contacts = contacts_array
+        end
         @location.attributes = params[:location]
         @location.geocode
       end
@@ -196,11 +207,19 @@ class LocationsController < ApplicationController
     end
   end
 
-  private
+private
   def render_contact_partials
     @contact_form = render_to_string(:partial => 'contact_form',
                                      :locals => {:javascript => true, :contact_idx => 'CONTACT_IDX',
                                                  :contact => {:phone => [{}]}}).gsub(/\n/, '\n').gsub(/'/, '"')
     @phone_form = render_to_string(:partial => 'phone_number_form', :locals => {:phone => {}, :contact_idx => 'CONTACT_IDX', :phone_idx => 'PHONE_IDX'}).gsub(/\n/, '\n').gsub(/'/, '"')
+  end
+
+  def hash_to_array(hash)
+    returning [] do |retval|
+      hash.each_pair do |index, value|
+        retval[index.to_i] = value
+      end
+    end
   end
 end

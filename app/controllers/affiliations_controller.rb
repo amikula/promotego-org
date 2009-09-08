@@ -8,7 +8,7 @@ class AffiliationsController < ApplicationController
     @affiliations = Affiliation.find(:all)
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html # index.html.haml
       format.xml  { render :xml => @affiliations }
     end
   end
@@ -19,7 +19,7 @@ class AffiliationsController < ApplicationController
     @affiliation ||= Affiliation.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html # show.html.haml
       format.xml  { render :xml => @affiliation }
     end
   end
@@ -30,7 +30,7 @@ class AffiliationsController < ApplicationController
     @affiliation = Affiliation.new(params[:affiliation])
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html # new.html.haml
       format.xml  { render :xml => @affiliation }
     end
   end

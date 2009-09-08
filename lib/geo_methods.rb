@@ -66,6 +66,6 @@ module GeoMethods
   end
 
   def geocode(geocode_address)
-    GeoKit::Geocoders::MultiGeocoder.geocode(geocode_address)
+    Geokit::Geocoders::MultiGeocoder.geocode(geocode_address)
   end
 end
