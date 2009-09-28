@@ -12,6 +12,8 @@ module NavigationHelpers
       '/'
     when /the new account page/
       new_account_path
+    when /the validation message page/
+      home_path :page => :validate
     else
       raise "Can't find mapping from \"#{page_name}\" to a path.\n" +
         "Now, go and add a mapping in #{__FILE__}"

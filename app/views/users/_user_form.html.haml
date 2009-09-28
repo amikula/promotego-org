@@ -1,18 +1,18 @@
 - form_for :user, :url => users_path do |f|
   %p
-    %label{:for => "login"} Login
+    %label{:for => "user_login"} Login
     %br/
     = f.text_field :login
   %p
-    %label{:for => "email"} Email
+    %label{:for => "user_email"} Email
     %br/
     = f.text_field :email
   %p
-    %label{:for => "password"} Password
+    %label{:for => "user_password"} Password
     %br/
     = f.password_field :password
   %p
-    %label{:for => "password_confirmation"} Confirm Password
+    %label{:for => "user_password_confirmation"} Confirm Password
     %br/
     = f.password_field :password_confirmation
   - if current_user && @roles

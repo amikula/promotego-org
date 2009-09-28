@@ -12,9 +12,12 @@ Feature: Manage registers
     When I follow "Register"
     Then I should be on the new account page
 
-  @wip
   Scenario: Register an account
     Given I am on the new account page
-    When I fill out the form
-    And I submit the form
-    Then I should be on the registration success page
+    When I fill in the following:
+      | Login             | test              |
+      | Email             | test@example.com  |
+      | Password          | pass1234          |
+      | Confirm Password  | pass1234          |
+    And I press "Sign up"
+    Then I should be on the validation message page
