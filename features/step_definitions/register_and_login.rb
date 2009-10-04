@@ -1,14 +1,12 @@
-Given /^the following registers:$/ do |registers|
-  Register.create!(registers.hashes)
+Given /^there is no (user "[^\"]+")$/ do |login|
+  user = User.find_by_login("login")
+  user.destroy if user
 end
 
-When /^I delete the (\d+)(?:st|nd|rd|th) register$/ do |pos|
-  visit registers_url
-  within("table > tr:nth-child(#{pos.to_i+1})") do
-    click_link "Destroy"
-  end
+Then /^(user "[^\"]+") should be active$/ do |user|
+  user.should be_active
 end
 
-Then /^I should see the following registers:$/ do |expected_registers_table|
-  expected_registers_table.diff!(table_at('table').to_a)
+Then /^(user "[^\"]+") should not be active$/ do |user|
+  user.should_not be_active
 end
