@@ -18,7 +18,8 @@ config.action_mailer.delivery_method = :test
 config.action_mailer.default_url_options = {:host => "testhost",
                                             :only_path => false }
 
-config.gem 'cucumber',    :lib => false,        :version => '>=0.2.0' unless File.directory?(File.join(Rails.root, 'vendor/plugins/cucumber'))
+config.gem 'cucumber',    :lib => false,        :version => '>=0.3.104' unless File.directory?(File.join(Rails.root, 'vendor/plugins/cucumber'))
 config.gem 'webrat',      :lib => false,        :version => '>=0.5.0' unless File.directory?(File.join(Rails.root, 'vendor/plugins/webrat'))
-config.gem 'rspec',       :lib => false,        :version => '>=1.2.6' unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec'))
-config.gem 'rspec-rails', :lib => 'spec/rails', :version => '>=1.2.6' unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
+config.gem 'rspec',       :lib => false,        :version => '>=1.2.8' unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec'))
+config.gem 'rspec-rails', :lib => false,        :version => '>=1.2.7.1' unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
+
