@@ -27,7 +27,8 @@ describe UserMailer do
     @user = mock_model(User, :email => "user_email",
                              :login => "user_login",
                              :password => "user_password",
-                             :activation_code => "ABC123")
+                             :activation_code => "ABC123",
+                             :perishable_token => "perishable")
   end
 
   describe "when sending a signup notification e-mail" do
@@ -91,6 +92,18 @@ describe UserMailer do
 
     it "should have the from address in the message body" do
       @email.body.should =~ %r{from_address}
+    end
+  end
+
+  describe :forgot_password do
+    before(:each) do
+      @email = UserMailer.create_forgot_password(@user)
+    end
+
+    it_should_behave_like "promotego.org email"
+
+    it "includes password reset url with the user's perishable token" do
+      @email.body.should include('http://testhost/reset_password/perishable')
     end
   end
 end

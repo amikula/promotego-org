@@ -4,15 +4,18 @@
       function() { $('login').focus() }
     );
 
-- form_tag user_session_path(:action => :create) do
+- form_tag :action => :create do
   %p
-    %label{:for => "login"} Login
+    %label{:for => "user_session_login"}
+      Login
     = text_field_tag 'user_session[login]'
   %p
-    %label{:for => "password"} Password
+    %label{:for => "user_session_password"}
+      Password
     = password_field_tag 'user_session[password]'
   %p
-    %label{:for => "remember_me"} Remember me:
-    = check_box_tag 'user_session[remember_me]'
+    %label{:for => "user_session_remember_me"}
+      Remember me:
+      = check_box_tag 'user_session[remember_me]'
   %p
     = submit_tag 'Log in'

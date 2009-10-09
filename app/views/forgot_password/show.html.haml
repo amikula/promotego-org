@@ -1,0 +1,8 @@
+%h1 Forgot Password
+%p Please enter your login and we will send you a link to reset your password:
+%p
+  - form_tag forgot_password_path do
+    %label{:for => "login"}
+      Enter your login name:
+      = text_field_tag 'login'
+      = submit_tag 'Submit'

@@ -5,7 +5,6 @@ When /^I receive an email to "([^\"]*)"$/ do |email_address|
 
   if @email
     ActionMailer::Base.deliveries.delete(@email)
-    puts "\n\nFound email with body '#{@email.body}'\n"
   end
 
   @email.should_not be_nil

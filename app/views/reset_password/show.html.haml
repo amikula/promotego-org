@@ -1,0 +1,12 @@
+%h1 New Password
+%p Please enter your new password below.  Don't forget your password!
+- form_tag({:id => @user.perishable_token}, {:method => :put}) do
+  %p
+    %label{:for => 'password'}
+      Password:
+      = password_field_tag 'password'
+  %p
+    %label{:for => 'password_confirmation'}
+      Confirm Password:
+      = password_field_tag 'password_confirmation'
+  %p= submit_tag "Reset Password"
