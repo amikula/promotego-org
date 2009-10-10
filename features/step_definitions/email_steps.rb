@@ -10,9 +10,13 @@ When /^I receive an email to "([^\"]*)"$/ do |email_address|
   @email.should_not be_nil
 end
 
-When /^I click on the first link in the email$/ do
+When "I click on the first link in the email" do
   link = @email.body.match(%r{http://[^\s]*})[0]
   link.should_not be_nil
 
   visit link
+end
+
+Then /^the email should contain "([^\"]+)"$/ do |text|
+  @email.body.should include(text)
 end

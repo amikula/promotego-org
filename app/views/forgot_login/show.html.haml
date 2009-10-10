@@ -1,0 +1,8 @@
+%h1 Forgot Login
+%p Please enter your email and we will send you information about your login:
+%p
+  - form_tag forgot_login_path do
+    %label{:for => "email"}
+      Enter your email address:
+      = text_field_tag 'email'
+      = submit_tag 'Submit'

@@ -106,4 +106,16 @@ describe UserMailer do
       @email.body.should include('http://testhost/reset_password/perishable')
     end
   end
+
+  describe :forgot_login do
+    before(:each) do
+      @email = UserMailer.create_forgot_login(@user)
+    end
+
+    it_should_behave_like "promotego.org email"
+
+    it "includes password the user's login" do
+      @email.body.should include('user_login')
+    end
+  end
 end

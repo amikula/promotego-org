@@ -7,22 +7,15 @@ module NavigationHelpers
   #
   def path_to(page_name)
     case page_name
-    when /the homepage/
-      '/'
-    when /the new account page/
-      new_account_path
-    when /the account page/
-      account_path
-    when /the validation message page/
-      home_path :page => :validate
-    when /the forgot password page/
-      forgot_password_path
-    when /the reset password page/
-      reset_password_path
-    when /the login page/
-      new_user_session_path
-    when /the user session page/
-      user_session_path
+    when /the homepage/                : '/'
+    when /the new account page/        : new_account_path
+    when /the account page/            : account_path
+    when /the validation message page/ : home_path(:page => :validate)
+    when /the forgot password page/    : forgot_password_path
+    when /the forgot login page/       : forgot_login_path
+    when /the reset password page/     : reset_password_path
+    when /the login page/              : new_user_session_path
+    when /the user session page/       : user_session_path
     else
       raise "Can't find mapping from \"#{page_name}\" to a path.\n" +
         "Now, go and add a mapping in #{__FILE__}"

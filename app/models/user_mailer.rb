@@ -23,6 +23,10 @@ class UserMailer < ActionMailer::Base
     @body[:url] = reset_password_url :id => user.perishable_token
   end
 
+  def forgot_login(user)
+    setup_email(user, 'Your login on PromoteGo.org')
+  end
+
   protected
     def setup_email(user, subject)
       recipients  "#{user.email}"

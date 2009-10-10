@@ -116,6 +116,21 @@ Feature: Register users
     Then I should see "Your password has been changed"
       And the user "test" should have password "pass2345"
 
+  Scenario: Forgot login
+    Given there is a User like the following:
+        | Login                 | testuser         |
+        | Password              | pass1234         |
+        | Password Confirmation | pass1234         |
+        | Email                 | test@example.com |
+        | Active                | true             |
+      And that User is active
+      And I am on the forgot login page
+    When I fill in "email" with "test@example.com"
+      And I press "Submit"
+    Then I should see "Please check your email"
+      And I receive an email to "test@example.com"
+      And the email should contain "testuser"
+
   Scenario: Password doesn't match when resetting password
     Given I have an account called "test"
       And I am on the forgot password page

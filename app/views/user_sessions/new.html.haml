@@ -4,6 +4,8 @@
       function() { $('login').focus() }
     );
 
+%h1 Login
+
 - form_for :user_session, @user_session, :url => {:action => :create} do |f|
   = f.error_messages
   %table
@@ -21,5 +23,9 @@
     %label{:for => "user_session_remember_me"}
       Remember me:
       = f.check_box :remember_me
+  %p
+    = link_to 'Forgot password', forgot_password_path
+    &nbsp;
+    = link_to 'Forgot login', forgot_login_path
   %p
     = submit_tag 'Log in'
