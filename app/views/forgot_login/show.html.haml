@@ -1,3 +1,9 @@
+- content_for("page_scripts") do
+  :plain
+    Event.observe(window, 'load',
+      function() { $('email').focus() }
+    );
+
 %h1 Forgot Login
 %p Please enter your email and we will send you information about your login:
 %p
