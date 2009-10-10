@@ -9,3 +9,9 @@ Given /^that (\w+) is active$/ do |clazz|
   @object.activate
   @object.should be_active
 end
+
+Given /^that (\w+) is not active$/ do |clazz|
+  @object.should be_a(clazz.constantize)
+  @object.deactivate
+  @object.should_not be_active
+end

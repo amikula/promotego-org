@@ -502,7 +502,7 @@ describe User do
 
 protected
   def create_user(options = {})
-    record = User.new({ :login => 'quire', :email => 'quire@example.com', :password => 'quire', :password_confirmation => 'quire' }.merge(options))
+    record = User.new({ :login => 'quirex', :email => 'quirex@example.com', :password => 'quirex', :password_confirmation => 'quirex' }.merge(options))
     record.save
     record
   end

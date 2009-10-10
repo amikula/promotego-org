@@ -36,12 +36,26 @@ describe ResetPasswordController do
       user = mock(User)
       user.should_receive(:password=).with('password')
       user.should_receive(:password_confirmation=).with('password_confirmation')
-      user.should_receive(:save!)
+      user.should_receive(:save).and_return(true)
       User.should_receive(:find_using_perishable_token).with('perishable_token').
         and_return(user)
 
       put 'update', :id => 'perishable_token', :password => 'password',
                     :password_confirmation => 'password_confirmation'
+    end
+
+    it 'renders show if the user cannot be saved' do
+      user = mock(User)
+      user.should_receive(:password=).with('password')
+      user.should_receive(:password_confirmation=).with('password_confirmation')
+      user.should_receive(:save).and_return(false)
+      User.should_receive(:find_using_perishable_token).with('perishable_token').
+        and_return(user)
+
+      put 'update', :id => 'perishable_token', :password => 'password',
+                    :password_confirmation => 'password_confirmation'
+
+      response.should render_template(:show)
     end
   end
 end

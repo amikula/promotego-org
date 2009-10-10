@@ -11,6 +11,8 @@ module NavigationHelpers
       '/'
     when /the new account page/
       new_account_path
+    when /the account page/
+      account_path
     when /the validation message page/
       home_path :page => :validate
     when /the forgot password page/
@@ -19,6 +21,8 @@ module NavigationHelpers
       reset_password_path
     when /the login page/
       new_user_session_path
+    when /the user session page/
+      user_session_path
     else
       raise "Can't find mapping from \"#{page_name}\" to a path.\n" +
         "Now, go and add a mapping in #{__FILE__}"

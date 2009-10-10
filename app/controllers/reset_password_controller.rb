@@ -17,7 +17,9 @@ class ResetPasswordController < ApplicationController
       @user.password = params[:password]
       @user.password_confirmation = params[:password_confirmation]
 
-      @user.save!
+      unless @user.save
+        render :show
+      end
     else
       redirect_to root_path
       flash[:warning] = "Sorry, but your password reset token is either expired or invalid"

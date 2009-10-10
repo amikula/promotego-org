@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "/users/edit" do
   include UsersHelper
-  
+
   before(:each) do
     @user = mock_model(User, :login => 'user_login', :email => 'user_email', :password => 'user_password', :password_confirmation => 'user_password')
     @user.stub!(:has_role?).and_return(false)
@@ -12,7 +12,7 @@ describe "/users/edit" do
   it "should render edit form" do
     render "/users/edit"
 
-    response.should have_tag("form[action=/users][method=post]") do
+    response.should have_tag("form[action=/account][method=post]") do
       with_tag('input#user_login[name=?]', "user[login]")
       with_tag('input#user_email[name=?]', "user[email]")
       with_tag('input#user_password[name=?]', "user[password]")
@@ -43,7 +43,7 @@ describe "/users/edit" do
 end
 
 def should_have_form_with_roles(show_owner = false)
-  response.should have_tag("form[action=/users][method=post]") do
+  response.should have_tag("form[action=/account][method=post]") do
     with_tag('select[multiple=multiple][name=?]', 'user[roles][]') do
       @roles.each do |role|
         if !show_owner && role.name == "owner"

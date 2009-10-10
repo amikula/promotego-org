@@ -10,7 +10,7 @@ describe "/users/new" do
   it "should render new form" do
     render "/users/new"
 
-    response.should have_tag("form[action=/users][method=post]") do
+    response.should have_tag("form[action=/account][method=post]") do
       with_tag('input#user_login[name=?]', "user[login]")
       with_tag('input#user_email[name=?]', "user[email]")
       with_tag('input#user_password[name=?]', "user[password]")
