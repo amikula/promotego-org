@@ -26,15 +26,18 @@
         %label{:for => "user_password_confirmation"} Confirm Password:
       %td
         = f.password_field :password_confirmation
-  - if current_user && @roles
-    %p
-      %label{:for => "roles"} Roles
-      %br/
-      %select{:name => "user[roles][]", :multiple => "multiple"}
-        = options_from_collection_for_select(@roles, "id", "name", @user.roles.collect{|r| r.id})
+    - if current_user && @roles
+      %tr
+        %td
+          %label{:for => "roles"} Roles
+        %td
+          %select{:name => "user[roles][]", :multiple => "multiple"}
+            = options_from_collection_for_select(@roles, "id", "name", @user.roles.collect{|r| r.id})
+    %tr
+      %td &nbsp;
+      %td
+        = link_to 'Forgot password', forgot_password_path
+        &nbsp;
+        = link_to 'Forgot login', forgot_login_path
   %p
     = submit_tag 'Sign up!'
-  %p
-    = link_to 'Forgot password', forgot_password_path
-    &nbsp;
-    = link_to 'Forgot login', forgot_login_path
