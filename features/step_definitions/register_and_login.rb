@@ -15,9 +15,7 @@ Then /^(user "[^\"]+") should not be active$/ do |user|
   user.should_not be_active
 end
 
-Then /^the user "([^\"]*)" should have password "([^\"]*)"$/ do |login, password|
-  user = User.authenticate(login, password)
-
+Then /^(user "[^\"]*") should have password "([^\"]*)"$/ do |user, password|
   user.should_not be_nil
-  user.login.should == login
+  user.should be_authenticated(password)
 end

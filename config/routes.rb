@@ -12,6 +12,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :forgot_login, :only => [:create, :show], :controller => 'forgot_login'
   map.resources :reset_password, :only => [:update, :show], :controller => 'reset_password'
 
+  map.resource :settings, :only => [:edit, :update]
+
   # Map basic pages to home_controller
   map.root :controller => 'home'
   map.home ':page', :controller => 'home', :action => 'show',
