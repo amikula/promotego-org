@@ -18,11 +18,21 @@ describe SettingsController do
     it "sets the user's password" do
       @user.should_receive(:password=).with('abcdef')
       @user.should_receive(:password_confirmation=).with('abcdef')
-      @user.should_receive(:save)
+      @user.should_receive(:save).and_return(true)
 
       put 'update', :password => 'abcdef', :password_confirmation => 'abcdef'
 
       response.should redirect_to(edit_settings_path)
+    end
+
+    it "does not set the user's password if the passwond does not match" do
+      @user.stub!(:password=)
+      @user.stub!(:password_confirmation=)
+      @user.should_receive(:save).and_return(false)
+
+      put 'update', :password => 'abcdef', :password_confirmation => 'abcdef'
+
+      response.should render_template(:edit)
     end
   end
 end

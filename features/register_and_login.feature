@@ -85,7 +85,6 @@ Feature: Register users
     Then I should see "Welcome"
       And I should be on the homepage
 
-  @wip
   Scenario: Change password
     Given there is a User like the following:
         | Login                 | test             |
@@ -106,6 +105,27 @@ Feature: Register users
       And I press "Submit"
     Then I should see "Your password has been changed"
       And user "test" should have password "pass7890"
+
+  Scenario: Change password with mismatched password
+    Given there is a User like the following:
+        | Login                 | test             |
+        | Password              | pass1234         |
+        | Password Confirmation | pass1234         |
+        | Email                 | test@example.com |
+        | Active                | true             |
+      And that User is active
+      And I am on the login page
+      And I fill in the following:
+          | Login    | test     |
+          | Password | pass1234 |
+      And I press "Log in"
+      And I follow "Settings"
+    When I fill in the following:
+        | Password         | pass7890 |
+        | Confirm Password | pass789a |
+      And I press "Submit"
+    Then I should see "doesn't match"
+      And user "test" should have password "pass1234"
 
   Scenario: Log in with an inactive account
     Given there is a User like the following:
