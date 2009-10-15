@@ -194,4 +194,16 @@ describe ApplicationHelper do
       infos.should == infos.sort_by{|i| i[2]}
     end
   end
+
+  describe :sort_with_nil do
+    it 'sorts elements' do
+      helper.sort_with_nil(%w{b c d f e a}).should == %w{a b c d e f}
+    end
+
+    it 'sorts nil elements at the end' do
+      array = %w{b c d f e a}
+      array.insert(3, nil)
+      helper.sort_with_nil(array).should == %w{a b c d e f} << nil
+    end
+  end
 end

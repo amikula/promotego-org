@@ -8,24 +8,24 @@
   %tbody
     - if params[:state]
       - locations_by_city = @locations.group_by{|l| l.city}
-      - locations_by_city.keys.sort.each do |city|
+      - sort_with_nil(locations_by_city.keys).each do |city|
         %tr.location-header
           %td{:colspan => 2}
-            %h2= city
+            %h2= city || "City Unknown"
         = render :partial => 'location_line', :collection => locations_by_city[city]
 
     - else
       - locations_by_state = @locations.group_by{|l| (STATE_FROM_ABBREV[@country] && STATE_FROM_ABBREV[@country][l.state]) || l.state}
-      - locations_by_state.keys.sort.each do |state|
+      - sort_with_nil(locations_by_state.keys).each do |state|
         - unless state.blank?
           %tr.location-header
             %td{:colspan => 2}
-              %h2= state
-        - locations_by_city = locations_by_state[state].group_by{|l| l.city || 'ZZZZZ'}
+              %h2= state || 'State Unknown'
+        - locations_by_city = locations_by_state[state].group_by{|l| l.city}
         - locations_by_city.keys.sort.each do |city|
           %tr.location-header
             %td{:colspan => 2}
-              %h3= city == 'ZZZZZ' ? 'City Unknown' : city
+              %h3= city || 'City Unknown'
           = render :partial => 'location_line', :collection => locations_by_city[city]
 
 = link_to 'New location', new_location_path

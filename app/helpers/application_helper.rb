@@ -76,4 +76,16 @@ module ApplicationHelper
       yield ary[0], ary[1].sort_by{|l| l.distance}
     end
   end
+
+  def sort_with_nil(elements)
+    elements.sort do |a,b|
+      if a.nil?
+        1
+      elsif b.nil?
+        -1
+      else
+        a <=> b
+      end
+    end
+  end
 end
