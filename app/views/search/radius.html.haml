@@ -5,9 +5,9 @@
 - unless @results
   - content_for("page_scripts") do
     :plain
-      Event.observe(window, 'load',
-        function() { $('address').focus() }
-      );
+      $(window).load(function() {
+        $('#address').focus();
+      });
 
 - unless @results.blank?
   #results

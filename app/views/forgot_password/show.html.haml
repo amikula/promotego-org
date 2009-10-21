@@ -1,8 +1,8 @@
 - content_for("page_scripts") do
   :plain
-    Event.observe(window, 'load',
-      function() { $('login').focus() }
-    );
+    $(window).load(function() {
+      $('#login').focus()
+    });
 
 %h1 Forgot Password
 %p Please enter your login and we will send you a link to reset your password:

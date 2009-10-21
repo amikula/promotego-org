@@ -11,6 +11,7 @@
     %p
       %b Owner
       %br/
+      -# TODO Replace with jQuery-compatible autocomplete
       = text_field_with_auto_complete :user, :login, :autocomplete => "off"
 
   %p
@@ -32,13 +33,13 @@
       function updateStateInput(countrySelect) {
         countryValue = countrySelect.options[countrySelect.selectedIndex].value
         selectList = selections[countryValue];
-        stateElement = $('location_state')
-        stateValue = stateElement.getValue()
+        stateElement = $('#location_state')
+        stateValue = stateElement.val()
 
-        Element.replace(stateElement, selectList || textField);
+        stateElement.replaceWith(selectList || textField);
 
         if(stateValue != '--') {
-          $('location_state').value = stateValue
+          $('#location_state').val(stateValue)
         }
       }
     %b Country

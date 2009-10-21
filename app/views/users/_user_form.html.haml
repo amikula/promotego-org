@@ -1,8 +1,8 @@
 - content_for("page_scripts") do
   :plain
-    Event.observe(window, 'load',
-      function() { $('user_login').focus() }
-    );
+    $(window).load(function() {
+      $('#user_login').focus()
+    });
 
 - form_for :user, :url => account_path do |f|
   %table
