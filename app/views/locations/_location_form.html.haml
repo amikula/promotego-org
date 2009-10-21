@@ -80,7 +80,7 @@
       function add_contact() {
         new_contact =
           '#{@contact_form}'.replace(/CONTACT_IDX/g, current_contacts);
-        appendHTML($('contacts'), new_contact);
+        appendHTML($('#contacts'), new_contact);
         current_phones[current_contacts] = 1
         current_contacts++;
       }
@@ -90,14 +90,14 @@
         new_phone = new_phone.replace(/CONTACT_IDX/g, contact_idx);
         new_phone = new_phone.replace(/PHONE_IDX/g, current_phones[contact_idx]);
 
-        appendHTML($('phones_'+contact_idx), new_phone)
+        appendHTML($('#phones_'+contact_idx), new_phone)
         current_phones[contact_idx]++;
       }
 
       function appendHTML(elem, html) {
         newdiv = document.createElement("div")
         newdiv.innerHTML = html
-        elem.appendChild(newdiv);
+        elem.append(newdiv);
       }
   %p
     %b Hours
