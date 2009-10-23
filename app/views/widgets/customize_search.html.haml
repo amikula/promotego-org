@@ -37,4 +37,5 @@
       $.post($(this).attr('action'), $(this).serialize(), null, "script");
       return false;
     });
+    $('#search_widget_form input[type=submit]').remove();
   });
