@@ -1,0 +1,40 @@
+%h1 PromoteGo.org search widget
+
+%p
+  Now you can include a search widget on your blog or web site to help your customers find a club where they can play Go!
+  The widget will render a search box page into your site that looks like this:
+#customize_widget
+  = render :partial => 'search_widget'
+%p
+  When your users enter their address or zip code information, they'll get a list of all known Go clubs in their area.
+%p
+  - form_tag({:action => 'customize_search'}, :id => 'search_widget_form', :method => :get) do
+    %table
+      - [:font_family, :width, :background_color, :height, :text_color, :dim_color].each do |attr|
+        %tr
+          %td
+            = attr.to_s.humanize + ':'
+          %td= text_field_tag attr.to_s, @widget_params[attr]
+          %td= select_tag "#{attr.to_s}_select", WidgetsController::DEFAULT_OPTIONS[attr].collect{|opt| "<option#{" selected='selected'" if opt == @widget_params[attr]}>#{opt}</option>"}, :id => "#{attr.to_s}_select"
+    = submit_tag 'Submit'
+%p To include the search box on your site, simply copy and paste the following code into your site layout:
+%p{:style => "margin-left: 3em;"}
+  %code#customize_script
+    &== <script type="text/javascript" src="#{widget_params_url}"></script><noscript>Find a #{link_to 'Go Club', :controller => :search, :action => :radius, :only_path => false} near you!</noscript>
+:javascript
+  $('#search_widget_form select').change(function(element) {
+    text_box_id = '#' + $(this).attr('id').replace(/_select$/, '');
+    $(text_box_id).val($(this).val());
+    $('#search_widget_form').submit();
+  });
+  $('#search_widget_form input[type=text]').change(function(element) {
+    select_box_id = '#' + $(this).attr('id') + '_select';
+    $(select_box_id).val($(this).val());
+    $('#search_widget_form').submit();
+  });
+  $(function() {
+    $('#search_widget_form').submit(function() {
+      $.post($(this).attr('action'), $(this).serialize(), null, "script");
+      return false;
+    });
+  });

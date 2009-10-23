@@ -1,0 +1,2 @@
+$('#customize_widget').html("<%= @javascript_widget %>");
+$('#customize_script').html("<%= h escape_javascript("<script type='text/javascript' src='#{widget_params_url}'></script><noscript>Find a #{link_to 'Go Club', :controller => :search, :action => :radius, :only_path => false} near you!</noscript>") %>");;
