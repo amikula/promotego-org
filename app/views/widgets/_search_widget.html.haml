@@ -28,14 +28,15 @@
       .top-row
         :margin 2px 0px 2px 0px
       .bottom-row
-        :position relative
+        :position absolute
+        :width 100%
         :margin 3px 0px 2px 0px
         :bottom 0px
       .clear_on_click
         :color #{@widget_params[:dim_color]}
       #submit_button
-        :position absolute
-        :right 0px
+        :margin-right 8px
+        :float right
 
 - default_text = 'Enter full address or zip code'
 :javascript
@@ -54,12 +55,12 @@
   }
 
 #promotego-search
-  %p.top-row Find a Go club near you
+  .top-row Find a Go club near you
   - form_tag({:controller => :search, :action => :radius, :only_path => false}, {:method => :get, :onsubmit => 'clickclear(this.address)', :target => '_blank'}) do
-    %p
+    .middle-row
       %label{:for => :address, :style => 'display: none;'} Enter address:
       = text_field_tag :address, default_text, :size => 30, :class => 'clear_on_click', :onfocus => 'clickclear(this)', :onblur => 'clickrecall(this)'
-    %p.bottom-row
-      = link_to 'PromoteGo.org', :controller => :widgets, :action => :index, :only_path => false
-      = hidden_field_tag :radius, '25'
-      = submit_tag 'Go!', :id => 'submit_button'
+  .bottom-row
+    = link_to 'PromoteGo.org', :controller => :widgets, :action => :index, :only_path => false
+    = hidden_field_tag :radius, '25'
+    = submit_tag 'Go!', :id => 'submit_button'
