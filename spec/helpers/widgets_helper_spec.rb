@@ -2,6 +2,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe WidgetsHelper do
   describe :widget_params_url do
+    before :each do
+      params[:action] = 'customize_search'
+    end
+
     it 'calls widgets_url' do
       helper.should_receive(:widgets_url).and_return(:widgets_url)
       helper.widget_params_url.should == :widgets_url
@@ -26,7 +30,7 @@ describe WidgetsHelper do
     it 'filters out blank values' do
       assigns[:widget_params] = {:foo => 'bar', :baz => '', :xyzzy => nil}
 
-      helper.should_receive(:widgets_url).with(:foo => 'bar', :format => 'js').and_return(:widgets_url)
+      helper.should_receive(:widgets_url).with(hash_including(:foo => 'bar', :format => 'js')).and_return(:widgets_url)
 
       helper.widget_params_url.should == :widgets_url
     end
@@ -34,13 +38,13 @@ describe WidgetsHelper do
     it 'filters out params that map to defaults' do
       assigns[:widget_params] = WidgetsController::SEARCH_WIDGET_DEFAULTS
 
-      helper.should_receive(:widgets_url).with(:format => 'js').and_return(:widgets_url)
+      helper.should_receive(:widgets_url).with(hash_including(:format => 'js')).and_return(:widgets_url)
 
       helper.widget_params_url.should == :widgets_url
     end
 
     it 'adds a format of "js"' do
-      helper.should_receive(:widgets_url).with(:format => 'js').and_return(:widgets_url)
+      helper.should_receive(:widgets_url).with(hash_including(:format => 'js')).and_return(:widgets_url)
 
       helper.widget_params_url.should == :widgets_url
     end
