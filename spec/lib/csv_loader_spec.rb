@@ -1,5 +1,4 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require 'pp'
 
 describe CsvLoader do
   before(:each) do
