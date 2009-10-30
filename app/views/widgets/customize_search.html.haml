@@ -15,7 +15,7 @@
           %td
             = attr.to_s.humanize + ':'
           %td= text_field_tag attr.to_s, @widget_params[attr]
-          %td= select_tag "#{attr.to_s}_select", WidgetsController::DEFAULT_OPTIONS[attr].collect{|opt| "<option#{" selected='selected'" if opt == @widget_params[attr]}>#{opt}</option>"}, :id => "#{attr.to_s}_select"
+          %td= select_tag "#{attr.to_s}_select", ["<option value=''>Select one</option>"] + @widget_options[attr].collect{|opt| "<option#{" selected='selected'" if opt == @widget_params[attr]}>#{opt}</option>"}, :id => "#{attr.to_s}_select"
     = submit_tag 'Submit'
 %p To include the search box on your site, simply copy and paste the following code into your site layout:
 %p{:style => "margin-left: 3em;"}

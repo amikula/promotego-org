@@ -19,4 +19,20 @@ describe WidgetsController do
 
     assigns[:widget_params][:bogus_param].should be_nil
   end
+
+  describe :customize_search do
+    describe 'when url is provided' do
+      it 'collects html on the url' do
+        collector = mock(CssCollector)
+        CssCollector.should_receive(:new).with('color', 'font-family', 'height', 'text-color', 'width').
+          and_return(collector)
+
+        collector.should_receive(:collect_html).with('http://example.com/')
+
+        collector.stub!(:[]).and_return([])
+
+        get :customize_search, :url => 'http://example.com/'
+      end
+    end
+  end
 end
