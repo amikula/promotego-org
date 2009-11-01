@@ -2,10 +2,10 @@ class WidgetsController < ApplicationController
   SEARCH_WIDGET_DEFAULTS = {
     :font_family => 'serif',
     :width => '180px',
-    :background_color => '#222',
+    :background_color => '#222222',
     :height => '64px',
-    :text_color => '#fff',
-    :dim_color => '#999'
+    :text_color => '#ffffff',
+    :dim_color => '#999999'
   }
 
   COLOR_PALETTE = %w{black blue green indigo orange red violet white yellow #222 #999}
@@ -23,10 +23,12 @@ class WidgetsController < ApplicationController
     @widget_params = filter_params(SEARCH_WIDGET_DEFAULTS)
 
     if params[:url]
-      collector = CssCollector.new('color', 'font-family', 'height', 'text-color', 'width')
+      collector = CssCollector.new('background-color', 'color', 'font-family', 'height', 'width')
       collector.collect_html(params[:url])
 
-      colors = (collector[:color] + collector['text-color']).sort
+      colors = (collector[:color] + collector['background-color']).sort
+      colors.uniq!
+      colors = WidgetsController.convert_colors(colors)
 
       @widget_options = {
         :background_color => colors,
@@ -63,6 +65,20 @@ private
     returning({}) do |h|
       defaults.each_pair do |k,v|
         h[k] = params[k].blank? ? v : params[k]
+      end
+    end
+  end
+
+  def self.convert_colors(colors)
+    colors.collect do |color|
+      color.downcase!
+      color.strip!
+
+      case(color)
+      when /^#([0-9a-f]([0-9a-f]))([0-9a-f])$/
+        "#"+($1*2)+($2*2)+($3*2)
+      else
+        color
       end
     end
   end

@@ -1,12 +1,37 @@
+= javascript_include_tag 'syronex-colorpicker'
+
 %h1 PromoteGo.org search widget
 
 %p
-  Now you can include a search widget on your blog or web site to help your customers find a club where they can play Go!
-  The widget will render a search box page into your site that looks like this:
+  Now you can include a search widget on your blog or web site to
+  help your customers find a club where they can play Go!  When
+  your users enter their address or zip code information, they'll
+  get a list of all known Go clubs in their area.
+%p
+  Follow the steps below to customize the search widget to fit your
+  site.
+
+%h2 1. Enter your site url (optional)
+%p
+  Enter your site url here.  We'll examine colors, fonts, and other
+  information about your site's styling to give you pre-populated
+  suggestions for values to use in the widget.
+%form
+  Url:
+  = text_field_tag 'url'
+  = submit_tag 'Go'
+
+%h2 2. View the preview of the search widget
+%p
+  The widget will render a search box page into your site that looks
+  like this:
 #customize_widget
   = render :partial => 'search_widget'
+
+%h2 3. Change widget defaults
 %p
-  When your users enter their address or zip code information, they'll get a list of all known Go clubs in their area.
+  Change the widget defaults by setting values here.  They'll
+  automatically be reflected in the preview above.
 %p
   - form_tag({:action => 'customize_search'}, :id => 'search_widget_form', :method => :get) do
     %table
@@ -15,8 +40,12 @@
           %td
             = attr.to_s.humanize + ':'
           %td= text_field_tag attr.to_s, @widget_params[attr]
-          %td= select_tag "#{attr.to_s}_select", ["<option value=''>Select one</option>"] + @widget_options[attr].collect{|opt| "<option#{" selected='selected'" if opt == @widget_params[attr]}>#{opt}</option>"}, :id => "#{attr.to_s}_select"
+          %td
+            %div{:id => "#{attr.to_s}_select_div"}
+              = select_tag "#{attr.to_s}_select", ["<option value=''>Select one</option>"] + @widget_options[attr].collect{|opt| "<option#{" selected='selected'" if opt == @widget_params[attr]}>#{opt}</option>"}, :id => "#{attr.to_s}_select"
     = submit_tag 'Submit'
+
+%h2 4. Include the code in your site layout
 %p To include the search box on your site, simply copy and paste the following code into your site layout:
 %p{:style => "margin-left: 3em;"}
   %code#customize_script
@@ -32,10 +61,25 @@
     $(select_box_id).val($(this).val());
     $('#search_widget_form').submit();
   });
+  formInitialized = false;
   $(function() {
     $('#search_widget_form').submit(function() {
       $.post($(this).attr('action'), $(this).serialize(), null, "script");
       return false;
     });
     $('#search_widget_form input[type=submit]').remove();
+    formInitialized = true;
+  });
+  $('select').each(function() {
+    var id = $(this).attr('id');
+    if (id.match(/_color_select$/)) {
+      colors = $("#" + id + ">option").map(function() { return $(this).val(); });
+      Array.shift(colors);
+      $('#' + id + '_div').colorPicker({
+        defaultColor: -1,
+        color: colors,
+        columns: 13,
+        click: function(color){elem=$('#'+id.replace(/_select$/, '')); elem.val(color); if (formInitialized) {elem.change();}},
+      });
+    }
   });

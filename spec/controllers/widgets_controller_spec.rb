@@ -24,9 +24,8 @@ describe WidgetsController do
     describe 'when url is provided' do
       it 'collects html on the url' do
         collector = mock(CssCollector)
-        CssCollector.should_receive(:new).with('color', 'font-family', 'height', 'text-color', 'width').
+        CssCollector.should_receive(:new).with('background-color', 'color', 'font-family', 'height', 'width').
           and_return(collector)
-
         collector.should_receive(:collect_html).with('http://example.com/')
 
         collector.stub!(:[]).and_return([])
