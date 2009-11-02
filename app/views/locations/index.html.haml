@@ -22,7 +22,7 @@
             %td{:colspan => 2}
               %h2= state || 'State Unknown'
         - locations_by_city = locations_by_state[state].group_by{|l| l.city}
-        - locations_by_city.keys.sort.each do |city|
+        - sort_with_nil(locations_by_city.keys).each do |city|
           %tr.location-header
             %td{:colspan => 2}
               %h3= city || 'City Unknown'

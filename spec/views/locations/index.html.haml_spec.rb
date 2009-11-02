@@ -76,6 +76,7 @@ describe "/locations/index" do
 
   it 'does not throw an error on a country page when a city is nil' do
     assigns[:locations] = [mock_model(Location, :city => 'A City', :state => 'A State'),
+                           mock_model(Location, :city => 'B City', :state => 'B State'),
                            mock_model(Location, :city =>      nil, :state => 'B State')]
     assigns[:country]   = 'US'
 
