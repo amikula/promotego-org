@@ -182,10 +182,14 @@ describe CssCollector do
     end
 
     describe 'with a url' do
+      def http_should_receive(url, body)
+        Net::HTTP.should_receive(:get_response).with(URI.parse(url)).and_return(mock('response', :body => body))
+      end
+
       it 'aggregates styles from style attributes' do
         collector = CssCollector.new(:width)
 
-        collector.should_receive(:open).with('http://example.com/page.html').and_return(<<-EOF)
+        http_should_receive('http://example.com/page.html', <<-EOF)
           <html>
             <head><title>Test HTML</title></head>
             <body style='width: 800px'>
@@ -203,7 +207,7 @@ describe CssCollector do
         collector = CssCollector.new(:width)
 
         collector.should_receive(:collect_stylesheet).with('http://example.com/subdir/styles/foo.css')
-        collector.should_receive(:open).with('http://example.com/subdir/page.html').and_return(<<-EOF)
+        http_should_receive('http://example.com/subdir/page.html', <<-EOF)
           <html>
             <head>
               <link rel='stylesheet' href='styles/foo.css' />
@@ -220,7 +224,7 @@ describe CssCollector do
         collector = CssCollector.new(:width)
 
         collector.should_receive(:collect_stylesheet).with('http://example.com:8080/subdir/styles/foo.css')
-        collector.should_receive(:open).with('http://example.com:8080/subdir/page.html').and_return(<<-EOF)
+        http_should_receive('http://example.com:8080/subdir/page.html', <<-EOF)
           <html>
             <head>
               <link rel='stylesheet' href='styles/foo.css' />
@@ -237,7 +241,7 @@ describe CssCollector do
         collector = CssCollector.new(:width)
 
         collector.should_receive(:collect_stylesheet).with('http://example.com/styles/foo.css')
-        collector.should_receive(:open).with('http://example.com/subdir/page.html').and_return(<<-EOF)
+        http_should_receive('http://example.com/subdir/page.html', <<-EOF)
           <html>
             <head>
               <link rel='stylesheet' href='/styles/foo.css' />
@@ -254,7 +258,7 @@ describe CssCollector do
         collector = CssCollector.new(:width)
 
         collector.should_receive(:collect_stylesheet).with('http://example.com:8080/styles/foo.css')
-        collector.should_receive(:open).with('http://example.com:8080/subdir/page.html').and_return(<<-EOF)
+        http_should_receive('http://example.com:8080/subdir/page.html', <<-EOF)
           <html>
             <head>
               <link rel='stylesheet' href='/styles/foo.css' />
@@ -271,7 +275,7 @@ describe CssCollector do
         collector = CssCollector.new(:width)
 
         collector.should_receive(:collect_stylesheet).with('http://test.com/styles/foo.css')
-        collector.should_receive(:open).with('http://example.com/subdir/page.html').and_return(<<-EOF)
+        http_should_receive('http://example.com/subdir/page.html', <<-EOF)
           <html>
             <head>
               <link rel='stylesheet' href='http://test.com/styles/foo.css' />

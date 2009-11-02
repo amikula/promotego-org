@@ -18,7 +18,7 @@
   suggestions for values to use in the widget.
 %form
   Url:
-  = text_field_tag 'url'
+  = text_field_tag 'url', params[:url], :size => 40
   = submit_tag 'Go'
 
 %h2 2. View the preview of the search widget
@@ -30,12 +30,13 @@
 
 %h2 3. Change widget defaults
 %p
-  Change the widget defaults by setting values here.  They'll
-  automatically be reflected in the preview above.
+  Change the widget defaults by setting values with the dropdowns
+  or exact styling text here.  They'll automatically be reflected
+  in the preview above.
 %p
   - form_tag({:action => 'customize_search'}, :id => 'search_widget_form', :method => :get) do
     %table
-      - [:font_family, :width, :background_color, :height, :text_color, :dim_color].each do |attr|
+      - @widget_inputs.each do |attr|
         %tr
           %td
             = attr.to_s.humanize + ':'
@@ -46,7 +47,9 @@
     = submit_tag 'Submit'
 
 %h2 4. Include the code in your site layout
-%p To include the search box on your site, simply copy and paste the following code into your site layout:
+%p
+  To include the search box on your site, simply copy and paste the
+  following code into your site layout:
 %p{:style => "margin-left: 3em;"}
   %code#customize_script
     &== <script type="text/javascript" src="#{widget_params_url}"></script><noscript>Find a #{link_to 'Go Club', :controller => :search, :action => :radius, :only_path => false} near you!</noscript>

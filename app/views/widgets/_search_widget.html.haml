@@ -7,7 +7,7 @@
       :width #{@widget_params[:width]}
       :height #{@widget_params[:height]}
       :font-family #{@widget_params[:font_family]}
-      :font-size 15px
+      :font-size #{@widget_params[:font_size]}
       :position relative
       p
         :position relative
@@ -17,7 +17,7 @@
         :left -3px
         :width= 100%
         :font-family #{@widget_params[:font_family]}
-        :font-size 14px
+        :font-size #{@widget_params[:input_font_size]}
       a
         :color #{@widget_params[:text_color]}
         :text-decoration none
@@ -33,7 +33,7 @@
         :margin 3px 0px 2px 0px
         :bottom 0px
       .clear_on_click
-        :color #{@widget_params[:dim_color]}
+        :color #{@widget_params[:hint_color]}
       #submit_button
         :margin-right 8px
         :float right

@@ -54,7 +54,17 @@ class CssCollector
   def collect_html(html)
     h, uri = if (html.is_a?(String) && html =~ %r{^http://})
                uri = URI::parse(html)
-               [Hpricot(open(html)), uri]
+               response = Net::HTTP.get_response(uri)
+               tries = 3
+               while(tries > 0 && response.is_a?(Net::HTTPRedirection)) do
+                 uri = URI::parse(response['location'])
+                 response = Net::HTTP.get_response(uri)
+                 tries -= 1
+               end
+
+               raise 'too many redirects' if response.is_a?(Net::HTTPRedirection)
+
+               [Hpricot(response.body), uri]
              else
                Hpricot(html)
              end
