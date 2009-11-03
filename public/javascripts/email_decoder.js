@@ -1,7 +1,7 @@
 function decodeLink() {
   anchor = $(this)
   var href = anchor.attr("href");
-  var address = href.replace(/.*contactto\/new\/([a-z0-9._%$-]+)\^([a-z0-9._%$-]+)/i, '$1' + '@' + '$2').replace(/\$/g, '.');
+  var address = href.replace('%5E', '^').replace('%24', '$').replace(/.*contactto\/new\/([a-z0-9._%$-]+)\^([a-z0-9._%$-]+)/i, '$1' + '@' + '$2').replace(/\$/g, '.');
 
   if (href != address) {
     anchor.attr('href', 'mailto:' + decode(address));
