@@ -1,4 +1,11 @@
 --- 
+vendor/plugins/http_accept_language: 
+  squashed: true
+  url: git://github.com/iain/http_accept_language.git
+  branch: master
+  type: git
+  revision: 8b939adc08dca2e965914ef36d388e70a0ccc4d4
+  remote: braid/vendor/plugins/http-accept-language
 vendor/plugins/acts_as_tree: 
   squashed: true
   url: git://github.com/rails/acts_as_tree.git
