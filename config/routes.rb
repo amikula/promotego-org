@@ -17,7 +17,7 @@ ActionController::Routing::Routes.draw do |map|
   # Map basic pages to home_controller
   map.root :controller => 'home'
   map.home ':page', :controller => 'home', :action => 'show',
-    :page => /about|contact|what-is-go|validate/
+    :page => /about|contact|what-is-go|validate|credits/
 
   map.activate 'activate/:activation_code', :controller => 'users',
     :action => 'activate'
