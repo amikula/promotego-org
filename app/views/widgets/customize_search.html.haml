@@ -44,6 +44,10 @@
           %td
             %div{:id => "#{attr.to_s}_select_div"}
               = select_tag "#{attr.to_s}_select", ["<option value=''>Select one</option>"] + @widget_options[attr].collect{|opt| "<option#{" selected='selected'" if opt == @widget_params[attr]}>#{opt}</option>"}, :id => "#{attr.to_s}_select"
+      %tr
+        %td
+          Language:
+        %td= select_tag "locale", ["<option value=''>Default user language</option>"] + @locales.collect{|lang,loc| "<option value='#{loc}'#{" selected='selected'" if loc == @widget_params[:locale]}>#{lang}</option>"}, :id => 'widget_locale'
     = submit_tag 'Submit'
 
 %h2 4. Include the code in your site layout
@@ -52,7 +56,7 @@
   following code into your site layout:
 %p{:style => "margin-left: 3em;"}
   %code#customize_script
-    &== <script type="text/javascript" src="#{widget_params_url}"></script><noscript>Find a #{link_to 'Go Club', :controller => :search, :action => :radius, :only_path => false} near you!</noscript>
+    &== <script type="text/javascript" src="#{widget_params_url}"></script><noscript>#{t 'widget.search.noscript', :link => link_to(t 'widget.search.link_text', :controller => :search, :action => :radius, :only_path => false)}</noscript>
 :javascript
   $('#search_widget_form select').change(function(element) {
     text_box_id = '#' + $(this).attr('id').replace(/_select$/, '');

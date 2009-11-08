@@ -42,9 +42,9 @@
         :margin-right 8px
         :float right
 
-- default_text = 'Enter full address or zip code'
+- hint_text = t 'widget.search.hint'
 :javascript
-  defaultText = "#{escape_javascript(default_text)}"
+  defaultText = "#{escape_javascript(hint_text)}"
   function clickclear(thisfield) {
     if (thisfield.value == defaultText) {
       thisfield.value = "";
@@ -59,12 +59,12 @@
   }
 
 #promotego-search
-  .top-row Find a Go club near you
+  .top-row= t 'widget.search.title'
   - form_tag({:controller => :search, :action => :radius, :only_path => false}, {:method => :get, :onsubmit => 'clickclear(this.address)', :target => '_blank'}) do
     .middle-row
-      %label{:for => :address, :style => 'display: none;'} Enter address:
-      = text_field_tag :address, default_text, :size => 30, :class => 'clear_on_click', :onfocus => 'clickclear(this)', :onblur => 'clickrecall(this)'
+      %label{:for => :address, :style => 'display: none;'}= t 'widget.search.label'
+      = text_field_tag :address, hint_text, :size => 30, :class => 'clear_on_click', :onfocus => 'clickclear(this)', :onblur => 'clickrecall(this)'
     .bottom-row
       = link_to 'PromoteGo.org', :controller => :widgets, :action => :index, :only_path => false
       = hidden_field_tag :radius, '25'
-      = submit_tag 'Go!', :id => 'submit_button'
+      = submit_tag t('widget.search.submit'), :id => 'submit_button'

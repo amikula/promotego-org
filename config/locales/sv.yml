@@ -1,0 +1,9 @@
+sv:
+  widget:
+    search:
+      title: Hitta en goklubb n&auml;ra dig
+      noscript: Hitta en {{link}} n&auml;ra dig!
+      link_text: gokklub
+      label: 'Adress:'
+      hint: Hela adressen eller postnummer
+      submit: Go!

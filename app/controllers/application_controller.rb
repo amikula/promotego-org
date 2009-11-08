@@ -5,6 +5,11 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   filter_parameter_logging :password, :password_confirmation
   helper_method :current_user_session, :current_user
+  before_filter :set_locale
+
+  def set_locale
+    I18n.locale = params[:locale].blank? ? request.preferred_language_from(I18n.available_locales) : params[:locale]
+  end
 
 private
   def current_user_session

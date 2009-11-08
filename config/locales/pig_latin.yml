@@ -1,0 +1,9 @@
+pig_latin:
+  widget:
+    search:
+      title: Indfay ayay Ogay ubclay earnay youay
+      noscript: Indfay ayay {{link}} earnay youay!
+      link_text: Ogay ubclay
+      label: 'Enteryay addressyay:'
+      hint: Enteryay ullfay addressyay oryay ipzay odecay
+      submit: Ogay!

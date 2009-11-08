@@ -23,7 +23,8 @@ class WidgetsController < ApplicationController
     :text_color       => '#ffffff',
     :hint_color       => '#999999',
     :font_size        => '15px',
-    :input_font_size  => '14px'
+    :input_font_size  => '14px',
+    :locale           => nil
   }
 
   COLOR_PALETTE = %w{black blue green indigo orange red violet white yellow #222 #999}
@@ -36,12 +37,14 @@ class WidgetsController < ApplicationController
     :font_size        => %w{14px 15px},
     :input_font_size  => %w{14px 15px},
     :height           => %w{64px 80px 100px 120px},
-    :width            => %w{180px 200px 250px 300px 350px 400px}
+    :width            => %w{180px 200px 250px 300px 350px 400px},
+    :locale           => nil
   }
 
   def customize_search
     @widget_params = filter_params(SEARCH_WIDGET_DEFAULTS)
     @widget_inputs = [:background_color, :text_color, :hint_color, :font_family, :font_size, :input_font_size, :height, :width]
+    @locales       = [['English', 'en'], ['Svenska', 'sv']]
 
     if params[:url]
       collector = CssCollector.new('background-color', 'color', 'font-family', 'font-size', 'height', 'width')

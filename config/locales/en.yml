@@ -1,0 +1,9 @@
+en:
+  widget:
+    search:
+      title: Find a Go club near you
+      noscript: Find a {{link}} near you!
+      link_text: Go club
+      label: 'Enter address:'
+      hint: Enter full address or zip code
+      submit: Go!
