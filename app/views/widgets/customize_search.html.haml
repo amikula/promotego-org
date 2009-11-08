@@ -80,13 +80,12 @@
   $('select').each(function() {
     var id = $(this).attr('id');
     if (id.match(/_color_select$/)) {
-      colors = $("#" + id + ">option").map(function() { return $(this).val(); });
-      Array.shift(colors);
+      colors = $("#" + id + ">option:not(:first)").map(function() { return $(this).val(); });
       $('#' + id + '_div').colorPicker({
         defaultColor: -1,
         color: colors,
         columns: 13,
-        click: function(color){elem=$('#'+id.replace(/_select$/, '')); elem.val(color); if (formInitialized) {elem.change();}},
+        click: function(color){elem=$('#'+id.replace(/_select$/, '')); elem.val(color); if (formInitialized) {elem.change();}}
       });
     }
   });
