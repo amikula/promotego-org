@@ -65,6 +65,6 @@
       %label{:for => :address, :style => 'display: none;'}= t 'widget.search.label'
       = text_field_tag :address, hint_text, :size => 30, :class => 'clear_on_click', :onfocus => 'clickclear(this)', :onblur => 'clickrecall(this)'
     .bottom-row
-      = link_to 'PromoteGo.org', :controller => :widgets, :action => :index, :only_path => false
+      = link_to 'PromoteGo.org', root_url
       = hidden_field_tag :radius, '25'
       = submit_tag t('widget.search.submit'), :id => 'submit_button'
