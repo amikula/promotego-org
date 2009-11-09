@@ -1,0 +1,9 @@
+pt:
+  widget:
+    search:
+      title: Encontre um clube de Go perto de si
+      noscript: Encontre um {{link}} perto de si
+      link_text: clube de Go
+      label: 'Introduza morada:'
+      hint: Introduza morada completa ou código postal
+      submit: Procurar!

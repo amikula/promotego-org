@@ -1,0 +1,9 @@
+ja:
+  widget:
+    search:
+      title: 近い碁会場を見つけよう！
+      noscript: 近い{{link}}を見つけよう！
+      link_text: 碁会場
+      label: 住所を入力してください。
+      hint: 住所や郵便番号
+      submit: 詮索!
