@@ -49,6 +49,7 @@
         %select#radius{:name => "radius"}
           - @radii.each do |radius|
             %option{:selected => radius == @radius}= radius
+        miles
   = submit_tag 'Search'
 %br/
 %br/
