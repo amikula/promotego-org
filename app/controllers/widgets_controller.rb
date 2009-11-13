@@ -44,7 +44,7 @@ class WidgetsController < ApplicationController
   def customize_search
     @widget_params = filter_params(SEARCH_WIDGET_DEFAULTS)
     @widget_inputs = [:background_color, :text_color, :hint_color, :font_family, :font_size, :input_font_size, :height, :width]
-    @locales       = [['English', 'en'], ['日本語 (Japanese)', 'ja'], ['Portugu&ecirc;s (Portuguese)', 'pt'], ['Svenska (Swedish)', 'sv']]
+    @locales       = [['English', 'en'], ['Deutsch (German)', 'de'], ['日本語 (Japanese)', 'ja'], ['Portugu&ecirc;s (Portuguese)', 'pt'], ['Svenska (Swedish)', 'sv']]
 
     if params[:url]
       collector = CssCollector.new('background-color', 'color', 'font-family', 'font-size', 'height', 'width')

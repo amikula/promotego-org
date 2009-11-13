@@ -1,0 +1,9 @@
+de:
+  widget:
+    search:
+      title: Finden Sie einen Go Club
+      noscript: Finden Sie einen {{link}} in der N&auml;he
+      link_text: Go Club
+      label: 'Adresse eingeben:'
+      hint: Vollständige Adresse oder Postleitzahl
+      submit: Weiter
