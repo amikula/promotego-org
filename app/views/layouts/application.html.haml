@@ -30,27 +30,27 @@
             %script{:type => 'text/javascript', :src => '/widgets/search.js'}
       #sitenav.nav
         %ul
-          %li= link_to "Home", :controller => :home, :action => :index
-          %li= link_to "Find a Club", :controller => :search, :action => :radius
-          %li= link_to "Add a Club", :controller => :locations, :action => :new
+          %li= link_to t('navlinks.home'), :controller => :home, :action => :index
+          %li= link_to t('navlinks.find_club'), :controller => :search, :action => :radius
+          %li= link_to t('navlinks.add_club'), :controller => :locations, :action => :new
           - if current_user && current_user.active?
-            %li= link_to "Log out", :controller => :user_sessions, :action => :destroy
-            %li== Welcome, #{current_user.login}
-            %li= link_to "Settings", :controller => :settings, :action => :edit
+            %li= link_to t('navlinks.logout'), :controller => :user_sessions, :action => :destroy
+            %li== #{t('welcome')}, #{current_user.login}
+            %li= link_to t('navlinks.settings'), :controller => :settings, :action => :edit
           - else
-            %li= link_to "Log in", :controller => :user_sessions, :action => :new
-            %li= link_to "Register", :controller => :users, :action => :new
+            %li= link_to t('navlinks.login'), :controller => :user_sessions, :action => :new
+            %li= link_to t('navlinks.register'), :controller => :users, :action => :new
       #navlinks
       #body
         = display_standard_flashes
         = @content_for_layout
       #footer.nav
         %ul
-          %li= link_to "About", :controller => :home, :action => :show, :page => :about
-          %li= link_to "Widgets", :controller => :widgets, :action => :index
-          %li= link_to "Development", "http://github.com/amikula/promotego-org/wikis/home"
-          %li= link_to "Contact", :controller => :home, :action => :show, :page => :contact
-          %li= link_to "Credits", :controller => :home, :action => :show, :page => :credits
+          %li= link_to t('navlinks.about'), :controller => :home, :action => :show, :page => :about
+          %li= link_to t('navlinks.widgets'), :controller => :widgets, :action => :index
+          %li= link_to t('navlinks.development'), "http://github.com/amikula/promotego-org/wikis/home"
+          %li= link_to t('navlinks.contact'), :controller => :home, :action => :show, :page => :contact
+          %li= link_to t('navlinks.credits'), :controller => :home, :action => :show, :page => :credits
     :javascript
       var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
       document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
