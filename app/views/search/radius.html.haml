@@ -12,16 +12,15 @@
 - unless @results.blank?
   #results
     - if @closest
-      %h1 No Match
-      %p
-        No locations matched your search.  However, here is the closest match in our database:
+      %h1= t('no_match')
+      %p= t('no_locations_matched')
     - else
-      %h1 Search Results
+      %h1= t('search_results')
     %table.results
       %tr
-        %th Name
-        %th Address
-        %th Miles
+        %th= t('name').capitalize
+        %th= t('address').capitalize
+        %th= t('miles').capitalize
       - sort_locations_by_distance(@results) do |info, group|
         %tr.location-header
           %td== #{info[0]}, #{info[1]}
@@ -30,14 +29,11 @@
         = render :partial => "result", :collection => group
 
 - if @results.blank? && @closest.blank?
-  %h1 Search
+  %h1= t('search')
 - else
-  %h2 Search again
+  %h2= t('search_again')
 
-%p
-  Enter a full address, a city and state, or a zip code to find locations to
-  play Go in your area.  Your information won't be shared, and the more
-  information you provide, the more accurate the search will be.
+%p= t('search_instructions')
 - form_tag({:action => "radius"}, :method => :get) do
   %table
     %tr
@@ -50,10 +46,10 @@
           - @radii.each do |radius|
             %option{:selected => radius == @radius}= radius
         miles
-  = submit_tag 'Search'
+  = submit_tag t('search')
 %br/
 %br/
-%h2 Listing by state
+%h2= t('state_listing')
 - active_countries(true).each do |country|
   .country{:style => "clear: left;"}
     = link_to country.full_name, :controller => :locations, :type => 'go-clubs', :action => :index, :country => country.full_name.gsub(' ', '-')

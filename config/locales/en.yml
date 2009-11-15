@@ -1,5 +1,21 @@
 en:
+  address: address       # Club address
+  kilometers: kilometers # Kilometers from search location
+  miles: miles           # Miles from search location
+  name: name             # Club name
+  no_locations_matched:
+    "No locations matched your search.  However, here is the closest match in our database:"
+  no_match: No Match
+  search: Search
+  search_again: Search again
+  search_instructions:
+    "Enter a full address, a city and state, or a zip code to find locations to
+    play Go in your area.  Your information won't be shared, and the more
+    information you provide, the more accurate the search will be."
+  search_results: Search Results
+  state_listing: Listing by state
   welcome: Welcome
+
   navlinks:
     home: Home
     find_club: Find a Club
