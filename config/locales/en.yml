@@ -1,11 +1,21 @@
 en:
   address: address       # Club address
+  back: Back
+  city: city
+  contacts: Contacts
+  country: country
+  description: Description
+  editing_location: Editing location
+  hidden: hidden
+  home_page: home page
   kilometers: kilometers # Kilometers from search location
   miles: miles           # Miles from search location
   name: name             # Club name
   no_locations_matched:
     "No locations matched your search.  However, here is the closest match in our database:"
   no_match: No Match
+  owner: owner
+  postal_code: Postal code
   search: Search
   search_again: Search again
   search_instructions:
@@ -13,7 +23,11 @@ en:
     play Go in your area.  Your information won't be shared, and the more
     information you provide, the more accurate the search will be."
   search_results: Search Results
+  select_country: Please select a country
+  select_state: Please select a state/province
+  show: Show
   state_listing: Listing by state
+  state_province: State/Province
   welcome: Welcome
 
   navlinks:

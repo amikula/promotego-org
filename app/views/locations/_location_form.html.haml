@@ -1,29 +1,29 @@
 - form_for(location) do |f|
   %p
-    %b Name
+    %b= (t 'name').capitalize
     %br/
     = f.text_field :name
   %p
-    %b Hidden
+    %b= (t 'hidden').capitalize
     = f.check_box :hidden
 
   - if current_user.has_role?(:administrator)
     %p
-      %b Owner
+      %b= (t 'owner').capitalize
       %br/
       -# TODO Replace with jQuery-compatible autocomplete
       = text_field_with_auto_complete :user, :login, :autocomplete => "off"
 
   %p
-    %b URL
+    %b= (t 'home_page').capitalize
     %br/
     = f.text_field :url
   %p
-    %b Address
+    %b= (t 'address').capitalize
     %br/
     = f.text_field :street_address
   %p
-    %b City
+    %b= (t 'city').capitalize
     %br/
     = f.text_field :city
   %p
@@ -42,26 +42,26 @@
           $('#location_state').val(stateValue)
         }
       }
-    %b Country
+    %b= (t 'country').capitalize
     %br/
-    = select :location, :country, [['Please select a country', '--']].concat(COUNTRY_TO_ABBREV.to_a.sort), {}, :onchange => 'updateStateInput(this)'
+    = select :location, :country, [[t('select_country'), '--']].concat(COUNTRY_TO_ABBREV.to_a.sort), {}, :onchange => 'updateStateInput(this)'
   %p
-    %b State/Province
+    %b= t 'state_province'
     %br/
     - if state_abbrevs=STATE_TO_ABBREV[@location.country]
-      = select :location, :state, [['Please select a state/province', '--']].concat(state_abbrevs.to_a.sort)
+      = select :location, :state, [[t('select_state'), '--']].concat(state_abbrevs.to_a.sort)
     - else
       = f.text_field :state
   %p
-    %b Zip/Postal code
+    %b= t 'postal_code'
     %br/
     = f.text_field :zip_code
   %p
-    %b Description
+    %b= t 'description'
     %br/
     = f.text_area :description
   %p
-    %b Contacts
+    %b= t 'contacts'
     :javascript
       document.write('#{escape_javascript(link_to("add contact", "javascript:add_contact()"))}');
     #contacts

@@ -1,9 +1,9 @@
-%h1 Editing location
+%h1= t 'editing_location'
 
 = error_messages_for :location
 
 = render :partial => "location_form", :locals => {:location => @location}
 
-= link_to 'Show', @location
+= link_to t('show'), @location
 |
-= link_to 'Back', locations_path
+= link_to t('back'), locations_path
