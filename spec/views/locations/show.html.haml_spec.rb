@@ -60,14 +60,14 @@ describe "/locations/show" do
         template.stub!(:current_user).and_return(@owner)
         render "/locations/show"
         response.should have_tag('a', 'Edit')
-        response.should have_tag('a', 'Destroy')
+        response.should have_tag('a', 'Delete')
       end
 
       it "when administrator is logged in" do
         template.stub!(:current_user).and_return(@administrator)
         render "/locations/show"
         response.should have_tag('a', 'Edit')
-        response.should have_tag('a', 'Destroy')
+        response.should have_tag('a', 'Delete')
       end
     end
   end
