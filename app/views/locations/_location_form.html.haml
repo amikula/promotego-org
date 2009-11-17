@@ -1,29 +1,29 @@
 - form_for(location) do |f|
   %p
-    %b= (t 'name').capitalize
+    %b= t 'name'
     %br/
     = f.text_field :name
   %p
-    %b= (t 'hidden').capitalize
+    %b= t 'hidden'
     = f.check_box :hidden
 
   - if current_user.has_role?(:administrator)
     %p
-      %b= (t 'owner').capitalize
+      %b= t 'owner'
       %br/
       -# TODO Replace with jQuery-compatible autocomplete
       = text_field_with_auto_complete :user, :login, :autocomplete => "off"
 
   %p
-    %b= (t 'home_page').capitalize
+    %b= t 'home_page'
     %br/
     = f.text_field :url
   %p
-    %b= (t 'address').capitalize
+    %b= t 'address'
     %br/
     = f.text_field :street_address
   %p
-    %b= (t 'city').capitalize
+    %b= t 'city'
     %br/
     = f.text_field :city
   %p
@@ -42,7 +42,7 @@
           $('#location_state').val(stateValue)
         }
       }
-    %b= (t 'country').capitalize
+    %b= t 'country'
     %br/
     = select :location, :country, [[t('select_country'), '--']].concat(COUNTRY_TO_ABBREV.to_a.sort), {}, :onchange => 'updateStateInput(this)'
   %p
@@ -66,9 +66,7 @@
       document.write('#{escape_javascript(link_to("add contact", "javascript:add_contact()"))}');
     #contacts
       %noscript
-        %p
-          Note: If you wish to add more contacts, fill out the existing contact fields, save this form,
-          and edit the location again.  Additional blank contact fields will appear.
+        %p= t 'noscript_more_contacts'
       - contacts = location.contacts || [{}]
       - contacts.each_with_index do |contact, i|
         = render :partial => "contact_form", :locals => {:contact => contact, :contact_idx => i }
@@ -101,8 +99,8 @@
         elem.append(newdiv);
       }
   %p
-    %b Hours
+    %b= t 'hours'
     %br/
     = f.text_field :hours
   %p
-    = f.submit "Update"
+    = f.submit t('update')

@@ -3,6 +3,6 @@
   %td= link_to h(location.name), location
   %td
     - if location.street_address.blank?
-      Address Unknown
+      = t 'address_unknown'
     - else
-      =h location.street_address
+      = h location.street_address

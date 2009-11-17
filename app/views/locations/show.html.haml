@@ -10,21 +10,21 @@
   #club_info
     - if @location.url
       %p
-        %b Home page:
+        %b== #{t 'home_page'}:
         .url
           = link_to @location.url, @location.url
     %p
-      %b Address:
+      %b== #{t 'address'}:
       = render :partial => "common/address", :locals => {:location => @location}
       - if @location.driving_directions?
-        = link_to "Directions", "http://maps.google.com/maps?saddr=#{session[:last_search_address]}&daddr=#{@location.geocode_address}"
+        = link_to t('directions'), "http://maps.google.com/maps?saddr=#{session[:last_search_address]}&daddr=#{@location.geocode_address}"
     - if @location.description
       %p
-        %b Description:
+        %b== #{t 'description'}:
         .note= @location.description.gsub(/\n|<br\/?>/, ' <br/> ')
     - if @location.contacts
       %p
-        %b Contacts:
+        %b== #{t 'contacts'}:
         - @location.contacts.each do |contact|
           .agent.vcard
             - if contact[:name]
@@ -39,7 +39,7 @@
                     = content_tag('span', phone[:type], :class => :type)
     - unless @location.hours.blank?
       %p
-        %b Hours:
+        %b== #{t 'hours'}:
         &= @location.hours
     - unless visible_affiliations.empty?
       %table.affiliations
@@ -51,15 +51,15 @@
               %td= affiliation.foreign_key
               %td
                 - if affiliation.new_record?
-                  = link_to "add", new_affiliation_path(:affiliation => {:affiliate_id => affiliation.affiliate.id, :location_id => affiliation.location.id})
+                  = link_to t('add'), new_affiliation_path(:affiliation => {:affiliate_id => affiliation.affiliate.id, :location_id => affiliation.location.id})
                 - else
-                  = link_to "edit", edit_affiliation_path(affiliation) if current_user.administers(affiliation)
-                  = link_to 'destroy', affiliation_path(affiliation), :confirm => 'Are you sure?', :method => :delete
+                  = link_to t('edit').downcase, edit_affiliation_path(affiliation) if current_user.administers(affiliation)
+                  = link_to t('delete').downcase, affiliation_path(affiliation), :confirm => t('confirm'), :method => :delete
         %thead
           %tr
-            %th Affiliate
-            %th Expires
-            %th Affiliate ID
+            %th= t 'affiliate'
+            %th= t 'expires'
+            %th= t 'affiliate_id'
             %th &nbsp;
     - if @location.lat && @location.lng
       .geo{:style => 'display: none;'}
@@ -68,8 +68,8 @@
     %br/
     %div
       - if(current_user && (current_user == @location.user || current_user.has_role?(:administrator)))
-        = link_to 'Edit', edit_location_path(@location)
+        = link_to t('edit'), edit_location_path(@location)
         |
-        = link_to 'Destroy', @location, :confirm => 'Are you sure?', :method => :delete
+        = link_to t('delete'), @location, :confirm => t('confirm'), :method => :delete
         |
-      = link_to 'Back', 'javascript:history.go(-1)'
+      = link_to t('back'), 'javascript:history.go(-1)'

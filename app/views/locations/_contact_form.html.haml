@@ -1,13 +1,13 @@
 - javascript = false unless defined?(javascript)
 - noscript = false unless defined?(noscript)
 
-Name:
+== #{t 'name'}:
 = text_field_tag "location[contacts][#{contact_idx}][name]", contact[:name]
 %br/
-Email:
+== #{t 'email'}:
 = text_field_tag "location[contacts][#{contact_idx}][email]", contact[:email]
 %br/
-Phone:
+== #{t 'phone'}:
 - add_phone_link = link_to "add phone", "javascript:add_phone(#{contact_idx})"
 - if javascript
   = add_phone_link

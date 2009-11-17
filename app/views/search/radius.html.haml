@@ -13,14 +13,14 @@
   #results
     - if @closest
       %h1= t('no_match')
-      %p= t('no_locations_matched')
+      %p= t('no_clubs_matched')
     - else
       %h1= t('search_results')
     %table.results
       %tr
-        %th= t('name').capitalize
-        %th= t('address').capitalize
-        %th= t('miles').capitalize
+        %th= t 'name'
+        %th= t 'address'
+        %th= t 'miles'
       - sort_locations_by_distance(@results) do |info, group|
         %tr.location-header
           %td== #{info[0]}, #{info[1]}

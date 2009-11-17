@@ -11,7 +11,7 @@
       - sort_with_nil(locations_by_city.keys).each do |city|
         %tr.location-header
           %td{:colspan => 2}
-            %h2= city || "City Unknown"
+            %h2= city || t('city_unknown')
         = render :partial => 'location_line', :collection => locations_by_city[city]
 
     - else
@@ -20,12 +20,12 @@
         - unless state.blank?
           %tr.location-header
             %td{:colspan => 2}
-              %h2= state || 'State Unknown'
+              %h2= state || t('state_unknown')
         - locations_by_city = locations_by_state[state].group_by{|l| l.city}
         - sort_with_nil(locations_by_city.keys).each do |city|
           %tr.location-header
             %td{:colspan => 2}
-              %h3= city || 'City Unknown'
+              %h3= city || t('city_unknown')
           = render :partial => 'location_line', :collection => locations_by_city[city]
 
-= link_to 'New location', new_location_path
+= link_to t('new_club'), new_location_path

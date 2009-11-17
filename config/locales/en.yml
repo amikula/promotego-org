@@ -1,25 +1,42 @@
 en:
-  address: address       # Club address
-  back: Back
-  city: city
-  contacts: Contacts
-  country: country
+  add: Add               # As in "add an entry"
+  address: Address       # Club street address
+  address_unknown: Address Unknown
+  affiliate: Affiliate   # This is the organization affiliated, a noun, not the verb "to affiliate"
+  affiliate_id: Affiliate ID
+  back: Back             # As in "go back to the previous page"
+  city: City
+  confirm: Are you sure?
+  contacts: Contacts     # People to contact for information about the club
+  country: Country
+  city_unknown: City Unknown
+  delete: Delete         # As in "delete this club"
   description: Description
-  editing_location: Editing location
-  hidden: hidden
-  home_page: home page
-  kilometers: kilometers # Kilometers from search location
-  miles: miles           # Miles from search location
-  name: name             # Club name
-  no_locations_matched:
-    "No locations matched your search.  However, here is the closest match in our database:"
+  directions: Directions # Driving directions
+  edit_club: Edit Go Club
+  edit: Edit             # As in "edit this club"
+  email: Email           # Email address
+  expires: Expires       # Date on which something expires
+  hidden: Hidden
+  home_page: Home Page
+  hours: Hours           # Hours of operation
+  kilometers: Kilometers # Kilometers from search location
+  miles: Miles           # Miles from search location
+  name: Name             # Club or contact name
+  new_club: New Go Club
+  no_clubs_matched:
+    "No Go clubs matched your search.  However, here is the closest match in our database:"
   no_match: No Match
-  owner: owner
+  noscript_more_contacts:
+    "Note: If you wish to add more contacts, fill out the existing contact fields, save this form,
+    and edit the club again.  Additional blank contact fields will appear."
+  owner: Owner
+  phone: Phone           # Phone number
   postal_code: Postal code
   search: Search
   search_again: Search again
   search_instructions:
-    "Enter a full address, a city and state, or a zip code to find locations to
+    "Enter a full address, a city and state, or a zip code to find places to
     play Go in your area.  Your information won't be shared, and the more
     information you provide, the more accurate the search will be."
   search_results: Search Results
@@ -28,6 +45,8 @@ en:
   show: Show
   state_listing: Listing by state
   state_province: State/Province
+  state_unknown: State/Province Unknown
+  update: Update
   welcome: Welcome
 
   navlinks:
