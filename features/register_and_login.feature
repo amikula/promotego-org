@@ -79,7 +79,7 @@ Feature: Register users
     When I follow "Log in"
     Then I should be on the login page
     When I fill in the following:
-        | Login    | test     |
+        | Username | test     |
         | Password | pass1234 |
       And I press "Log in"
     Then I should see "Welcome"
@@ -95,7 +95,7 @@ Feature: Register users
       And that User is active
       And I am on the login page
       And I fill in the following:
-          | Login    | test     |
+          | Username | test     |
           | Password | pass1234 |
       And I press "Log in"
       And I follow "Settings"
@@ -116,7 +116,7 @@ Feature: Register users
       And that User is active
       And I am on the login page
       And I fill in the following:
-          | Login    | test     |
+          | Username | test     |
           | Password | pass1234 |
       And I press "Log in"
       And I follow "Settings"
@@ -136,7 +136,7 @@ Feature: Register users
       And that User is not active
       And I am on the login page
     When I fill in the following:
-        | Login    | test     |
+        | Username | test     |
         | Password | pass1234 |
       And I press "Log in"
     Then I should be on the user session page
