@@ -1,6 +1,6 @@
 Given /^there is a (\w+) like the following:$/ do |clazz, data|
   @object = clazz.constantize.new
-  @object.attributes = Hash[data.rows_hash.map{|k,v| [k.underscore.tr(' ', '_'), v]}]
+  @object.attributes = Hash[*data.rows_hash.map{|k,v| [k.underscore.tr(' ', '_'), v]}.flatten]
   @object.save!
 end
 
