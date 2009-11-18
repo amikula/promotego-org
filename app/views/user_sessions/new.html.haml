@@ -4,7 +4,7 @@
       $('#user_session_login').focus()
     });
 
-%h1 Login
+%h1= t 'log_in'
 
 - form_for :user_session, @user_session, :url => {:action => :create} do |f|
   = f.error_messages
@@ -12,20 +12,20 @@
     %tr
       %td
         %label{:for => "user_session_login"}
-          Login:
+          == #{t 'username'}:
       %td= f.text_field :login
     %tr
       %td
         %label{:for => "user_session_password"}
-          Password:
+          == #{t 'password'}:
       %td= f.password_field :password
   %p
     %label{:for => "user_session_remember_me"}
-      Remember me:
+      == #{t 'remember_me'}:
       = f.check_box :remember_me
   %p
-    = link_to 'Forgot password', forgot_password_path
+    = link_to t('forgot_password'), forgot_password_path
     &nbsp;
-    = link_to 'Forgot login', forgot_login_path
+    = link_to t('forgot_username'), forgot_login_path
   %p
-    = submit_tag 'Log in'
+    = submit_tag t('log_in')

@@ -3,7 +3,7 @@
     .street-address
       = location.street_address
   - else
-    %div No street address available
+    %div= t 'no_address'
   - unless location.city_state_zip.blank?
     %div
       - if location.city

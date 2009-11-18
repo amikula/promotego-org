@@ -17,13 +17,17 @@ en:
   edit: Edit             # As in "edit this club"
   email: Email           # Email address
   expires: Expires       # Date on which something expires
+  forgot_password: Forgot password
+  forgot_username: Forgot username
   hidden: Hidden
   home_page: Home Page
   hours: Hours           # Hours of operation
   kilometers: Kilometers # Kilometers from search location
+  log_in: Log in
   miles: Miles           # Miles from search location
   name: Name             # Club or contact name
   new_club: New Go Club
+  no_address: No street address available
   no_clubs_matched:
     "No Go clubs matched your search.  However, here is the closest match in our database:"
   no_match: No Match
@@ -31,8 +35,10 @@ en:
     "Note: If you wish to add more contacts, fill out the existing contact fields, save this form,
     and edit the club again.  Additional blank contact fields will appear."
   owner: Owner
+  password: Password
   phone: Phone           # Phone number
   postal_code: Postal code
+  remember_me: Remember me  # Checkbox for persistent login on login page
   search: Search
   search_again: Search again
   search_instructions:
@@ -47,6 +53,7 @@ en:
   state_province: State/Province
   state_unknown: State/Province Unknown
   update: Update
+  username: Username
   welcome: Welcome
 
   navlinks:

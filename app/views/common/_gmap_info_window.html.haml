@@ -6,4 +6,4 @@
 = render :partial => 'common/address', :locals => {:location => location}
 - if location.driving_directions?
   %br/
-  = link_to "Directions", "http://maps.google.com/maps?saddr=#{session[:last_search_address]}&daddr=#{location.geocode_address}"
+  = link_to t('directions'), "http://maps.google.com/maps?saddr=#{session[:last_search_address]}&daddr=#{location.geocode_address}"
