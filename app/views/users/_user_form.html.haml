@@ -8,36 +8,36 @@
   %table
     %tr
       %td
-        %label{:for => "user_login"} Login:
+        %label{:for => "user_login"}== #{t 'username'}:
       %td
         = f.text_field :login
     %tr
       %td
-        %label{:for => "user_email"} Email:
+        %label{:for => "user_email"}== #{t 'email'}:
       %td
         = f.text_field :email
     %tr
       %td
-        %label{:for => "user_password"} Password:
+        %label{:for => "user_password"}== #{t 'password'}:
       %td
         = f.password_field :password
     %tr
       %td
-        %label{:for => "user_password_confirmation"} Confirm Password:
+        %label{:for => "user_password_confirmation"}== #{t 'confirm_password'}:
       %td
         = f.password_field :password_confirmation
     - if current_user && @roles
       %tr
         %td
-          %label{:for => "roles"} Roles
+          %label{:for => "roles"}== #{t 'roles'}
         %td
           %select{:name => "user[roles][]", :multiple => "multiple"}
             = options_from_collection_for_select(@roles, "id", "name", @user.roles.collect{|r| r.id})
     %tr
       %td &nbsp;
       %td
-        = link_to 'Forgot password', forgot_password_path
+        = link_to t('forgot_password'), forgot_password_path
         &nbsp;
-        = link_to 'Forgot login', forgot_login_path
+        = link_to t('forgot_username'), forgot_login_path
   %p
-    = submit_tag 'Sign up!'
+    = submit_tag t('sign_up')

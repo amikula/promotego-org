@@ -1,16 +1,16 @@
-%h1 Edit Settings
-%h2 Change Password
+%h1= t 'edit_settings'
+%h2= t 'change_password'
 - form_tag settings_path, :method => :put do
   = error_messages_for :user
   %table
     %tr
       %td
-        %label{:for => 'password'} Password:
+        %label{:for => 'password'}== #{t 'password'}:
       %td
         = password_field_tag 'password'
     %tr
       %td
-        %label{:for => 'password_confirmation'} Confirm Password:
+        %label{:for => 'password_confirmation'}== #{t 'confirm_password'}:
       %td
         = password_field_tag 'password_confirmation'
-  = submit_tag "Submit"
+  = submit_tag t('submit')

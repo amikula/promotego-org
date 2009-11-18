@@ -15,7 +15,7 @@ Feature: Register users
   Scenario: Register an account
     Given I am on the new account page
     When I fill in the following:
-        | Login             | test              |
+        | Username          | test              |
         | Email             | test@example.com  |
         | Password          | pass1234          |
         | Confirm Password  | pass1234          |
@@ -25,7 +25,7 @@ Feature: Register users
   Scenario: Password doesn't match when registering
     Given I am on the new account page
     When I fill in the following:
-        | Login             | test              |
+        | Username          | test              |
         | Email             | test@example.com  |
         | Password          | pass1234          |
         | Confirm Password  | pass123           |
@@ -36,7 +36,7 @@ Feature: Register users
   Scenario: Password is invalid when registering
     Given I am on the new account page
     When I fill in the following:
-        | Login             | test              |
+        | Username          | test              |
         | Email             | test@example.com  |
         | Password          | pass              |
         | Confirm Password  | pass              |
@@ -47,7 +47,7 @@ Feature: Register users
   Scenario: Account is not active before clicking on email validation link
     Given I am on the new account page
     When I fill in the following:
-        | Login             | test              |
+        | Username          | test              |
         | Email             | test@example.com  |
         | Password          | pass1234          |
         | Confirm Password  | pass1234          |
@@ -57,7 +57,7 @@ Feature: Register users
   Scenario: Click on link in registration email
     Given I am on the new account page
     When I fill in the following:
-        | Login             | test              |
+        | Username          | test              |
         | Email             | test@example.com  |
         | Password          | pass1234          |
         | Confirm Password  | pass1234          |

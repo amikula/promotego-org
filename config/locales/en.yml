@@ -5,16 +5,19 @@ en:
   affiliate: Affiliate   # This is the organization affiliated, a noun, not the verb "to affiliate"
   affiliate_id: Affiliate ID
   back: Back             # As in "go back to the previous page"
+  change_password: Change Password
   city: City
   confirm: Are you sure?
+  confirm_password: Confirm Password
   contacts: Contacts     # People to contact for information about the club
   country: Country
   city_unknown: City Unknown
   delete: Delete         # As in "delete this club"
   description: Description
   directions: Directions # Driving directions
-  edit_club: Edit Go Club
   edit: Edit             # As in "edit this club"
+  edit_club: Edit Go Club
+  edit_settings: Edit Settings
   email: Email           # Email address
   expires: Expires       # Date on which something expires
   forgot_password: Forgot password
@@ -38,7 +41,9 @@ en:
   password: Password
   phone: Phone           # Phone number
   postal_code: Postal code
+  register: Register a new account
   remember_me: Remember me  # Checkbox for persistent login on login page
+  roles: Roles           # Roles for this user: admin, superuser, etc.
   search: Search
   search_again: Search again
   search_instructions:
@@ -49,9 +54,11 @@ en:
   select_country: Please select a country
   select_state: Please select a state/province
   show: Show
+  sign_up: Sign up!
   state_listing: Listing by state
   state_province: State/Province
   state_unknown: State/Province Unknown
+  submit: Submit
   update: Update
   username: Username
   welcome: Welcome
