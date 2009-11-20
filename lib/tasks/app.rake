@@ -7,15 +7,6 @@ namespace :app do
     puts "Loaded roles"
   end
 
-  desc 'Load default types'
-  task :load_types => :environment do
-    ["Go Club", "Coffee House", "Park", "Pub", "Other"].each do |type|
-      Type.create(:name => type) unless Type.find_by_name(type)
-    end
-
-    puts "Loaded default types"
-  end
-
   desc 'Create owner account'
   task :create_owner => :environment do
     puts "\nEnter info for default owner:"
@@ -31,5 +22,5 @@ namespace :app do
   end
 
   desc 'Initialize application data (roles, types, owner account)'
-  task :initialize => [:load_roles, :load_types, :create_affiliates, :create_owner]
+  task :initialize => [:load_roles, :create_affiliates, :create_owner]
 end
