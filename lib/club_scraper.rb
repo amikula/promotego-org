@@ -2,6 +2,18 @@ require 'open-uri'
 require 'hpricot'
 
 class ClubScraper
+
+  PHONE_REGEXP = /
+    (\d{3})     # area code is 3 digits (e.g. '800')
+    \D*         # optional separator is any number of non-digits
+    (\d{3})     # trunk is 3 digits (e.g. '555')
+    \D*         # optional separator
+    (\d{4})     # rest of number is 4 digits (e.g. '1212')
+    \D*         # optional separator
+    (\d*)       # extension is optional and can be any number of digits
+    $           # end of string
+/x
+
   def self.is_aga?(element)
     img = element.at('img')
     if (img)
@@ -69,6 +81,7 @@ class ClubScraper
   cattr_accessor :contacts
 
   def self.get_club_contacts(element)
+
     self.current_contact = {}
     self.contacts = [current_contact]
     self.first_contact = true
@@ -78,7 +91,8 @@ class ClubScraper
         text = child.inner_text.strip
         next if text.blank?
 
-        if (text =~ /@/)
+        case text
+        when /@/
           # email address
           if (text =~ %r{^<a href="mailto:([-0-9a-zA-Z_@.]+)"([a-zA-Z ]+)})
             self.current_contact[:email] = $1
@@ -87,12 +101,14 @@ class ClubScraper
             self.current_contact[:email] = text
           end
           validate_email(text)
-        elsif (text =~ /^(([a-z]+):?\s+)?([-()+ 0-9]+)(\s+([a-z]+))?$/i)
+        when PHONE_REGEXP
           # phone number
           phone_number = {}
-          phone_number[:number] = $3
-          phone_number[:type] = $2.downcase if $2
-          phone_number[:type] = $5.downcase if $5
+          phone_number[:number] = "#{$1}-#{$2}-#{$3}"
+          phone_number[:number] += " x #{$4}" if !$4.empty?
+          start_of_string = text.match(/^\D*/).to_s #Anything not a number at beginning of string
+          end_of_string = text.match(/\D*$/).to_s   #Anything not a number at the end of string
+          phone_number[:type] = start_of_string || end_of_string
 
           current_contact[:phone] ||= []
           current_contact[:phone] << phone_number
