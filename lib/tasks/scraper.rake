@@ -26,29 +26,17 @@ namespace :scraper do
       location.description = club[:info]
       location.hidden = false
       #If it is an AGA club, we create the affiliation, which requires some data massaging.
-      if club[:is_aga?]
+     if club[:is_aga?]
         aga = Affiliate.find_by_name('AGA')
-        begin
-          name = location.contacts[0][:name]
-        rescue NoMethodError
-          name = nil
-        end
-
-        begin
-          email = location.contacts[0][:email]
-        rescue NoMethodError
-          email = nil
-        end
-
-        begin
-          phone = location.contacts[0][:phone][0][:number]
-        rescue NoMethodError
-          phone = nil
-        end
+        name = location.contacts[0][:name] rescue nil
+        email = location.contacts[0][:email] rescue nil
+        phone = location.contacts[0][:phone][0][:number] rescue nil
 
         # We don't really know anything about the affiliation except that it exists and it
         # hasn't expired.
-        affiliation = Affiliation.new(:affiliate => aga, :expires => 1.month.from_now.to_date)
+        affiliation = Affiliation.new(:affiliate => aga, :expires => 1.month.from_now.to_date,
+                                      :contact_name => name, :contact_email => email,
+                                      :contact_telephone => phone)
         location.affiliations << affiliation
       end
       CsvLoader.save_or_update_club(location)
