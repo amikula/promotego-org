@@ -4,11 +4,11 @@
       $('#login').focus()
     });
 
-%h1 Forgot Password
-%p Please enter your login and we will send you a link to reset your password:
+%h1= t 'forgot_password'
+%p== #{t 'enter_username_for_password'}:
 %p
   - form_tag forgot_password_path do
     %label{:for => "login"}
-      Enter your login name:
+      == #{t 'enter_username'}:
       = text_field_tag 'login'
-      = submit_tag 'Submit'
+      = submit_tag t('submit')

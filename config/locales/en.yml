@@ -7,7 +7,8 @@ en:
   back: Back             # As in "go back to the previous page"
   captcha_instructions: Please type the words from the picture into the text box below
   change_password: Change Password
-  check_email: Please check your email for information about your username.
+  check_email_password: Please check your email for instructions to reset your password.
+  check_email_username: Please check your email for information about your username.
   city: City
   confirm: Are you sure?
   confirm_password: Confirm Password
@@ -21,7 +22,10 @@ en:
   edit_club: Edit Go Club
   edit_settings: Edit Settings
   email: Email           # Email address
+  enter_email: Enter your email address
   enter_email_for_username: 'Please enter your email and we will send you information about your username:'
+  enter_username: Enter your username
+  enter_username_for_password: Please enter your username and we will send you a link to reset your password
   expires: Expires       # Date on which something expires
   forgot_password: Forgot password
   forgot_username: Forgot username

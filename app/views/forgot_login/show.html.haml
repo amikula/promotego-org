@@ -9,6 +9,6 @@
 %p
   - form_tag forgot_login_path do
     %label{:for => "email"}
-      Enter your email address:
+      == #{t 'enter_email'}:
       = text_field_tag 'email'
       = submit_tag 'Submit'
