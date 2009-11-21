@@ -5,7 +5,9 @@ en:
   affiliate: Affiliate   # This is the organization affiliated, a noun, not the verb "to affiliate"
   affiliate_id: Affiliate ID
   back: Back             # As in "go back to the previous page"
+  captcha_instructions: Please type the words from the picture into the text box below
   change_password: Change Password
+  check_email: Please check your email for information about your username.
   city: City
   confirm: Are you sure?
   confirm_password: Confirm Password
@@ -19,14 +21,17 @@ en:
   edit_club: Edit Go Club
   edit_settings: Edit Settings
   email: Email           # Email address
+  enter_email_for_username: 'Please enter your email and we will send you information about your username:'
   expires: Expires       # Date on which something expires
   forgot_password: Forgot password
   forgot_username: Forgot username
+  from: From             # Email sender address
   hidden: Hidden
   home_page: Home Page
   hours: Hours           # Hours of operation
   kilometers: Kilometers # Kilometers from search location
   log_in: Log in
+  message: Message       # Email message body
   miles: Miles           # Miles from search location
   name: Name             # Club or contact name
   new_club: New Go Club
@@ -53,6 +58,9 @@ en:
   search_results: Search Results
   select_country: Please select a country
   select_state: Please select a state/province
+  send: Send
+  send_message: Send Message
+  sent: Sent
   show: Show
   sign_up: Sign up!
   state_listing: Listing by state

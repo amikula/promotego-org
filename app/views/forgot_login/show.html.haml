@@ -1,11 +1,11 @@
-- content_for("page_scripts") do
+- content_for('page_scripts') do
   :plain
     $(window).load(function() {
       $('#email').focus()
     });
 
-%h1 Forgot Login
-%p Please enter your email and we will send you information about your login:
+%h1= t 'forgot_username'
+%p= t 'enter_email_for_username'
 %p
   - form_tag forgot_login_path do
     %label{:for => "email"}

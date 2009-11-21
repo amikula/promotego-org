@@ -1,17 +1,17 @@
-%h1 Send Message
+%h1= t 'send_message'
 - form_tag :action => :send_mail do
   = hidden_field_tag :email, (@email || params[:id])
   = hidden_field_tag :listing_url, @listing_url || request.referer
 
-  From:
+  == #{t 'from'}:
   = text_field_tag("from", @from)
   %br/
 
-  Message:
+  == #{t 'message'}:
   %br/
   = text_area_tag("message", @message, :rows => 10, :cols => 80)
   %br/
   %br/
-  Please type the words from the picture into the text box below:
+  == #{t 'captcha_instructions'}:
   = recaptcha_tags
-  = submit_tag "Send"
+  = submit_tag t('send')
