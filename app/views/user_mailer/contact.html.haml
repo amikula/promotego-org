@@ -1,8 +1,7 @@
 :plain
-  You have a message from a PromoteGo.org user regarding your listing
-  at #{@url}.
+  #{t 'message_about_listing', :url => @url}
 
-  Return email: #{@sender}
+  #{t 'return_email'}: #{@sender}
 
-  Message:
+  #{t 'message'}:
   #{@message}

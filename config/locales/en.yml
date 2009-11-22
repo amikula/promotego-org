@@ -1,14 +1,24 @@
 en:
   add: Add               # As in "add an entry"
+  account_activated: 
+    "{{username}}, your account has been activated.  You may now create and edit clubs:"
+  account_created: Your account has been created.
   address: Address       # Club street address
   address_unknown: Address Unknown
   affiliate: Affiliate   # This is the organization affiliated, a noun, not the verb "to affiliate"
   affiliate_id: Affiliate ID
+  almost_finished: "You're almost finished with sign-up"
   back: Back             # As in "go back to the previous page"
   captcha_instructions: Please type the words from the picture into the text box below
   change_password: Change Password
   check_email_password: Please check your email for instructions to reset your password.
   check_email_username: Please check your email for information about your username.
+  check_email_validation:
+    "Next, check your email for your validation link.  Once you click on the validation
+    link in the e-mail we sent you, you'll be able to act as a full member of the site,
+    including listing and editing your own club information, as well as future features,
+    such as receiving notifications about new clubs near you, and meeting other players
+    interested in playing games in person."
   city: City
   confirm: Are you sure?
   confirm_password: Confirm Password
@@ -36,9 +46,11 @@ en:
   kilometers: Kilometers # Kilometers from search location
   log_in: Log in
   message: Message       # Email message body
+  message_about_listing: You have a message from a PromoteGo.org user regarding your listing at {{url}}.
   miles: Miles           # Miles from search location
   name: Name             # Club or contact name
   new_club: New Go Club
+  new_password: New Password
   no_address: No street address available
   no_clubs_matched:
     "No Go clubs matched your search.  However, here is the closest match in our database:"
@@ -48,10 +60,23 @@ en:
     and edit the club again.  Additional blank contact fields will appear."
   owner: Owner
   password: Password
+  password_changed: Your password has been changed.
+  password_reset: Password Reset  # Page title for resetting password
   phone: Phone           # Phone number
+  please_enter_password: "Please enter your new password below.  Don't forget your password!"
   postal_code: Postal code
   register: Register a new account
   remember_me: Remember me  # Checkbox for persistent login on login page
+  reset_password: Reset Password
+  reset_password_notification: |
+    You are receiving this email because you requested to reset your password.
+
+    If you did not request a password reset, please contact us at contact@promotego.org
+    to let us know of the problem.
+
+    To reset your password, simply click on the following link, or copy and paste it
+    into your browser:
+  return_email: Return email  # The email to use to respond to a message
   roles: Roles           # Roles for this user: admin, superuser, etc.
   search: Search
   search_again: Search again
@@ -60,6 +85,7 @@ en:
     play Go in your area.  Your information won't be shared, and the more
     information you provide, the more accurate the search will be."
   search_results: Search Results
+  search_widget_title: PromoteGo.org search widget
   select_country: Please select a country
   select_state: Please select a state/province
   send: Send
@@ -73,6 +99,16 @@ en:
   submit: Submit
   update: Update
   username: Username
+  username_notification: |
+    Gentle user,
+
+    You are receiving this email because you requested information about your login.
+
+    If you did not request your login, please contact us at contact@promotego.org
+    to let us know of the problem.
+
+    Here is your login on PromoteGo.org:
+  visit_url_to_activate: "Visit this url to activate your account:"
   welcome: Welcome
 
   navlinks:

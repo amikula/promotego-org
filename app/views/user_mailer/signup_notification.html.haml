@@ -1,9 +1,9 @@
 :plain
-  Your account has been created.
+  #{t 'account_created'}
 
-    Username: #{@user.login}
-    Password: #{@user.password}
+    #{t 'username'}: #{@user.login}
+    #{t 'password'}: #{@user.password}
 
-  Visit this url to activate your account:
+  #{t 'visit_url_to_activate'}
 
     #{@url}
