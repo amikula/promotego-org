@@ -1,13 +1,6 @@
--# TODO Internationalize
-%h1 PromoteGo.org Widgets
-%p
-  PromoteGo.org widgets are code that help you to integrate PromoteGo.org features into your blog or website.
-  PromoteGo.org is a service dedicated to promoting the
-  == #{link_to 'game of Go', 'http://usgo.org/resources/whatisgo.html'}.
-  For more information about PromoteGo.org, see the
-  == #{link_to 'about', :controller => :home, :action => :show, :page => :about} page.
-%h2= link_to "Search Widget", :action => :customize_search
-%p
-  The PromoteGo.org search widget adds a search box to your web site or blog so that your customers can easily
-  do a search for Go clubs nearby.  For more information, see the
-  == #{link_to 'search widget', :action => :customize_search} page.
+%h1= t 'promotego_widgets'
+- game_of_go = link_to(t('game_of_go'), 'http://usgo.org/resources/whatisgo.html')
+- about      = link_to(t('about'), :controller => :home, :action => :show, :page => :about)
+%p= t 'widgets_summary', :game_of_go => game_of_go, :about => about
+%h2= link_to t('search_widget'), :action => :customize_search
+%p= t 'search_widget_teaser', :search_widget => link_to(t('search_widget').downcase, :action => :customize_search)

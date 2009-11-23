@@ -1,4 +1,5 @@
 en:
+  about: about
   add: Add               # As in "add an entry"
   account_activated: 
     "{{username}}, your account has been activated.  You may now create and edit clubs:"
@@ -40,6 +41,7 @@ en:
   forgot_password: Forgot password
   forgot_username: Forgot username
   from: From             # Email sender address
+  game_of_go: game of Go  # As in "to learn more about the game of Go"
   hidden: Hidden
   home_page: Home Page
   hours: Hours           # Hours of operation
@@ -65,6 +67,7 @@ en:
   phone: Phone           # Phone number
   please_enter_password: "Please enter your new password below.  Don't forget your password!"
   postal_code: Postal code
+  promotego_widgets: PromoteGo.org Widgets
   register: Register a new account
   remember_me: Remember me  # Checkbox for persistent login on login page
   reset_password: Reset Password
@@ -85,7 +88,48 @@ en:
     play Go in your area.  Your information won't be shared, and the more
     information you provide, the more accurate the search will be."
   search_results: Search Results
+  search_widget: Search Widget
   search_widget_title: PromoteGo.org search widget
+  search_widget_summary:
+    <p>
+      Now you can include a search widget on your blog or web site to
+      help your customers find a club where they can play Go!  When
+      your users enter their address or zip code information, they'll
+      get a list of all known Go clubs in their area.
+    </p>
+    <p>
+      Follow the steps below to customize the search widget to fit your
+      site.
+    </p>
+  search_widget_step_1_instructions: >
+    <p>
+      Enter your site url here.  We'll examine colors, fonts, and other
+      information about your site's styling to give you pre-populated
+      suggestions for values to use in the widget.
+    </p>
+  search_widget_step_1_title: Enter your site url (optional)
+  search_widget_step_2_instructions: >
+    <p>
+      The widget will render a search box page into your site that looks
+      like this:
+    </p>
+  search_widget_step_2_title: View the preview of the search widget
+  search_widget_step_3_instructions: >
+    <p>
+      Change the widget defaults by setting values with the dropdowns
+      or exact styling text here.  They'll automatically be reflected
+      in the preview above.
+    </p>
+  search_widget_step_3_title: Change widget defaults
+  search_widget_step_4_instructions: >
+    <p>
+      To include the search box on your site, simply copy and paste the
+      following code into your site layout:
+    </p>
+  search_widget_step_4_title: Include the code in your site layout
+  search_widget_teaser: >
+    The PromoteGo.org search widget adds a search box to your web site or blog so that your customers can easily
+    do a search for Go clubs nearby.  For more information, see the {{search_widget}} page.
   select_country: Please select a country
   select_state: Please select a state/province
   send: Send
@@ -98,6 +142,7 @@ en:
   state_unknown: State/Province Unknown
   submit: Submit
   update: Update
+  url: Url        # eg. http://your-site.com
   username: Username
   username_notification: |
     Gentle user,
@@ -110,6 +155,10 @@ en:
     Here is your login on PromoteGo.org:
   visit_url_to_activate: "Visit this url to activate your account:"
   welcome: Welcome
+  widgets_summary: >
+    PromoteGo.org widgets are code that help you to integrate PromoteGo.org features into your blog or website.
+    PromoteGo.org is a service dedicated to promoting the {{game_of_go}}.
+    For more information about PromoteGo.org, see the {{about}} page.
 
   navlinks:
     home: Home

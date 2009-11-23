@@ -2,37 +2,28 @@
 
 %h1= t 'search_widget_title'
 
-%p
-  Now you can include a search widget on your blog or web site to
-  help your customers find a club where they can play Go!  When
-  your users enter their address or zip code information, they'll
-  get a list of all known Go clubs in their area.
-%p
-  Follow the steps below to customize the search widget to fit your
-  site.
+= t 'search_widget_summary'
 
-%h2 1. Enter your site url (optional)
-%p
-  Enter your site url here.  We'll examine colors, fonts, and other
-  information about your site's styling to give you pre-populated
-  suggestions for values to use in the widget.
+%h2
+  1.
+  = t 'search_widget_step_1_title'
+= t 'search_widget_step_1_instructions'
 %form
-  Url:
+  == #{t 'url'}:
   = text_field_tag 'url', params[:url], :size => 40
   = submit_tag 'Go'
 
-%h2 2. View the preview of the search widget
-%p
-  The widget will render a search box page into your site that looks
-  like this:
+%h2
+  2.
+  = t 'search_widget_step_2_title'
+= t 'search_widget_step_2_instructions'
 #customize_widget
   = render :partial => 'search_widget'
 
-%h2 3. Change widget defaults
-%p
-  Change the widget defaults by setting values with the dropdowns
-  or exact styling text here.  They'll automatically be reflected
-  in the preview above.
+%h2
+  3.
+  = t 'search_widget_step_3_title'
+= t 'search_widget_step_3_instructions'
 %p
   - form_tag({:action => 'customize_search'}, :id => 'search_widget_form', :method => :get) do
     %table
@@ -50,10 +41,10 @@
         %td= select_tag "locale", ["<option value=''>Default user language</option>"] + @locales.collect{|lang,loc| "<option value='#{loc}'#{" selected='selected'" if loc == @widget_params[:locale]}>#{lang}</option>"}, :id => 'widget_locale'
     = submit_tag 'Submit'
 
-%h2 4. Include the code in your site layout
-%p
-  To include the search box on your site, simply copy and paste the
-  following code into your site layout:
+%h2
+  4.
+  = t 'search_widget_step_4_title'
+= t 'search_widget_step_4_instructions'
 %p{:style => "margin-left: 3em;"}
   %code#customize_script
     &== <script type="text/javascript" src="#{widget_params_url}"></script><noscript>#{t 'widget.search.noscript', :link => link_to(t 'widget.search.link_text', :controller => :search, :action => :radius, :only_path => false)}</noscript>
