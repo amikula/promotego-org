@@ -31,7 +31,7 @@ class SearchController < ApplicationController
               pushpin_for_club(location) if location.is_a? Location
             end
           else
-            flash.now[:error] = "No locations matched your search within #{SEARCH_RADII[-1]} miles"
+            flash.now[:error] = t 'no_clubs_matched_limit', :miles => SEARCH_RADII.last
           end
         end
 

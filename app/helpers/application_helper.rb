@@ -1,6 +1,6 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-  def display_standard_flashes(message = 'There were some problems with your submission:')
+  def display_standard_flashes(message=t('default_submission_error'))
     if flash[:notice]
       flash_to_display, level = flash[:notice], 'notice'
     elsif flash[:warning]

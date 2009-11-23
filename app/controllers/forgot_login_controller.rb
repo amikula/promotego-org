@@ -9,9 +9,9 @@ class ForgotLoginController < ApplicationController
       UserMailer.deliver_forgot_login(user)
     else
       if params[:email].blank?
-        flash[:warning] = "Please provide your email address to continue"
+        flash[:warning] = t 'provide_email'
       else
-        flash[:warning] = "The email address you entered is not in the system"
+        flash[:warning] = t 'email_unknown'
       end
 
       redirect_to :action => :show

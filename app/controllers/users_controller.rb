@@ -40,7 +40,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       UserMailer.deliver_signup_notification(@user)
-      flash[:notice] = "Account registered!  Check your email for your activation link."
+      flash[:notice] = t 'account_registered'
       redirect_to :controller => :home, :action => :show, :page => :validate
     else
       render :action => :new
@@ -53,7 +53,7 @@ class UsersController < ApplicationController
     if logged_in? && !current_user.active?
       current_user.activate
       UserMailer.deliver_activation(current_user)
-      flash[:notice] = "Signup complete!"
+      flash[:notice] = t 'signup_complete'
     end
     redirect_back_or_default('/')
   end

@@ -11,7 +11,7 @@ class SettingsController < ApplicationController
     @user.password_confirmation = params[:password_confirmation]
 
     if @user.save
-      flash[:notice] = "Your password has been changed"
+      flash[:notice] = t 'password_changed'
       redirect_to edit_settings_path
     else
       render :action => 'edit'

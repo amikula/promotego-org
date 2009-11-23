@@ -109,7 +109,7 @@ class LocationsController < ApplicationController
     end
 
     unless @location
-      flash[:error] = 'Location does not exist'
+      flash[:error] = t 'club_unknown'
       redirect_to locations_url
     end
   end
@@ -128,7 +128,7 @@ class LocationsController < ApplicationController
 
     respond_to do |format|
       if @location.save
-        flash[:notice] = 'Location was successfully created.'
+        flash[:notice] = t 'club_created'
         format.html { redirect_to(location_path(@location.slug)) }
         format.xml  { render :xml => @location, :status => :created, :location => @location }
       else
@@ -178,7 +178,7 @@ class LocationsController < ApplicationController
       end
 
       if @location && @location.save
-        flash[:notice] = 'Location was successfully updated.'
+        flash[:notice] = t 'club_updated'
         format.html { redirect_to(location_path(@location.slug)) }
         format.xml  { head :ok }
       else
@@ -186,7 +186,7 @@ class LocationsController < ApplicationController
           if @location
             render :action => "edit"
           else
-            flash[:error] = 'Location does not exist'
+            flash[:error] = t 'club_unknown'
             redirect_to locations_url
           end
         end

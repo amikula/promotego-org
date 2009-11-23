@@ -9,9 +9,9 @@ class ForgotPasswordController < ApplicationController
       UserMailer.deliver_forgot_password(user)
     else
       if params[:login].blank?
-        flash[:warning] = "Please provide a login name to continue"
+        flash[:warning] = t 'provide_username'
       else
-        flash[:warning] = "The user you specified does not exist"
+        flash[:warning] = t 'username_unknown'
       end
 
       redirect_to :action => :show

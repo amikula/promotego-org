@@ -1,15 +1,17 @@
 en:
   about: about
   add: Add               # As in "add an entry"
-  account_activated: 
+  account_activated:
     "{{username}}, your account has been activated.  You may now create and edit clubs:"
   account_created: Your account has been created.
+  account_registered: Account registered!  Check your email for your activation link.
   address: Address       # Club street address
   address_unknown: Address Unknown
   affiliate: Affiliate   # This is the organization affiliated, a noun, not the verb "to affiliate"
   affiliate_id: Affiliate ID
   almost_finished: "You're almost finished with sign-up"
   back: Back             # As in "go back to the previous page"
+  captcha_failed: Captcha challenge failed   # A Captcha is a test to verify a human is filling out the form.  It's usually an image with distorted characters that have to be entered by the user to proceed.
   captcha_instructions: Please type the words from the picture into the text box below
   change_password: Change Password
   check_email_password: Please check your email for instructions to reset your password.
@@ -21,11 +23,15 @@ en:
     such as receiving notifications about new clubs near you, and meeting other players
     interested in playing games in person."
   city: City
+  club_created: Go club was successfully created.
+  club_unknown: Go club does not exist
+  club_updated: Go club was successfully updated.
   confirm: Are you sure?
   confirm_password: Confirm Password
   contacts: Contacts     # People to contact for information about the club
   country: Country
   city_unknown: City Unknown
+  default_submission_error: 'There were some problems with your submission:'
   delete: Delete         # As in "delete this club"
   description: Description
   directions: Directions # Driving directions
@@ -33,6 +39,7 @@ en:
   edit_club: Edit Go Club
   edit_settings: Edit Settings
   email: Email           # Email address
+  email_unknown: The email address you entered is not in the system
   enter_email: Enter your email address
   enter_email_for_username: 'Please enter your email and we will send you information about your username:'
   enter_username: Enter your username
@@ -47,15 +54,21 @@ en:
   hours: Hours           # Hours of operation
   kilometers: Kilometers # Kilometers from search location
   log_in: Log in
+  logged_out: You have been logged out.
+  login_successful: Login successful!
   message: Message       # Email message body
   message_about_listing: You have a message from a PromoteGo.org user regarding your listing at {{url}}.
+  message_sent: Your message has been sent
   miles: Miles           # Miles from search location
+  must_log_in: You must be logged in to access this page
+  must_log_out: You must be logged out to access this page
   name: Name             # Club or contact name
   new_club: New Go Club
   new_password: New Password
   no_address: No street address available
   no_clubs_matched:
     "No Go clubs matched your search.  However, here is the closest match in our database:"
+  no_clubs_matched_limit: No locations matched your search within {{miles}} miles
   no_match: No Match
   noscript_more_contacts:
     "Note: If you wish to add more contacts, fill out the existing contact fields, save this form,
@@ -64,9 +77,12 @@ en:
   password: Password
   password_changed: Your password has been changed.
   password_reset: Password Reset  # Page title for resetting password
+  password_reset_invalid: Sorry, but your password reset token is either expired or invalid
   phone: Phone           # Phone number
   please_enter_password: "Please enter your new password below.  Don't forget your password!"
   postal_code: Postal code
+  provide_email: Please provide your email address to continue
+  provide_username: Please provide a username to continue
   promotego_widgets: PromoteGo.org Widgets
   register: Register a new account
   remember_me: Remember me  # Checkbox for persistent login on login page
@@ -137,6 +153,7 @@ en:
   sent: Sent
   show: Show
   sign_up: Sign up!
+  signup_complete: Signup complete!
   state_listing: Listing by state
   state_province: State/Province
   state_unknown: State/Province Unknown
@@ -153,6 +170,7 @@ en:
     to let us know of the problem.
 
     Here is your login on PromoteGo.org:
+  username_unknown: The username you specified does not exist
   visit_url_to_activate: "Visit this url to activate your account:"
   welcome: Welcome
   widgets_summary: >

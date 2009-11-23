@@ -6,7 +6,7 @@ class ResetPasswordController < ApplicationController
 
     unless @user
       redirect_to root_path
-      flash[:warning] = "Sorry, but your password reset token is either expired or invalid"
+      flash[:warning] = t 'password_reset_invalid'
     end
   end
 
@@ -22,7 +22,7 @@ class ResetPasswordController < ApplicationController
       end
     else
       redirect_to root_path
-      flash[:warning] = "Sorry, but your password reset token is either expired or invalid"
+      flash[:warning] = t 'password_reset_invalid'
     end
   end
 end

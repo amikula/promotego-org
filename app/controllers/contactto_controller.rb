@@ -14,11 +14,11 @@ class ContacttoController < ApplicationController
     if verify_recaptcha
       UserMailer.deliver_contact(to, @from, @subject, @message, @listing_url)
 
-      flash[:notice] = "Your message has been sent"
+      flash[:notice] = t 'message_sent'
 
       redirect_to('/')
     else
-      flash[:error] = "Captcha challenge failed"
+      flash[:error] = t 'captcha_failed'
       render :action => "new"
     end
   end

@@ -425,7 +425,7 @@ describe LocationsController do
         get :edit, :id => location.slug
 
         response.should redirect_to(locations_url)
-        flash[:error].should == 'Location does not exist'
+        flash[:error].should == 'Go club does not exist'
       end
     end
 
@@ -448,7 +448,7 @@ describe LocationsController do
         put :update, :id => location.slug
 
         response.should redirect_to(locations_url)
-        flash[:error].should == 'Location does not exist'
+        flash[:error].should == 'Go club does not exist'
       end
     end
   end

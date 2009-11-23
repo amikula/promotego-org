@@ -8,7 +8,7 @@ describe ForgotPasswordController do
       post 'create', :login => 'test_login'
 
       response.should redirect_to(forgot_password_path)
-      flash[:warning].should =~ /user .* does not exist/i
+      flash[:warning].should =~ /does not exist/i
     end
 
     it "redirects to show with a flash message if the user is not provided" do
@@ -17,7 +17,7 @@ describe ForgotPasswordController do
       post 'create', :login => ''
 
       response.should redirect_to(forgot_password_path)
-      flash[:warning].should =~ /please provide a login name to continue/i
+      flash[:warning].should =~ /please provide a username to continue/i
     end
 
     it "sends a password reset email to the user represented by the login" do
