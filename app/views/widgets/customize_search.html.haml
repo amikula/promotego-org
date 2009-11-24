@@ -2,12 +2,14 @@
 
 %h1= t 'search_widget_title'
 
-= t 'search_widget_summary'
+- t('search_widget_summary').each do |paragraph|
+  %p= paragraph
 
 %h2
   1.
   = t 'search_widget_step_1_title'
-= t 'search_widget_step_1_instructions'
+- t('search_widget_step_1_instructions').each do |paragraph|
+  %p= paragraph
 %form
   == #{t 'url'}:
   = text_field_tag 'url', params[:url], :size => 40
@@ -16,14 +18,16 @@
 %h2
   2.
   = t 'search_widget_step_2_title'
-= t 'search_widget_step_2_instructions'
+- t('search_widget_step_2_instructions').each do |paragraph|
+  %p= paragraph
 #customize_widget
   = render :partial => 'search_widget'
 
 %h2
   3.
   = t 'search_widget_step_3_title'
-= t 'search_widget_step_3_instructions'
+- t('search_widget_step_3_instructions').each do |paragraph|
+  %p= paragraph
 %p
   - form_tag({:action => 'customize_search'}, :id => 'search_widget_form', :method => :get) do
     %table
@@ -44,7 +48,8 @@
 %h2
   4.
   = t 'search_widget_step_4_title'
-= t 'search_widget_step_4_instructions'
+- t('search_widget_step_4_instructions').each do |paragraph|
+  %p= paragraph
 %p{:style => "margin-left: 3em;"}
   %code#customize_script
     &== <script type="text/javascript" src="#{widget_params_url}"></script><noscript>#{t 'widget.search.noscript', :link => link_to(t 'widget.search.link_text', :controller => :search, :action => :radius, :only_path => false)}</noscript>
