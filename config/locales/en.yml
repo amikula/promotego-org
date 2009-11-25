@@ -22,6 +22,7 @@ en:
     including listing and editing your own club information, as well as future features,
     such as receiving notifications about new clubs near you, and meeting other players
     interested in playing games in person."
+  choose_country: Please choose a country
   city: City
   club_created: Go club was successfully created.
   club_unknown: Go club does not exist
