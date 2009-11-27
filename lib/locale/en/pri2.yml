@@ -47,6 +47,19 @@ en:
   login_successful: Login successful!
   must_log_in: You must be logged in to access this page
   must_log_out: You must be logged out to access this page
+  navlinks:
+    home: Home
+    find_club: Find a Club
+    add_club: Add a Club
+    logout: Log out
+    login: Log in
+    register: Register
+    settings: Settings
+    about: About
+    widgets: Widgets
+    development: Development
+    contact: Contact
+    credits: Credits
   new_password: New Password
   owner: Owner
   password: Password
