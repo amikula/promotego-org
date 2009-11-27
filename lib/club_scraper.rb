@@ -12,7 +12,7 @@ class ClubScraper
     \D*         # optional separator
     (\d*)       # extension is optional and can be any number of digits
     $           # end of string
-/x
+/xi
 
   def self.is_aga?(element)
     img = element.at('img')
@@ -108,8 +108,12 @@ class ClubScraper
           phone_number[:number] += " x #{$4}" if !$4.empty?
           start_of_string = text.match(/^\D*/).to_s #Anything not a number at beginning of string
           end_of_string = text.match(/\D*$/).to_s   #Anything not a number at the end of string
-          phone_number[:type] = start_of_string || end_of_string
-
+          start_of_string.delete!("^[a-zA-Z]")
+          end_of_string.delete!("^[a-zA-Z")
+          #phone_number[:type] = $1 if !$1.nil?
+          #phone_number[:type] ||= $6 if !$6.nil?
+          phone_number[:type] = start_of_string if !start_of_string.empty?
+          phone_number[:type] ||= end_of_string if !end_of_string.empty?
           current_contact[:phone] ||= []
           current_contact[:phone] << phone_number
         else

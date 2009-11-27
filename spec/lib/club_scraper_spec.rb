@@ -190,8 +190,7 @@ describe ClubScraper do
         954-555-1212
       </td>
       EOF
-
-      pending
+      
       ClubScraper.get_club_contacts(element).should ==
         [{:name => "Broken Contact", :email => "clubemail@domain.com",
           :phone => [{:number => '954-555-1212'}]}]
@@ -226,7 +225,6 @@ describe ClubScraper do
       </td>
       EOF
 
-      pending
       ClubScraper.get_club_contacts(element).should ==
         [{:phone => [{:number => "626-555-1212"}]}]
     end
@@ -250,7 +248,6 @@ describe ClubScraper do
       </td>
       EOF
 
-      pending
       ClubScraper.get_club_contacts(element).should ==
         [{:name => "Contact Guy", :phone => [{:number => "213-555-1212"}]}]
     end
@@ -266,7 +263,6 @@ describe ClubScraper do
       </td>
       EOF
 
-      pending
       ClubScraper.get_club_contacts(element).should ==
         [{:name => "Contact Guy", :email => "email@domain.com",
           :phone => [{:number => "479-555-1212"}]},
@@ -281,10 +277,10 @@ describe ClubScraper do
       </td>
       EOF
 
-      pending
+      
       ClubScraper.get_club_contacts(element).should ==
         [{:name => "Foo Contact", :email => "email@domain.com",
-          :phone => [{:type => "cell", :number => "626-555-1212"}]}]
+          :phone => [{:type => "Cell", :number => "626-555-1212"}]}]
     end
 
     it "should handle postfix phone number designations" do
@@ -295,7 +291,6 @@ describe ClubScraper do
       </td>
       EOF
 
-      pending
       ClubScraper.get_club_contacts(element).should ==
         [{:name => "Bar Contact",
           :phone => [{:type => "home", :number => "281-555-1212"}]}]
@@ -310,7 +305,6 @@ describe ClubScraper do
       </td>
       EOF
 
-      pending
       ClubScraper.get_club_contacts(multiple_phone_numbers).should ==
         [{:name => "Baz Contact",
           :phone => [{:type => "home", :number => "281-555-1212"},
@@ -325,7 +319,7 @@ describe ClubScraper do
         +100 (0)00 000000
       </td>
       EOF
-
+      
       pending
       ClubScraper.get_club_contacts(element).should ==
         [{:name => "Xyzzy Contact",
@@ -515,7 +509,7 @@ describe ClubScraper do
       </tr>
       EOF
 
-      pending
+      
       ClubScraper.get_club_from_row(row).should match_hash(
         { :name => "Birmingham Go Association",
           :city => "Birmingham",
