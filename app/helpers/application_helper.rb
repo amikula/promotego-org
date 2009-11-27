@@ -34,7 +34,7 @@ module ApplicationHelper
       if l.country.blank?
         Abbreviable.new('None', 'None')
       else
-        Abbreviable.new(COUNTRY_FROM_ABBREV[l.country] || l.country, l.country)
+        Abbreviable.new(I18n.translate(l.country, :scope => "countries") || l.country, l.country)
       end
     end.sort_by{|c| (us_first && c.abbrev == 'US') ? 'AAAAAAAA' : c.full_name}
   end

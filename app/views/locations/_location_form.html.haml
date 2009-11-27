@@ -45,7 +45,6 @@
     %b= t 'country'
     %br/
     = localized_country_select(:location, :country, [], {:include_blank => t('choose_country')}, :onchange => 'updateStateInput(this)')
-    -# select :location, :country, [[t('select_country'), '--']].concat(COUNTRY_TO_ABBREV.to_a.sort), {}, :onchange => 'updateStateInput(this)'
   %p
     %b= t 'state_province'
     %br/

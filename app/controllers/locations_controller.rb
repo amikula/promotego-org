@@ -27,13 +27,12 @@ class LocationsController < ApplicationController
         state ||= state_name
 
         options[:conditions] = ['country = ? AND state = ?', @country, state]
-        @locality = "in #{state_name}"
+        @heading = t 'clubs_in_location', :location => state_name
 
-        @title = "Go Clubs in #{state_name}, #{country_name}"
+        @title = t 'clubs_in_state_and_country', :state => state_name, :country => country_name
       else
         options[:conditions] = ['country = ?', @country]
-        @locality = "in #{country_name}"
-        @title = "Go Clubs in #{country_name}"
+        @heading = @title = t('clubs_in_location', :location => country_name)
       end
     end
 

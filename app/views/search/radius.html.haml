@@ -37,15 +37,15 @@
 - form_tag({:action => "radius"}, :method => :get) do
   %table
     %tr
-      %td Address, City, State, or Zip:
+      %td== #{t 'address_or_postcode'}:
       %td= text_field_tag :address, @address, :size => 30
     %tr
-      %td Radius:
+      %td== #{t 'radius'}:
       %td
         %select#radius{:name => "radius"}
           - @radii.each do |radius|
             %option{:selected => radius == @radius}= radius
-        miles
+        = t('miles_downcase')
   = submit_tag t('search')
 %br/
 %br/

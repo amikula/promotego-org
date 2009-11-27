@@ -1,0 +1,57 @@
+en:
+  affiliate: Affiliate   # This is the organization affiliated, a noun, not the verb "to affiliate"
+  affiliate_id: Affiliate ID
+  captcha_failed: Captcha challenge failed   # A Captcha is a test to verify a human is filling out the form.  It's usually an image with distorted characters that have to be entered by the user to proceed.
+  captcha_instructions: Please type the words from the picture into the text box below
+  expires: Expires       # Date on which something expires
+  from: From             # Email sender address
+  message: Message       # Email message body
+  message_about_listing: You have a message from a PromoteGo.org user regarding your listing at {{url}}.
+  message_sent: Your message has been sent
+  noscript_more_contacts:
+    "Note: If you wish to add more contacts, fill out the existing contact fields, save this form,
+    and edit the club again.  Additional blank contact fields will appear."
+  promotego_widgets: PromoteGo.org Widgets
+  return_email: Return email  # The email to use to respond to a message
+  roles: Roles           # Roles for this user: admin, superuser, etc.
+  search_widget: Search Widget
+  search_widget_title: PromoteGo.org search widget
+  search_widget_summary:
+    -
+      Now you can include a search widget on your blog or web site to
+      help your customers find a club where they can play Go!  When
+      your users enter their address or zip code information, they'll
+      get a list of all known Go clubs in their area.
+    -
+      Follow the steps below to customize the search widget to fit your
+      site.
+  search_widget_step_1_instructions:
+    - >
+      Enter your site url here.  We'll examine colors, fonts, and other
+      information about your site's styling to give you pre-populated
+      suggestions for values to use in the widget.
+  search_widget_step_1_title: Enter your site url (optional)
+  search_widget_step_2_instructions:
+    - >
+      The widget will render a search box page into your site that looks
+      like this:
+  search_widget_step_2_title: View the preview of the search widget
+  search_widget_step_3_instructions:
+    - >
+      Change the widget defaults by setting values with the dropdowns
+      or exact styling text here.  They'll automatically be reflected
+      in the preview above.
+  search_widget_step_3_title: Change widget defaults
+  search_widget_step_4_instructions:
+    - >
+      To include the search box on your site, simply copy and paste the
+      following code into your site layout:
+  search_widget_step_4_title: Include the code in your site layout
+  search_widget_teaser: >
+    The PromoteGo.org search widget adds a search box to your web site or blog so that your customers can easily
+    do a search for Go clubs nearby.  For more information, see the {{search_widget}} page.
+  url: Url        # eg. http://your-site.com
+  widgets_summary: >
+    PromoteGo.org widgets are code that help you to integrate PromoteGo.org features into your blog or website.
+    PromoteGo.org is a service dedicated to promoting the {{game_of_go}}.
+    For more information about PromoteGo.org, see the {{about}} page.

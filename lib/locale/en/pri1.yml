@@ -1,0 +1,30 @@
+en:
+  address: Address       # Club street address
+  address_or_postcode: Address, City, State, or Postal Code
+  address_unknown: Address Unknown
+  city_unknown: City Unknown
+  clubs_in_location: Go Clubs in {{location}}
+  clubs_in_state_and_country: Go Clubs in {{state}}, {{country}}
+  contacts: Contacts     # People to contact for information about the club
+  description: Description
+  directions: Directions # Driving directions
+  miles: Miles
+  miles_downcase: miles  # Still capitalized if nouns are always capitalized as in German
+  name: Name             # Club or contact name
+  new_club: New Go Club
+  no_address: No street address available
+  no_clubs_matched:
+    "No Go clubs matched your search.  However, here is the closest match in our database:"
+  no_clubs_matched_limit: No locations matched your search within {{miles}} miles
+  no_match: No Match
+  radius: Radius         # As in the radius of the search
+  search: Search
+  search_again: Search again
+  search_instructions:
+    "Enter a full address, a city and state, or a zip code to find places to
+    play Go in your area.  Your information won't be shared, and the more
+    information you provide, the more accurate the search will be."
+  search_results: Search Results
+  state_listing: Listing by state
+  state_unknown: State/Province Unknown
+  welcome: Welcome
