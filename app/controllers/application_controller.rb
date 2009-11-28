@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 private
   def extract_locale_from_subdomain
     parsed_locale = request.subdomains.first
-    (I18n.available_locales.include? parsed_locale.to_sym) ? parsed_locale : nil
+    (parsed_locale && I18n.available_locales.include?(parsed_locale.to_sym)) ? parsed_locale : nil
   end
 
   def current_user_session
