@@ -30,4 +30,17 @@ namespace :app do
       puts "#{k}=#{v}"
     end
   end
+
+  desc 'Update .gems for heroku based on geminstaller.yml'
+  task :update_dotgems do
+    geminstaller = YAML.load(File.new('config/geminstaller.yml'))
+    File.open('.gems', 'w') do |f|
+      geminstaller['gems'].each do |gemspec|
+        line = gemspec['name']
+        line << " --version '#{gemspec['version']}'" if gemspec['version']
+        line << "\n"
+        f << line
+      end
+    end
+  end
 end
