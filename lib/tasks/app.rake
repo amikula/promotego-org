@@ -23,4 +23,11 @@ namespace :app do
 
   desc 'Initialize application data (roles, types, owner account)'
   task :initialize => [:load_roles, :create_affiliates, :create_owner]
+
+  desc 'Print the application environment'
+  task :printenv do
+    ENV.each_pair do |k,v|
+      puts "#{k}=#{v}"
+    end
+  end
 end
