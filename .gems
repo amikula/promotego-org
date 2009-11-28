@@ -1,3 +1,4 @@
+geminstaller --version '~> 0.5.4'
 rdoc --version '>= 2.4.3'
 rake --version '~> 0.8.4'
 rails --version '2.3.4'

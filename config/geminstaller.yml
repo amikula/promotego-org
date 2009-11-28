@@ -2,6 +2,8 @@
 defaults:
   install_options: --no-ri --no-rdoc
 gems:
+- name: geminstaller
+  version: ~> 0.5.4
 - name: rdoc
   version: >= 2.4.3
 - name: rake
