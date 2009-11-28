@@ -8,10 +8,21 @@ class ApplicationController < ActionController::Base
   before_filter :set_locale
 
   def set_locale
-    I18n.locale = params[:locale].blank? ? request.preferred_language_from(I18n.available_locales) : params[:locale]
+    I18n.locale = if params[:locale]
+                    params[:locale]
+                  elsif(locale=extract_locale_from_subdomain)
+                    locale
+                  else
+                    request.preferred_language_from(I18n.available_locales)
+                  end
   end
 
 private
+  def extract_locale_from_subdomain
+    parsed_locale = request.subdomains.first
+    (I18n.available_locales.include? parsed_locale.to_sym) ? parsed_locale : nil
+  end
+
   def current_user_session
     return @current_user_session if defined?(@current_user_session)
     @current_user_session = UserSession.find
