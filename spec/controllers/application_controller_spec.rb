@@ -50,4 +50,18 @@ describe ApplicationController do
       subject.set_locale
     end
   end
+
+  describe :subdomain_locale? do
+    it 'returns false if extract_locale_from_subdomain is nil' do
+      subject.should_receive(:extract_locale_from_subdomain).and_return(nil)
+
+      subject.subdomain_locale?.should be_false
+    end
+
+    it 'returns true if extract_locale_from_subdomain is not nil' do
+      subject.should_receive(:extract_locale_from_subdomain).and_return('en')
+
+      subject.subdomain_locale?.should be_true
+    end
+  end
 end

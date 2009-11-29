@@ -17,6 +17,10 @@ class ApplicationController < ActionController::Base
                   end
   end
 
+  def subdomain_locale?
+    !!extract_locale_from_subdomain
+  end
+
 private
   def extract_locale_from_subdomain
     parsed_locale = request.subdomains.first
