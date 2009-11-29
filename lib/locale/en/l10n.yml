@@ -1,2 +1,3 @@
 en:
-  distance: km
+  locale_units:
+    distance: km
