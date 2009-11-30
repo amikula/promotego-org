@@ -1,0 +1,30 @@
+sv:
+  address: Adress       # Club street address
+  address_or_postcode: "Adress, stad, l&auml;n eller postnummer"
+  address_unknown: "Ok&auml;nd adress"
+  city_unknown: "Ok&auml;nd stad"
+  clubs_in_location: Goklubbar i {{location}}
+  clubs_in_state_and_country: Goklubbar i  {{state}}, {{country}}
+  contacts: Kontaktpersoner     # People to contact for information about the club
+  description: "F&ouml;rklaring"
+  directions: "V&auml;gbeskrivning # Driving directions"
+  miles: Amerikanska miles
+  miles_downcase: amerikanska miles  # Still capitalized if nouns are always capitalized as in German
+  name: Namn             # Club or contact name
+  new_club: Ny goklubb
+  no_address: Gatuadress saknas
+  no_clubs_matched:
+    "Inga goklubbar hittades med angivna s&ouml;kord. Detta &auml;r b&auml;sta matchningen mot databasen:"
+  no_clubs_matched_limit: "Inga tr&auml;ffar inom {{miles}} amerikanska miles"
+  no_match: "Ingen tr&auml;ff"
+  radius: Radie         # As in the radius of the search
+  search: "S&ouml;k"
+  search_again: "S&ouml;k igen"
+  search_instructions:
+    "Skriv hela adressen, stad och l&auml;n, eller postnummer f&ouml;r att se var det
+    g&aring;r att spela go n&auml;ra dig. Informationen kommer inte att delas. Ju mer
+    information du anger desto b&auml;ttre svar kan du f&aring;."
+  search_results: "S&ouml;kresultat"
+  state_listing: "Lista per l&auml;n"
+  state_unknown: "Ok&auml;nt l&auml;n"
+  welcome: "V&auml;lkommen"
