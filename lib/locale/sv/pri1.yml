@@ -7,7 +7,7 @@ sv:
   clubs_in_state_and_country: Goklubbar i  {{state}}, {{country}}
   contacts: Kontaktpersoner     # People to contact for information about the club
   description: "F&ouml;rklaring"
-  directions: "V&auml;gbeskrivning # Driving directions"
+  directions: "V&auml;gbeskrivning" # Driving directions
   miles: Amerikanska miles
   miles_downcase: amerikanska miles  # Still capitalized if nouns are always capitalized as in German
   name: Namn             # Club or contact name
