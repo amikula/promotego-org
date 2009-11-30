@@ -1,0 +1,30 @@
+de:
+  address: Adresse       # Club street address
+  address_or_postcode: Adresse, Stadt/Ort, Bundesland/Kanton, or Postleitzahl
+  address_unknown: Adresse unbekannt
+  city_unknown: Stadt/Ort unbekannt
+  clubs_in_location: Go Clubs im {{location}}
+  clubs_in_state_and_country: Go Clubs im {{state}}, {{country}}
+  contacts: Kontakte     # People to contact for information about the club
+  description: Beschreibung
+  directions: Anfahrtsbeschreibung # Driving directions
+  miles: Meilen
+  miles_downcase: Meilen  # Still capitalized if nouns are always capitalized as in German
+  name: Name             # Club or contact name
+  new_club: Neue Go Club
+  no_address: "Keine Adresse verf&uuml;gbar"
+  no_clubs_matched:
+    "Keine Go-Clubs gefunden die mit Ihren Suchkriterien &uuml;bereinstimmen.  Allerdings ist hier die gr&ouml;&szlig;te &Uuml;bereinstimmung in unserer Datenbank:"
+  no_clubs_matched_limit: "Keine Go-Clubs innerhalb von {{miles}} Meilen gefunden die mit Ihren Suchkriterien &uuml;bereinstimmen."
+  no_match: "Keine &Uuml;bereinstimmung"
+  radius: Radius         # As in the radius of the search
+  search: Suche
+  search_again: Wieder suchen
+  search_instructions:
+    "Geben Sie die vollst&auml;ndige Adresse, eine Stadt und Staat, oder eine Postleitzahl ein, um Orte in der N&auml;he zu finden,
+    wo man Go spielen kann. Ihre Daten werden nicht weitergegeben werden, und je mehr
+    Informationen, die Sie liefern, desto genauer wird die Suche sein."
+  search_results: Ergebnisse der Suche
+  state_listing: Liste in Staat-Sequenz
+  state_unknown: Staat/Bundesland/Kanton unbekannt
+  welcome: Wilkommen
