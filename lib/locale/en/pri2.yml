@@ -39,9 +39,9 @@ en:
   forgot_username: Forgot username
   game_of_go: game of Go  # As in "to learn more about the game of Go"
   hidden: Hidden
-  home_page: Home Page
+  home_page: Home Page   # Moving this to pri1.  Delete after we have sv, de, and ja translations.
   hours: Hours           # Hours of operation
-  kilometers: Kilometers # Kilometers from search location
+  kilometers: Kilometers # Kilometers from search location.  Moving this to pri1.  Delete after we have sv, de, and ja translations.
   log_in: Log in
   logged_out: You have been logged out.
   login_successful: Login successful!

@@ -8,6 +8,8 @@ en:
   contacts: Contacts     # People to contact for information about the club
   description: Description
   directions: Directions # Driving directions
+  home_page: Home Page
+  kilometers: Kilometers # Kilometers from search location
   miles: Miles
   miles_downcase: miles  # Still capitalized if nouns are always capitalized as in German
   name: Name             # Club or contact name
