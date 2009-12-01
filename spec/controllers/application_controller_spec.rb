@@ -64,4 +64,20 @@ describe ApplicationController do
       subject.subdomain_locale?.should be_true
     end
   end
+
+  describe :host_locale do
+    it 'returns locale extracted from subdomain' do
+      subject.stub!(:extract_locale_from_subdomain).and_return('de')
+
+      subject.host_locale.should == :de
+    end
+
+    it 'returns default locale when locale from subdomain is nil' do
+      I18n.default_locale.should == :en
+
+      subject.should_receive(:extract_locale_from_subdomain).and_return(nil)
+
+      subject.host_locale.should == :en
+    end
+  end
 end
