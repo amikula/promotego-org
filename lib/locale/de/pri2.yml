@@ -1,0 +1,108 @@
+de:
+  about: "&Uuml;ber"
+  account_activated:
+    "{{username}}, Ihr Konto wurde aktiviert. Sie k&ouml;nnen nun erstellen und bearbeiten Clubs:"
+  account_created: Ihr Konto wurde erstellt.
+  account_registered: "Konto registriert!  &Uuml;berpr&uuml;fen Sie Ihre E-Mail f&uuml;r einen Aktivierungs-Link."
+  add: "Anf&uuml;gen"         # As in "add an entry"  - This one was tough
+  almost_finished: "Sie sind fast fertig mit der Anmeldung"
+  back: "Zur&uuml;ck"             # As in "go back to the previous page"
+  change_password: "Passwort &auml;ndern"
+  check_email_password: "Bitte &uuml;berpr&uuml;fen Sie Ihre E-Mail f&uuml;r Anweisungen zum Zur&uuml;cksetzen des Passworts."
+  check_email_username: "Bitte &uuml;berpr&uuml;fen Sie Ihre E-Mail f&uuml;r Auskunft &uuml;ber Ihren Benutzername."
+  check_email_validation:
+    "Weiter, &uuml;berpr&uuml;fen Sie Ihre E-Mail-Link f&uuml;r Ihre Validierungs-Link. Sobald Sie auf die Validierungs-Link
+    in der E-Mail von uns erhalten haben, dann k&ouml;nnen Sie als Vollmitglied der Website handeln.
+    Zum Beispiel, Sie konnen Ihrer eigenen Club Informationen einstellen und bearbeiten.
+    Sie werden auch zuk&uuml;nftige F&auml;higkeiten benutzen k&ouml;nnen, wie der Empfang von Mitteilungen
+    bei neuen Clubs in Ihrer N&auml;he, Treffen mit anderen Spielern, die in Spielen in Person
+    interessiert sind."
+  choose_country: "Bitte w&auml;hlen Sie ein Land"
+  city: Stadt
+  club_created: Go-Club erfolgreich erstellt wurde.
+  club_unknown: Go-Club gibt es nicht.
+  club_updated: Go-Klub wurde erfolgreich aktualisiert.
+  confirm: Sind Sie Sicher?
+  confirm_password: "Passwort best&auml;tigen"
+  country: Land
+  default_submission_error: "Es gab einige Probleme mit Ihrer Einreichung:"
+  delete: "L&ouml;schen"         # As in "delete this club"
+  edit: Bearbeiten             # As in "edit this club"
+  edit_club: Go Club bearbeiten
+  edit_settings: Einstellungen bearbeiten
+  email: E-Mail-Adresse           # Email address
+  email_unknown: Die angegebene E-Mail-Adresse ist nicht im System
+  enter_email: Geben Sie Ihre E-Mail-Adresse
+  enter_email_for_username: "Bitte geben Sie Ihre E-Mail-Adresse und wir schicken Ihnen Informationen &uuml;ber Ihren Benutzername:"
+  enter_username: Benutzername eingeben
+  enter_username_for_password: "Bitte geben Sie Ihre Benutzername und wir senden Ihnen einen Link zum Zur&uuml;cksetzen des Passworts"
+  forgot_password: Passwort vergessen
+  forgot_username: Benutzername vergessen
+  game_of_go: Go-Spiel  # As in "to learn more about the game of Go"
+  hidden: versteckt
+  home_page: Homepage   # Moving this to pri1.  Delete after we have sv, de, and ja translations.
+  hours: Stunden           # Hours of operation
+  kilometers: Kilometer # Kilometers from search location.  Moving this to pri1.  Delete after we have sv, de, and ja translations.
+  log_in: Loggen Sie sich ein
+  logged_out: Sie sind ausgeloggt worden.
+  login_successful: Login erfolgreich!
+  must_log_in: Sie mussen eingeloggt sein um diese Seite zu betreten
+  must_log_out: Sie mussen ausgeloggt sein um diese Seite zu betreten.
+  navlinks:
+    home: Home
+    find_club: Ein Club finden
+    add_club: "Ein Club einf&uuml;gen"
+    logout: Ausloggen
+    login: Einloggen
+    register: Registrieren
+    settings: Einstellungen
+    about: "&Uuml;ber"
+    widgets: Widgets
+    development: Entwicklung
+    contact: Kontakte
+    credits: Credits
+  new_password: Neues Passwort
+  owner: Besitzer
+  password: Passwort
+  password_changed: "Ihr Passwort wurde ge&auml;ndert."
+  password_reset: "Passwort zur&uuml;cksetzen"  # Page title for resetting password
+  password_reset_invalid: "Sorry, aber das Token f&uuml;r Ihre Zur&uuml;cksetzen des Passworts ist entweder abgelaufen oder ung&uuml;ltig"
+  phone: Telefon            # Phone number
+  please_enter_password: "Bitte geben Sie Ihr neues Passwort unten.  Vergessen Sie Ihr Passwort nicht!"
+  postal_code: Postleitzahl
+  provide_email: Bitte geben Sie Ihre E-Mail-Adresse um fortzusetzen
+  provide_username: Bitte geben Sie Ihren Benutzername um fortzusetzen
+  register: Registriren Sie ein neues Konto
+  remember_me: "Einpr&auml;gen mich"
+  reset_password: "Passwort zur&uuml;cksetzen"
+  reset_password_notification: |
+    "Sie erhalten diese E-Mail, weil Sie gebeten haben, Ihr Passwort zur&uuml;ckzusetzen.
+
+    Wenn Sie nicht angefordert haben ein Passwort zur&uuml;ckzusetzen, wenden Sie sich bitte an contact@promotego.org
+    um uns &uuml;ber das Problem zu kennen lassen.
+
+    Um Ihr Passwort zur&uuml;ckzusetzen, klicken Sie einfach auf den folgenden Link oder kopieren
+    und f&uuml;gen Sie sie in Ihrem Browser:"
+  select_country: "Bitte w&auml;hlen Sie ein Land"
+  select_state: "Bitte w&auml;hlen Sie ein Bundesland"
+  send: Senden
+  send_message: Nachricht senden
+  sent: Gesendet
+  show: Zeigen
+  sign_up: Anmelden!
+  signup_complete: Anmeldung abgeschlossen!
+  state_province: Bundesland
+  submit: "&Uuml;bermitteln"
+  update: Aktualisieren
+  username: Benutzername
+  username_notification: |
+    "Gnadiger Benutzer,
+
+    Sie erhalten diese E-Mail, weil Sie haben um Ihre Login-Daten angefordert.
+
+    Wenn Sie nicht Ihre Login-Daten angefordert haben, wenden Sie sich bitte an contact@promotego.org
+    um uns &uuml;ber das Problem zu kennen lassen.
+
+    Hier ist Ihre Login-Daten auf PromoteGo.org:"
+  username_unknown: Der eingegebene Benutzername existiert nicht
+  visit_url_to_activate: "Besuchen Sie diese URL Ihr Konto zu aktivieren:"
