@@ -1,0 +1,56 @@
+de:
+  affiliate: PartnerProgramm
+  affiliate_id: Partner-ID
+  captcha_failed: Captcha Herausforderung gescheitert   # A Captcha is a test to verify a human is filling out the form.  It's usually an image with distorted characters that have to be entered by the user to proceed.
+  captcha_instructions: Bitte geben Sie die Worte aus dem Bild in das Textfeld unten
+  expires: "ausl&auml;uft"      # Date on which something expires
+  from: Von             # Email sender address
+  message: Nachricht       # Email message body
+  message_about_listing: "Sie haben eine Nachricht von einem PromoteGo.org Nutzer bez&uuml;glich Ihrer Liste Eintrag bei {{url}}."
+  message_sent: Ihre Nachricht wurde gesendet
+  noscript_more_contacts:
+    "Hinweis: Wenn Sie mehr Kontakten hinzuf&uuml;gen m&ouml;chten, f&uuml;llen Sie das Kontaktformular Felder, speichern Sie dieses Formular,
+    und bearbeiten Sie der Club wieder. Zus&auml;tzliche leere Kontakt Felder wird erscheinen."
+  promotego_widgets: PromoteGo.org Widgets
+  return_email: "Zur&uuml;ck E-Mail-Adresse"  # The email to use to respond to a message
+  roles: Funktionen           # Roles for this user: admin, superuser, etc.
+  search_widget: Such-Widget
+  search_widget_title: PromoteGo.org Such-Widget
+  search_widget_summary:
+    - >
+      Jetzt k&ouml;nnen Sie ein Such-Widget in Ihrem Blog oder Ihrer Website einf&uuml;gen,
+      um Ihre Kunden zu helfen, einen Club zu finden wo sie Go spielen kann!
+      Wenn Ihre Benutzer geben ihre Adresse oder Postleitzahl Informationen ein,
+      werden sie eine Liste erhalten von allen bekannten Go Clubs in ihrem Gebiet.
+    - >
+      Befolgen Sie die nachstehenden Schritte, um die Such-Widget auf Ihrer
+      Website anzupassen.
+  search_widget_step_1_instructions:
+    - >
+      Geben Sie Ihre Website-URL hier. Wir werden Farben, Schriften, und weitere
+      Informationen &uuml;ber der Stil Ihrer Website untersuchen, um Ihnen vor besiedelten
+      Vorschl&auml;ge zu geben f&uuml;r Werte die im Widget verwendet werden kann
+  search_widget_step_1_title: Geben Sie Ihre Website-URL (optional)
+  search_widget_step_2_instructions:
+    - >
+      Das Widget wird ein Suchformular Seite in Ihre Website machen das so aussieht:
+  search_widget_step_2_title: Sehen Sie sich die Vorschau auf das Such-Widget
+  search_widget_step_3_instructions:
+    - >
+      &Auml;ndern Sie das Widget Standardwerte, indem Sie Werte setzen mit den Dropdown-Men&uuml;s
+      oder genau Stil Text hier. Sie werden automatisch in der Vorschau oben reflektiert werden.
+  search_widget_step_3_title: "&Auml;ndern Widget Standardwerte"
+  search_widget_step_4_instructions:
+    - >
+      Um das Suchformular auf Ihrer Website einzuf&uuml;gen, einfach kopieren und f&uuml;gen Sie den folgenden Quelltext in
+      Ihre Website-Layout
+  search_widget_step_4_title: "F&uuml;gen den Quelltext in Ihre Website-Layout ein"
+  search_widget_teaser: >
+    Die PromoteGo.org Such-Widget f&uuml;gt ein Suchformular auf Ihre Website oder Blog ein,
+    so dass Ihre Kunden auf einfache Weise eine Suche nach Go Clubs in der N&auml;he tun k&ouml;nnen.
+    Weitere Informationen finden Sie in der {{search_widget}} Seite.
+  url: Url        # eg. http://your-site.com
+  widgets_summary: >
+    PromoteGo.org Widgets sind Quelltext, der Ihnen helfen, zu integrieren PromoteGo.org Funktionen in Ihren Blog oder Website.
+    PromoteGo.org ist ein Service das zur F&ouml;rderung der {{game_of_go}} gewidmet ist.
+    F&uuml;r weitere Informationen &uuml;ber PromoteGo.org, schauen Sie die {{about}} Seite.
