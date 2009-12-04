@@ -235,7 +235,7 @@
 			:UA => "Ukraina",
 			:UG => "Uganda",
 			:UM => "USA:s yttre öarR221",
-			:US => "USAR217",
+			:US => "USA",
 			:UY => "Uruguay",
 			:UZ => "Uzbekistan",
 			:VA => "Vatikanstaten",

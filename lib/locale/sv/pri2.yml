@@ -1,0 +1,107 @@
+sv:
+  about: om
+  account_activated:
+    "{{username}}, ditt konto har aktiverats.  Du kan nu skapa och &auml;ndra klubbar:"
+  account_created: Ditt konto har skapats.
+  account_registered: Konto registrerat! Kolla din epost f&ouml;r aktiverings-l&auml;nk.
+  add: L&auml;gg till               # As in "add an entry"
+  almost_finished: "Du &auml;r n&auml;stan f&auml;rdig med registreringen"
+  back: Tillbaka             # As in "go back to the previous page"
+  change_password: Byt l&ouml;senord
+  check_email_password:
+    Kontrollera din epost f&ouml;r instruktioner hur du nollst&auml;ller ditt l&ouml;senord
+  check_email_username: Kontrollera din epost f&ouml;r information om ditt anv&auml;ndarnamn
+  check_email_validation:
+    "Sedan, kontrollera din epost f&ouml;r aktiverings-l&auml;nk. Efter att du klickat p&aring; aktiverings-l&auml;nken
+    i ebrevet fr&aring;n oss s&aring; kommer du att kunna anv&auml;nda webbplatsen som fullv&auml;rdig medlem.
+    Detta inkluderar att kunna lista och &auml;ndra din egen klubbinformation, samt framtida funktioner
+    s&aring;som att f&aring; meddelanden om nya klubbar i n&auml;rheten och att hitta spelare som vill
+    spela go p&aring; riktigt br&auml;de."
+  choose_country: V&auml;lj land
+  city: Stad
+  club_created: Goklubb skapad OK.
+  club_unknown: Goklubb finns inte
+  club_updated: Goklubb &auml;ndrades OK.
+  confirm: &auml;r du s&auml;ker?
+  confirm_password: Bekr&auml;fta l&ouml;senord
+  country: Land
+  default_submission_error: 'Ett problem uppstod med ditt bidrag:'
+  delete: Radera         # As in "delete this club"
+  edit: &auml;ndra             # As in "edit this club"
+  edit_club: &auml;ndra p&aring; goklubb
+  edit_settings: &auml;ndra inst&auml;llningar
+  email: epost           # Email address
+  email_unknown: Epost-adressen finns inte i systemet
+  enter_email: Skriv din epost-adress
+  enter_email_for_username: 'Skriv din epost-adress s&aring; skickar vi information om ditt anv&auml;ndarnamn:'
+  enter_username: Skriv ditt anv&auml;ndarnamn
+  enter_username_for_password: Skriv ditt anv&auml;ndarnamn s&aring; skickar vi en l&auml;nk f&ouml;r att nollst&auml;lla ditt l&ouml;senord
+  forgot_password: Gl&ouml;mt l&ouml;senord
+  forgot_username: Gl&ouml;mt anv&auml;ndarnamn
+  game_of_go: spelet go  # As in "to learn more about the game of Go"
+  hidden: Dold
+  home_page: Hemsida   # Moving this to pri1.  Delete after we have sv, de, and ja translations.
+  hours: Timmar           # Hours of operation
+  kilometers: Kilometer # Kilometers from search location.  Moving this to pri1.  Delete after we have sv, de, and ja translations.
+  log_in: Logga in
+  logged_out: Du har loggats ut.
+  login_successful: Inloggningen lyckades!
+  must_log_in: Du m&aring;ste logga in f&ouml;r att ha tillg&aring;ng till den h&auml;r sidan
+  must_log_out: Du m&aring;ste logga ut f&ouml;r att ha tillg&aring;ng till den h&auml;r sidan
+  navlinks:
+    home: Hem
+    find_club: Hitta en klubb
+    add_club: L&auml;gg till en klubb
+    logout: Logga ut
+    login: Logga in
+    register: Registrera
+    settings: Inst&auml;llningar
+    about: Om
+    widgets: S&ouml;kfunktioner
+    development: Utveckling
+    contact: Kontakt
+    credits: Tack till
+  new_password: Nytt l&ouml;senord
+  owner: &auml;gare
+  password: L&ouml;senord
+  password_changed: Ditt l&ouml;senord har &auml;ndrats.
+  password_reset: Nollst&auml;llning av l&ouml;senord  # Page title for resetting password
+  password_reset_invalid: Beklagar, koden f&ouml;r att nollst&auml;lla ditt l&ouml;senord &auml;r antingen gammal eller ogiltig
+  phone: Telefonnummer           # Phone number
+  please_enter_password: "Skriv l&ouml;senord nedan. Kom ih&aring;g ditt l&ouml;senord!"
+  postal_code: Postnummer
+  provide_email: Skriv in din epost-adress f&ouml;r att forts&auml;tta
+  provide_username: Skriv ett anv&auml;ndarnamn f&ouml;r att forts&auml;tta
+  register: Registrera ett nytt konto
+  remember_me: Kom ih&aring;g mig # Checkbox for persistent login on login page
+  reset_password: Nollst&auml;ll l&ouml;senord
+  reset_password_notification: |
+    Du f&aring;r det h&auml;r ebrevet eftersom du har bett om att f&aring; ditt l&ouml;senord nollst&auml;llt.
+
+    Om du inte har bett om en nollst&auml;llning av l&ouml;senordet ber vi dig att kontakta oss p&aring; contact@promotego.org
+    s&aring; att vi f&aring;r reda p&aring; att det &auml;r ett problem.
+
+    F&ouml;r att nollst&auml;lla l&ouml;senordet klickar du p&aring; f&ouml;ljande l&auml;nk, eller kopiera den och klistra in i en webbl&auml;sare.
+  select_country: V&auml;lj ett land
+  select_state: V&auml;lj ett l&auml;n/omr&aring;de
+  send: Skicka
+  send_message: Skicka meddelande
+  sent: Skickat
+  show: Visa
+  sign_up: Registrera dig!
+  signup_complete: Registreringen klar!
+  state_province: L&auml;n/omr&aring;de
+  submit: Skicka
+  update: Uppdatera
+  username: Anv&auml;ndarnamn
+  username_notification: |
+    K&auml;ra anv&auml;ndare!
+
+    Du f&aring;r detta ebrev eftersom du har efterfr&aring;gat information om ditt anv&auml;ndarnamn.
+
+    Om du inte har efterfr&aring;gat information, v&auml;nligen kontakta oss p&aring; contact@promotego.org
+    s&aring; att vi f&aring;r reda p&aring; att det &auml;r ett problem.
+
+    H&auml;r &auml;r ditt anv&auml;ndarnamn till PromoteGo.org:
+  username_unknown: Det angivna anv&auml;ndarnamnet finns inte
+  visit_url_to_activate: "G&aring; till denna adress f&ouml;r att aktivera ditt konto:"

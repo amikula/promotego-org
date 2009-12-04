@@ -5,5 +5,5 @@ sv:
       noscript: Hitta en {{link}} n&auml;ra dig!
       link_text: gokklub
       label: 'Adress:'
-      hint: Hela adressen eller postnummer
+      hint: Adress eller postnummer
       submit: OK

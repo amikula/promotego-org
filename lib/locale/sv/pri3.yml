@@ -1,0 +1,56 @@
+sv:
+  affiliate: Partner   # This is the organization affiliated, a noun, not the verb "to affiliate"
+  affiliate_id: Partner ID
+  captcha_failed: Captcha-utmaning misslyckades   # A Captcha is a test to verify a human is filling out the form.  It's usually an image with distorted characters that have to be entered by the user to proceed.
+  captcha_instructions: Skriv av orden fr&aring;n bilden i rutan nedan
+  expires: G&aring;r ut       # Date on which something expires
+  from: Fr&aring;n             # Email sender address
+  message: Meddelande       # Email message body
+  message_about_listing: Du har ett meddelande fr&aring;n en anv&auml;ndare p&aring; PromoteGo.org ang&aring;ende din listning p&aring; {{url}}.
+  message_sent: Ditt meddelande har skickats
+  noscript_more_contacts:
+    "OBS: Vill du l&auml;gga till fler kontaktpersoner s&aring; fyll i &ouml;vriga kontakt-f&auml;lt och spara formul&auml;ret.
+    Editera sedan klubben igen s&aring; kommer det finnas ytterligare tomma f&auml;lt."
+  promotego_widgets: PromoteGo.org-funktioner
+  return_email: Svarsmail  # The email to use to respond to a message
+  roles: Roller           # Roles for this user: admin, superuser, etc.
+  search_widget: S&ouml;kfunktion
+  search_widget_title: PromoteGo.org s&ouml;kfunktion
+  search_widget_summary:
+    -
+      Nu kan du l&auml;gga till en s&ouml;kruta p&aring; din blogg eller webbsida
+      f&ouml;r att hj&auml;lpa dina bes&ouml;kare att hitta en klubb d&auml;r de kan spela go!
+      N&auml;r bes&ouml;karna skriver in en adress eller postnummer s&aring; listas alla
+      k&auml;nda goklubbar i n&auml;rheten.
+    -
+      F&ouml;lj instruktionerna nedan f&ouml;r att &auml;ndra s&ouml;k-funktionen till att passa
+      in p&aring; din webbplats.
+  search_widget_step_1_instructions:
+    - >
+      Skriv webbplatsens adress h&auml;r. Vi kommer att unders&ouml;ka f&auml;rger,
+      typsnitt samt annan information om webbplatsens utseende och
+      skapa ett f&ouml;rslag p&aring; inst&auml;llningar att anv&auml;nda med s&ouml;krutan.
+  search_widget_step_1_title: Skriv in webbplatsens adress (valfritt)
+  search_widget_step_2_instructions:
+    - >
+      S&ouml;krutan kommer att f&aring; f&ouml;ljande utseende:
+  search_widget_step_2_title: Se hur s&ouml;krutan kommer att se ut
+  search_widget_step_3_instructions:
+    - >
+      &Auml;ndra s&ouml;krutans inst&auml;llningar genom rullgardinsmenyerna
+      eller genom att ange v&auml;rden. F&ouml;rhandsvisningens utseendet kommer att
+      &auml;ndras automatiskt.
+  search_widget_step_3_title: "&Auml;ndra s&ouml;krutans inst&auml;llningar"
+  search_widget_step_4_instructions:
+    - >
+      F&ouml;r att l&auml;gga till s&ouml;krutan p&aring; din webbplats, kopiera och klistra
+      in f&ouml;ljande kod:
+  search_widget_step_4_title: L&auml;gg till koden till din webbplats
+  search_widget_teaser: >
+    S&ouml;kfunktionen p&aring; PromoteGo.org n&aring;s via en s&ouml;kruta p&aring; din webbplats eller blogg, s&aring; att bes&ouml;kare p&aring; ett
+    enkelt s&auml;tt kan hitta goklubbar i n&auml;rheten. F&ouml;r mer information, se {{search_widget}}.
+  url: Webbadress        # eg. http://your-site.com
+  widgets_summary: >
+    Widgetar fr&aring;n PromoteGo.org &auml;r kodsnuttar som integrerar PromoteGo.org-funktioner med webbplatsen eller bloggen.
+    PromoteGo.org &auml;r en tj&auml;nst avsedd att fr&auml;mja {{game_of_go}}.
+    Se {{about}}-sidan f&ouml;r ytterligare information om PromoteGo.org
