@@ -52,7 +52,7 @@
 %h2= t('state_listing')
 - active_countries(true).each do |country|
   .country{:style => "clear: left;"}
-    = link_to country.full_name, :controller => :locations, :type => 'go-clubs', :action => :index, :country => country.full_name.gsub(' ', '-')
+    = link_to country.full_name, :controller => :locations, :type => 'go-clubs', :action => :index, :country => country.url_name
   - by_columns(active_states_for(country.abbrev)) do |column|
     .column{:style => 'float: left; width: 120px; padding-bottom: 1em;'}
       - column.each do |state|

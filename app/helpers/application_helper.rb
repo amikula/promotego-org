@@ -27,14 +27,16 @@ module ApplicationHelper
     error_list
   end
 
-  Abbreviable = Struct.new(:full_name, :abbrev)
+  Abbreviable = Struct.new(:full_name, :url_name, :abbrev)
 
   def active_countries(us_first=false)
     Location.visible.find(:all, :select => 'DISTINCT country').collect do |l|
       if l.country.blank?
-        Abbreviable.new('None', 'None')
+        Abbreviable.new('None', 'None', 'None')
       else
-        Abbreviable.new(I18n.translate(l.country, :scope => "countries") || l.country, l.country)
+        country_name = I18n.translate(l.country, :scope => 'countries', :default => l.country)
+        country_url_fragment = (I18n.translate(l.country, :scope => 'countries', :locale => host_locale, :default => country_name)).gsub(' ', '-')
+        Abbreviable.new(country_name, country_url_fragment, l.country)
       end
     end.sort_by{|c| (us_first && c.abbrev == 'US') ? 'AAAAAAAA' : c.full_name}
   end
@@ -42,7 +44,7 @@ module ApplicationHelper
   def active_states_for(cntry)
     Location.visible.find(:all, :select => 'DISTINCT state', :conditions => ['country = ? AND state IS NOT NULL', cntry]).collect do |l|
       full_state_name = (STATE_FROM_ABBREV[cntry] && STATE_FROM_ABBREV[cntry][l.state]) || l.state
-      Abbreviable.new(full_state_name, l.state)
+      Abbreviable.new(full_state_name, nil, l.state)
     end.sort_by{|s| s.full_name}
   end
 

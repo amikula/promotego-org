@@ -17,7 +17,7 @@ class LocationsController < ApplicationController
 
     if params[:country]
       country_name = params[:country].gsub('-', ' ')
-      @country = COUNTRY_TO_ABBREV[country_name] || params[:country]
+      @country = I18n.t(country_name, :scope => :reverse_countries) || params[:country]
 
       if params[:state]
         state_name = params[:state].gsub('-', ' ')
