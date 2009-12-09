@@ -13,6 +13,7 @@ class LocationsController < ApplicationController
       return
     end
 
+    # TODO Need to sort server-side so we can sort in the proper order for the translated country name.  In fact, if we're already doing that, then the following line is unnecessary.
     options = {:order => 'country, state, city, name'}
 
     if params[:country]
