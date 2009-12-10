@@ -46,26 +46,11 @@ namespace :app do
 
   desc 'Reverse country translations'
   task :reverse_countries => :environment do
-    print 'Writing reverse countries...'
-    I18n.available_locales.each do |locale|
-      countries_hash = I18n.t('countries', :locale => locale)
+    ReverseTranslations.do_reverse('countries')
+  end
 
-      # Only continue if the locale of the translation matches our locale, ie, if there was no fallback translation
-      if locale == countries_hash.first.last.locale
-        new_data = {locale => {:reverse_countries => Hash[*countries_hash.invert.map{|k,v| [k.to_sym, v.to_s]}.flatten]}}
-        print "#{locale}..."
-
-        # Make sure the directory exists
-        FileUtils.mkdir_p(File.join(Rails.root, 'lib', 'locale', locale.to_s))
-
-        # Write the reverse data to the file
-        File.open(File.join(Rails.root, 'lib', 'locale', locale.to_s, 'reverse_countries.rb'), 'w') do |file|
-          file << new_data.inspect
-          file << "\n"
-        end
-      end
-    end
-
-    print "\n"
+  desc 'Reverse province translations'
+  task :reverse_provinces => :environment do
+    ReverseTranslations.do_reverse('provinces')
   end
 end
