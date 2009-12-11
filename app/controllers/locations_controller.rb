@@ -18,14 +18,11 @@ class LocationsController < ApplicationController
 
     if params[:country]
       country_name = params[:country].gsub('-', ' ')
-      @country = I18n.t(country_name, :scope => :reverse_countries) || params[:country]
+      @country = I18n.t(country_name, :scope => :reverse_countries, :locale => host_locale) || country_name
 
       if params[:state]
         state_name = params[:state].gsub('-', ' ')
-        if STATE_TO_ABBREV[@country]
-          state = STATE_TO_ABBREV[@country][state_name]
-        end
-        state ||= state_name
+        state = t(state_name, :scope => [:reverse_provinces, @country], :locale => host_locale) || state_name
 
         options[:conditions] = ['country = ? AND state = ?', @country, state]
         @heading = t 'clubs_in_location', :location => state_name

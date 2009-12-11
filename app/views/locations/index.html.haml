@@ -16,7 +16,7 @@
         = render :partial => 'location_line', :collection => locations_by_city[city]
 
     - else
-      - locations_by_state = @locations.group_by{|l| (STATE_FROM_ABBREV[@country] && STATE_FROM_ABBREV[@country][l.state]) || l.state}
+      - locations_by_state = @locations.group_by{|l| t(l.state, :scope => [:provinces, @country], :default => l.state)}
       - sort_with_nil(locations_by_state.keys).each do |state|
         - unless state.blank?
           %tr.location-header

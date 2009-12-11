@@ -52,6 +52,10 @@ describe ApplicationHelper do
     before(:each) do
       @visible = mock('named_scope')
       Location.stub!(:visible).and_return(@visible)
+
+      # Apparently this is not available during rspec testing, because it comes from ApplicationController
+      # and there's no controller when helper is run under rspec.
+      helper.stub!(:host_locale)
     end
 
     it 'queries all states for the country from the database' do

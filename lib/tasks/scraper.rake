@@ -17,7 +17,7 @@ namespace :scraper do
       #Set the country - default country is United States if none is set.
       location.country = club[:country].blank? ? 'US' : club[:country]
       #Set the state by two-letter code, or whatever the scraper gives us if we can't find it.
-      location.state = STATE_TO_ABBREV[location.country][club[:state]] || club[:state]
+      location.state = I18n.t(club[:state], :scope => [:reverse_provinces, location.country], :default => club[:state])
       if club[:phone]
         location.phone_number = club[:phone][0][:number]
       end

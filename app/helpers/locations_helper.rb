@@ -31,8 +31,9 @@ module LocationsHelper
 
   def state_select_hash
     returning Hash.new do |retval|
-      STATE_TO_ABBREV.each_pair do |country,states|
-        retval[country] = select :location, :state, states.to_a.sort!.unshift(['Please select a state/province', '--'])
+      (t :provinces).each_pair do |country,states|
+        states_array = states.to_a.map{|a| [a[1],a[0].to_s]}.sort!.unshift(['Please select a state/province', '--'])
+        retval[country.to_s] = select :location, :state, states_array
       end
     end
   end

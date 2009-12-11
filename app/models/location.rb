@@ -221,8 +221,8 @@ protected
       errors.add(:country, 'must be selected')
     elsif state == '--'
       errors.add(:state, 'must be selected')
-    elsif abbrevs=STATE_FROM_ABBREV[country]
-      unless abbrevs[state] || STATE_TO_ABBREV[country][state]
+    elsif I18n.t(country, :scope => :provinces)  # We know the province names for this country
+      unless I18n.t(state, :scope => [:provinces, country]) || I18n.t(state, :scope => [:reverse_provinces, country])
         errors.add(:state, "'#{state}' is not a valid state")
       end
     end
