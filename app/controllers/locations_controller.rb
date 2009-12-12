@@ -17,18 +17,26 @@ class LocationsController < ApplicationController
     options = {:order => 'country, state, city, name'}
 
     if params[:country]
-      country_name = params[:country].gsub('-', ' ')
+      country_name = seo_decode(params[:country])
       @country = I18n.t(country_name, :scope => :reverse_countries, :locale => host_locale) || country_name
 
+      redirect_country = seo_encode better_translation(country_name, @country, :countries)
+
       if params[:state]
-        state_name = params[:state].gsub('-', ' ')
+        state_name = seo_decode(params[:state])
         state = t(state_name, :scope => [:reverse_provinces, @country], :locale => host_locale) || state_name
+
+        redirect_state = seo_encode better_translation(state_name, state, [:provinces, @country])
+
+        redirect_to(:country => (redirect_country||params[:country]), :state => (redirect_state||params[:state]), :status => :moved_permanently) && return if redirect_country || redirect_state
 
         options[:conditions] = ['country = ? AND state = ?', @country, state]
         @heading = t 'clubs_in_location', :location => state_name
 
         @title = t 'clubs_in_state_and_country', :state => state_name, :country => country_name
       else
+        redirect_to(:country => redirect_country, :status => :moved_permanently) && return if redirect_country
+
         options[:conditions] = ['country = ?', @country]
         @heading = @title = t('clubs_in_location', :location => country_name)
       end
@@ -218,5 +226,11 @@ private
         retval[index.to_i] = value
       end
     end
+  end
+
+  def better_translation(translation, key, scope, locale=host_locale)
+    correct_translation = t(key, :scope => scope, :locale => locale)
+
+    return correct_translation if correct_translation != translation
   end
 end

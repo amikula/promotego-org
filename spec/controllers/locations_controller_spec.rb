@@ -52,6 +52,80 @@ describe LocationsController do
 
       do_get :country => 'United-States', :state => 'Texas'
     end
+
+    it 'redirects when there is a better country match for the host locale' do
+      controller.should_receive(:host_locale).any_number_of_times.and_return(:sv)
+
+      do_get :country => 'United-States'
+
+      response.should redirect_to(:country => 'USA')
+      response.response_code.should == 301
+    end
+
+    it 'redirects when there is a better country match for the host locale and there is a state' do
+      controller.should_receive(:host_locale).any_number_of_times.and_return(:sv)
+
+      do_get :country => 'United-States', :state => 'Texas'
+
+      response.should redirect_to(:country => 'USA', :state => 'Texas')
+      response.response_code.should == 301
+    end
+
+    it 'does not redirect when there is not a better country match for the host locale' do
+      controller.should_receive(:host_locale).any_number_of_times.and_return(:sv)
+
+      do_get :country => 'Sverige'
+
+      response.should_not be_redirect
+    end
+
+    it 'redirects when there is a better state match for the host locale' do
+      controller.should_receive(:host_locale).any_number_of_times.and_return(:sv)
+
+      do_get :country => 'USA', :state => 'California'
+
+      response.should redirect_to(:country => 'USA', :state => 'Kalifornien')
+      response.response_code.should == 301
+    end
+
+    it 'redirects when there is a better state and country match for the host locale' do
+      controller.should_receive(:host_locale).any_number_of_times.and_return(:sv)
+
+      do_get :country => 'United-States', :state => 'California'
+
+      response.should redirect_to(:country => 'USA', :state => 'Kalifornien')
+      response.response_code.should == 301
+    end
+  end
+
+  describe :better_translation do
+    describe 'with a non-array scope' do
+      it 'returns nil if there is no better translation than the one provided' do
+        controller.stub!(:host_locale).and_return(:en)
+
+        controller.send(:better_translation, 'United States', :US, :countries).should be_nil
+      end
+
+      it 'returns the new country translation if there is a better match' do
+        controller.stub!(:host_locale).and_return(:sv)
+
+        controller.send(:better_translation, 'United States', :US, :countries).should == 'USA'
+      end
+    end
+
+    describe 'with array scope' do
+      it 'returns nil if there is no better translation than the one provided' do
+        controller.stub!(:host_locale).and_return(:en)
+
+        controller.send(:better_translation, 'Texas', :TX, [:provinces, :US]).should be_nil
+      end
+
+      it 'returns the new country translation if there is a better match' do
+        controller.stub!(:host_locale).and_return(:sv)
+
+        controller.send(:better_translation, 'California', :CA, [:provinces, :US]).should == 'Kalifornien'
+      end
+    end
   end
 
   describe "handling GET /locations.xml" do
@@ -66,16 +140,16 @@ describe LocationsController do
       get :index, :type => 'go-clubs'
     end
 
-    it "should be successful" do
+    it "is successful" do
       do_get
       response.should be_success
     end
 
-    it "should find all locations" do
+    it "finds all locations" do
       do_get
     end
 
-    it "should render the found locations as xml" do
+    it "renders the found locations as xml" do
       @locations.should_receive(:to_xml).and_return("XML")
       do_get
       response.body.should == "XML"

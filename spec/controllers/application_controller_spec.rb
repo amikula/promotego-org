@@ -80,4 +80,16 @@ describe ApplicationController do
       subject.host_locale.should == :en
     end
   end
+
+  describe :seo_encode do
+    it 'converts spaces to hyphens' do
+      subject.seo_encode('United States of America').should == 'United-States-of-America'
+    end
+  end
+
+  describe :seo_decode do
+    it 'converts hyphens to spaces' do
+      subject.seo_decode('United-States-of-America').should == 'United States of America'
+    end
+  end
 end

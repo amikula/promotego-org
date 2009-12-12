@@ -57,4 +57,4 @@
     .column{:style => 'float: left; width: 120px; padding-bottom: 1em;'}
       - column.each do |state|
         .state
-          = link_to state.full_name, :controller => :locations, :type => 'go-clubs', :action => :index, :country => country.full_name.gsub(' ', '-'), :state => state.full_name.gsub(' ', '-')
+          = link_to state.full_name, :controller => :locations, :type => 'go-clubs', :action => :index, :country => country.url_name, :state => state.url_name

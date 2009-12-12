@@ -4,7 +4,7 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   filter_parameter_logging :password, :password_confirmation
-  helper_method :current_user_session, :current_user, :host_locale
+  helper_method :current_user_session, :current_user, :host_locale, :seo_encode, :seo_decode
   before_filter :set_locale
 
   def set_locale
@@ -23,6 +23,14 @@ class ApplicationController < ActionController::Base
 
   def host_locale
     (extract_locale_from_subdomain || I18n.default_locale).to_sym
+  end
+
+  def seo_encode(string)
+    string.tr(' ', '-') if string
+  end
+
+  def seo_decode(string)
+    string.tr('-', ' ') if string
   end
 
 private

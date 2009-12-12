@@ -35,7 +35,7 @@ module ApplicationHelper
         Abbreviable.new('None', 'None', 'None')
       else
         country_name = I18n.translate(l.country, :scope => 'countries', :default => l.country)
-        country_url_fragment = (I18n.translate(l.country, :scope => 'countries', :locale => host_locale, :default => country_name)).gsub(' ', '-')
+        country_url_fragment = seo_encode(I18n.translate(l.country, :scope => 'countries', :locale => host_locale, :default => country_name))
         Abbreviable.new(country_name, country_url_fragment, l.country)
       end
     end.sort_by{|c| (us_first && c.abbrev == 'US') ? 'AAAAAAAA' : c.full_name}
@@ -44,7 +44,7 @@ module ApplicationHelper
   def active_states_for(cntry)
     Location.visible.find(:all, :select => 'DISTINCT state', :conditions => ['country = ? AND state IS NOT NULL', cntry]).collect do |l|
       full_state_name = t(l.state, :scope => [:provinces, cntry], :default => l.state)
-      full_state_url_fragment = t(l.state, :scope => [:provinces, cntry], :locale => host_locale, :default => l.state)
+      full_state_url_fragment = seo_encode t(l.state, :scope => [:provinces, cntry], :locale => host_locale, :default => l.state)
       Abbreviable.new(full_state_name, full_state_url_fragment, l.state)
     end.sort_by{|s| s.full_name}
   end

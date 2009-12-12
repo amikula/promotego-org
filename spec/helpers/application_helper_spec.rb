@@ -9,6 +9,7 @@ describe ApplicationHelper do
       # Apparently this is not available during rspec testing, because it comes from ApplicationController
       # and there's no controller when helper is run under rspec.
       helper.stub!(:host_locale)
+      helper.stub!(:seo_encode){|str| str}
     end
 
     it 'queries all countries from the database' do
@@ -53,9 +54,10 @@ describe ApplicationHelper do
       @visible = mock('named_scope')
       Location.stub!(:visible).and_return(@visible)
 
-      # Apparently this is not available during rspec testing, because it comes from ApplicationController
+      # Apparently these are not available during rspec testing, because it comes from ApplicationController
       # and there's no controller when helper is run under rspec.
       helper.stub!(:host_locale)
+      helper.stub!(:seo_encode){|str| str}
     end
 
     it 'queries all states for the country from the database' do
