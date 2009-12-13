@@ -31,14 +31,14 @@ class LocationsController < ApplicationController
         redirect_to(:country => (redirect_country||params[:country]), :state => (redirect_state||params[:state]), :status => :moved_permanently) && return if redirect_country || redirect_state
 
         options[:conditions] = ['country = ? AND state = ?', @country, state]
-        @heading = t 'clubs_in_location', :location => state_name
+        @heading = t 'clubs_in_location', :location => t(state, :scope => [:provinces, @country], :default => state_name)
 
         @title = t 'clubs_in_state_and_country', :state => state_name, :country => country_name
       else
         redirect_to(:country => redirect_country, :status => :moved_permanently) && return if redirect_country
 
         options[:conditions] = ['country = ?', @country]
-        @heading = @title = t('clubs_in_location', :location => country_name)
+        @heading = @title = t('clubs_in_location', :location => t(@country, :scope => :countries, :default => country_name))
       end
     end
 
