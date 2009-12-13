@@ -4,7 +4,7 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   filter_parameter_logging :password, :password_confirmation
-  helper_method :current_user_session, :current_user, :host_locale, :seo_encode, :seo_decode
+  helper_method :current_user_session, :current_user, :host_locale, :seo_encode, :seo_decode, :merge_translation_hashes
   before_filter :set_locale
 
   def set_locale
@@ -31,6 +31,15 @@ class ApplicationController < ActionController::Base
 
   def seo_decode(string)
     string.tr('-', ' ') if string
+  end
+
+  def merge_translation_hashes(key, scope, locale=I18n.locale)
+    # Start with the translation for tha last fallback, and merge all the other translation fallbacks
+    # on top of it.
+    I18n.fallbacks[locale].reverse.inject({}) do |hsh,l|
+      translation_hash = t key, :scope => scope, :locale => l
+      hsh.merge(translation_hash) if translation_hash
+    end
   end
 
 private

@@ -126,13 +126,19 @@ describe LocationsHelper do
 
   describe :state_select_hash do
     it 'has a key for US and Canada' do
+      helper.should_receive(:merge_translation_hashes).any_number_of_times
+
       helper.state_select_hash.should have_key('US')
       helper.state_select_hash.should have_key('CA')
     end
 
-    it 'has a TX and CA state selector in the US key' do
-      helper.state_select_hash['US'].should have_tag('option[value=?]', 'TX', 'Texas')
-      helper.state_select_hash['US'].should have_tag('option[value=?]', 'CA', 'California')
+    it 'creates selectors based on the merged translation hashes' do
+      helper.should_receive(:merge_translation_hashes).with(:CA, :provinces).and_return(:AB => 'Alberta')
+      helper.should_receive(:merge_translation_hashes).with(:US, :provinces).and_return(:TX => 'Texas', :CA => 'California')
+
+      hash = helper.state_select_hash
+      hash['US'].should have_tag('option[value=?]', 'TX', 'Texas')
+      hash['US'].should have_tag('option[value=?]', 'CA', 'California')
     end
   end
 end

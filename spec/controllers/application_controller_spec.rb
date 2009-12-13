@@ -92,4 +92,16 @@ describe ApplicationController do
       subject.seo_decode('United-States-of-America').should == 'United States of America'
     end
   end
+
+  describe :merge_location_hashes do
+    it 'looks up the translation requested' do
+      subject.merge_translation_hashes(:US, :provinces, :en).keys.length.should == 51
+      subject.merge_translation_hashes(:US, :provinces, :en)[:CA].should == 'California'
+    end
+
+    it 'merges keys according to fallback sequence' do
+      subject.merge_translation_hashes(:US, :provinces, :sv).keys.length.should == 51
+      subject.merge_translation_hashes(:US, :provinces, :sv)[:CA].should == 'Kalifornien'
+    end
+  end
 end

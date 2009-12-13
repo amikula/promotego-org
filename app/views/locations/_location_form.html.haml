@@ -48,8 +48,8 @@
   %p
     %b= t 'state_province'
     %br/
-    - if state_abbrevs=t(@location.country, :scope => :provinces)
-      = select :location, :state, [[t('select_state'), '--']].concat(state_abbrevs.to_a.map{|a| [a[1], a[0].to_s]}.sort)
+    - if state_abbrevs=state_select_hash[location.country]
+      = select :location, :state, state_abbrevs
     - else
       = f.text_field :state
   %p
