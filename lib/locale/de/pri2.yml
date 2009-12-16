@@ -72,7 +72,7 @@ de:
   postal_code: Postleitzahl
   provide_email: Bitte geben Sie Ihre E-Mail-Adresse um fortzusetzen
   provide_username: Bitte geben Sie Ihren Benutzername um fortzusetzen
-  register: Registriren Sie ein neues Konto
+  register: Registrieren Sie ein neues Konto
   remember_me: "Einpr&auml;gen mich"
   reset_password: "Passwort zur&uuml;cksetzen"
   reset_password_notification: |
