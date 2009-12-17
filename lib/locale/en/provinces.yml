@@ -1,6 +1,6 @@
 en:
   provinces:
-    CA:
+    CA: # Canada
       AB: Alberta
       BC: British Colombia
       MB: Manitoba
@@ -11,7 +11,7 @@ en:
       PE: Prince Edward Island
       QC: Quebec
       SK: Saskatchewan
-    US:
+    US: # United States
       AL: Alabama
       AK: Alaska
       AZ: Arizona
@@ -63,3 +63,9 @@ en:
       WV: West Virginia
       WI: Wisconsin
       WY: Wyoming
+    SE: # Sweden
+      none: "true"
+    SG: # Singapore
+      none: "true"
+    IL: # Israel
+      none: "true"

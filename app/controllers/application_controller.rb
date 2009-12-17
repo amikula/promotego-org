@@ -4,7 +4,8 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   filter_parameter_logging :password, :password_confirmation
-  helper_method :current_user_session, :current_user, :host_locale, :seo_encode, :seo_decode, :merge_translation_hashes
+  helper_method :current_user_session, :current_user, :host_locale, :seo_encode, :seo_decode
+  helper_method :has_provinces?, :merge_translation_hashes
   before_filter :set_locale
 
   def set_locale
@@ -40,6 +41,14 @@ class ApplicationController < ActionController::Base
       translation_hash = t key, :scope => scope, :locale => l
       hsh.merge(translation_hash) if translation_hash
     end
+  end
+
+  # Return true unless province translation exists and contains special province 'none' with
+  # value 'true'
+  def has_provinces?(country)
+    translation_hash = merge_translation_hashes(country, :provinces)
+
+    !(translation_hash && translation_hash[:none] == 'true')
   end
 
 private

@@ -125,6 +125,10 @@ describe LocationsHelper do
   end
 
   describe :state_select_hash do
+    before :each do
+      helper.stub!(:has_provinces?).and_return(true)
+    end
+
     it 'has a key for US and Canada' do
       helper.should_receive(:merge_translation_hashes).any_number_of_times
 
@@ -133,12 +137,25 @@ describe LocationsHelper do
     end
 
     it 'creates selectors based on the merged translation hashes' do
+      helper.stub!(:merge_translation_hashes)
       helper.should_receive(:merge_translation_hashes).with(:CA, :provinces).and_return(:AB => 'Alberta')
       helper.should_receive(:merge_translation_hashes).with(:US, :provinces).and_return(:TX => 'Texas', :CA => 'California')
 
       hash = helper.state_select_hash
       hash['US'].should have_tag('option[value=?]', 'TX', 'Texas')
       hash['US'].should have_tag('option[value=?]', 'CA', 'California')
+    end
+
+    it 'inserts nil hash values for countries when has_provinces? returns false' do
+      helper.stub!(:merge_translation_hashes)
+      helper.should_receive(:has_provinces?).with(:SE).and_return(false)
+      helper.should_receive(:has_provinces?).with(:IL).and_return(false)
+
+      hash = helper.state_select_hash
+      hash.should have_key('SE')
+      hash['SE'].should == nil
+      hash.should have_key('IL')
+      hash['IL'].should == nil
     end
   end
 end

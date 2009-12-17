@@ -32,20 +32,31 @@
       textField = #{f.text_field(:state).to_json};
       function updateStateInput(countrySelect) {
         countryValue = countrySelect.options[countrySelect.selectedIndex].value
-        selectList = selections[countryValue];
         stateElement = $('#location_state')
-        stateValue = stateElement.val()
+        if(countryValue in selections) {
+          if (selections[countryValue] != null) {
+            selectList = selections[countryValue];
+            stateValue = stateElement.val()
 
-        stateElement.replaceWith(selectList || textField);
+            stateElement.replaceWith(selectList);
 
-        if(stateValue != '--') {
-          $('#location_state').val(stateValue)
+            if(stateValue != '--') {
+              $('#location_state').val(stateValue)
+            }
+
+            $('#state_province').css('display', 'block')
+          } else {
+            $('#state_province').css('display', 'none')
+          }
+        } else {
+          stateElement.replaceWith(textField);
+          $('#state_province').css('display', 'block')
         }
       }
     %b= t 'country'
     %br/
     = localized_country_select(:location, :country, [], {:include_blank => t('choose_country')}, :onchange => 'updateStateInput(this)')
-  %p
+  %p#state_province
     %b= t 'state_province'
     %br/
     - if state_abbrevs=state_select_hash[location.country]

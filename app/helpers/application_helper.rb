@@ -42,6 +42,8 @@ module ApplicationHelper
   end
 
   def active_states_for(cntry)
+    return [] unless has_provinces?(cntry)
+
     Location.visible.find(:all, :select => 'DISTINCT state', :conditions => ['country = ? AND state IS NOT NULL', cntry]).collect do |l|
       full_state_name = t(l.state, :scope => [:provinces, cntry], :default => l.state)
       full_state_url_fragment = seo_encode t(l.state, :scope => [:provinces, cntry], :locale => host_locale, :default => l.state)

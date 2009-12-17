@@ -58,6 +58,7 @@ describe ApplicationHelper do
       # and there's no controller when helper is run under rspec.
       helper.stub!(:host_locale)
       helper.stub!(:seo_encode){|str| str}
+      helper.stub!(:has_provinces?).and_return(true)
     end
 
     it 'queries all states for the country from the database' do
@@ -82,6 +83,13 @@ describe ApplicationHelper do
       @visible.should_receive(:find).and_return([mock(Location, :state => 'LA'), mock(Location, :state => 'AK'), mock(Location, :state => 'CA')])
 
       helper.active_states_for('US').collect{|c| c.full_name}.should == ['Alaska', 'California', 'Louisiana']
+    end
+
+    it 'returns an empty array when the country has no provinces' do
+      @visible.should_not_receive(:find)
+      helper.stub!(:has_provinces?).with('XX').and_return(false)
+
+      helper.active_states_for('XX').should == []
     end
   end
 

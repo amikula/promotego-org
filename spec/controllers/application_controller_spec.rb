@@ -104,4 +104,24 @@ describe ApplicationController do
       subject.merge_translation_hashes(:US, :provinces, :sv)[:CA].should == 'Kalifornien'
     end
   end
+
+  describe :has_provinces? do
+    it 'returns true when the country has provinces in the province hash' do
+      subject.should_receive(:merge_translation_hashes).with(:US, :provinces).and_return(:CA => 'California')
+
+      subject.has_provinces?(:US).should be_true
+    end
+
+    it 'returns true when the country is not listed in the province hash' do
+      subject.should_receive(:merge_translation_hashes).with(:XX, :provinces).and_return(nil)
+
+      subject.has_provinces?(:XX).should be_true
+    end
+
+    it 'returns false when the country has the special province "none" in the province hash' do
+      subject.should_receive(:merge_translation_hashes).with(:SE, :provinces).and_return(:none => 'true')
+
+      subject.has_provinces?(:SE).should be_false
+    end
+  end
 end

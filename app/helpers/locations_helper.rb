@@ -29,12 +29,20 @@ module LocationsHelper
     end
   end
 
+  # Returns a hash containing selection lists for each country's provinces, or null for countries
+  # with special province 'none'.  Countries with no provinces configured are omitted.  Used in
+  # javascript to present a selection of provinces for known countries.
   def state_select_hash
     returning Hash.new do |retval|
       (t :provinces).each_key do |country|
-        states_array = merge_translation_hashes(country, :provinces).to_a.map{|a| [a[1],a[0].to_s]}.sort
-        states_array.unshift([t('select_state'), '--'])
-        retval[country.to_s] = select :location, :state, states_array
+        if !has_provinces?(country)
+          retval[country.to_s] = nil
+        else
+          states_hash = merge_translation_hashes(country, :provinces)
+          states_array = states_hash.to_a.map{|a| [a[1],a[0].to_s]}.sort
+          states_array.unshift([t('select_state'), '--'])
+          retval[country.to_s] = select :location, :state, states_array
+        end
       end
     end
   end
