@@ -30,7 +30,7 @@
     :javascript
       selections = #{state_select_hash.to_json};
       textField = #{f.text_field(:state).to_json};
-      emptyField = #{text_field_tag(:location_state, 'Not Used', :disabled => true).to_json}
+      emptyField = #{text_field_tag(:location_state, t('not_used'), :disabled => true).to_json}
       function updateStateInput(countrySelect) {
         countryValue = countrySelect.options[countrySelect.selectedIndex].value
         stateElement = $('#location_state')
@@ -42,7 +42,7 @@
 
             stateElement.replaceWith(selectList);
 
-            if((stateValue != '--') && (stateValue != 'Not Used')) {
+            if((stateValue != '--') && (stateValue != '#{t('not_used')}')) {
               $('#location_state').val(stateValue)
             }
           } else {
@@ -50,7 +50,7 @@
           }
         } else {
           stateElement.replaceWith(textField);
-          if((stateValue != '--') && (stateValue != 'Not Used')) {
+          if((stateValue != '--') && (stateValue != '#{t('not_used')}')) {
             $('#location_state').val(stateValue)
           }
         }

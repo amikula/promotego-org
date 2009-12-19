@@ -61,6 +61,7 @@ en:
     contact: Contact
     credits: Credits
   new_password: New Password
+  not_used: Not Used   # Hint text in state/province input when it's suppressed for a country
   owner: Owner
   password: Password
   password_changed: Your password has been changed.
