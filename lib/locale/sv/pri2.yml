@@ -48,6 +48,7 @@ sv:
   login_successful: Inloggningen lyckades!
   must_log_in: Du m&aring;ste logga in f&ouml;r att ha tillg&aring;ng till den h&auml;r sidan
   must_log_out: Du m&aring;ste logga ut f&ouml;r att ha tillg&aring;ng till den h&auml;r sidan
+  not_used: Används inte   # Hint text in state/province input when it's suppressed for a country
   navlinks:
     home: Hem
     find_club: Hitta en klubb
