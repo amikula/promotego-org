@@ -30,27 +30,29 @@
     :javascript
       selections = #{state_select_hash.to_json};
       textField = #{f.text_field(:state).to_json};
+      emptyField = #{text_field_tag(:location_state, 'Not Used', :disabled => true).to_json}
       function updateStateInput(countrySelect) {
         countryValue = countrySelect.options[countrySelect.selectedIndex].value
         stateElement = $('#location_state')
+        stateValue = stateElement.val()
+
         if(countryValue in selections) {
           if (selections[countryValue] != null) {
             selectList = selections[countryValue];
-            stateValue = stateElement.val()
 
             stateElement.replaceWith(selectList);
 
-            if(stateValue != '--') {
+            if((stateValue != '--') && (stateValue != 'Not Used')) {
               $('#location_state').val(stateValue)
             }
-
-            $('#state_province').css('display', 'block')
           } else {
-            $('#state_province').css('display', 'none')
+            stateElement.replaceWith(emptyField)
           }
         } else {
           stateElement.replaceWith(textField);
-          $('#state_province').css('display', 'block')
+          if((stateValue != '--') && (stateValue != 'Not Used')) {
+            $('#location_state').val(stateValue)
+          }
         }
       }
     %b= t 'country'
@@ -59,10 +61,9 @@
   %p#state_province
     %b= t 'state_province'
     %br/
-    - if state_abbrevs=state_select_hash[location.country]
-      = select :location, :state, state_abbrevs
-    - else
-      = f.text_field :state
+    = f.text_field :state
+    :javascript
+      $(function() {updateStateInput($('#location_country')[0]);});
   %p
     %b= t 'postal_code'
     %br/

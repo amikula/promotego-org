@@ -8,8 +8,7 @@
     %div
       - if location.city
         %span.locality= location.city
-        %span.region= location.state
-      - elsif location.state
+      - if location.state
         %span.region= location.state
       - if location.zip_code
         %span.postal-code= location.zip_code

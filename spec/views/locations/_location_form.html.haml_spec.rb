@@ -19,7 +19,7 @@ describe "/locations/_location_form" do
       with_tag('input#location_name[name=?]', "location[name]")
       with_tag('input#location_street_address[name=?]', "location[street_address]")
       with_tag('input#location_city[name=?]', "location[city]")
-      with_tag('select#location_state[name=?]', "location[state]")
+      with_tag('input#location_state[name=?]', "location[state]")
       with_tag('input#location_zip_code[name=?]', "location[zip_code]")
       with_tag('select#location_country[name=?]', "location[country]")
       with_tag('input#location_hours[name=?]', "location[hours]")

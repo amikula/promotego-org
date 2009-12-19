@@ -2,6 +2,8 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+  include TranslationExtension
+
   helper :all # include all helpers, all the time
   filter_parameter_logging :password, :password_confirmation
   helper_method :current_user_session, :current_user, :host_locale, :seo_encode, :seo_decode
@@ -32,23 +34,6 @@ class ApplicationController < ActionController::Base
 
   def seo_decode(string)
     string.tr('-', ' ') if string
-  end
-
-  def merge_translation_hashes(key, scope, locale=I18n.locale)
-    # Start with the translation for tha last fallback, and merge all the other translation fallbacks
-    # on top of it.
-    I18n.fallbacks[locale].reverse.inject({}) do |hsh,l|
-      translation_hash = t key, :scope => scope, :locale => l
-      hsh.merge(translation_hash) if translation_hash
-    end
-  end
-
-  # Return true unless province translation exists and contains special province 'none' with
-  # value 'true'
-  def has_provinces?(country)
-    translation_hash = merge_translation_hashes(country, :provinces)
-
-    !(translation_hash && translation_hash[:none] == 'true')
   end
 
 private

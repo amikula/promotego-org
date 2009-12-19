@@ -1,4 +1,6 @@
 class Location < ActiveRecord::Base
+  include TranslationExtension
+
   acts_as_mappable
   belongs_to :user
   belongs_to :source
@@ -40,6 +42,11 @@ class Location < ActiveRecord::Base
     clean_empty_contacts
     if self.slug.blank? || self.slug_should_change?
       self.slug = first_available_slug(self.name.sluggify)
+    end
+
+    # Clean out unused provinces
+    unless has_provinces?(country)
+      self.state = nil
     end
 
     if self.slug_changed?
@@ -134,7 +141,7 @@ class Location < ActiveRecord::Base
     components << city unless city.blank?
 
     state_zip = ''
-    unless state.blank?
+    if state.present?
       state_zip << state
       unless zip_code.blank?
         state_zip << ' '
@@ -151,6 +158,14 @@ class Location < ActiveRecord::Base
 
   def driving_directions?
     geocode_precision == 'address' && !street_address.blank?
+  end
+
+  def state
+    # Suppress state if we know that the country does not have provinces.
+    # If we don't know the country, it's because we queried only for states.  I think it's ok
+    # to let those states come through, since going forward these listings should disappear
+    # as they are updated.
+    read_attribute(:state) if !country? || has_provinces?(country)
   end
 
 private
@@ -219,11 +234,13 @@ protected
   def validate
     if country == '--'
       errors.add(:country, 'must be selected')
-    elsif state == '--'
-      errors.add(:state, 'must be selected')
-    elsif I18n.t(country, :scope => :provinces)  # We know the province names for this country
-      unless I18n.t(state, :scope => [:provinces, country]) || I18n.t(state, :scope => [:reverse_provinces, country])
-        errors.add(:state, "'#{state}' is not a valid state")
+    elsif has_provinces?(country)
+      if state == '--'
+        errors.add(:state, 'must be selected')
+      elsif I18n.t(country, :scope => :provinces)  # We know the province names for this country
+        unless I18n.t(state, :scope => [:provinces, country]) || I18n.t(state, :scope => [:reverse_provinces, country])
+          errors.add(:state, "'#{state}' is not a valid state")
+        end
       end
     end
   end
