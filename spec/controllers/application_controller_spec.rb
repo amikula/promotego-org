@@ -73,11 +73,11 @@ describe ApplicationController do
     end
 
     it 'returns default locale when locale from subdomain is nil' do
-      I18n.default_locale.should == :en
+      I18n.default_locale.should == :'en-US'
 
       subject.should_receive(:extract_locale_from_subdomain).and_return(nil)
 
-      subject.host_locale.should == :en
+      subject.host_locale.should == :'en-US'
     end
   end
 

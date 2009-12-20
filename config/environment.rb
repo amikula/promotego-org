@@ -24,5 +24,7 @@ Rails::Initializer.run do |config|
   }
 end
 
+I18n.default_locale = :'en-US'
+
 ENV['RECAPTCHA_PUBLIC_KEY'] = '6Ldu-AIAAAAAAG7LIohw_Gx3HoB7aWL3a_k9jNpS'
 ENV['RECAPTCHA_PRIVATE_KEY'] = '6Ldu-AIAAAAAALXrp6fSj3VOs6rk_FEln-ZTl33O'
