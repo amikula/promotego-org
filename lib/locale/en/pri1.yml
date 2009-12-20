@@ -9,15 +9,12 @@ en:
   description: Description
   directions: Directions # Driving directions
   home_page: Home Page
-  kilometers: Kilometers # Kilometers from search location
-  miles: Miles
-  miles_downcase: miles  # Still capitalized if nouns are always capitalized as in German
+  kilometers: Kilometres # Kilometers from search location
   name: Name             # Club or contact name
   new_club: New Go Club
   no_address: No street address available
   no_clubs_matched:
     "No Go clubs matched your search.  However, here is the closest match in our database:"
-  no_clubs_matched_limit: No locations matched your search within {{miles}} miles
   no_match: No Match
   radius: Radius         # As in the radius of the search
   search: Search
@@ -30,3 +27,11 @@ en:
   state_listing: Listing by state
   state_unknown: State/Province Unknown
   welcome: Welcome
+  mi:
+    no_clubs_matched_limit: No locations matched your search within {{limit}} miles
+    units: Miles
+    units_downcase: miles  # Still capitalized if nouns are always capitalized as in German
+  km:
+    no_clubs_matched_limit: No locations matched your search within {{limit}} kilometres
+    units: Kilometres
+    units_downcase: kilometres  # Still capitalized if nouns are always capitalized as in German

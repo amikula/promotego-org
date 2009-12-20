@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   filter_parameter_logging :password, :password_confirmation
   helper_method :current_user_session, :current_user, :host_locale, :seo_encode, :seo_decode
-  helper_method :has_provinces?, :merge_translation_hashes
+  helper_method :has_provinces?, :merge_translation_hashes, :distance_units
   before_filter :set_locale
 
   def set_locale
@@ -34,6 +34,12 @@ class ApplicationController < ActionController::Base
 
   def seo_decode(string)
     string.tr('-', ' ') if string
+  end
+
+  # Returns :mi or :km.  Eventually this will be a preference the user can set, but
+  # we're starting with a default setting for the current locale.
+  def distance_units
+    I18n.t(:distance, :scope => :locale_units).to_sym
   end
 
 private

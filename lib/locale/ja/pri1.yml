@@ -8,14 +8,11 @@ ja:
   contacts: 連絡先
   description: 説明
   directions: アクセス方法 # Driving directions
-  miles: マイル
-  miles_downcase: マイル  # Still capitalized if nouns are always capitalized as in German
   name: 名前             # Club or contact name
   new_club: 新しい碁会所
   no_address: 住所未入力
   no_clubs_matched:
     "一致する碁会所は見つかりませんでした。最寄の碁会所の情報をお薦めします。"
-  no_clubs_matched_limit: "{{miles}}マイル 以内に対戦相手が見つかりませんでした。"
   no_match: 対戦相手が見つかりませんでした。
   radius: 検索範囲         # As in the radius of the search
   search: 検索
@@ -26,3 +23,7 @@ ja:
   state_listing: 県別検索結果
   state_unknown: 県名不明
   welcome: ようこそ
+  mi:
+    no_clubs_matched_limit: "{{limit}}マイル 以内に対戦相手が見つかりませんでした。"
+    units: マイル
+    units_downcase: マイル  # Still capitalized if nouns are always capitalized as in German

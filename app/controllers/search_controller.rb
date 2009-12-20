@@ -3,7 +3,7 @@ class SearchController < ApplicationController
 
   include GeoMethods
 
-  SEARCH_RADII = [5,10,25,50,100,250]
+  SEARCH_RADII = {:mi => [5,10,25,50,100,250], :km => [10,25,50,100,250,400]}
 
   def go_clubs_redirect
     redirect_to :type => 'go-clubs', :action => params[:action], :status => :moved_permanently unless !request.get? || params[:type] == 'go-clubs'
@@ -31,7 +31,7 @@ class SearchController < ApplicationController
               pushpin_for_club(location) if location.is_a? Location
             end
           else
-            flash.now[:error] = t 'no_clubs_matched_limit', :miles => SEARCH_RADII.last
+            flash.now[:error] = t 'no_clubs_matched_limit', :limit => SEARCH_RADII[distance_units].last, :scope => distance_units
           end
         end
 
@@ -46,7 +46,7 @@ class SearchController < ApplicationController
     session[:last_search_address] = @address
     @radius = params[:radius].to_d if params[:radius]
 
-    @radii = SEARCH_RADII
+    @radii = SEARCH_RADII[distance_units]
   end
 
   def find_params
@@ -57,11 +57,14 @@ class SearchController < ApplicationController
   end
 
   def find_closest
-    closest_params = {:origin => @address, :within => SEARCH_RADII[-1]}
+    limit = SEARCH_RADII[distance_units].last
+    limit = limit.send(distance_units).to.miles.to_f unless distance_units == :mi
+
+    closest_params = {:origin => @address, :within => limit}
     closest_params[:conditions] = 'lat is not null and lng is not null and hidden = false'
 
     @closest = true
 
-    @results = [Location.find_closest(closest_params)]
+    @results = [Location.find_closest(closest_params)].compact
   end
 end

@@ -9,21 +9,57 @@ describe SearchController do
     end
 
     describe :radius do
-      it "should assign radii and types on radius_search" do
+      it "assigns radii and types on radius_search" do
         get :radius
         assigns[:radii].should_not be_nil
       end
 
-      it "should find the closest result if no search results are present" do
-        Location.should_receive(:find).and_return([])
+      describe 'assigns radii according to current distance units' do
+        [:mi, :km].each do |units|
+          it "(#{units})" do
+            subject.should_receive(:distance_units).and_return(units)
 
-        Location.should_receive(:find_closest).with(:origin => @address,
-            :within => 250, :conditions => 'lat is not null and lng is not null and hidden = false')
+            get :radius
 
-        get :radius, :address => @address, :radius => "5"
+            assigns[:radii].should == SearchController::SEARCH_RADII[units]
+          end
+        end
       end
 
-      it "should call find with the results of the find_params method" do
+      [:mi, :km].each do |units|
+        it "finds the closest result if no search results are present (#{units})" do
+          controller.should_receive(:distance_units).any_number_of_times.and_return(units)
+          Location.should_receive(:find).and_return([])
+          limit = SearchController::SEARCH_RADII[units].last.send(units).to.miles.to_f
+
+          Location.should_receive(:find_closest).with(:origin => @address,
+              :within => limit,
+              :conditions => 'lat is not null and lng is not null and hidden = false')
+
+          get :radius, :address => @address, :radius => "5"
+        end
+
+        it "provides an appropriate error message when no results are found (#{units})" do
+          controller.should_receive(:distance_units).any_number_of_times.and_return(units)
+          Location.should_receive(:find).and_return([])
+          limit = SearchController::SEARCH_RADII[units].last.send(units).to.miles.to_f
+          limit_display = SearchController::SEARCH_RADII[units].last
+
+          controller.should_receive(:t).
+            with('no_clubs_matched_limit', :limit => limit_display, :scope => units).
+            and_return('translation')
+
+          Location.should_receive(:find_closest).and_return(nil)
+
+          controller.instance_eval{flash.stub!(:sweep)}
+
+          get :radius, :address => @address, :radius => "5"
+
+          flash.now[:error].should == 'translation'
+        end
+      end
+
+      it "calls find with the results of the find_params method" do
         controller.should_receive(:find_params).and_return(:find_params)
         Location.should_receive(:find).with(:all, :find_params).and_return([@location])
 
@@ -32,11 +68,11 @@ describe SearchController do
     end
 
     describe :find_params do
-      it "should return a Hash" do
+      it "returns a Hash" do
         controller.send(:find_params).should be_kind_of(Hash)
       end
 
-      it "should contain origin, within, and order params" do
+      it "contains origin, within, and order params" do
         controller.instance_eval do
           @address = :address
           @radius = :radius
@@ -48,20 +84,20 @@ describe SearchController do
   end
 
   describe 'testing go_clubs_redirect' do
-    it 'should redirect when type is not go-clubs' do
+    it 'redirects when type is not go-clubs' do
       get :radius, :type => 'not-go-clubs'
 
       response.should redirect_to(:action => 'radius', :type => 'go-clubs')
       response.response_code.should == 301
     end
 
-    it 'should not redirect when type is go-clubs' do
+    it 'does not redirect when type is go-clubs' do
       get :radius, :type => 'go-clubs'
 
       response.should_not be_redirect
     end
 
-    it 'should not redirect on post' do
+    it 'does not redirect on post' do
       post :radius, :type => 'not-go-clubs'
 
       response.should_not be_redirect

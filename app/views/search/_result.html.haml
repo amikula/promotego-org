@@ -3,6 +3,6 @@
   %td= result.street_address if result.street_address
   %td
     - if result.geocode_precision.to_s == 'address'
-      =result.distance.to_f.round(1)
+      =result.distance.to_f.miles.to.send(distance_units).round(1)
     - else
       ?

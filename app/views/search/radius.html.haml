@@ -20,12 +20,12 @@
       %tr
         %th= t 'name'
         %th= t 'address'
-        %th= t 'miles'
+        %th= t 'units', :scope => distance_units
       - sort_locations_by_distance(@results) do |info, group|
         %tr.location-header
           %td== #{info[0]}, #{info[1]}
           %td
-          %td= info[2].round(1)
+          %td= info[2].miles.to.send(distance_units).round(1)
         = render :partial => "result", :collection => group
 
 - if @results.blank? && @closest.blank?
@@ -44,8 +44,9 @@
       %td
         %select#radius{:name => "radius"}
           - @radii.each do |radius|
-            %option{:selected => radius == @radius}= radius
-        = t('miles_downcase')
+            - value = (distance_units == :mi) ? radius : radius.send(distance_units).to.miles
+            %option{:selected => radius == @radius, :value => value}= radius
+        = t 'units_downcase', :scope => distance_units
   = submit_tag t('search')
 %br/
 %br/

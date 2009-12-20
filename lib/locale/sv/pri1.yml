@@ -8,14 +8,11 @@ sv:
   contacts: Kontaktpersoner     # People to contact for information about the club
   description: "F&ouml;rklaring"
   directions: "V&auml;gbeskrivning" # Driving directions
-  miles: Amerikanska miles
-  miles_downcase: amerikanska miles  # Still capitalized if nouns are always capitalized as in German
   name: Namn             # Club or contact name
   new_club: Ny goklubb
   no_address: Gatuadress saknas
   no_clubs_matched:
     "Inga goklubbar hittades med angivna s&ouml;kord. Detta &auml;r b&auml;sta matchningen mot databasen:"
-  no_clubs_matched_limit: "Inga tr&auml;ffar inom {{miles}} amerikanska miles"
   no_match: "Ingen tr&auml;ff"
   radius: Radie         # As in the radius of the search
   search: "S&ouml;k"
@@ -27,3 +24,7 @@ sv:
   state_listing: "Lista per provins"
   state_unknown: "Ok&auml;nt provins"
   welcome: "V&auml;lkommen"
+  mi:
+    no_clubs_matched_limit: "Inga tr&auml;ffar inom {{limit}} amerikanska miles"
+    units: Amerikanska miles
+    units_downcase: amerikanska miles

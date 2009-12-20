@@ -48,3 +48,5 @@ gems:
   version: 1.4.1
 - name: webrat
   version: 0.5.3
+- name: alchemist
+  version: 0.1.1

@@ -44,6 +44,7 @@ describe "/search/radius" do
     end
 
     it 'should contain location headings' do
+      template.stub!(:distance_units).and_return(:mi)
       do_render
 
       response.should have_tag("tr[class=?]", "location-header") do

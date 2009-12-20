@@ -1,0 +1,5 @@
+en-US:
+  km:
+    no_clubs_matched_limit: No locations matched your search within {{limit}} kilometers
+    units: Kilometers
+    units_downcase: kilometers  # Still capitalized if nouns are always capitalized as in German

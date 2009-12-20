@@ -8,14 +8,11 @@ de:
   contacts: Kontakte     # People to contact for information about the club
   description: Beschreibung
   directions: Anfahrtsbeschreibung # Driving directions
-  miles: Meilen
-  miles_downcase: Meilen  # Still capitalized if nouns are always capitalized as in German
   name: Name             # Club or contact name
   new_club: Neue Go Club
   no_address: "Keine Adresse verf&uuml;gbar"
   no_clubs_matched:
     "Keine Go-Clubs gefunden die mit Ihren Suchkriterien &uuml;bereinstimmen.  Allerdings ist hier die gr&ouml;&szlig;te &Uuml;bereinstimmung in unserer Datenbank:"
-  no_clubs_matched_limit: "Keine Go-Clubs innerhalb von {{miles}} Meilen gefunden die mit Ihren Suchkriterien &uuml;bereinstimmen."
   no_match: "Keine &Uuml;bereinstimmung"
   radius: Radius         # As in the radius of the search
   search: Suche
@@ -28,3 +25,7 @@ de:
   state_listing: Liste in Staat-Sequenz
   state_unknown: Staat/Bundesland/Kanton unbekannt
   welcome: Wilkommen
+  mi:
+    no_clubs_matched_limit: "Keine Go-Clubs innerhalb von {{limit}} Meilen gefunden die mit Ihren Suchkriterien &uuml;bereinstimmen."
+    units: Meilen
+    units_downcase: Meilen  # Still capitalized if nouns are always capitalized as in German

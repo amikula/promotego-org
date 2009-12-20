@@ -3,6 +3,12 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe User do
   fixtures :users
 
+  def create_user(options = {})
+    record = User.new({ :login => 'quirex', :email => 'quirex@example.com', :password => 'quirex', :password_confirmation => 'quirex' }.merge(options))
+    record.save
+    record
+  end
+
   describe 'being created' do
     before do
       @user = nil
@@ -498,13 +504,6 @@ describe User do
         @user.administers(@affiliate).should be_false
       end
     end
-  end
-
-protected
-  def create_user(options = {})
-    record = User.new({ :login => 'quirex', :email => 'quirex@example.com', :password => 'quirex', :password_confirmation => 'quirex' }.merge(options))
-    record.save
-    record
   end
 end
 

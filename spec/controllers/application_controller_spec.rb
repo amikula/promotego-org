@@ -92,4 +92,12 @@ describe ApplicationController do
       subject.seo_decode('United-States-of-America').should == 'United States of America'
     end
   end
+
+  describe :distance_units do
+    it 'uses the current locale setting, converting to symbol' do
+      I18n.should_receive(:t).with(:distance, :scope => :locale_units).and_return('km')
+
+      subject.distance_units.should == :km
+    end
+  end
 end
