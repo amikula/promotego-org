@@ -26,6 +26,7 @@ en:
   search_results: Search Results
   state_listing: Listing by state
   state_unknown: State/Province Unknown
+  translated: 'true'   # Just leave this value as-is.  It means we have a translation for this language.
   welcome: Welcome
   mi:
     no_clubs_matched_limit: No locations matched your search within {{limit}} miles
@@ -35,3 +36,8 @@ en:
     no_clubs_matched_limit: No locations matched your search within {{limit}} kilometres
     units: Kilometres
     units_downcase: kilometres  # Still capitalized if nouns are always capitalized as in German
+  languages:
+    de: German
+    en: English
+    ja: Japanese
+    sv: Swedish

@@ -24,8 +24,14 @@ de:
   search_results: Ergebnisse der Suche
   state_listing: Liste in Staat-Sequenz
   state_unknown: Staat/Bundesland/Kanton unbekannt
+  translated: 'true'   # Just leave this value as-is.  It means we have a translation for this language.
   welcome: Wilkommen
   mi:
     no_clubs_matched_limit: "Keine Go-Clubs innerhalb von {{limit}} Meilen gefunden die mit Ihren Suchkriterien &uuml;bereinstimmen."
     units: Meilen
     units_downcase: Meilen  # Still capitalized if nouns are always capitalized as in German
+  languages:
+    de: Deutsch
+    en: Englisch
+    ja: Japanisch
+    sv: Schwedisch

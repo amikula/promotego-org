@@ -52,6 +52,7 @@
           %li= link_to t('navlinks.development'), "http://github.com/amikula/promotego-org/wikis/home"
           %li= link_to t('navlinks.contact'), :controller => :home, :action => :show, :page => :contact
           %li= link_to t('navlinks.credits'), :controller => :home, :action => :show, :page => :credits
+          %li= language_list
     - if Rails.env.production?
       :javascript
         var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");

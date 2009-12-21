@@ -93,4 +93,27 @@ module ApplicationHelper
       end
     end
   end
+
+  def available_translations
+    I18n.available_locales.inject([]) do |avail, l|
+      avail << l if I18n.t(:translated, :locale => l).locale == l
+      avail
+    end
+  end
+
+  def language_list
+    content_tag :ul do
+      available_translations.inject("") do |ret, lang|
+        ret << content_tag(:li) do
+                 language_native = t(lang, :scope => :languages, :locale => lang)
+                 language = t(lang, :scope => :languages)
+
+                 language_display = language_native
+                 language_display << " (#{language})" unless language_display == language
+                 flag = t(:flag, :locale => lang)
+                 image_tag("/images/flags/#{flag}.png") + content_tag(:a, language_display, :href => "http://#{lang}.#{base_hostname}/")
+               end
+      end
+    end
+  end
 end

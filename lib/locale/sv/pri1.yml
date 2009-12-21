@@ -23,8 +23,18 @@ sv:
   search_results: "S&ouml;kresultat"
   state_listing: "Lista per provins"
   state_unknown: "Ok&auml;nt provins"
+  translated: 'true'   # Just leave this value as-is.  It means we have a translation for this language.
   welcome: "V&auml;lkommen"
   mi:
     no_clubs_matched_limit: "Inga tr&auml;ffar inom {{limit}} amerikanska miles"
     units: Amerikanska miles
     units_downcase: amerikanska miles
+  km:
+    no_clubs_matched_limit: Inga klubbar funna inom {{limit}} kilometer.
+    units: kilometer
+    units_downcase: kilometer
+  languages:
+    de: Tyska
+    en: Engelska
+    ja: Japanska
+    sv: Svenska

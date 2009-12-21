@@ -7,8 +7,16 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   filter_parameter_logging :password, :password_confirmation
   helper_method :current_user_session, :current_user, :host_locale, :seo_encode, :seo_decode
-  helper_method :has_provinces?, :merge_translation_hashes, :distance_units
+  helper_method :has_provinces?, :merge_translation_hashes, :distance_units, :base_hostname
   before_filter :set_locale
+  before_filter :locale_redirect
+
+  def locale_redirect
+    browser_locale = request.preferred_language_from(I18n.available_locales).to_s
+    subdomain_locale = extract_locale_from_subdomain
+
+    redirect_to "http://#{base_hostname}#{request.request_uri}" if subdomain_locale && browser_locale.starts_with?(subdomain_locale)
+  end
 
   def set_locale
     I18n.locale = if params[:locale]
@@ -24,8 +32,21 @@ class ApplicationController < ActionController::Base
     !!extract_locale_from_subdomain
   end
 
+  # Return the default locale of the host.  If no locale is in the subdomain, return the
+  # default locale.  Otherwise, return the locale in the hostname.
   def host_locale
     (extract_locale_from_subdomain || I18n.default_locale).to_sym
+  end
+
+  # Return the hostname with any locale information stripped off.
+  def base_hostname
+    locale, base_host = request.host.split('.', 2)
+
+    if I18n.available_locales.map(&:to_s).include?(locale)
+      base_host
+    else
+      request.host
+    end
   end
 
   def seo_encode(string)

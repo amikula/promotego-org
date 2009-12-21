@@ -224,4 +224,31 @@ describe ApplicationHelper do
       helper.sort_with_nil(array).should == %w{a b c d e f} << nil
     end
   end
+
+  describe :available_translations do
+    it 'returns a list of available locales for which we have a translation' do
+      helper.available_translations.collect(&:to_s).sort.should == %w{de en ja sv}
+    end
+  end
+
+  describe :language_list do
+    before :each do
+      helper.stub!(:base_hostname).and_return('example.com')
+    end
+
+    it 'has a list' do
+      helper.language_list.should have_tag('ul')
+    end
+
+    it 'has an item for each available locale we have a translation for' do
+      languages = [:en, :de]
+      helper.should_receive(:available_translations).and_return(languages)
+
+      helper.language_list.should have_tag('ul') do
+        languages.each do |lang|
+          with_tag('li a[href=?]', "http://#{lang}.example.com/")
+        end
+      end
+    end
+  end
 end

@@ -22,8 +22,14 @@ ja:
   search_results: 検索結果
   state_listing: 県別検索結果
   state_unknown: 県名不明
+  translated: 'true'   # Just leave this value as-is.  It means we have a translation for this language.
   welcome: ようこそ
   mi:
     no_clubs_matched_limit: "{{limit}}マイル 以内に対戦相手が見つかりませんでした。"
     units: マイル
     units_downcase: マイル  # Still capitalized if nouns are always capitalized as in German
+  languages:
+    de: ドイツ語
+    en: 英語
+    ja: 日本語
+    sv: スウェーデン語

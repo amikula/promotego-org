@@ -81,6 +81,51 @@ describe ApplicationController do
     end
   end
 
+  describe :locale_redirect do
+    it 'redirects to the base hostname if the browser locale matches the host locale' do
+      subject.stub!(:extract_locale_from_subdomain).and_return ('en')
+      subject.request.stub!(:preferred_language_from).and_return(:en)
+      subject.stub!(:base_hostname).and_return('example.com')
+
+      subject.should_receive(:redirect_to)
+
+      subject.locale_redirect
+    end
+
+    it 'redirects to the base hostname if the browser locale starts with the host locale' do
+      subject.stub!(:extract_locale_from_subdomain).and_return ('en')
+      subject.request.stub!(:preferred_language_from).and_return(:'en-US')
+      subject.stub!(:base_hostname).and_return('example.com')
+
+      subject.should_receive(:redirect_to)
+
+      subject.locale_redirect
+    end
+
+    it 'does not redirect to the base hostname if the browser locale does not match the host locale' do
+      subject.stub!(:extract_locale_from_subdomain).and_return ('de')
+      subject.request.stub!(:preferred_language_from).and_return(:'en-US')
+
+      subject.should_not_receive(:redirect_to)
+
+      subject.locale_redirect
+    end
+  end
+
+  describe :base_hostname do
+    it 'strips known locales from the hostname' do
+      subject.stub!(:request).and_return(mock('request', :host => 'de.example.com'))
+
+      subject.base_hostname.should == 'example.com'
+    end
+
+    it 'returns the hostname untouched if no locale is present' do
+      subject.stub!(:request).and_return(mock('request', :host => 'promotego.org'))
+
+      subject.base_hostname.should == 'promotego.org'
+    end
+  end
+
   describe :seo_encode do
     it 'converts spaces to hyphens' do
       subject.seo_encode('United States of America').should == 'United-States-of-America'
