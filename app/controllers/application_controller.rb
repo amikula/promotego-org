@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
     browser_locale = request.preferred_language_from(I18n.available_locales).to_s
     subdomain_locale = extract_locale_from_subdomain
 
-    redirect_to "http://#{base_hostname}#{request.request_uri}", :status => :moved_permanantly if subdomain_locale && browser_locale.starts_with?(subdomain_locale)
+    redirect_to "http://#{base_hostname}#{request.request_uri}", :status => :moved_permanently if subdomain_locale && browser_locale.starts_with?(subdomain_locale)
   end
 
   def set_locale
