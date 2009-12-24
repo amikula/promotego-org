@@ -1,0 +1,61 @@
+ul.dropdown, ul.dropdown *
+  margin: 0
+  padding: 0
+
+ul.dropdown
+  position: relative
+  list-style: none
+  li
+    font-weight: bold
+    float: left
+    zoom: 1
+    background: #aaa
+  a
+    &:hover
+      color: #000
+    &:active
+      color: #ffa500
+  li
+    a
+      display: block
+      padding: 4px 8px
+      border-right: 1px solid #333
+      color: #222
+    &:last-child a
+      border-right: none
+    &.hover, &:hover
+      background: #F3D673
+      color: black
+      position: relative
+    &.hover a
+      color: black
+  img
+    border: none
+    vertical-align: middle
+    padding-right: 3px
+
+  # Level 2
+  ul
+    width: 220px
+    visibility: hidden
+    position: absolute
+    top: 100%
+    left: 0
+    list-style: none
+    li
+      font-weight: normal
+      background: #f6f6f6
+      color: #000
+      border-bottom: 1px solid #ccc
+      float: none
+      a
+        border-right: none
+        width: 100%
+        display: inline-block
+
+    # Level 3
+    ul
+      left: 100%
+      top: 0
+  li:hover > ul
+    visibility: visible

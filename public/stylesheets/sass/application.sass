@@ -9,20 +9,21 @@
   :font "Arial Black"
   :font-size 40pt
   :padding 0.2em
+  :position relative
 
 .nav
+  :position relative
+  :width 100%
+  :background #aaaaaa
+  :float left
+  .welcome
+    :float right
+    :padding 4px 8px
   ul
-    :background #aaaaaa
-    :padding 5px
     :margin 0px
-  li
-    :display inline
-    :list-style none
-    :padding-right 15px
+    :float left
   a
     :text-decoration none
-  a:hover
-    :text-decoration underline
 
 
 #body
@@ -32,34 +33,29 @@
   :padding 10px
 
 #footer
-  :padding-top 1em
   :clear both
 
-.notice
-  :border 1px solid green
-  :color green
+.flash
+  :clear both
+  :padding-top 1em
   :text-align center
   :margin-left auto
   :margin-right auto
   :padding 10px
+
+.notice
+  :border 1px solid green
+  :color green
   :background #aaffaa
 
 .warning
   :border 1px solid yellow
   :color #666600
-  :text-align center
-  :margin-left auto
-  :margin-right auto
-  :padding 10px
   :background #ffffaa
 
 .error
   :border 1px solid red
   :color red
-  :text-align center
-  :margin-left auto
-  :margin-right auto
-  :padding 10px
   :background #ffaaaa
 
 h1

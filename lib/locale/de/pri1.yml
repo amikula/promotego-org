@@ -30,7 +30,7 @@ de:
     no_clubs_matched_limit: "Keine Go-Clubs innerhalb von {{limit}} Meilen gefunden die mit Ihren Suchkriterien &uuml;bereinstimmen."
     units: Meilen
     units_downcase: Meilen  # Still capitalized if nouns are always capitalized as in German
-  languages:
+  language_names:
     de: Deutsch
     en: Englisch
     ja: Japanisch

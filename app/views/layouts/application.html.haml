@@ -1,6 +1,5 @@
 !!! XML
 !!! 1.1
--# TODO Internationalize
 %html
   %head
     %title
@@ -11,6 +10,7 @@
     = stylesheet_link_tag :all
     = javascript_include_tag "email_decoder"
     = javascript_include_tag "jquery"
+    = javascript_include_tag "jquery.dropdownPlain"
     = javascript_include_tag "application"
     :javascript
       #{@content_for_page_scripts}
@@ -23,36 +23,39 @@
 
   %body
     #wrapper
-      #header{:style => "position: relative;"}
+      #header
         %div
           PromoteGo.org
         - unless %w{search widgets}.include?(params[:controller])
           %div{:style => "position: absolute; top: 0px; right: 0px;"}
             %script{:type => 'text/javascript', :src => '/widgets/search.js'}
       #sitenav.nav
-        %ul
+        %ul.dropdown
           %li= link_to t('navlinks.home'), :controller => :home, :action => :index
           %li= link_to t('navlinks.find_club'), :controller => :search, :action => :radius
           %li= link_to t('navlinks.add_club'), :controller => :locations, :action => :new
           - if current_user && current_user.active?
             %li= link_to t('navlinks.logout'), :controller => :user_sessions, :action => :destroy
-            %li== #{t('welcome')}, #{current_user.login}
             %li= link_to t('navlinks.settings'), :controller => :settings, :action => :edit
           - else
             %li= link_to t('navlinks.login'), :controller => :user_sessions, :action => :new
             %li= link_to t('navlinks.register'), :controller => :users, :action => :new
+          %li
+            = link_to t('languages', :locale => browser_language), '#'
+            =language_list
+        - if current_user && current_user.active?
+          %span.welcome== #{t('welcome')}, #{current_user.login}
       #navlinks
       #body
         = display_standard_flashes
         = @content_for_layout
       #footer.nav
-        %ul
+        %ul.dropdown
           %li= link_to t('navlinks.about'), :controller => :home, :action => :show, :page => :about
           %li= link_to t('navlinks.widgets'), :controller => :widgets, :action => :index
           %li= link_to t('navlinks.development'), "http://github.com/amikula/promotego-org/wikis/home"
           %li= link_to t('navlinks.contact'), :controller => :home, :action => :show, :page => :contact
           %li= link_to t('navlinks.credits'), :controller => :home, :action => :show, :page => :credits
-          %li= language_list
     - if Rails.env.production?
       :javascript
         var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");

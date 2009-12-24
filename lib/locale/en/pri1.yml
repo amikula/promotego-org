@@ -10,6 +10,7 @@ en:
   directions: Directions # Driving directions
   home_page: Home Page
   kilometers: Kilometres # Kilometers from search location
+  languages: Languages
   name: Name             # Club or contact name
   new_club: New Go Club
   no_address: No street address available
@@ -36,7 +37,7 @@ en:
     no_clubs_matched_limit: No locations matched your search within {{limit}} kilometres
     units: Kilometres
     units_downcase: kilometres  # Still capitalized if nouns are always capitalized as in German
-  languages:
+  language_names:
     de: German
     en: English
     ja: Japanese

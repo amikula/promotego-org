@@ -28,7 +28,7 @@ ja:
     no_clubs_matched_limit: "{{limit}}マイル 以内に対戦相手が見つかりませんでした。"
     units: マイル
     units_downcase: マイル  # Still capitalized if nouns are always capitalized as in German
-  languages:
+  language_names:
     de: ドイツ語
     en: 英語
     ja: 日本語

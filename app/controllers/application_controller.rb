@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password, :password_confirmation
   helper_method :current_user_session, :current_user, :host_locale, :seo_encode, :seo_decode
   helper_method :has_provinces?, :merge_translation_hashes, :distance_units, :base_hostname
+  helper_method :browser_language
+
   before_filter :set_locale
   before_filter :locale_redirect
 
@@ -24,7 +26,7 @@ class ApplicationController < ActionController::Base
                   elsif(locale=extract_locale_from_subdomain)
                     locale
                   else
-                    request.preferred_language_from(I18n.available_locales)
+                    browser_language
                   end
   end
 
@@ -61,6 +63,10 @@ class ApplicationController < ActionController::Base
   # we're starting with a default setting for the current locale.
   def distance_units
     I18n.t(:distance, :scope => :locale_units).to_sym
+  end
+
+  def browser_language
+    request.preferred_language_from(I18n.available_locales)
   end
 
 private

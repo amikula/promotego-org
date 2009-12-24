@@ -33,7 +33,7 @@ sv:
     no_clubs_matched_limit: Inga klubbar funna inom {{limit}} kilometer.
     units: kilometer
     units_downcase: kilometer
-  languages:
+  language_names:
     de: Tyska
     en: Engelska
     ja: Japanska
