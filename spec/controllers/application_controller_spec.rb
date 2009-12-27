@@ -83,7 +83,7 @@ describe ApplicationController do
 
   describe :locale_redirect do
     it 'redirects to the base hostname if the browser locale matches the host locale' do
-      subject.stub!(:extract_locale_from_subdomain).and_return ('en')
+      subject.stub!(:extract_locale_from_subdomain).and_return('en')
       subject.request.stub!(:preferred_language_from).and_return(:en)
       subject.stub!(:base_hostname).and_return('example.com')
 
@@ -93,7 +93,7 @@ describe ApplicationController do
     end
 
     it 'redirects to the base hostname if the browser locale starts with the host locale' do
-      subject.stub!(:extract_locale_from_subdomain).and_return ('en')
+      subject.stub!(:extract_locale_from_subdomain).and_return('en')
       subject.request.stub!(:preferred_language_from).and_return(:'en-US')
       subject.stub!(:base_hostname).and_return('example.com')
 
@@ -103,7 +103,7 @@ describe ApplicationController do
     end
 
     it 'does not redirect to the base hostname if the browser locale does not match the host locale' do
-      subject.stub!(:extract_locale_from_subdomain).and_return ('de')
+      subject.stub!(:extract_locale_from_subdomain).and_return('de')
       subject.request.stub!(:preferred_language_from).and_return(:'en-US')
 
       subject.should_not_receive(:redirect_to)
