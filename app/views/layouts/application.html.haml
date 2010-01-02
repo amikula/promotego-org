@@ -41,8 +41,8 @@
             %li= link_to t('navlinks.login'), :controller => :user_sessions, :action => :new
             %li= link_to t('navlinks.register'), :controller => :users, :action => :new
           %li
-            = link_to t('languages', :locale => browser_language), '#'
-            =language_list
+            = languages_link
+            = language_list
         - if current_user && current_user.active?
           %span.welcome== #{t('welcome')}, #{current_user.login}
       #navlinks

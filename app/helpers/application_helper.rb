@@ -116,4 +116,19 @@ module ApplicationHelper
       end
     end
   end
+
+  def languages_link
+    flag = t(:flag, :locale => browser_language)
+    flag_image = image_tag("/images/flags/#{flag}.png")
+
+    other_languages = available_translations.dup
+    other_languages.delete(browser_language[0..1].to_sym) if browser_language
+
+    other_flag = t(:flag, :locale => other_languages[rand(other_languages.length)])
+    other_flag_image = image_tag("/images/flags/#{other_flag}.png")
+
+    languages_text = t('languages', :locale => browser_language)
+
+    link_to "#{flag_image}&nbsp;#{languages_text}&nbsp;#{other_flag_image}", '#'
+  end
 end

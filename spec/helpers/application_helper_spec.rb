@@ -251,4 +251,32 @@ describe ApplicationHelper do
       end
     end
   end
+
+  describe :languages_link do
+    before :each do
+      helper.stub!(:browser_language).and_return('bl')
+      helper.stub!(:t).with(:flag, anything).and_return('bl')
+      helper.stub!(:t).with('languages', anything).and_return('translated_language')
+    end
+
+    it 'has a link containing the translated word "languages" in the browser language' do
+      helper.should_receive(:t).with('languages', :locale => 'bl').and_return('translated_language')
+      helper.languages_link.should have_tag('a', /translated_language/)
+    end
+
+    it 'links to "#"' do
+      helper.languages_link.should have_tag('a[href=?]', '#')
+    end
+
+    it 'contains a flag image represented by the browser language' do
+      helper.should_receive(:t).with(:flag, :locale => 'bl').and_return('bl')
+      helper.languages_link.should have_tag('img[src=?]', /.*bl\.png/)
+    end
+
+    it 'contains at least one other flag image at the end, not matching the browser language' do
+      helper.should_receive(:available_translations).and_return([:bl, :other])
+      helper.should_receive(:t).with(:flag, :locale => :other).and_return('other')
+      helper.languages_link.should have_tag('img[src=?]', /.*other\.png/)
+    end
+  end
 end
