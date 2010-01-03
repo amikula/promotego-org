@@ -18,9 +18,9 @@ class ApplicationController < ActionController::Base
     subdomain_locale = extract_locale_from_subdomain
 
     if user_is_bot?
-      if !subdomain_locale && locale=browser_locale
+      if !subdomain_locale && browser_locale.present?
         # Turn into a string and take the first two letters, ie, 'en' of 'en-US'
-        locale = locale.to_s[0..1]
+        locale = browser_locale[0..1]
 
         redirect_to "http://#{locale}.#{base_hostname}#{request.request_uri}", :status => :moved_permanently
       end
