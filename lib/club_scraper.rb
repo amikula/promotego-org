@@ -3,7 +3,9 @@ require 'hpricot'
 
 class ClubScraper
 
-  PHONE_REGEXP = /
+  US_PHONE_REGEXP = /
+    ^           # beginning of string
+    \D*         # possible prefix designator for number type
     (\d{3})     # area code is 3 digits (e.g. '800')
     \D*         # optional separator is any number of non-digits
     (\d{3})     # trunk is 3 digits (e.g. '555')
@@ -103,11 +105,11 @@ class ClubScraper
             self.current_contact[:email] = text
           end
           validate_email(text)
-        when PHONE_REGEXP
+        when US_PHONE_REGEXP
           # phone number
           phone_number = {}
           phone_number[:number] = "#{$1}-#{$2}-#{$3}"
-          phone_number[:number] += " x #{$4}" if !$4.empty?
+          phone_number[:number] += " x#{$4}" if !$4.empty?
           start_of_string = text.match(/^\D*/).to_s #Anything not a number at beginning of string
           end_of_string = text.match(/\D*$/).to_s   #Anything not a number at the end of string
           start_of_string.delete!("^[a-zA-Z]")

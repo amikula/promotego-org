@@ -326,6 +326,20 @@ describe ClubScraper do
         }]
     end
 
+    it 'does not truncate international numbers that resemble US numbers' do
+      element = Hpricot(<<-EOF).at('td')
+      <td>
+        Thud Contact<br>
+        02-123-456-7890
+      </td>
+      EOF
+
+      ClubScraper.get_club_contacts(element).should ==
+        [{:name => "Thud Contact",
+          :phone => [{:number => "02-123-456-7890"}]
+        }]
+    end
+
     it "should handle empty fields" do
       element = Hpricot(<<-EOF).at('td')
       <td>
