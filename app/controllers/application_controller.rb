@@ -17,7 +17,16 @@ class ApplicationController < ActionController::Base
     browser_locale = request.preferred_language_from(I18n.available_locales).to_s
     subdomain_locale = extract_locale_from_subdomain
 
-    redirect_to "http://#{base_hostname}#{request.request_uri}", :status => :moved_permanently if subdomain_locale && browser_locale.starts_with?(subdomain_locale)
+    if user_is_bot?
+      if !subdomain_locale && locale=browser_locale
+        # Turn into a string and take the first two letters, ie, 'en' of 'en-US'
+        locale = locale.to_s[0..1]
+
+        redirect_to "http://#{locale}.#{base_hostname}#{request.request_uri}", :status => :moved_permanently
+      end
+    elsif subdomain_locale && browser_locale.starts_with?(subdomain_locale)
+      redirect_to "http://#{base_hostname}#{request.request_uri}", :status => :moved_permanently
+    end
   end
 
   def set_locale
@@ -67,6 +76,10 @@ class ApplicationController < ActionController::Base
 
   def browser_language
     request.preferred_language_from(I18n.available_locales)
+  end
+
+  def user_is_bot?
+    request.headers['User-Agent'] =~ %r{msnbot|Baiduspider|Yahoo! Slurp|Speedy Spider|Yeti|Sosospider|Twiceler|Sogou|Yandex|Exabot|kosmix|Googlebot|al_viewer|MLBot|aiHitBot|Linguee Bot|Cabot/Nutch|80legs|YoudaoBot|Snapbot|SurveyBot}
   end
 
 private

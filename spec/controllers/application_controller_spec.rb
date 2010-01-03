@@ -87,7 +87,7 @@ describe ApplicationController do
       subject.request.stub!(:preferred_language_from).and_return(:en)
       subject.stub!(:base_hostname).and_return('example.com')
 
-      subject.should_receive(:redirect_to)
+      subject.should_receive(:redirect_to).with(%r{^http://example.com}, :status => :moved_permanently)
 
       subject.locale_redirect
     end
@@ -97,7 +97,18 @@ describe ApplicationController do
       subject.request.stub!(:preferred_language_from).and_return(:'en-US')
       subject.stub!(:base_hostname).and_return('example.com')
 
-      subject.should_receive(:redirect_to)
+      subject.should_receive(:redirect_to).with(%r{^http://example.com}, :status => :moved_permanently)
+
+      subject.locale_redirect
+    end
+
+    it 'does not redirect to the base hostname if already on the base hostname' do
+      subject.stub!(:extract_locale_from_subdomain).and_return(nil)
+      subject.request.stub!(:preferred_language_from).and_return(:'en-US')
+      subject.stub!(:base_hostname).and_return('example.com')
+      subject.stub!(:host).and_return('example.com')
+
+      subject.should_not_receive(:redirect_to)
 
       subject.locale_redirect
     end
@@ -109,6 +120,33 @@ describe ApplicationController do
       subject.should_not_receive(:redirect_to)
 
       subject.locale_redirect
+    end
+
+    it 'redirects to the locale url from the base hostname if the user is a bot' do
+      subject.should_receive(:user_is_bot?).and_return(true)
+      subject.should_receive(:extract_locale_from_subdomain).and_return(nil)
+      subject.request.should_receive(:preferred_language_from).and_return(:en)
+      subject.should_receive(:base_hostname).and_return('example.com')
+
+      subject.should_receive(:redirect_to).with(%r{^http://en.example.com}, :status => :moved_permanently)
+
+      subject.locale_redirect
+    end
+  end
+
+  describe :user_is_bot? do
+    ['msnbot', 'Yahoo! Slurp', 'Googlebot'].each do |string|
+      it "evaluates to true when the user-agent string contains #{string}" do
+        request.headers['User-Agent'] = "Mozilla foo / #{string} / 1.6.2.5.9.0"
+
+        subject.user_is_bot?.should_not be_nil
+      end
+    end
+
+    it 'evaluates to false otherwise' do
+      request.headers['User-Agent'] = "Mozilla foo / Not a bot / 1.6.2.5.9.0"
+
+      subject.user_is_bot?.should be_nil
     end
   end
 
