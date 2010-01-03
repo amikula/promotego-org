@@ -28,6 +28,7 @@ namespace :scraper do
       #If it is an AGA club, we create the affiliation, which requires some data massaging.
      if club[:is_aga?]
         aga = Affiliate.find_by_name('AGA')
+        fail "AGA Affiliate not found.  Did you remember to do 'rake app:initialize'?" unless aga
         name = location.contacts[0][:name] rescue nil
         email = location.contacts[0][:email] rescue nil
         phone = location.contacts[0][:phone][0][:number] rescue nil

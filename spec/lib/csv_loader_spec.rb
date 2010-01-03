@@ -24,6 +24,9 @@ describe CsvLoader do
         'Telephone' => '626-555-1212', 'Email' => 'private@test.com', 'chapter' => 'YUGO'
       }
     ]
+
+    @aga = Affiliate.new(:name => 'AGA', :full_name => 'American Go Association')
+    Affiliate.stub!(:find_by_name).with('AGA').and_return(@aga)
   end
 
   describe :club_from do

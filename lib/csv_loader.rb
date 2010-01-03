@@ -22,6 +22,8 @@ class CsvLoader
 
     if expire
       aga = Affiliate.find_by_name('AGA')
+      fail "AGA Affiliate not found.  Did you remember to do 'rake app:initialize'?" unless aga
+
       affiliation = Affiliation.new(:location => club, :affiliate => aga, :expires => expire,
                                     :contact_name => row['Contact'], :contact_address => row['Address'],
                                     :contact_city => row['City'], :contact_state => row['State'],
