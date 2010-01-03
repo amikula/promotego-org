@@ -1,6 +1,7 @@
 *.sw?
 *.bak
 tags
-coverage
-DRY_report.html
+/coverage
+/DRY_report.html
 tmp/
+/rerun.txt
