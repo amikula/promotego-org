@@ -4,7 +4,6 @@ ul.dropdown, ul.dropdown *
 
 ul.dropdown
   position: relative
-  list-style: none
   li
     font-weight: bold
     float: left
@@ -29,10 +28,6 @@ ul.dropdown
       position: relative
     &.hover a
       color: black
-  img
-    border: none
-    vertical-align: middle
-    padding-right: 3px
 
   # Level 2
   ul
@@ -59,3 +54,10 @@ ul.dropdown
       top: 0
   li:hover > ul
     visibility: visible
+
+ul.dropdown, ul.submenu
+  list-style: none
+  img
+    border: none
+    vertical-align: middle
+    padding-right: 3px

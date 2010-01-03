@@ -264,8 +264,8 @@ describe ApplicationHelper do
       helper.languages_link.should have_tag('a', /translated_language/)
     end
 
-    it 'links to "#"' do
-      helper.languages_link.should have_tag('a[href=?]', '#')
+    it 'links to the languages path' do
+      helper.languages_link.should have_tag('a[href=?]', home_path(:page => 'languages'))
     end
 
     it 'contains a flag image represented by the browser language' do

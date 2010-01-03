@@ -129,6 +129,6 @@ module ApplicationHelper
 
     languages_text = t('languages', :locale => browser_language)
 
-    link_to "#{flag_image}&nbsp;#{languages_text}&nbsp;#{other_flag_image}", '#'
+    link_to "#{flag_image}&nbsp;#{languages_text}&nbsp;#{other_flag_image}", home_path(:page => 'languages')
   end
 end
