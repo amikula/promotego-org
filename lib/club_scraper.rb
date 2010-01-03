@@ -14,6 +14,8 @@ class ClubScraper
     $           # end of string
 /xi
 
+  OTHER_NUMBER_REGEXP = /^[-0-9+() -]+$/
+
   def self.is_aga?(element)
     img = element.at('img')
     if (img)
@@ -116,6 +118,10 @@ class ClubScraper
           phone_number[:type] ||= end_of_string if !end_of_string.empty?
           current_contact[:phone] ||= []
           current_contact[:phone] << phone_number
+        when OTHER_NUMBER_REGEXP
+          # international number
+          current_contact[:phone] ||= []
+          current_contact[:phone] << {:number => text}
         else
           # name
           new_contact

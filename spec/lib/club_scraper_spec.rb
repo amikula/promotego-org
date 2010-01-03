@@ -190,7 +190,7 @@ describe ClubScraper do
         954-555-1212
       </td>
       EOF
-      
+
       ClubScraper.get_club_contacts(element).should ==
         [{:name => "Broken Contact", :email => "clubemail@domain.com",
           :phone => [{:number => '954-555-1212'}]}]
@@ -277,7 +277,7 @@ describe ClubScraper do
       </td>
       EOF
 
-      
+
       ClubScraper.get_club_contacts(element).should ==
         [{:name => "Foo Contact", :email => "email@domain.com",
           :phone => [{:type => "Cell", :number => "626-555-1212"}]}]
@@ -319,8 +319,7 @@ describe ClubScraper do
         +100 (0)00 000000
       </td>
       EOF
-      
-      pending
+
       ClubScraper.get_club_contacts(element).should ==
         [{:name => "Xyzzy Contact",
           :phone => [{:number => "+100 (0)00 000000"}]
@@ -509,7 +508,7 @@ describe ClubScraper do
       </tr>
       EOF
 
-      
+
       ClubScraper.get_club_from_row(row).should match_hash(
         { :name => "Birmingham Go Association",
           :city => "Birmingham",
