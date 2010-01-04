@@ -33,7 +33,7 @@ namespace :app do
 
   desc 'Update .gems for heroku based on geminstaller.yml'
   task :update_dotgems do
-    geminstaller = YAML.load(File.new('config/geminstaller.yml'))
+    geminstaller = YAML.load(ERB.new(File.read('config/geminstaller.yml')).result)
     File.open('.gems', 'w') do |f|
       geminstaller['gems'].each do |gemspec|
         line = gemspec['name']
