@@ -56,4 +56,6 @@ gems:
   version: 1.4.0
 - name: highline
   version: 1.5.0
+- name: RedCloth
+  version: >= 4.2.2
 <% end %>

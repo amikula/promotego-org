@@ -1,4 +1,6 @@
 # Methods added to this helper will be available to all templates in the application.
+require 'RedCloth'
+
 module ApplicationHelper
   def display_standard_flashes(message=t('default_submission_error'))
     if flash[:notice]
@@ -130,5 +132,9 @@ module ApplicationHelper
     languages_text = t('languages', :locale => browser_language)
 
     link_to "#{flag_image}&nbsp;#{languages_text}&nbsp;#{other_flag_image}", home_path(:page => 'languages')
+  end
+
+  def render_textile(text)
+    RedCloth.new(text,[:filter_html]).to_html()
   end
 end
