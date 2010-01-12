@@ -21,7 +21,7 @@
     - if @location.description
       %p
         %b== #{t 'description'}:
-        .note= @location.description.gsub(/\n|<br\/?>/, ' <br/> ')
+        .note= render_textile(@location.description)
     - if @location.contacts
       %p
         %b== #{t 'contacts'}:
