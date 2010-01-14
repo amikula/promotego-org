@@ -135,6 +135,6 @@ module ApplicationHelper
   end
 
   def render_textile(text)
-    RedCloth.new(text,[:filter_html]).to_html()
+    RedCloth.new(text,[:filter_html, :filter_styles]).to_html()
   end
 end
