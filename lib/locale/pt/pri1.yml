@@ -1,0 +1,45 @@
+pt:
+  address: Morada       # Club street address
+  address_or_postcode: Morada, Cidade, Estado, ou Código Postal
+  address_unknown: Morada Desconhecida
+  city_unknown: Cidade Desconhecida
+  clubs_in_location: Clubes de Go em {{location}}
+  clubs_in_state_and_country: Clubes de Go em {{state}}, {{country}}
+  contacts: Contactos     # People to contact for information about the club
+  description: Descripção
+  directions: Direcções # Driving directions
+  home_page: Homepage
+  kilometers: Kilómetros # Kilometers from search location
+  languages: Línguas
+  name: Nome             # Club or contact name
+  new_club: Novo Clube de Go
+  no_address: Morada não dísponível
+  no_clubs_matched:
+    "Nenhum Clube de Go correspondeu à sua pesquisa.  No entanto, este é o resultado mais próximo na nossa base de dados:"
+  no_match: Não encontrado
+  radius: Raio         # As in the radius of the search
+  search: Pesquisar
+  search_again: Pesquisar novamente
+  search_instructions:
+    "Introduza uma morada completa, uma cidade e estado, ou um código postal para encontrar locais para
+    jogar Go na sua àrea.  A sua informação não será partilhada, e quanto mais
+    informação der, mais precisa será a pesquisa."
+  search_results: Resultados de Procura
+  state_listing: Listagem por estado
+  state_unknown: Estado/Província Desconhecido
+  translated: 'true'   # Just leave this value as-is.  It means we have a translation for this language.
+  welcome: Bem-vindo
+  mi:
+    no_clubs_matched_limit: Nenhuma localização corresponde à sua procura dentro de {{limit}} milhas
+    units: Milhas
+    units_downcase: milhas  # Still capitalized if nouns are always capitalized as in German
+  km:
+    no_clubs_matched_limit: Nennhuma localização corresponde à sua procura dentro de {{limit}} kilómetros
+    units: Kilómetros
+    units_downcase: kilómetros  # Still capitalized if nouns are always capitalized as in German
+  language_names:
+    de: Alemão
+    en: Inglês
+    ja: Japonês
+    sv: Sueco
+    pt: Português
