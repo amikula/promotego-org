@@ -168,6 +168,11 @@ class Location < ActiveRecord::Base
     read_attribute(:state) if !country? || has_provinces?(country)
   end
 
+  def description=(new_description)
+   # Replace any <br> tags with newlines, for compatibility with textile
+   write_attribute(:description, new_description.gsub(/<br\s?\/?>(\n|\r)*/i, "\n"))
+  end
+
 private
   # Returns the first available slug that doesn't conflict with a known slug
   def first_available_slug(slug)

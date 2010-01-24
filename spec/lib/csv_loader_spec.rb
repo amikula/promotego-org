@@ -94,7 +94,7 @@ describe CsvLoader do
       club.contacts[0][:name].should == 'Club Contact 2'
       club.contacts[0][:phone].should include({:number => '626-555-1212'})
       club.url.should == nil
-      club.description.should == " 20 N. Raymond Ave,<br> Suite 200<br>Wednesday 6:30-10:00 pm<br>Free beginner lessons every week"
+      club.description.should == " 20 N. Raymond Ave,\n Suite 200\nWednesday 6:30-10:00 pm\nFree beginner lessons every week"
       club.hidden?.should be_true
     end
 
