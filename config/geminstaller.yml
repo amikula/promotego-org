@@ -29,7 +29,7 @@ gems:
   version: 0.1.1
 - name: vlad
   version: ~> 1.3.2
-<% unless ENV['HEROKU_ENV'] %>
+<% unless ENV['HEROKU_SLUG'] %>
 - name: mysql
   version: ~> 2.8.0
 <% end %>
