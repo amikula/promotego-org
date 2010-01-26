@@ -41,7 +41,7 @@ en:
   hidden: Hidden
   home_page: Home Page   # Moving this to pri1.  TODO: Delete after we have sv, de, and ja translations.
   hours: Hours           # Hours of operation
-  kilometers: Kilometers # Kilometers from search location.  Moving this to pri1.  TODO: Delete after we have sv, de, and ja translations.
+  kilometers: Kilometres # Kilometers from search location.  Moving this to pri1.  TODO: Delete after we have sv, de, and ja translations.
   log_in: Log in
   logged_out: You have been logged out.
   login_successful: Login successful!
