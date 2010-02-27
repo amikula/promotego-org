@@ -3,7 +3,7 @@ require 'spork'
 
 ENV["RAILS_ENV"] ||= 'test'
 
-Spork.prefork :env => 'test' do
+Spork.prefork do
   require File.expand_path('../config/environment', File.dirname(__FILE__))
   require 'spec/autorun'
   require 'spec/rails'
