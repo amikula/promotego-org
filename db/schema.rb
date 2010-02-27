@@ -9,7 +9,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090906231856) do
+ActiveRecord::Schema.define(:version => 20100227231654) do
+
+  create_table "addresses", :force => true do |t|
+    t.string   "street_address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip_code"
+    t.float    "lat"
+    t.float    "lng"
+    t.string   "geocode_precision"
+    t.boolean  "public"
+    t.boolean  "hidden"
+    t.string   "addressable_type"
+    t.integer  "addressable_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "addresses", ["addressable_id", "addressable_type"], :name => "index_addresses_on_addressable_id_and_addressable_type"
 
   create_table "affiliates", :force => true do |t|
     t.string   "name"
