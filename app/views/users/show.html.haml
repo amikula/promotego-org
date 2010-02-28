@@ -1,0 +1,28 @@
+%h1= t 'account_info'
+%table
+  %tr
+    %td
+      %label{:for => "user_login"}== #{t 'username'}:
+    %td
+      = @user.login
+  %tr
+    %td
+      %label{:for => "user_email"}== #{t 'email'}:
+    %td
+      = @user.email
+  - if @user.roles.present?
+    %tr
+      %td
+        %label{:for => "roles"}== #{t 'roles'}:
+      %td
+        = @user.roles.collect{|r| r.name}.join(', ')
+- if @user.addresses.present?
+  %h2 Addresses
+  - @user.addresses.each do |address|
+    .address
+      .name= address.name
+      .street_address= address.street_address
+      %div
+        - [:city, :state, :zip_code].each do |attr|
+          - if address.send(attr).present?
+            %span{:class => attr}= address.send(attr)

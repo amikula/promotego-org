@@ -1,4 +1,5 @@
 en:
+  account_info: Account Information
   address: Address       # Club street address
   address_or_postcode: Address, City, State, or Postal Code
   address_unknown: Address Unknown

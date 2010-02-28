@@ -1,13 +1,18 @@
 class UsersController < ApplicationController
   before_filter :require_no_user, :only => [:new, :create, :activate]
-  before_filter :require_user, :only => [:show, :edit, :update]
+  before_filter :require_user, :except => [:new, :create, :activate]
+  before_filter :find_user
+
+  def index
+    if @user.has_role?(:super_user)
+      @users = User.all
+    else
+      render 'common/message', :locals => {:header => :forbidden, :message => :access_users}, :status => :forbidden
+    end
+  end
 
   def new
     @user = User.new
-  end
-
-  def show
-    @user = @current_user
   end
 
   def edit
@@ -26,10 +31,10 @@ class UsersController < ApplicationController
     if(current_user && (current_user.has_role?(:owner) ||
                         current_user.has_role?(:super_user)))
       roles = params[:user].delete("roles")
-      User.update(params[:id], params[:user])
+      @user.update(params[:user])
       if(roles)
         role_ids = roles.collect{|role| role.to_d}
-        User.find(params[:id]).set_roles(role_ids, current_user)
+        @user.set_roles(role_ids, current_user)
       end
     else
       redirect_to :action => :new
@@ -56,5 +61,18 @@ class UsersController < ApplicationController
       flash[:notice] = t 'signup_complete'
     end
     redirect_back_or_default('/')
+  end
+
+private
+  def find_user
+    if params[:id]
+      if current_user.has_role?(:super_user) || current_user.has_role?(:owner)
+        @user = User.find_by_login(params[:id])
+      else
+        render 'common/message', :locals => {:header => :forbidden, :message => :access_users}, :status => :forbidden
+      end
+    else
+      @user = current_user
+    end
   end
 end

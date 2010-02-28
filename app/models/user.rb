@@ -193,6 +193,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def to_param
+    login
+  end
+
   private
     def add_role_internal(role, granting_user)
       user_role = UserRole.new

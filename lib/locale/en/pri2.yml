@@ -1,5 +1,6 @@
 en:
   about: about
+  access_users: "Only owner may access other users' information."
   account_activated:
     "{{username}}, your account has been activated.  You may now create and edit clubs:"
   account_created: Your account has been created.
@@ -35,6 +36,7 @@ en:
   enter_email_for_username: 'Please enter your email and we will send you information about your username:'
   enter_username: Enter your username
   enter_username_for_password: Please enter your username and we will send you a link to reset your password
+  forbidden: Forbidden
   forgot_password: Forgot password
   forgot_username: Forgot username
   game_of_go: game of Go  # As in "to learn more about the game of Go"
