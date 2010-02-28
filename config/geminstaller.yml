@@ -5,7 +5,7 @@ gems:
 - name: geminstaller
   version: ~> 0.5.4
 - name: rails
-  version: 2.3.4
+  version: 2.3.5
 - name: amatch
   version: 0.2.3
 - name: haml
