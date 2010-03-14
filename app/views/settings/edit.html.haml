@@ -1,7 +1,11 @@
 %h1= t 'edit_settings'
-%h2= t 'change_password'
 - form_tag settings_path, :method => :put do
   = error_messages_for :user
+  %h2= t 'addresses'
+  %table
+    = render :partial => 'common/address_form', :collection => @user.addresses
+
+  %h2= t 'change_password'
   %table
     %tr
       %td

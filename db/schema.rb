@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(:version => 20100227231654) do
     t.string   "city"
     t.string   "state"
     t.string   "zip_code"
+    t.string   "country"
     t.float    "lat"
     t.float    "lng"
     t.string   "geocode_precision"
