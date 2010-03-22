@@ -227,7 +227,7 @@ describe ApplicationHelper do
 
   describe :available_translations do
     it 'returns a list of available locales for which we have a translation' do
-      helper.available_translations.collect(&:to_s).sort.should == %w{de en ja sv}
+      helper.available_translations.collect(&:to_s).sort.should == %w{de en ja pt sv}
     end
   end
 

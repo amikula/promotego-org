@@ -13,6 +13,19 @@ en:
   languages: Languages
   name: Name             # Club or contact name
   new_club: New Go Club
+  navlinks:
+    home: Home
+    find_club: Find a Club
+    add_club: Add a Club
+    logout: Log out
+    login: Log in
+    register: Register
+    settings: Settings
+    about: About
+    widgets: Widgets
+    development: Development
+    contact: Contact
+    credits: Credits
   no_address: No street address available
   no_clubs_matched:
     "No Go clubs matched your search.  However, here is the closest match in our database:"
@@ -41,4 +54,5 @@ en:
     de: German
     en: English
     ja: Japanese
+    pt: Portuguese
     sv: Swedish

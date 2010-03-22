@@ -1,6 +1,6 @@
 ja:
   address: 住所
-  address_or_postcode: 住所や郵便番号
+  address_or_postcode: 住所や郵便番号など
   address_unknown: 宛先不明
   city_unknown: 市町村不明
   clubs_in_location: "{{location}}の碁会所"
@@ -8,28 +8,48 @@ ja:
   contacts: 連絡先
   description: 説明
   directions: アクセス方法 # Driving directions
+  kilometers: km
   name: 名前             # Club or contact name
+  navlinks:
+    home: Home
+    find_club: 碁会所を探する
+    add_club: 碁会所を追加する
+    logout: ログアウト
+    login: ログイン
+    register: 登録
+    settings: 設定
+    about: PromoteGo.orgとは
+    widgets: ウィジェット
+    development: ディベロバー向け
+    contact: Contact Us
+    credits: クレジット
   new_club: 新しい碁会所
   no_address: 住所未入力
   no_clubs_matched:
-    "一致する碁会所は見つかりませんでした。最寄の碁会所の情報をお薦めします。"
-  no_match: 対戦相手が見つかりませんでした。
+    "お探しの地域に碁会所が見つかりませんでした。登録された碁会所の中から最も近い場所をご紹介します。"
+  no_match: 碁会所が見つかりませんでした。
   radius: 検索範囲         # As in the radius of the search
   search: 検索
-  search_again: 再検索
+  search_again: 再検索してください。
   search_instructions:
-    "周辺の碁会場を見つけるために住所を入力してください。詳しく見つけるために、住所を詳細に入力してください。入力情報を他目的に使用することはありません。"
+    "最寄りの碁会所を検索するために住所（例: 県、州、市、町、駅名、通り、郵便番号など）を入力してください。
+    入力された情報が多いほど、多くの検索結果を導きだすことができます。入力された情報が他で使用されることはありません。"
   search_results: 検索結果
-  state_listing: 県別検索結果
-  state_unknown: 県名不明
+  state_listing: 国別または県別検索結果
+  state_unknown: 県名／州名不明
   translated: 'true'   # Just leave this value as-is.  It means we have a translation for this language.
   welcome: ようこそ
+  km:
+    no_clubs_matched_limit: "{{limit}} km 以内に碁会所は見つかりませんでした。"
+    units: km
+    units_downcase: km  # Still capitalized if nouns are always capitalized as in German
   mi:
-    no_clubs_matched_limit: "{{limit}}マイル 以内に対戦相手が見つかりませんでした。"
+    no_clubs_matched_limit: "{{limit}}マイル 以内に碁会所は見つかりませんでした。"
     units: マイル
     units_downcase: マイル  # Still capitalized if nouns are always capitalized as in German
   language_names:
     de: ドイツ語
     en: 英語
     ja: 日本語
+    pt: ポルトガル語
     sv: スウェーデン語
