@@ -1,0 +1,96 @@
+ja:
+  about: 当サイトについて
+  account_activated:
+    "{{username}}さんのPromoteGo.org会員登録が完了しました。碁会所リストへの追加や編集が出来ます。"
+  account_created: 仮登録が完了しました。
+  account_registered: 仮登録が完了しました!  登録したメールを確認し、メール内のURLをクリックして登録を完了してください。
+  add: 追加               # As in "add an entry"
+  almost_finished: "登録完了まで後少しです！"
+  back: 戻る             # As in "go back to the previous page"
+  change_password: パスワード変更
+  check_email_password: パスワード初期化の方法に付いてはメールを確認してください。
+  check_email_username: ユーザー名についてはメールを確認してください。
+  check_email_validation:
+    "入力いただいたアドレスに届くメールの確認ＵＲＬに接続して下さい。接続の確認が出来ると、本登録完了となります。本登録が完了すると、自分の碁会所に関する情報を編集したり、他の人の情報を閲覧したりすることができるようになります。そして、貴方の近くの地域に新たな碁会所情報が登録されると、その情報が自動的に送信されます。ぜひ、お近くの碁会所で仲間と出会ってください。"
+  choose_country: 国名
+  city: 市町村名
+  club_created: 新しい碁会所が登録されました。
+  club_unknown: 該当する碁会所がありません。
+  club_updated: 碁会所情報が更新されました。
+  confirm: Are you sure?
+  confirm_password: パスワード再入力
+  country: 国名
+  default_submission_error: '入力情報に誤りがあります。'
+  delete: 消去         # As in "delete this club"
+  edit: 編集             # As in "edit this club"
+  edit_club: 碁会所情報の編集
+  edit_settings: 設定変更
+  email: メール           # Email address
+  email_unknown: 入力されたメールアドレスは登録されていません。
+  enter_email: メールアドレス入力
+  enter_email_for_username: '登録したメールアドレスを入力してください。ユーザー名を送ります。'
+  enter_username: ユーザー名入力
+  enter_username_for_password: ユーザー名を入力してください。パスワード初期化のURLを送ります。
+  forgot_password: パスワードを忘れた場合
+  forgot_username: ユーザー名を忘れた場合
+  game_of_go: 囲碁  # As in "to learn more about the game of Go"
+  hidden: 非公開
+  home_page: ホームページURL   # Moving this to pri1.  TODO: Delete after we have sv, de, and ja translations.
+  hours: 営業時間           # Hours of operation
+  kilometers: ｋｍ # Kilometers from search location.  Moving this to pri1.  TODO: Delete after we have sv, de, and ja translations.
+  log_in: ログイン
+  logged_out: ログアウトしました。
+  login_successful: ログイン成功!
+  must_log_in: このページの閲覧にはログインが必要です。
+  must_log_out: このページの閲覧にはログアウトが必要です。
+  navlinks:
+    home: ホーム
+    find_club: 碁会所検索
+    add_club: 碁会所追加
+    logout: ログアウト
+    login: ログイン
+    register: アカウント作成
+    settings: 設定
+    about: 当サイトについて
+    widgets: ウィジェット
+    development: 開発
+    contact: 連絡先
+    credits: 製作者
+  new_password: 新しいパスワード
+  not_used: 不要   # Hint text in state/province input when it's suppressed for a country
+  owner: 管理者
+  password: パスワード
+  password_changed: パスワードを変更できました。
+  password_reset: パスワード初期化  # Page title for resetting password
+  password_reset_invalid: ご利用のパスワード初期化URLは、期限を過ぎたか無効となりました。
+  phone: 電話番号           # Phone number
+  please_enter_password: "下にパスワードを入力してください。パスワードを忘れないよう注意してください!"
+  postal_code: 郵便番号
+  provide_email: 登録を続けるためにメールアドレスを入力してください。
+  provide_username: 登録を続けるためにユーザー名を入力してください
+  register: アカウント作成
+  remember_me: 次回から自動的にログイン　# Checkbox for persistent login on login page
+  reset_password: パスワード初期化
+  reset_password_notification: |
+    PromoteGoのパスワード初期化を受け付けました。
+    心当たりがない場合は、contact@promotego.org　までご連絡ください。
+    パスワードを再設定するには次のインターネット アドレスを選択してコピーします。
+  select_country: 国選択
+  select_state: 都道府県選択
+  send: 送信
+  send_message: メッセージ送信
+  sent: 送信しました。
+  show: 閲覧
+  sign_up: 新規登録!
+  signup_complete: 登録完了!
+  state_province: 都道府県
+  submit: 送信
+  update: 情報更新
+  username: ユーザー名
+  username_notification: |
+    PromoteGo.orgのユーザー名確認を受け付けました。
+    心当たりがない場合は、contact@promotego.org　までご連絡ください。
+
+    ユーザ名：
+  username_unknown: 入力したユーザー名は登録されていません。
+  visit_url_to_activate: "アカウント登録を完了するために、このURLにアクセスしてください。:"

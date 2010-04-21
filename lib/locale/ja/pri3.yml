@@ -1,0 +1,44 @@
+ja:
+  affiliate: アフェリエイト   # This is the organization affiliated, a noun, not the verb "to affiliate"
+  affiliate_id: アフェリエイトID
+  captcha_failed: 確認に失敗しました # A Captcha is a test to verify a human is filling out the form.  It's usually an image with distorted characters that have to be entered by the user to proceed.
+  captcha_instructions: 画像の文字を下に入力してください
+  expires: 有効期限       # Date on which something expires
+  from: 送信者             # Email sender address
+  message: メッセージ本文       # Email message body
+  message_about_listing: 貴方の登録した情報（{{url}}）に他のユーザーからメッセージが届きました。
+  message_sent: メッセージ送信完了
+  noscript_more_contacts:
+    "Note: If you wish to add more contacts, fill out the existing contact fields, save this form,
+    and edit the club again.  Additional blank contact fields will appear."
+  promotego_widgets: PromoteGo.org ガジェット
+  return_email: 返信  # The email to use to respond to a message
+  roles: スティタス           # Roles for this user: admin, superuser, etc.
+  search_widget: 検索ガジェット
+  search_widget_title: PromoteGo.org 検索ガジェット
+  search_widget_summary:
+    -
+      あなたのブログやHPに検索ガジェットを貼って、読者が碁会所を探すために協力しましょう。読者が湯便版碁や住所を入力すると、その地域の情報が見れます。
+    -
+      検索ガジェットの貼り方
+  search_widget_step_1_instructions:
+    - >
+      ここに貴方のサイトのURLを入れてください。貴方のサイトの特徴を自動的に分析し適したガジェットを作成します。
+  search_widget_step_1_title: サイトのURL（任意）
+  search_widget_step_2_instructions:
+    - >
+      貴方のサイトにこのように表示されます。
+  search_widget_step_2_title: プレビュー
+  search_widget_step_3_instructions:
+    - >
+      右側の選択肢から選ぶか、直接入力して設定変更してください。変更は自動的にプレビューに反映されます
+  search_widget_step_3_title: 画面設定
+  search_widget_step_4_instructions:
+    - >
+      検索ガジェットを表示するために下記のソースをコピーし、貴方のサイトのソースに入れてください。
+  search_widget_step_4_title: ガジェット　ソース
+  search_widget_teaser: >
+    あなたのブログやHPに検索ガジェットを貼って、読者が碁会所を探すために協力しましょう。読者が湯便版碁や住所を入力すると、その地域の情報が見れます。詳しくは{{search_widget}}をご覧ください。.
+  url: ＵＲＬ        # eg. http://your-site.com
+  widgets_summary: >
+    PromoteGo.orgガジェットとはPromoteGo.orgの機能をあたなのサイトに繋げる事が出来る機能です。PromoteGo.orgとは囲碁を普及させるために活動しています。詳しくはPromoteGo.orgの, {{about}}をご覧ください。.
