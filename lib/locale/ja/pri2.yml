@@ -69,7 +69,7 @@ ja:
   provide_email: 登録を続けるためにメールアドレスを入力してください。
   provide_username: 登録を続けるためにユーザー名を入力してください
   register: アカウント作成
-  remember_me: 次回から自動的にログイン　# Checkbox for persistent login on login page
+  remember_me: 次回から自動的にログイン # Checkbox for persistent login on login page
   reset_password: パスワード初期化
   reset_password_notification: |
     PromoteGoのパスワード初期化を受け付けました。
