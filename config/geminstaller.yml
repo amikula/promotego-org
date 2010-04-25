@@ -6,6 +6,8 @@ gems:
   version: ~> 0.5.4
 - name: rails
   version: 2.3.5
+- name: rack
+  version: 1.0.1
 - name: amatch
   version: 0.2.3
 - name: haml
