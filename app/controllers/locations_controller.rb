@@ -8,9 +8,13 @@ class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.xml
   def index
-    # TODO Need to sort server-side so we can sort in the proper order for the translated country name.  In fact, if we're already doing that, then the following line is unnecessary.
+    # TODO Need to sort on the Rails side so we can sort in the
+    # proper order for the translated country name.  In fact, if we're
+    # already doing that, then the following line is unnecessary.
     options = {:order => 'country, state, city, name'}
 
+    # TODO tease apart all this logic and move it under sensibly named
+    # methods.
     if params[:country]
       country_name = seo_decode(params[:country])
       @country = I18n.t(country_name, :scope => :reverse_countries, :locale => host_locale) || country_name
