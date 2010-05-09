@@ -8,11 +8,6 @@ class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.xml
   def index
-    unless params[:type] == 'go-clubs'
-      redirect_to :action => :index, :country => params[:country], :state => params[:state], :type => 'go-clubs'
-      return
-    end
-
     # TODO Need to sort server-side so we can sort in the proper order for the translated country name.  In fact, if we're already doing that, then the following line is unnecessary.
     options = {:order => 'country, state, city, name'}
 

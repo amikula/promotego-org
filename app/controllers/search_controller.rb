@@ -1,13 +1,7 @@
 class SearchController < ApplicationController
-  before_filter :go_clubs_redirect
-
   include GeoMethods
 
   SEARCH_RADII = {:mi => [5,10,25,50,100,250], :km => [10,25,50,100,250,400]}
-
-  def go_clubs_redirect
-    redirect_to :type => 'go-clubs', :action => params[:action], :status => :moved_permanently unless !request.get? || params[:type] == 'go-clubs'
-  end
 
   def radius
     @title = "Find a Go Club"
