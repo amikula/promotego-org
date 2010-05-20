@@ -3,10 +3,14 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :affiliations, :has_one => :location, :has_one => :affiliate
 
-  map.resources :locations
+  map.resources :locations do |location|
+    location.resources :addresses
+  end
 
   map.resource :account, :controller => "users"
-  map.resources :users
+  map.resources :users do |user|
+    user.resources :addresses, :only => [:new, :create, :edit, :update, :destroy]
+  end
 
   map.resource :forgot_password, :only => [:create, :show], :controller => 'forgot_password'
   map.resource :forgot_login, :only => [:create, :show], :controller => 'forgot_login'

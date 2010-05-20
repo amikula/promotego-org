@@ -1,9 +1,18 @@
 %h1= t 'edit_settings'
 - form_tag settings_path, :method => :put do
   = error_messages_for :user
-  %h2= t 'addresses'
-  %table
-    = render :partial => 'common/address_form', :collection => @user.addresses
+  %h2
+    = t 'addresses'
+  %ul.addresses
+    - @user.addresses.each do |address|
+      %li.address
+        - if address.name.present?
+          %strong== #{address.name}:
+        = address.to_s.gsub('  ', '&nbsp; ')
+        = link_to 'edit', edit_user_address_path(@user, address)
+        = link_to t('delete').downcase, user_address_path(@user, address), :confirm => t('confirm'), :method => :delete
+
+  = link_to 'new address', new_user_address_path(@user)
 
   %h2= t 'change_password'
   %table

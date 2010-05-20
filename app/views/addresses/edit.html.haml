@@ -1,0 +1,8 @@
+%h1 Editing address
+
+- form_for(@address, :url => user_address_path(@address_owner, @address)) do |f|
+  = render :partial => 'address_form', :object => f
+
+= link_to 'Show', user_address_path(@address_owner, @address)
+|
+= link_to 'Back', edit_settings_path
