@@ -13,12 +13,12 @@
   = address_form.text_field :city
 %p
   :javascript
-    selections = #{state_select_hash.to_json};
+    selections = #{state_select_hash(:address).to_json};
     textField = #{address_form.text_field(:state).to_json};
-    emptyField = #{text_field_tag(:location_state, t('not_used'), :disabled => true).to_json}
+    emptyField = #{text_field_tag(:address_state, t('not_used'), :disabled => true).to_json}
     function updateStateInput(countrySelect) {
       countryValue = countrySelect.options[countrySelect.selectedIndex].value
-      stateElement = $('#location_state')
+      stateElement = $('#address_state')
       stateValue = stateElement.val()
 
       if(countryValue in selections) {
@@ -28,7 +28,7 @@
           stateElement.replaceWith(selectList);
 
           if((stateValue != '--') && (stateValue != '#{t('not_used')}')) {
-            $('#location_state').val(stateValue)
+            $('#address_state').val(stateValue)
           }
         } else {
           stateElement.replaceWith(emptyField)
@@ -36,19 +36,19 @@
       } else {
         stateElement.replaceWith(textField);
         if((stateValue != '--') && (stateValue != '#{t('not_used')}')) {
-          $('#location_state').val(stateValue)
+          $('#address_state').val(stateValue)
         }
       }
     }
   %b= t 'country'
   %br/
-  = localized_country_select(:location, :country, [], {:include_blank => t('choose_country')}, :onchange => 'updateStateInput(this)')
+  = localized_country_select(:address, :country, [], {:include_blank => t('choose_country')}, :onchange => 'updateStateInput(this)')
 %p#state_province
   %b= t 'state_province'
   %br/
   = address_form.text_field :state
   :javascript
-    $(function() {updateStateInput($('#location_country')[0]);});
+    $(function() {updateStateInput($('#address_country')[0]);});
 %p
   %b= t 'postal_code'
   %br/
