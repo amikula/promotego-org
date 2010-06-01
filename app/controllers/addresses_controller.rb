@@ -5,17 +5,6 @@ class AddressesController < ApplicationController
     @address_owner = User.find_by_login(params[:user_id])
   end
 
-  # GET /addresses
-  # GET /addresses.xml
-  def index
-    @addresses = @address_owner.addresses
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @addresses }
-    end
-  end
-
   # GET /addresses/1
   # GET /addresses/1.xml
   def show
