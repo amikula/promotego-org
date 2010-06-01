@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100227231654) do
+ActiveRecord::Schema.define(:version => 20100601021244) do
 
   create_table "addresses", :force => true do |t|
     t.string   "name"
@@ -97,6 +97,18 @@ ActiveRecord::Schema.define(:version => 20100227231654) do
   end
 
   add_index "locations", ["slug"], :name => "index_locations_on_slug", :unique => true
+
+  create_table "messages", :force => true do |t|
+    t.integer  "sender_id"
+    t.integer  "recipient_id"
+    t.string   "subject"
+    t.string   "body"
+    t.boolean  "read"
+    t.integer  "message_responded_to_id"
+    t.integer  "thread_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "roles", :force => true do |t|
     t.string   "name"
