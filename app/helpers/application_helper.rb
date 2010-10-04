@@ -19,14 +19,6 @@ module ApplicationHelper
     content_tag 'div', flash_to_display, :class => "flash #{level}"
   end
 
-  def activerecord_error_list(errors)
-    error_list = '<ul class="error_list">'
-    error_list << errors.collect do |e, m|
-      "<li>#{e.humanize unless e == "base"} #{m}</li>"
-    end.to_s << '</ul>'
-    error_list
-  end
-
   Abbreviable = Struct.new(:full_name, :url_name, :abbrev)
 
   def active_countries(us_first=false)
@@ -38,21 +30,21 @@ module ApplicationHelper
         country_url_fragment = seo_encode(I18n.translate(l.country, :scope => 'countries', :locale => host_locale, :default => country_name))
         Abbreviable.new(country_name, country_url_fragment, l.country)
       end
-    end.sort_by{|c| (us_first && c.abbrev == 'US') ? 'AAAAAAAA' : c.full_name}
+    end.sort_by{|c| (us_first && c.abbrev == 'US') ? 'AAAAAAAA' : c.full_name}  # TODO: This is lame. Instead, use an inline comparator for this.
   end
 
-  def active_states_for(cntry)
-    return [] unless has_provinces?(cntry)
+  def active_states_for(country)
+    return [] unless has_provinces?(country)
 
-    Location.visible.find(:all, :select => 'DISTINCT state', :conditions => ['country = ? AND state IS NOT NULL', cntry]).collect do |l|
-      full_state_name = t(l.state, :scope => [:provinces, cntry], :default => l.state)
-      full_state_url_fragment = seo_encode t(l.state, :scope => [:provinces, cntry], :locale => host_locale, :default => l.state)
+    Location.visible.find(:all, :select => 'DISTINCT state', :conditions => ['country = ? AND state IS NOT NULL', country]).collect do |l|
+      full_state_name = t(l.state, :scope => [:provinces, country], :default => l.state)
+      full_state_url_fragment = seo_encode t(l.state, :scope => [:provinces, country], :locale => host_locale, :default => l.state)
       Abbreviable.new(full_state_name, full_state_url_fragment, l.state)
     end.sort_by{|s| s.full_name}
   end
 
-  def by_columns(collection, min_column=8, max_columns=5)
-    elems_per_slice = [min_column, (collection.length/max_columns.to_f).ceil].max
+  def by_columns(collection, min_column_size=8, max_columns=5)
+    elems_per_slice = [min_column_size, (collection.length/max_columns.to_f).ceil].max
 
     collection.each_slice(elems_per_slice) do |slice|
       yield slice
@@ -74,7 +66,7 @@ module ApplicationHelper
         distance = sum/group.size.to_f
       end
 
-      with_distance << [key + [distance], group]
+      with_distance << [key << distance, group]
     end
 
     with_distance.sort_by{|k| k[0][2]}.each do |ary|
@@ -130,5 +122,14 @@ module ApplicationHelper
     languages_text = t('languages', :locale => browser_language)
 
     link_to "#{flag_image}&nbsp;#{languages_text}&nbsp;#{other_flag_image}", home_path(:page => 'languages')
+  end
+
+private
+  def activerecord_error_list(errors)
+    error_list = '<ul class="error_list">'
+    error_list << errors.collect do |e, m|
+      "<li>#{e.humanize unless e == "base"} #{m}</li>"
+    end.to_s << '</ul>'
+    error_list
   end
 end
